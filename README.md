@@ -2,11 +2,11 @@
 
 [![NPM version](https://badge.fury.io/js/slate-edit-list.svg)](http://badge.fury.io/js/slate-edit-list)
 
-A Slate plugin to handle keyboard events in lists.
+A Slate plugin to handle keyboard events in lists. List items can contain blocks.
 
 ### Install
 
-```js
+```
 npm install slate-edit-list
 ```
 
@@ -28,4 +28,6 @@ const plugins = [
 
 #### Arguments
 
-- ``[onlyIn: Function(Node)]`` — a filtering function to select list blocks.
+- ``[typeUL: String]`` — type for bulleted lists.
+- ``[typeOL: String]`` — type for numbered lists.
+- ``[typeItem: String]`` — type for list items.

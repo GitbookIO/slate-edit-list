@@ -22,7 +22,7 @@
                     "kind": "text",
                     "ranges": [
                         {
-                            "text": "This page is a basic example of Slate + slate-edit-list plugin:"
+                            "text": "This page is a basic example of Slate + slate-edit-list plugin. Press Enter in alist to create a new list item, press Enter again to exit and Mod+Enter to create a paragraph in a list."
                         }
                     ]
                 }
@@ -37,10 +37,16 @@
                     "type": "list_item",
                     "nodes": [
                         {
-                            "kind": "text",
-                            "ranges": [
+                            "kind": "block",
+                            "type": "paragraph",
+                            "nodes": [
                                 {
-                                    "text": "First item in the list"
+                                    "kind": "text",
+                                    "ranges": [
+                                        {
+                                            "text": "First item in the list"
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -51,10 +57,16 @@
                     "type": "list_item",
                     "nodes": [
                         {
-                            "kind": "text",
-                            "ranges": [
+                            "kind": "block",
+                            "type": "paragraph",
+                            "nodes": [
                                 {
-                                    "text": "Second item in the list"
+                                    "kind": "text",
+                                    "ranges": [
+                                        {
+                                            "text": "Second item in the list"
+                                        }
+                                    ]
                                 }
                             ]
                         }
