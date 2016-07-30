@@ -58,13 +58,47 @@
                     "nodes": [
                         {
                             "kind": "block",
+                            "type": "heading",
+                            "nodes": [
+                                {
+                                    "kind": "text",
+                                    "ranges": [
+                                        {
+                                            "text": "With blocks:"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "block",
                             "type": "paragraph",
                             "nodes": [
                                 {
                                     "kind": "text",
                                     "ranges": [
                                         {
-                                            "text": "Second item in the list"
+                                            "text": "List item can contain blocks"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "block",
+                    "type": "list_item",
+                    "nodes": [
+                        {
+                            "kind": "block",
+                            "type": "paragraph",
+                            "nodes": [
+                                {
+                                    "kind": "text",
+                                    "ranges": [
+                                        {
+                                            "text": "Third item in the list"
                                         }
                                     ]
                                 }
