@@ -13,7 +13,7 @@ npm install slate-edit-list
 ### Features
 
 - Pressing <kbd>Enter</kbd> insert a new list item
-- Pressing <kbd>Mod+Enter</kbd> split the block in the list item
+- Pressing <kbd>Shift+Enter</kbd> split the block in the list item
 - Pressing <kbd>Tab</kbd> wrap the item in a new list
 - Pressing <kbd>Delete</kbd> at the start, remove the list item (or the list)
 
