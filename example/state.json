@@ -98,7 +98,53 @@
                                     "kind": "text",
                                     "ranges": [
                                         {
-                                            "text": "Third item in the list"
+                                            "text": "Third item in the list, with a nested list"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "kind": "block",
+                            "type": "ol_list",
+                            "nodes": [
+                                {
+                                    "kind": "block",
+                                    "type": "list_item",
+                                    "nodes": [
+                                        {
+                                            "kind": "block",
+                                            "type": "paragraph",
+                                            "nodes": [
+                                                {
+                                                    "kind": "text",
+                                                    "ranges": [
+                                                        {
+                                                            "text": "First item in the nested list"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "kind": "block",
+                                    "type": "list_item",
+                                    "nodes": [
+                                        {
+                                            "kind": "block",
+                                            "type": "paragraph",
+                                            "nodes": [
+                                                {
+                                                    "kind": "text",
+                                                    "ranges": [
+                                                        {
+                                                            "text": "Second item in the nested list"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
