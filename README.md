@@ -1,6 +1,7 @@
 # slate-edit-list
 
 [![NPM version](https://badge.fury.io/js/slate-edit-list.svg)](http://badge.fury.io/js/slate-edit-list)
+[![Linux Build Status](https://travis-ci.org/SamyPesse/slate-edit-list.png?branch=master)](https://travis-ci.org/SamyPesse/slate-edit-list)
 
 A Slate plugin to handle keyboard events in lists. List items can contain blocks.
 
