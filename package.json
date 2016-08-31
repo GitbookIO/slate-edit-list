@@ -3,7 +3,7 @@
   "description": "A Slate plugin to handle keyboard events in lists.",
   "version": "0.1.1",
   "license": "Apache-2.0",
-  "repository": "git://github.com/SamyPesse/slate-edit-list.git",
+  "repository": "git://github.com/GitbookIO/slate-edit-list.git",
   "main": "./dist/index.js",
   "dependencies": {},
   "devDependencies": {
