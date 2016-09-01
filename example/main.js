@@ -20,19 +20,19 @@ const SCHEMA = {
 };
 
 const Example = React.createClass({
-    getInitialState: function() {
+    getInitialState() {
         return {
             state: Slate.Raw.deserialize(stateJson, { terse: true })
         };
     },
 
-    onChange: function(state) {
+    onChange(state) {
         this.setState({
-            state: state
+            state
         });
     },
 
-    render: function() {
+    render() {
         return (
             <Slate.Editor
                 placeholder={'Enter some text...'}
