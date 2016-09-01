@@ -9,12 +9,14 @@ const plugins = [
     PluginEditList()
 ];
 
-const NODES = {
-    ul_list:   props => <ul {...props.attributes}>{props.children}</ul>,
-    ol_list:   props => <ol {...props.attributes}>{props.children}</ol>,
-    list_item: props => <li {...props.attributes}>{props.children}</li>,
-    paragraph: props => <p {...props.attributes}>{props.children}</p>,
-    heading:   props => <h1 {...props.attributes}>{props.children}</h1>
+const SCHEMA = {
+    nodes: {
+        ul_list:   props => <ul {...props.attributes}>{props.children}</ul>,
+        ol_list:   props => <ol {...props.attributes}>{props.children}</ol>,
+        list_item: props => <li {...props.attributes}>{props.children}</li>,
+        paragraph: props => <p {...props.attributes}>{props.children}</p>,
+        heading:   props => <h1 {...props.attributes}>{props.children}</h1>
+    }
 };
 
 const Example = React.createClass({
@@ -30,10 +32,6 @@ const Example = React.createClass({
         });
     },
 
-    renderNode: function(node) {
-        return NODES[node.type];
-    },
-
     render: function() {
         return (
             <Slate.Editor
@@ -41,7 +39,7 @@ const Example = React.createClass({
                 plugins={plugins}
                 state={this.state.state}
                 onChange={this.onChange}
-                renderNode={this.renderNode}
+                schema={SCHEMA}
             />
     );
     }
