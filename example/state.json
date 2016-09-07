@@ -22,7 +22,7 @@
                     "kind": "text",
                     "ranges": [
                         {
-                            "text": "This page is a basic example of Slate + slate-edit-list plugin. Press Enter in alist to create a new list item, press Enter again to exit and Shift+Enter to create a paragraph in a list."
+                            "text": "This page is a basic example of Slate + slate-edit-list plugin. Press Enter in a list to create a new list item. Press Enter again to exit and Shift+Enter to create a paragraph in a list."
                         }
                     ]
                 }
