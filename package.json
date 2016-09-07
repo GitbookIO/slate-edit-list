@@ -32,8 +32,8 @@
     "lint": "eslint ./",
     "build-example": "browserify ./example/main.js -o ./example/bundle.js -t [ babelify --presets [ es2015 react ] ]",
     "serve-example": "http-server ./example/ -p 8080",
-    "start": "npm run build-example; npm run serve-example",
-    "deploy-example": "npm run build-example; gh-pages -d ./example",
+    "start": "npm run build-example && npm run serve-example",
+    "deploy-example": "npm run build-example && gh-pages -d ./example",
     "test": "./node_modules/.bin/mocha ./tests/all.js --compilers js:babel-register --bail --reporter=list"
   },
   "keywords": [
