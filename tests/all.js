@@ -15,16 +15,26 @@ describe('slate-edit-list', function() {
 
         it(test, function() {
             const dir = path.resolve(__dirname, test);
-            const input = readMetadata.sync(path.resolve(dir, 'input.yaml'));
-            const expected = readMetadata.sync(path.resolve(dir, 'expected.yaml'));
+
+            const inputPath = path.resolve(dir, 'input.yaml');
+            const input = readMetadata.sync(inputPath);
+
+            const expectedPath = path.resolve(dir, 'expected.yaml');
+            let expected;
+            if (fs.existsSync(expectedPath)) {
+                expected = readMetadata.sync(expectedPath);
+            }
+
             const runTransform = require(path.resolve(dir, 'transform.js'));
 
             const stateInput = Slate.Raw.deserialize(input, { terse: true });
 
             const newState = runTransform(plugin, stateInput);
 
-            const newDocJSon = Slate.Raw.serialize(newState, { terse: true });
-            expect(newDocJSon).toEqual(expected);
+            if (expected) {
+                const newDocJSon = Slate.Raw.serialize(newState, { terse: true });
+                expect(newDocJSon).toEqual(expected);
+            }
         });
     });
 });
