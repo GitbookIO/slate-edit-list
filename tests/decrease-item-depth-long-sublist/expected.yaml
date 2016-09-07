@@ -8,7 +8,13 @@ nodes:
         nodes:
           - kind: text
             text: Item 1
-          # Sub list
+
+      - kind: block
+        type: list_item
+        nodes:
+          - kind: text
+            text: Item 1.1
+
           - kind: block
             type: ul_list
             nodes:
@@ -17,9 +23,3 @@ nodes:
                 nodes:
                   - kind: text
                     text: Item 1.2
-
-      - kind: block
-        type: list_item
-        nodes:
-          - kind: text
-            text: Item 1.1
