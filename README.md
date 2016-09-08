@@ -116,6 +116,42 @@ nodes:
 
 Return true if selection is inside a list (and it can be unwrap).
 
+#### `utils.isList`
+
+`plugin.utils.isList(node: Node) => Boolean`
+
+Return true if the node is one of the list type.
+
+#### `utils.getItemDepth`
+
+`plugin.utils.getItemDepth(state: State, block: Block?) => Number`
+
+Returns the depth of the current item (or the depth of the given block) in a list. 0 means not in a list.
+
+#### `utils.getCurrentItem`
+
+`plugin.utils.getCurrentItem(state: State, block: Block?) => Block || Void`
+
+Returns the current item at selection (or at the given block).
+
+#### `utils.getCurrentList`
+
+`plugin.utils.getCurrentList(state: State, block: Block?) => Block || Void`
+
+Returns the current list at selection (or at the given block).
+
+#### `transforms.increaseItemDepth`
+
+`plugin.transforms.increaseItemDepth(transform: Transform) => Transform`
+
+Increase the depth of the current item.
+
+#### `transforms.decreaseItemDepth`
+
+`plugin.transforms.decreaseItemDepth(transform: Transform) => Transform`
+
+Decrease the depth of the current item.
+
 #### `transforms.wrapInList`
 
 `plugin.transforms.wrapInList(transform: Transform, ordered: Boolean?) => Transform`
