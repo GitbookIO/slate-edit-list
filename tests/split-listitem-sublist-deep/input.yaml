@@ -1,6 +1,7 @@
+
 nodes:
   - kind: block
-    type: ul_list
+    type: ol_list
     nodes:
       - kind: block
         type: list_item
@@ -9,15 +10,7 @@ nodes:
             type: paragraph
             nodes:
               - kind: text
-                text: First item
-      - kind: block
-        type: list_item
-        nodes:
-          - kind: block
-            type: paragraph
-            nodes:
-              - kind: text
-                text: Second item
+                text: Item 1
           - kind: block
             type: ol_list
             nodes:
@@ -26,9 +19,10 @@ nodes:
                 nodes:
                   - kind: block
                     type: paragraph
+                    key: '_selection_key'
                     nodes:
                       - kind: text
-                        text: First item in the nested list
+                        text: Item 1.1 # split here "It|em 1.1"
                   - kind: block
                     type: ol_list
                     nodes:
@@ -39,4 +33,12 @@ nodes:
                             type: paragraph
                             nodes:
                               - kind: text
-                                text: Second item in the nested list
+                                text: Item 1.1.1
+                      - kind: block
+                        type: list_item
+                        nodes:
+                          - kind: block
+                            type: paragraph
+                            nodes:
+                              - kind: text
+                                text: Item 1.1.2
