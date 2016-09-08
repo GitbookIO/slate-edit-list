@@ -39,6 +39,15 @@ const plugins = [
 ]
 ```
 
+#### Arguments
+
+This plugin accepts options to redefine the following block types:
+
+- ``[typeUL: String]`` — type for bulleted lists.
+- ``[typeOL: String]`` — type for numbered lists.
+- ``[typeItem: String]`` — type for list items.
+- ``[typeDefault: String]`` — type for default block in list items.
+
 #### Assumption about the schema
 
 You can use this plugins with custom list block types (using plugin [arguments](#arguments)). But your lists structure should still conform to a few rules. These rules are implemented as schema.
@@ -96,13 +105,6 @@ nodes:
                       - kind: text
                         text: Item 1.2
 ```
-
-#### Arguments
-
-- ``[typeUL: String]`` — type for bulleted lists.
-- ``[typeOL: String]`` — type for numbered lists.
-- ``[typeItem: String]`` — type for list items.
-- ``[typeDefault: String]`` — type for default block in list items.
 
 ### Utilities and Transform
 
