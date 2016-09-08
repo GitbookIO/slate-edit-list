@@ -7,14 +7,14 @@ nodes:
         type: list_item
         nodes:
           - kind: text
-            text: "1st item"
-      - kind: block
-        type: NOT_AN_ITEM
-        nodes:
-          - kind: text
-            text: "2nd item"
+            text: "1st"
+          - kind: block
+            type: paragraph
+            nodes:
+              - kind: text
+                text: "item"
       - kind: block
         type: list_item
         nodes:
           - kind: text
-            text: "3rd item"
+            text: "2nd item"
