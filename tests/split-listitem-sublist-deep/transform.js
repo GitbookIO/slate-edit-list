@@ -22,7 +22,8 @@ module.exports = function(plugin, state) {
         focusKey: selectedNode.key,
         focusOffset: 0,
         isBackward: false,
-        isFocused: false
+        isFocused: false,
+        marks: null
     });
 
     return newState;
