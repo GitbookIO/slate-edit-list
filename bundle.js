@@ -854,7 +854,7 @@ function decreaseItemDepth(opts, transform, ordered) {
     }
 
     // Insert the item after parent item
-    var afterRemoval = transform.apply();
+    var afterRemoval = transform.state;
     var newParentListItems = afterRemoval.document.getDescendant(parentList).nodes;
     newParentListItems = newParentListItems.insert(parentList.nodes.indexOf(parentItem) + 1, currentItem);
     transform = transform.setNodeByKey(parentList.key, {
@@ -954,7 +954,7 @@ function splitListItem(opts, transform) {
 
     // Now move the new block and all the following to a next item
 
-    var afterSplit = transform.apply();
+    var afterSplit = transform.state;
     // Block resulting from split
     var newBlock = afterSplit.startBlock;
     var currentList = getCurrentList(opts, afterSplit);
