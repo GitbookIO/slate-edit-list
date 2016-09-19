@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.4.2] - 2016-09-19
+### Fixed
+- Use of this plugin with other container plugins (such as `slate-edit-blockquote`)
+
 ## [0.4.1] - 2016-09-15
 ### Fixed
 - Undo/Redo of `splitListItem` and `decreaseItemDepth` actions
