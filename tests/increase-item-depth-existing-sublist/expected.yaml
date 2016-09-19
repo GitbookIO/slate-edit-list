@@ -7,8 +7,11 @@ nodes:
       - kind: block
         type: list_item
         nodes:
-          - kind: text
-            text: Item 1
+          - kind: block
+            type: paragraph
+            nodes:
+              - kind: text
+                text: Item 1
 
           - kind: block
             type: ul_list
@@ -16,10 +19,16 @@ nodes:
               - kind: block
                 type: list_item
                 nodes:
-                  - kind: text
-                    text: Item 1.1
+                  - kind: block
+                    type: paragraph
+                    nodes:
+                      - kind: text
+                        text: Item 1.1
               - kind: block
                 type: list_item
                 nodes:
-                  - kind: text
-                    text: Item 2
+                  - kind: block
+                    type: paragraph
+                    nodes:
+                      - kind: text
+                        text: Item 2
