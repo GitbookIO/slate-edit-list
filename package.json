@@ -6,7 +6,7 @@
   "repository": "git://github.com/GitbookIO/slate-edit-list.git",
   "main": "./dist/index.js",
   "dependencies": {
-    "slate": "^0.14.x"
+    "slate": "^0.14.10"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
