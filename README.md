@@ -152,7 +152,7 @@ Increase the depth of the current item.
 
 Decrease the depth of the current item.
 
-#### `transforms.wrapList`
+#### `transforms.wrapInList`
 
 `plugin.transforms.wrapInList(transform: Transform, ordered: Boolean?) => Transform`
 
