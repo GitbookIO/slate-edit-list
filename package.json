@@ -6,7 +6,7 @@
   "repository": "git://github.com/GitbookIO/slate-edit-list.git",
   "main": "./dist/index.js",
   "dependencies": {
-    "slate": "^0.14.10"
+    "slate": "GitbookIO/slate#26c6105c86994b2a19cf08dd6327a00d83bc497c"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -34,7 +34,7 @@
     "serve-example": "http-server ./example/ -p 8080",
     "start": "npm run build-example && npm run serve-example",
     "deploy-example": "npm run build-example && gh-pages -d ./example",
-    "test": "./node_modules/.bin/mocha ./tests/all.js --compilers js:babel-register --bail --reporter=list"
+    "test": "./node_modules/.bin/mocha ./tests/all.js --compilers js:babel-register --reporter=list"
   },
   "keywords": [
     "slate"

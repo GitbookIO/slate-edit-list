@@ -19,10 +19,11 @@ nodes:
                 nodes:
                   - kind: block
                     type: paragraph
-                    key: '_selection_key'
                     nodes:
                       - kind: text
-                        text: Item 1.1 # split here "It|em 1.1"
+                        key: '_selection_key'
+                        # split here "It|em 1.1"
+                        text: Item 1.1
                   - kind: block
                     type: ol_list
                     nodes:
