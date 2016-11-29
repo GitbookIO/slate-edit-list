@@ -8,6 +8,11 @@ nodes:
         nodes:
           - kind: text
             text: "1st"
+          - kind: inline
+            type: link
+            nodes:
+              - kind: text
+                text: "2nd"
           - kind: block
             type: paragraph
             nodes:
