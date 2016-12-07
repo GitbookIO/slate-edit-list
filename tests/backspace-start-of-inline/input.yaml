@@ -36,4 +36,11 @@ nodes:
             type: paragraph
             nodes:
               - kind: text
-                text: Third item
+                text: ""
+              - kind: inline
+                type: link
+                nodes:
+                  - kind: text
+                    text: "Third item"
+              - kind: text
+                text: ""
