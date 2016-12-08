@@ -16,9 +16,9 @@ nodes:
             nodes:
               - kind: block
                 type: paragraph
-                key: '_selection_key'
                 nodes:
                   - kind: text
+                    key: '_selection_key'
                     text: Item 2
           - kind: block
             type: list_item
