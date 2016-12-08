@@ -1,7 +1,7 @@
 {
   "name": "slate-edit-list",
   "description": "A Slate plugin to handle keyboard events in lists.",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "license": "Apache-2.0",
   "repository": "git://github.com/GitbookIO/slate-edit-list.git",
   "main": "./dist/index.js",
@@ -24,7 +24,7 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "read-metadata": "^1.0.0",
-    "slate": "0.16.1",
+    "slate": "GitbookIO/slate#dffd6803001c555e7f4aeae7449ceddbd9edc010",
     "slate-edit-code": "^0.1.0"
   },
   "scripts": {
@@ -32,7 +32,7 @@
     "postpublish": "npm run deploy-example",
     "lint": "eslint ./",
     "build-example": "browserify ./example/main.js -o ./example/bundle.js -t [ babelify --presets [ es2015 react ] ]",
-    "serve-example": "http-server ./example/ -p 8080",
+    "serve-example": "http-server ./example/ -p 8081",
     "start": "npm run build-example && npm run serve-example",
     "deploy-example": "npm run build-example && gh-pages -d ./example",
     "test": "./node_modules/.bin/mocha ./tests/all.js --compilers js:babel-register --reporter=list"
