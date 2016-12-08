@@ -981,10 +981,10 @@ function unwrapList(opts, transform) {
     });
 
     // Unwrap the item list children
-    transform.removeNodeByKey(currentItem.key);
     currentItem.nodes.reverse().forEach(function (node) {
-        transform.insertNodeByKey(parent.key, index, node);
+        transform.moveNodeByKey(node.key, parent.key, index, node);
     });
+    transform.removeNodeByKey(currentItem.key);
 
     return transform;
 }
