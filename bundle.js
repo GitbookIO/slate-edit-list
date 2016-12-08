@@ -75,7 +75,7 @@ var Example = React.createClass({
 
 ReactDOM.render(React.createElement(Example, null), document.getElementById('example'));
 
-},{"../lib/":8,"./state":2,"react":375,"react-dom":228,"slate":396}],2:[function(require,module,exports){
+},{"../lib/":8,"./state":2,"react":329,"react-dom":182,"slate":350}],2:[function(require,module,exports){
 module.exports={
     "nodes": [
         {
@@ -678,7 +678,7 @@ function matchTypes(types) {
 
 module.exports = makeSchema;
 
-},{"immutable":160,"slate":396}],11:[function(require,module,exports){
+},{"immutable":158,"slate":350}],11:[function(require,module,exports){
 'use strict';
 
 var unwrapList = require('./transforms/unwrapList');
@@ -691,16 +691,18 @@ function onBackspace(event, data, state, opts) {
     var startOffset = state.startOffset,
         selection = state.selection;
 
+    // Only unwrap...
+    // ... with a collapsed selection
 
-    if (
-    // Only unwrap when at the begining
-    startOffset > 0
-    // With a collapsed selection
-    || selection.isExpanded
-    // In a list
-    || !getCurrentItem(opts, state)) {
-        return;
-    }
+    if (selection.isExpanded) return;
+
+    // ... when at the beginning of nodes
+    if (startOffset > 0) return;
+    // ... in a list
+    var currentItem = getCurrentItem(opts, state);
+    if (!currentItem) return;
+    // ... more precisely at the beginning of the current item
+    if (!selection.isAtStartOf(currentItem)) return;
 
     event.preventDefault();
     return unwrapList(opts, state.transform()).apply();
@@ -864,7 +866,7 @@ function decreaseItemDepth(opts, transform, ordered) {
 
 module.exports = decreaseItemDepth;
 
-},{"../getCurrentItem":3,"../getItemDepth":5,"slate":396}],15:[function(require,module,exports){
+},{"../getCurrentItem":3,"../getItemDepth":5,"slate":350}],15:[function(require,module,exports){
 'use strict';
 
 var Slate = require('slate');
@@ -932,7 +934,7 @@ function moveAsSubItem(opts, transform, item, destKey) {
 
 module.exports = increaseItemDepth;
 
-},{"../getCurrentItem":3,"../getListForItem":6,"../getPreviousItem":7,"../isList":9,"slate":396}],16:[function(require,module,exports){
+},{"../getCurrentItem":3,"../getListForItem":6,"../getPreviousItem":7,"../isList":9,"slate":350}],16:[function(require,module,exports){
 'use strict';
 
 var getCurrentItem = require('../getCurrentItem');
@@ -955,7 +957,9 @@ function splitListItem(opts, transform) {
 module.exports = splitListItem;
 
 },{"../getCurrentItem":3}],17:[function(require,module,exports){
-"use strict";
+'use strict';
+
+var getCurrentItem = require('../getCurrentItem');
 
 /**
  * Unwrap from list.
@@ -965,12 +969,29 @@ module.exports = splitListItem;
  * @return {Transform} transform
  */
 function unwrapList(opts, transform) {
-  return transform.unwrapBlock(opts.typeItem).unwrapBlock();
+    var state = transform.state;
+
+    var currentItem = getCurrentItem(opts, state);
+    // Unwrap the item from its list
+    transform.unwrapNodeByKey(currentItem.key);
+
+    var parent = transform.state.document.getParent(currentItem.key);
+    var index = parent.nodes.findIndex(function (node) {
+        return node.key === currentItem.key;
+    });
+
+    // Unwrap the item list children
+    transform.removeNodeByKey(currentItem.key);
+    currentItem.nodes.reverse().forEach(function (node) {
+        transform.insertNodeByKey(parent.key, index, node);
+    });
+
+    return transform;
 }
 
 module.exports = unwrapList;
 
-},{}],18:[function(require,module,exports){
+},{"../getCurrentItem":3}],18:[function(require,module,exports){
 "use strict";
 
 /**
@@ -3019,7 +3040,7 @@ function isnan (val) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":19,"ieee754":159,"isarray":164}],24:[function(require,module,exports){
+},{"base64-js":19,"ieee754":157,"isarray":162}],24:[function(require,module,exports){
 /**
  * Export cheerio (with )
  */
@@ -3529,7 +3550,7 @@ exports.is = function (selector) {
 };
 
 
-},{"../static":32,"../utils":33,"lodash.assignin":166,"lodash.foreach":171,"lodash.some":177}],26:[function(require,module,exports){
+},{"../static":32,"../utils":33,"lodash.assignin":164,"lodash.foreach":169,"lodash.some":175}],26:[function(require,module,exports){
 var domEach = require('../utils').domEach,
     _ = {
       pick: require('lodash.pick'),
@@ -3652,7 +3673,7 @@ function parse(styles) {
     }, {});
 }
 
-},{"../utils":33,"lodash.pick":174}],27:[function(require,module,exports){
+},{"../utils":33,"lodash.pick":172}],27:[function(require,module,exports){
 // https://github.com/jquery/jquery/blob/2.1.3/src/manipulation/var/rcheckableType.js
 // https://github.com/jquery/jquery/blob/2.1.3/src/serialize.js
 var submittableSelector = 'input,select,textarea,keygen',
@@ -3719,7 +3740,7 @@ exports.serializeArray = function() {
     }).get();
 };
 
-},{"lodash.map":172}],28:[function(require,module,exports){
+},{"lodash.map":170}],28:[function(require,module,exports){
 var parse = require('../parse'),
     $ = require('../static'),
     updateDOM = parse.update,
@@ -4146,7 +4167,7 @@ exports.clone = function() {
   return this._make(cloneDom(this.get(), this.options));
 };
 
-},{"../parse":31,"../static":32,"../utils":33,"lodash.bind":167,"lodash.flatten":170,"lodash.foreach":171}],29:[function(require,module,exports){
+},{"../parse":31,"../static":32,"../utils":33,"lodash.bind":165,"lodash.flatten":168,"lodash.foreach":169}],29:[function(require,module,exports){
 var select = require('css-select'),
     utils = require('../utils'),
     domEach = utils.domEach,
@@ -4577,7 +4598,7 @@ exports.addBack = function(selector) {
   );
 };
 
-},{"../utils":33,"css-select":36,"htmlparser2":158,"lodash.bind":167,"lodash.filter":169,"lodash.foreach":171,"lodash.reduce":175,"lodash.reject":176}],30:[function(require,module,exports){
+},{"../utils":33,"css-select":36,"htmlparser2":156,"lodash.bind":165,"lodash.filter":167,"lodash.foreach":169,"lodash.reduce":173,"lodash.reject":174}],30:[function(require,module,exports){
 /*
   Module dependencies
 */
@@ -4727,7 +4748,7 @@ var isNode = function(obj) {
   return obj.name || obj.type === 'text' || obj.type === 'comment';
 };
 
-},{"./api/attributes":25,"./api/css":26,"./api/forms":27,"./api/manipulation":28,"./api/traversing":29,"./parse":31,"./static":32,"./utils":33,"lodash.assignin":166,"lodash.bind":167,"lodash.defaults":168,"lodash.foreach":171}],31:[function(require,module,exports){
+},{"./api/attributes":25,"./api/css":26,"./api/forms":27,"./api/manipulation":28,"./api/traversing":29,"./parse":31,"./static":32,"./utils":33,"lodash.assignin":164,"lodash.bind":165,"lodash.defaults":166,"lodash.foreach":169}],31:[function(require,module,exports){
 (function (Buffer){
 /*
   Module Dependencies
@@ -4817,7 +4838,7 @@ exports.update = function(arr, parent) {
 // module.exports = $.extend(exports);
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":162,"htmlparser2":158}],32:[function(require,module,exports){
+},{"../../is-buffer/index.js":160,"htmlparser2":156}],32:[function(require,module,exports){
 /**
  * Module dependencies
  */
@@ -5006,7 +5027,7 @@ exports.contains = function(container, contained) {
   return false;
 };
 
-},{"./cheerio":30,"./parse":31,"css-select":36,"dom-serializer":49,"lodash.defaults":168,"lodash.merge":173}],33:[function(require,module,exports){
+},{"./cheerio":30,"./parse":31,"css-select":36,"dom-serializer":47,"lodash.defaults":166,"lodash.merge":171}],33:[function(require,module,exports){
 var parse = require('./parse'),
     render = require('dom-serializer');
 
@@ -5091,7 +5112,7 @@ exports.isHtml = function(str) {
   return !!(match && match[1]);
 };
 
-},{"./parse":31,"dom-serializer":49}],34:[function(require,module,exports){
+},{"./parse":31,"dom-serializer":47}],34:[function(require,module,exports){
 module.exports={
   "name": "cheerio",
   "version": "0.22.0",
@@ -5263,7 +5284,7 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":162}],36:[function(require,module,exports){
+},{"../../is-buffer/index.js":160}],36:[function(require,module,exports){
 "use strict";
 
 module.exports = CSSselect;
@@ -5324,7 +5345,7 @@ CSSselect.iterate = selectAll;
 CSSselect._compileUnsafe = compileUnsafe;
 CSSselect._compileToken = compileToken;
 
-},{"./lib/compile.js":38,"./lib/pseudos.js":41,"boolbase":20,"domutils":55}],37:[function(require,module,exports){
+},{"./lib/compile.js":38,"./lib/pseudos.js":41,"boolbase":20,"domutils":53}],37:[function(require,module,exports){
 var DomUtils  = require("domutils"),
     hasAttrib = DomUtils.hasAttrib,
     getAttributeValue = DomUtils.getAttributeValue,
@@ -5507,7 +5528,7 @@ module.exports = {
 	rules: attributeRules
 };
 
-},{"boolbase":20,"domutils":55}],38:[function(require,module,exports){
+},{"boolbase":20,"domutils":53}],38:[function(require,module,exports){
 /*
 	compiles a selector to an executable function
 */
@@ -5701,7 +5722,7 @@ filters.matches = function(next, token, options, context){
 	return compileToken(token, opts, context);
 };
 
-},{"./general.js":39,"./procedure.json":40,"./pseudos.js":41,"./sort.js":42,"boolbase":20,"css-what":43,"domutils":55}],39:[function(require,module,exports){
+},{"./general.js":39,"./procedure.json":40,"./pseudos.js":41,"./sort.js":42,"boolbase":20,"css-what":43,"domutils":53}],39:[function(require,module,exports){
 var DomUtils    = require("domutils"),
     isTag       = DomUtils.isTag,
     getParent   = DomUtils.getParent,
@@ -5791,7 +5812,7 @@ module.exports = {
 		return next;
 	}
 };
-},{"./attributes.js":37,"./pseudos.js":41,"domutils":55}],40:[function(require,module,exports){
+},{"./attributes.js":37,"./pseudos.js":41,"domutils":53}],40:[function(require,module,exports){
 module.exports={
   "universal": 50,
   "tag": 30,
@@ -6199,7 +6220,7 @@ module.exports = {
 	pseudos: pseudos
 };
 
-},{"./attributes.js":37,"boolbase":20,"domutils":55,"nth-check":223}],42:[function(require,module,exports){
+},{"./attributes.js":37,"boolbase":20,"domutils":53,"nth-check":177}],42:[function(require,module,exports){
 module.exports = sortByProcedure;
 
 /*
@@ -6583,7 +6604,7 @@ module.exports = function (props/*, bindTo*/) {
 	});
 };
 
-},{"es5-ext/object/copy":82,"es5-ext/object/map":90,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":97}],45:[function(require,module,exports){
+},{"es5-ext/object/copy":80,"es5-ext/object/map":88,"es5-ext/object/valid-callable":94,"es5-ext/object/valid-value":95}],45:[function(require,module,exports){
 'use strict';
 
 var assign        = require('es5-ext/object/assign')
@@ -6648,61 +6669,7 @@ d.gs = function (dscr, get, set/*, options*/) {
 	return !options ? desc : assign(normalizeOpts(options), desc);
 };
 
-},{"es5-ext/object/assign":79,"es5-ext/object/is-callable":85,"es5-ext/object/normalize-options":91,"es5-ext/string/#/contains":98}],46:[function(require,module,exports){
-var detectBrowser = require('./lib/detectBrowser');
-
-module.exports = detectBrowser(navigator.userAgent);
-
-},{"./lib/detectBrowser":47}],47:[function(require,module,exports){
-module.exports = function detectBrowser(userAgentString) {
-  var browsers = [
-    [ 'edge', /Edge\/([0-9\._]+)/ ],
-    [ 'chrome', /(?!Chrom.*OPR)Chrom(?:e|ium)\/([0-9\.]+)(:?\s|$)/ ],
-    [ 'crios', /CriOS\/([0-9\.]+)(:?\s|$)/ ],
-    [ 'firefox', /Firefox\/([0-9\.]+)(?:\s|$)/ ],
-    [ 'opera', /Opera\/([0-9\.]+)(?:\s|$)/ ],
-    [ 'opera', /OPR\/([0-9\.]+)(:?\s|$)$/ ],
-    [ 'ie', /Trident\/7\.0.*rv\:([0-9\.]+)\).*Gecko$/ ],
-    [ 'ie', /MSIE\s([0-9\.]+);.*Trident\/[4-7].0/ ],
-    [ 'ie', /MSIE\s(7\.0)/ ],
-    [ 'bb10', /BB10;\sTouch.*Version\/([0-9\.]+)/ ],
-    [ 'android', /Android\s([0-9\.]+)/ ],
-    [ 'ios', /iPad.*Version\/([0-9\._]+)/ ],
-    [ 'ios',  /iPhone.*Version\/([0-9\._]+)/ ],
-    [ 'safari', /Version\/([0-9\._]+).*Safari/ ]
-  ];
-
-  var i = 0, mapped =[];
-  for (i = 0; i < browsers.length; i++) {
-    browsers[i] = createMatch(browsers[i]);
-    if (isMatch(browsers[i])) {
-      mapped.push(browsers[i]);
-    }
-  }
-
-  var match = mapped[0];
-  var parts = match && match[3].split(/[._]/).slice(0,3);
-
-  while (parts && parts.length < 3) {
-    parts.push('0');
-  }
-
-  function createMatch(pair) {
-    return pair.concat(pair[1].exec(userAgentString));
-  }
-
-  function isMatch(pair) {
-    return !!pair[2];
-  }
-
-  // return the name and version
-  return {
-    name: match && match[0],
-    version: parts && parts.join('.'),
-  };
-};
-
-},{}],48:[function(require,module,exports){
+},{"es5-ext/object/assign":77,"es5-ext/object/is-callable":83,"es5-ext/object/normalize-options":89,"es5-ext/string/#/contains":96}],46:[function(require,module,exports){
 'use strict';
 
 var GROUP_LEFT_TO_RIGHT,
@@ -6775,7 +6742,7 @@ function direction(value) {
 
 module.exports = direction;
 
-},{}],49:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 /*
   Module dependencies
 */
@@ -6955,7 +6922,7 @@ function renderComment(elem) {
   return '<!--' + elem.data + '-->';
 }
 
-},{"domelementtype":50,"entities":62}],50:[function(require,module,exports){
+},{"domelementtype":48,"entities":60}],48:[function(require,module,exports){
 //Types of elements found in the DOM
 module.exports = {
 	Text: "text", //Text
@@ -6970,7 +6937,7 @@ module.exports = {
 		return elem.type === "tag" || elem.type === "script" || elem.type === "style";
 	}
 };
-},{}],51:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 //Types of elements found in the DOM
 module.exports = {
 	Text: "text", //Text
@@ -6987,7 +6954,7 @@ module.exports = {
 	}
 };
 
-},{}],52:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 var ElementType = require("domelementtype");
 
 var re_whitespace = /\s+/g;
@@ -7171,7 +7138,7 @@ DomHandler.prototype.onprocessinginstruction = function(name, data){
 
 module.exports = DomHandler;
 
-},{"./lib/element":53,"./lib/node":54,"domelementtype":51}],53:[function(require,module,exports){
+},{"./lib/element":51,"./lib/node":52,"domelementtype":49}],51:[function(require,module,exports){
 // DOM-Level-1-compliant structure
 var NodePrototype = require('./node');
 var ElementPrototype = module.exports = Object.create(NodePrototype);
@@ -7193,7 +7160,7 @@ Object.keys(domLvl1).forEach(function(key) {
 	});
 });
 
-},{"./node":54}],54:[function(require,module,exports){
+},{"./node":52}],52:[function(require,module,exports){
 // This object will be used as the prototype for Nodes when creating a
 // DOM-Level-1-compliant structure.
 var NodePrototype = module.exports = {
@@ -7239,7 +7206,7 @@ Object.keys(domLvl1).forEach(function(key) {
 	});
 });
 
-},{}],55:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var DomUtils = module.exports;
 
 [
@@ -7255,7 +7222,7 @@ var DomUtils = module.exports;
 	});
 });
 
-},{"./lib/helpers":56,"./lib/legacy":57,"./lib/manipulation":58,"./lib/querying":59,"./lib/stringify":60,"./lib/traversal":61}],56:[function(require,module,exports){
+},{"./lib/helpers":54,"./lib/legacy":55,"./lib/manipulation":56,"./lib/querying":57,"./lib/stringify":58,"./lib/traversal":59}],54:[function(require,module,exports){
 // removeSubsets
 // Given an array of nodes, remove any member that is contained by another.
 exports.removeSubsets = function(nodes) {
@@ -7398,7 +7365,7 @@ exports.uniqueSort = function(nodes) {
 	return nodes;
 };
 
-},{}],57:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 var ElementType = require("domelementtype");
 var isTag = exports.isTag = ElementType.isTag;
 
@@ -7487,7 +7454,7 @@ exports.getElementsByTagType = function(type, element, recurse, limit){
 	return this.filter(Checks.tag_type(type), element, recurse, limit);
 };
 
-},{"domelementtype":51}],58:[function(require,module,exports){
+},{"domelementtype":49}],56:[function(require,module,exports){
 exports.removeElement = function(elem){
 	if(elem.prev) elem.prev.next = elem.next;
 	if(elem.next) elem.next.prev = elem.prev;
@@ -7566,7 +7533,7 @@ exports.prepend = function(elem, prev){
 
 
 
-},{}],59:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 var isTag = require("domelementtype").isTag;
 
 module.exports = {
@@ -7662,7 +7629,7 @@ function findAll(test, elems){
 	return result;
 }
 
-},{"domelementtype":51}],60:[function(require,module,exports){
+},{"domelementtype":49}],58:[function(require,module,exports){
 var ElementType = require("domelementtype"),
     getOuterHTML = require("dom-serializer"),
     isTag = ElementType.isTag;
@@ -7686,7 +7653,7 @@ function getText(elem){
 	return "";
 }
 
-},{"dom-serializer":49,"domelementtype":51}],61:[function(require,module,exports){
+},{"dom-serializer":47,"domelementtype":49}],59:[function(require,module,exports){
 var getChildren = exports.getChildren = function(elem){
 	return elem.children;
 };
@@ -7712,7 +7679,7 @@ exports.getName = function(elem){
 	return elem.name;
 };
 
-},{}],62:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 var encode = require("./lib/encode.js"),
     decode = require("./lib/decode.js");
 
@@ -7747,7 +7714,7 @@ exports.decodeHTMLStrict = decode.HTMLStrict;
 
 exports.escape = encode.escape;
 
-},{"./lib/decode.js":63,"./lib/encode.js":65}],63:[function(require,module,exports){
+},{"./lib/decode.js":61,"./lib/encode.js":63}],61:[function(require,module,exports){
 var entityMap = require("../maps/entities.json"),
     legacyMap = require("../maps/legacy.json"),
     xmlMap    = require("../maps/xml.json"),
@@ -7820,7 +7787,7 @@ module.exports = {
 	HTML: decodeHTML,
 	HTMLStrict: decodeHTMLStrict
 };
-},{"../maps/entities.json":67,"../maps/legacy.json":68,"../maps/xml.json":69,"./decode_codepoint.js":64}],64:[function(require,module,exports){
+},{"../maps/entities.json":65,"../maps/legacy.json":66,"../maps/xml.json":67,"./decode_codepoint.js":62}],62:[function(require,module,exports){
 var decodeMap = require("../maps/decode.json");
 
 module.exports = decodeCodePoint;
@@ -7848,7 +7815,7 @@ function decodeCodePoint(codePoint){
 	return output;
 }
 
-},{"../maps/decode.json":66}],65:[function(require,module,exports){
+},{"../maps/decode.json":64}],63:[function(require,module,exports){
 var inverseXML = getInverseObj(require("../maps/xml.json")),
     xmlReplacer = getInverseReplacer(inverseXML);
 
@@ -7923,16 +7890,16 @@ function escapeXML(data){
 
 exports.escape = escapeXML;
 
-},{"../maps/entities.json":67,"../maps/xml.json":69}],66:[function(require,module,exports){
+},{"../maps/entities.json":65,"../maps/xml.json":67}],64:[function(require,module,exports){
 module.exports={"0":65533,"128":8364,"130":8218,"131":402,"132":8222,"133":8230,"134":8224,"135":8225,"136":710,"137":8240,"138":352,"139":8249,"140":338,"142":381,"145":8216,"146":8217,"147":8220,"148":8221,"149":8226,"150":8211,"151":8212,"152":732,"153":8482,"154":353,"155":8250,"156":339,"158":382,"159":376}
-},{}],67:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 module.exports={"Aacute":"\u00C1","aacute":"\u00E1","Abreve":"\u0102","abreve":"\u0103","ac":"\u223E","acd":"\u223F","acE":"\u223E\u0333","Acirc":"\u00C2","acirc":"\u00E2","acute":"\u00B4","Acy":"\u0410","acy":"\u0430","AElig":"\u00C6","aelig":"\u00E6","af":"\u2061","Afr":"\uD835\uDD04","afr":"\uD835\uDD1E","Agrave":"\u00C0","agrave":"\u00E0","alefsym":"\u2135","aleph":"\u2135","Alpha":"\u0391","alpha":"\u03B1","Amacr":"\u0100","amacr":"\u0101","amalg":"\u2A3F","amp":"&","AMP":"&","andand":"\u2A55","And":"\u2A53","and":"\u2227","andd":"\u2A5C","andslope":"\u2A58","andv":"\u2A5A","ang":"\u2220","ange":"\u29A4","angle":"\u2220","angmsdaa":"\u29A8","angmsdab":"\u29A9","angmsdac":"\u29AA","angmsdad":"\u29AB","angmsdae":"\u29AC","angmsdaf":"\u29AD","angmsdag":"\u29AE","angmsdah":"\u29AF","angmsd":"\u2221","angrt":"\u221F","angrtvb":"\u22BE","angrtvbd":"\u299D","angsph":"\u2222","angst":"\u00C5","angzarr":"\u237C","Aogon":"\u0104","aogon":"\u0105","Aopf":"\uD835\uDD38","aopf":"\uD835\uDD52","apacir":"\u2A6F","ap":"\u2248","apE":"\u2A70","ape":"\u224A","apid":"\u224B","apos":"'","ApplyFunction":"\u2061","approx":"\u2248","approxeq":"\u224A","Aring":"\u00C5","aring":"\u00E5","Ascr":"\uD835\uDC9C","ascr":"\uD835\uDCB6","Assign":"\u2254","ast":"*","asymp":"\u2248","asympeq":"\u224D","Atilde":"\u00C3","atilde":"\u00E3","Auml":"\u00C4","auml":"\u00E4","awconint":"\u2233","awint":"\u2A11","backcong":"\u224C","backepsilon":"\u03F6","backprime":"\u2035","backsim":"\u223D","backsimeq":"\u22CD","Backslash":"\u2216","Barv":"\u2AE7","barvee":"\u22BD","barwed":"\u2305","Barwed":"\u2306","barwedge":"\u2305","bbrk":"\u23B5","bbrktbrk":"\u23B6","bcong":"\u224C","Bcy":"\u0411","bcy":"\u0431","bdquo":"\u201E","becaus":"\u2235","because":"\u2235","Because":"\u2235","bemptyv":"\u29B0","bepsi":"\u03F6","bernou":"\u212C","Bernoullis":"\u212C","Beta":"\u0392","beta":"\u03B2","beth":"\u2136","between":"\u226C","Bfr":"\uD835\uDD05","bfr":"\uD835\uDD1F","bigcap":"\u22C2","bigcirc":"\u25EF","bigcup":"\u22C3","bigodot":"\u2A00","bigoplus":"\u2A01","bigotimes":"\u2A02","bigsqcup":"\u2A06","bigstar":"\u2605","bigtriangledown":"\u25BD","bigtriangleup":"\u25B3","biguplus":"\u2A04","bigvee":"\u22C1","bigwedge":"\u22C0","bkarow":"\u290D","blacklozenge":"\u29EB","blacksquare":"\u25AA","blacktriangle":"\u25B4","blacktriangledown":"\u25BE","blacktriangleleft":"\u25C2","blacktriangleright":"\u25B8","blank":"\u2423","blk12":"\u2592","blk14":"\u2591","blk34":"\u2593","block":"\u2588","bne":"=\u20E5","bnequiv":"\u2261\u20E5","bNot":"\u2AED","bnot":"\u2310","Bopf":"\uD835\uDD39","bopf":"\uD835\uDD53","bot":"\u22A5","bottom":"\u22A5","bowtie":"\u22C8","boxbox":"\u29C9","boxdl":"\u2510","boxdL":"\u2555","boxDl":"\u2556","boxDL":"\u2557","boxdr":"\u250C","boxdR":"\u2552","boxDr":"\u2553","boxDR":"\u2554","boxh":"\u2500","boxH":"\u2550","boxhd":"\u252C","boxHd":"\u2564","boxhD":"\u2565","boxHD":"\u2566","boxhu":"\u2534","boxHu":"\u2567","boxhU":"\u2568","boxHU":"\u2569","boxminus":"\u229F","boxplus":"\u229E","boxtimes":"\u22A0","boxul":"\u2518","boxuL":"\u255B","boxUl":"\u255C","boxUL":"\u255D","boxur":"\u2514","boxuR":"\u2558","boxUr":"\u2559","boxUR":"\u255A","boxv":"\u2502","boxV":"\u2551","boxvh":"\u253C","boxvH":"\u256A","boxVh":"\u256B","boxVH":"\u256C","boxvl":"\u2524","boxvL":"\u2561","boxVl":"\u2562","boxVL":"\u2563","boxvr":"\u251C","boxvR":"\u255E","boxVr":"\u255F","boxVR":"\u2560","bprime":"\u2035","breve":"\u02D8","Breve":"\u02D8","brvbar":"\u00A6","bscr":"\uD835\uDCB7","Bscr":"\u212C","bsemi":"\u204F","bsim":"\u223D","bsime":"\u22CD","bsolb":"\u29C5","bsol":"\\","bsolhsub":"\u27C8","bull":"\u2022","bullet":"\u2022","bump":"\u224E","bumpE":"\u2AAE","bumpe":"\u224F","Bumpeq":"\u224E","bumpeq":"\u224F","Cacute":"\u0106","cacute":"\u0107","capand":"\u2A44","capbrcup":"\u2A49","capcap":"\u2A4B","cap":"\u2229","Cap":"\u22D2","capcup":"\u2A47","capdot":"\u2A40","CapitalDifferentialD":"\u2145","caps":"\u2229\uFE00","caret":"\u2041","caron":"\u02C7","Cayleys":"\u212D","ccaps":"\u2A4D","Ccaron":"\u010C","ccaron":"\u010D","Ccedil":"\u00C7","ccedil":"\u00E7","Ccirc":"\u0108","ccirc":"\u0109","Cconint":"\u2230","ccups":"\u2A4C","ccupssm":"\u2A50","Cdot":"\u010A","cdot":"\u010B","cedil":"\u00B8","Cedilla":"\u00B8","cemptyv":"\u29B2","cent":"\u00A2","centerdot":"\u00B7","CenterDot":"\u00B7","cfr":"\uD835\uDD20","Cfr":"\u212D","CHcy":"\u0427","chcy":"\u0447","check":"\u2713","checkmark":"\u2713","Chi":"\u03A7","chi":"\u03C7","circ":"\u02C6","circeq":"\u2257","circlearrowleft":"\u21BA","circlearrowright":"\u21BB","circledast":"\u229B","circledcirc":"\u229A","circleddash":"\u229D","CircleDot":"\u2299","circledR":"\u00AE","circledS":"\u24C8","CircleMinus":"\u2296","CirclePlus":"\u2295","CircleTimes":"\u2297","cir":"\u25CB","cirE":"\u29C3","cire":"\u2257","cirfnint":"\u2A10","cirmid":"\u2AEF","cirscir":"\u29C2","ClockwiseContourIntegral":"\u2232","CloseCurlyDoubleQuote":"\u201D","CloseCurlyQuote":"\u2019","clubs":"\u2663","clubsuit":"\u2663","colon":":","Colon":"\u2237","Colone":"\u2A74","colone":"\u2254","coloneq":"\u2254","comma":",","commat":"@","comp":"\u2201","compfn":"\u2218","complement":"\u2201","complexes":"\u2102","cong":"\u2245","congdot":"\u2A6D","Congruent":"\u2261","conint":"\u222E","Conint":"\u222F","ContourIntegral":"\u222E","copf":"\uD835\uDD54","Copf":"\u2102","coprod":"\u2210","Coproduct":"\u2210","copy":"\u00A9","COPY":"\u00A9","copysr":"\u2117","CounterClockwiseContourIntegral":"\u2233","crarr":"\u21B5","cross":"\u2717","Cross":"\u2A2F","Cscr":"\uD835\uDC9E","cscr":"\uD835\uDCB8","csub":"\u2ACF","csube":"\u2AD1","csup":"\u2AD0","csupe":"\u2AD2","ctdot":"\u22EF","cudarrl":"\u2938","cudarrr":"\u2935","cuepr":"\u22DE","cuesc":"\u22DF","cularr":"\u21B6","cularrp":"\u293D","cupbrcap":"\u2A48","cupcap":"\u2A46","CupCap":"\u224D","cup":"\u222A","Cup":"\u22D3","cupcup":"\u2A4A","cupdot":"\u228D","cupor":"\u2A45","cups":"\u222A\uFE00","curarr":"\u21B7","curarrm":"\u293C","curlyeqprec":"\u22DE","curlyeqsucc":"\u22DF","curlyvee":"\u22CE","curlywedge":"\u22CF","curren":"\u00A4","curvearrowleft":"\u21B6","curvearrowright":"\u21B7","cuvee":"\u22CE","cuwed":"\u22CF","cwconint":"\u2232","cwint":"\u2231","cylcty":"\u232D","dagger":"\u2020","Dagger":"\u2021","daleth":"\u2138","darr":"\u2193","Darr":"\u21A1","dArr":"\u21D3","dash":"\u2010","Dashv":"\u2AE4","dashv":"\u22A3","dbkarow":"\u290F","dblac":"\u02DD","Dcaron":"\u010E","dcaron":"\u010F","Dcy":"\u0414","dcy":"\u0434","ddagger":"\u2021","ddarr":"\u21CA","DD":"\u2145","dd":"\u2146","DDotrahd":"\u2911","ddotseq":"\u2A77","deg":"\u00B0","Del":"\u2207","Delta":"\u0394","delta":"\u03B4","demptyv":"\u29B1","dfisht":"\u297F","Dfr":"\uD835\uDD07","dfr":"\uD835\uDD21","dHar":"\u2965","dharl":"\u21C3","dharr":"\u21C2","DiacriticalAcute":"\u00B4","DiacriticalDot":"\u02D9","DiacriticalDoubleAcute":"\u02DD","DiacriticalGrave":"`","DiacriticalTilde":"\u02DC","diam":"\u22C4","diamond":"\u22C4","Diamond":"\u22C4","diamondsuit":"\u2666","diams":"\u2666","die":"\u00A8","DifferentialD":"\u2146","digamma":"\u03DD","disin":"\u22F2","div":"\u00F7","divide":"\u00F7","divideontimes":"\u22C7","divonx":"\u22C7","DJcy":"\u0402","djcy":"\u0452","dlcorn":"\u231E","dlcrop":"\u230D","dollar":"$","Dopf":"\uD835\uDD3B","dopf":"\uD835\uDD55","Dot":"\u00A8","dot":"\u02D9","DotDot":"\u20DC","doteq":"\u2250","doteqdot":"\u2251","DotEqual":"\u2250","dotminus":"\u2238","dotplus":"\u2214","dotsquare":"\u22A1","doublebarwedge":"\u2306","DoubleContourIntegral":"\u222F","DoubleDot":"\u00A8","DoubleDownArrow":"\u21D3","DoubleLeftArrow":"\u21D0","DoubleLeftRightArrow":"\u21D4","DoubleLeftTee":"\u2AE4","DoubleLongLeftArrow":"\u27F8","DoubleLongLeftRightArrow":"\u27FA","DoubleLongRightArrow":"\u27F9","DoubleRightArrow":"\u21D2","DoubleRightTee":"\u22A8","DoubleUpArrow":"\u21D1","DoubleUpDownArrow":"\u21D5","DoubleVerticalBar":"\u2225","DownArrowBar":"\u2913","downarrow":"\u2193","DownArrow":"\u2193","Downarrow":"\u21D3","DownArrowUpArrow":"\u21F5","DownBreve":"\u0311","downdownarrows":"\u21CA","downharpoonleft":"\u21C3","downharpoonright":"\u21C2","DownLeftRightVector":"\u2950","DownLeftTeeVector":"\u295E","DownLeftVectorBar":"\u2956","DownLeftVector":"\u21BD","DownRightTeeVector":"\u295F","DownRightVectorBar":"\u2957","DownRightVector":"\u21C1","DownTeeArrow":"\u21A7","DownTee":"\u22A4","drbkarow":"\u2910","drcorn":"\u231F","drcrop":"\u230C","Dscr":"\uD835\uDC9F","dscr":"\uD835\uDCB9","DScy":"\u0405","dscy":"\u0455","dsol":"\u29F6","Dstrok":"\u0110","dstrok":"\u0111","dtdot":"\u22F1","dtri":"\u25BF","dtrif":"\u25BE","duarr":"\u21F5","duhar":"\u296F","dwangle":"\u29A6","DZcy":"\u040F","dzcy":"\u045F","dzigrarr":"\u27FF","Eacute":"\u00C9","eacute":"\u00E9","easter":"\u2A6E","Ecaron":"\u011A","ecaron":"\u011B","Ecirc":"\u00CA","ecirc":"\u00EA","ecir":"\u2256","ecolon":"\u2255","Ecy":"\u042D","ecy":"\u044D","eDDot":"\u2A77","Edot":"\u0116","edot":"\u0117","eDot":"\u2251","ee":"\u2147","efDot":"\u2252","Efr":"\uD835\uDD08","efr":"\uD835\uDD22","eg":"\u2A9A","Egrave":"\u00C8","egrave":"\u00E8","egs":"\u2A96","egsdot":"\u2A98","el":"\u2A99","Element":"\u2208","elinters":"\u23E7","ell":"\u2113","els":"\u2A95","elsdot":"\u2A97","Emacr":"\u0112","emacr":"\u0113","empty":"\u2205","emptyset":"\u2205","EmptySmallSquare":"\u25FB","emptyv":"\u2205","EmptyVerySmallSquare":"\u25AB","emsp13":"\u2004","emsp14":"\u2005","emsp":"\u2003","ENG":"\u014A","eng":"\u014B","ensp":"\u2002","Eogon":"\u0118","eogon":"\u0119","Eopf":"\uD835\uDD3C","eopf":"\uD835\uDD56","epar":"\u22D5","eparsl":"\u29E3","eplus":"\u2A71","epsi":"\u03B5","Epsilon":"\u0395","epsilon":"\u03B5","epsiv":"\u03F5","eqcirc":"\u2256","eqcolon":"\u2255","eqsim":"\u2242","eqslantgtr":"\u2A96","eqslantless":"\u2A95","Equal":"\u2A75","equals":"=","EqualTilde":"\u2242","equest":"\u225F","Equilibrium":"\u21CC","equiv":"\u2261","equivDD":"\u2A78","eqvparsl":"\u29E5","erarr":"\u2971","erDot":"\u2253","escr":"\u212F","Escr":"\u2130","esdot":"\u2250","Esim":"\u2A73","esim":"\u2242","Eta":"\u0397","eta":"\u03B7","ETH":"\u00D0","eth":"\u00F0","Euml":"\u00CB","euml":"\u00EB","euro":"\u20AC","excl":"!","exist":"\u2203","Exists":"\u2203","expectation":"\u2130","exponentiale":"\u2147","ExponentialE":"\u2147","fallingdotseq":"\u2252","Fcy":"\u0424","fcy":"\u0444","female":"\u2640","ffilig":"\uFB03","fflig":"\uFB00","ffllig":"\uFB04","Ffr":"\uD835\uDD09","ffr":"\uD835\uDD23","filig":"\uFB01","FilledSmallSquare":"\u25FC","FilledVerySmallSquare":"\u25AA","fjlig":"fj","flat":"\u266D","fllig":"\uFB02","fltns":"\u25B1","fnof":"\u0192","Fopf":"\uD835\uDD3D","fopf":"\uD835\uDD57","forall":"\u2200","ForAll":"\u2200","fork":"\u22D4","forkv":"\u2AD9","Fouriertrf":"\u2131","fpartint":"\u2A0D","frac12":"\u00BD","frac13":"\u2153","frac14":"\u00BC","frac15":"\u2155","frac16":"\u2159","frac18":"\u215B","frac23":"\u2154","frac25":"\u2156","frac34":"\u00BE","frac35":"\u2157","frac38":"\u215C","frac45":"\u2158","frac56":"\u215A","frac58":"\u215D","frac78":"\u215E","frasl":"\u2044","frown":"\u2322","fscr":"\uD835\uDCBB","Fscr":"\u2131","gacute":"\u01F5","Gamma":"\u0393","gamma":"\u03B3","Gammad":"\u03DC","gammad":"\u03DD","gap":"\u2A86","Gbreve":"\u011E","gbreve":"\u011F","Gcedil":"\u0122","Gcirc":"\u011C","gcirc":"\u011D","Gcy":"\u0413","gcy":"\u0433","Gdot":"\u0120","gdot":"\u0121","ge":"\u2265","gE":"\u2267","gEl":"\u2A8C","gel":"\u22DB","geq":"\u2265","geqq":"\u2267","geqslant":"\u2A7E","gescc":"\u2AA9","ges":"\u2A7E","gesdot":"\u2A80","gesdoto":"\u2A82","gesdotol":"\u2A84","gesl":"\u22DB\uFE00","gesles":"\u2A94","Gfr":"\uD835\uDD0A","gfr":"\uD835\uDD24","gg":"\u226B","Gg":"\u22D9","ggg":"\u22D9","gimel":"\u2137","GJcy":"\u0403","gjcy":"\u0453","gla":"\u2AA5","gl":"\u2277","glE":"\u2A92","glj":"\u2AA4","gnap":"\u2A8A","gnapprox":"\u2A8A","gne":"\u2A88","gnE":"\u2269","gneq":"\u2A88","gneqq":"\u2269","gnsim":"\u22E7","Gopf":"\uD835\uDD3E","gopf":"\uD835\uDD58","grave":"`","GreaterEqual":"\u2265","GreaterEqualLess":"\u22DB","GreaterFullEqual":"\u2267","GreaterGreater":"\u2AA2","GreaterLess":"\u2277","GreaterSlantEqual":"\u2A7E","GreaterTilde":"\u2273","Gscr":"\uD835\uDCA2","gscr":"\u210A","gsim":"\u2273","gsime":"\u2A8E","gsiml":"\u2A90","gtcc":"\u2AA7","gtcir":"\u2A7A","gt":">","GT":">","Gt":"\u226B","gtdot":"\u22D7","gtlPar":"\u2995","gtquest":"\u2A7C","gtrapprox":"\u2A86","gtrarr":"\u2978","gtrdot":"\u22D7","gtreqless":"\u22DB","gtreqqless":"\u2A8C","gtrless":"\u2277","gtrsim":"\u2273","gvertneqq":"\u2269\uFE00","gvnE":"\u2269\uFE00","Hacek":"\u02C7","hairsp":"\u200A","half":"\u00BD","hamilt":"\u210B","HARDcy":"\u042A","hardcy":"\u044A","harrcir":"\u2948","harr":"\u2194","hArr":"\u21D4","harrw":"\u21AD","Hat":"^","hbar":"\u210F","Hcirc":"\u0124","hcirc":"\u0125","hearts":"\u2665","heartsuit":"\u2665","hellip":"\u2026","hercon":"\u22B9","hfr":"\uD835\uDD25","Hfr":"\u210C","HilbertSpace":"\u210B","hksearow":"\u2925","hkswarow":"\u2926","hoarr":"\u21FF","homtht":"\u223B","hookleftarrow":"\u21A9","hookrightarrow":"\u21AA","hopf":"\uD835\uDD59","Hopf":"\u210D","horbar":"\u2015","HorizontalLine":"\u2500","hscr":"\uD835\uDCBD","Hscr":"\u210B","hslash":"\u210F","Hstrok":"\u0126","hstrok":"\u0127","HumpDownHump":"\u224E","HumpEqual":"\u224F","hybull":"\u2043","hyphen":"\u2010","Iacute":"\u00CD","iacute":"\u00ED","ic":"\u2063","Icirc":"\u00CE","icirc":"\u00EE","Icy":"\u0418","icy":"\u0438","Idot":"\u0130","IEcy":"\u0415","iecy":"\u0435","iexcl":"\u00A1","iff":"\u21D4","ifr":"\uD835\uDD26","Ifr":"\u2111","Igrave":"\u00CC","igrave":"\u00EC","ii":"\u2148","iiiint":"\u2A0C","iiint":"\u222D","iinfin":"\u29DC","iiota":"\u2129","IJlig":"\u0132","ijlig":"\u0133","Imacr":"\u012A","imacr":"\u012B","image":"\u2111","ImaginaryI":"\u2148","imagline":"\u2110","imagpart":"\u2111","imath":"\u0131","Im":"\u2111","imof":"\u22B7","imped":"\u01B5","Implies":"\u21D2","incare":"\u2105","in":"\u2208","infin":"\u221E","infintie":"\u29DD","inodot":"\u0131","intcal":"\u22BA","int":"\u222B","Int":"\u222C","integers":"\u2124","Integral":"\u222B","intercal":"\u22BA","Intersection":"\u22C2","intlarhk":"\u2A17","intprod":"\u2A3C","InvisibleComma":"\u2063","InvisibleTimes":"\u2062","IOcy":"\u0401","iocy":"\u0451","Iogon":"\u012E","iogon":"\u012F","Iopf":"\uD835\uDD40","iopf":"\uD835\uDD5A","Iota":"\u0399","iota":"\u03B9","iprod":"\u2A3C","iquest":"\u00BF","iscr":"\uD835\uDCBE","Iscr":"\u2110","isin":"\u2208","isindot":"\u22F5","isinE":"\u22F9","isins":"\u22F4","isinsv":"\u22F3","isinv":"\u2208","it":"\u2062","Itilde":"\u0128","itilde":"\u0129","Iukcy":"\u0406","iukcy":"\u0456","Iuml":"\u00CF","iuml":"\u00EF","Jcirc":"\u0134","jcirc":"\u0135","Jcy":"\u0419","jcy":"\u0439","Jfr":"\uD835\uDD0D","jfr":"\uD835\uDD27","jmath":"\u0237","Jopf":"\uD835\uDD41","jopf":"\uD835\uDD5B","Jscr":"\uD835\uDCA5","jscr":"\uD835\uDCBF","Jsercy":"\u0408","jsercy":"\u0458","Jukcy":"\u0404","jukcy":"\u0454","Kappa":"\u039A","kappa":"\u03BA","kappav":"\u03F0","Kcedil":"\u0136","kcedil":"\u0137","Kcy":"\u041A","kcy":"\u043A","Kfr":"\uD835\uDD0E","kfr":"\uD835\uDD28","kgreen":"\u0138","KHcy":"\u0425","khcy":"\u0445","KJcy":"\u040C","kjcy":"\u045C","Kopf":"\uD835\uDD42","kopf":"\uD835\uDD5C","Kscr":"\uD835\uDCA6","kscr":"\uD835\uDCC0","lAarr":"\u21DA","Lacute":"\u0139","lacute":"\u013A","laemptyv":"\u29B4","lagran":"\u2112","Lambda":"\u039B","lambda":"\u03BB","lang":"\u27E8","Lang":"\u27EA","langd":"\u2991","langle":"\u27E8","lap":"\u2A85","Laplacetrf":"\u2112","laquo":"\u00AB","larrb":"\u21E4","larrbfs":"\u291F","larr":"\u2190","Larr":"\u219E","lArr":"\u21D0","larrfs":"\u291D","larrhk":"\u21A9","larrlp":"\u21AB","larrpl":"\u2939","larrsim":"\u2973","larrtl":"\u21A2","latail":"\u2919","lAtail":"\u291B","lat":"\u2AAB","late":"\u2AAD","lates":"\u2AAD\uFE00","lbarr":"\u290C","lBarr":"\u290E","lbbrk":"\u2772","lbrace":"{","lbrack":"[","lbrke":"\u298B","lbrksld":"\u298F","lbrkslu":"\u298D","Lcaron":"\u013D","lcaron":"\u013E","Lcedil":"\u013B","lcedil":"\u013C","lceil":"\u2308","lcub":"{","Lcy":"\u041B","lcy":"\u043B","ldca":"\u2936","ldquo":"\u201C","ldquor":"\u201E","ldrdhar":"\u2967","ldrushar":"\u294B","ldsh":"\u21B2","le":"\u2264","lE":"\u2266","LeftAngleBracket":"\u27E8","LeftArrowBar":"\u21E4","leftarrow":"\u2190","LeftArrow":"\u2190","Leftarrow":"\u21D0","LeftArrowRightArrow":"\u21C6","leftarrowtail":"\u21A2","LeftCeiling":"\u2308","LeftDoubleBracket":"\u27E6","LeftDownTeeVector":"\u2961","LeftDownVectorBar":"\u2959","LeftDownVector":"\u21C3","LeftFloor":"\u230A","leftharpoondown":"\u21BD","leftharpoonup":"\u21BC","leftleftarrows":"\u21C7","leftrightarrow":"\u2194","LeftRightArrow":"\u2194","Leftrightarrow":"\u21D4","leftrightarrows":"\u21C6","leftrightharpoons":"\u21CB","leftrightsquigarrow":"\u21AD","LeftRightVector":"\u294E","LeftTeeArrow":"\u21A4","LeftTee":"\u22A3","LeftTeeVector":"\u295A","leftthreetimes":"\u22CB","LeftTriangleBar":"\u29CF","LeftTriangle":"\u22B2","LeftTriangleEqual":"\u22B4","LeftUpDownVector":"\u2951","LeftUpTeeVector":"\u2960","LeftUpVectorBar":"\u2958","LeftUpVector":"\u21BF","LeftVectorBar":"\u2952","LeftVector":"\u21BC","lEg":"\u2A8B","leg":"\u22DA","leq":"\u2264","leqq":"\u2266","leqslant":"\u2A7D","lescc":"\u2AA8","les":"\u2A7D","lesdot":"\u2A7F","lesdoto":"\u2A81","lesdotor":"\u2A83","lesg":"\u22DA\uFE00","lesges":"\u2A93","lessapprox":"\u2A85","lessdot":"\u22D6","lesseqgtr":"\u22DA","lesseqqgtr":"\u2A8B","LessEqualGreater":"\u22DA","LessFullEqual":"\u2266","LessGreater":"\u2276","lessgtr":"\u2276","LessLess":"\u2AA1","lesssim":"\u2272","LessSlantEqual":"\u2A7D","LessTilde":"\u2272","lfisht":"\u297C","lfloor":"\u230A","Lfr":"\uD835\uDD0F","lfr":"\uD835\uDD29","lg":"\u2276","lgE":"\u2A91","lHar":"\u2962","lhard":"\u21BD","lharu":"\u21BC","lharul":"\u296A","lhblk":"\u2584","LJcy":"\u0409","ljcy":"\u0459","llarr":"\u21C7","ll":"\u226A","Ll":"\u22D8","llcorner":"\u231E","Lleftarrow":"\u21DA","llhard":"\u296B","lltri":"\u25FA","Lmidot":"\u013F","lmidot":"\u0140","lmoustache":"\u23B0","lmoust":"\u23B0","lnap":"\u2A89","lnapprox":"\u2A89","lne":"\u2A87","lnE":"\u2268","lneq":"\u2A87","lneqq":"\u2268","lnsim":"\u22E6","loang":"\u27EC","loarr":"\u21FD","lobrk":"\u27E6","longleftarrow":"\u27F5","LongLeftArrow":"\u27F5","Longleftarrow":"\u27F8","longleftrightarrow":"\u27F7","LongLeftRightArrow":"\u27F7","Longleftrightarrow":"\u27FA","longmapsto":"\u27FC","longrightarrow":"\u27F6","LongRightArrow":"\u27F6","Longrightarrow":"\u27F9","looparrowleft":"\u21AB","looparrowright":"\u21AC","lopar":"\u2985","Lopf":"\uD835\uDD43","lopf":"\uD835\uDD5D","loplus":"\u2A2D","lotimes":"\u2A34","lowast":"\u2217","lowbar":"_","LowerLeftArrow":"\u2199","LowerRightArrow":"\u2198","loz":"\u25CA","lozenge":"\u25CA","lozf":"\u29EB","lpar":"(","lparlt":"\u2993","lrarr":"\u21C6","lrcorner":"\u231F","lrhar":"\u21CB","lrhard":"\u296D","lrm":"\u200E","lrtri":"\u22BF","lsaquo":"\u2039","lscr":"\uD835\uDCC1","Lscr":"\u2112","lsh":"\u21B0","Lsh":"\u21B0","lsim":"\u2272","lsime":"\u2A8D","lsimg":"\u2A8F","lsqb":"[","lsquo":"\u2018","lsquor":"\u201A","Lstrok":"\u0141","lstrok":"\u0142","ltcc":"\u2AA6","ltcir":"\u2A79","lt":"<","LT":"<","Lt":"\u226A","ltdot":"\u22D6","lthree":"\u22CB","ltimes":"\u22C9","ltlarr":"\u2976","ltquest":"\u2A7B","ltri":"\u25C3","ltrie":"\u22B4","ltrif":"\u25C2","ltrPar":"\u2996","lurdshar":"\u294A","luruhar":"\u2966","lvertneqq":"\u2268\uFE00","lvnE":"\u2268\uFE00","macr":"\u00AF","male":"\u2642","malt":"\u2720","maltese":"\u2720","Map":"\u2905","map":"\u21A6","mapsto":"\u21A6","mapstodown":"\u21A7","mapstoleft":"\u21A4","mapstoup":"\u21A5","marker":"\u25AE","mcomma":"\u2A29","Mcy":"\u041C","mcy":"\u043C","mdash":"\u2014","mDDot":"\u223A","measuredangle":"\u2221","MediumSpace":"\u205F","Mellintrf":"\u2133","Mfr":"\uD835\uDD10","mfr":"\uD835\uDD2A","mho":"\u2127","micro":"\u00B5","midast":"*","midcir":"\u2AF0","mid":"\u2223","middot":"\u00B7","minusb":"\u229F","minus":"\u2212","minusd":"\u2238","minusdu":"\u2A2A","MinusPlus":"\u2213","mlcp":"\u2ADB","mldr":"\u2026","mnplus":"\u2213","models":"\u22A7","Mopf":"\uD835\uDD44","mopf":"\uD835\uDD5E","mp":"\u2213","mscr":"\uD835\uDCC2","Mscr":"\u2133","mstpos":"\u223E","Mu":"\u039C","mu":"\u03BC","multimap":"\u22B8","mumap":"\u22B8","nabla":"\u2207","Nacute":"\u0143","nacute":"\u0144","nang":"\u2220\u20D2","nap":"\u2249","napE":"\u2A70\u0338","napid":"\u224B\u0338","napos":"\u0149","napprox":"\u2249","natural":"\u266E","naturals":"\u2115","natur":"\u266E","nbsp":"\u00A0","nbump":"\u224E\u0338","nbumpe":"\u224F\u0338","ncap":"\u2A43","Ncaron":"\u0147","ncaron":"\u0148","Ncedil":"\u0145","ncedil":"\u0146","ncong":"\u2247","ncongdot":"\u2A6D\u0338","ncup":"\u2A42","Ncy":"\u041D","ncy":"\u043D","ndash":"\u2013","nearhk":"\u2924","nearr":"\u2197","neArr":"\u21D7","nearrow":"\u2197","ne":"\u2260","nedot":"\u2250\u0338","NegativeMediumSpace":"\u200B","NegativeThickSpace":"\u200B","NegativeThinSpace":"\u200B","NegativeVeryThinSpace":"\u200B","nequiv":"\u2262","nesear":"\u2928","nesim":"\u2242\u0338","NestedGreaterGreater":"\u226B","NestedLessLess":"\u226A","NewLine":"\n","nexist":"\u2204","nexists":"\u2204","Nfr":"\uD835\uDD11","nfr":"\uD835\uDD2B","ngE":"\u2267\u0338","nge":"\u2271","ngeq":"\u2271","ngeqq":"\u2267\u0338","ngeqslant":"\u2A7E\u0338","nges":"\u2A7E\u0338","nGg":"\u22D9\u0338","ngsim":"\u2275","nGt":"\u226B\u20D2","ngt":"\u226F","ngtr":"\u226F","nGtv":"\u226B\u0338","nharr":"\u21AE","nhArr":"\u21CE","nhpar":"\u2AF2","ni":"\u220B","nis":"\u22FC","nisd":"\u22FA","niv":"\u220B","NJcy":"\u040A","njcy":"\u045A","nlarr":"\u219A","nlArr":"\u21CD","nldr":"\u2025","nlE":"\u2266\u0338","nle":"\u2270","nleftarrow":"\u219A","nLeftarrow":"\u21CD","nleftrightarrow":"\u21AE","nLeftrightarrow":"\u21CE","nleq":"\u2270","nleqq":"\u2266\u0338","nleqslant":"\u2A7D\u0338","nles":"\u2A7D\u0338","nless":"\u226E","nLl":"\u22D8\u0338","nlsim":"\u2274","nLt":"\u226A\u20D2","nlt":"\u226E","nltri":"\u22EA","nltrie":"\u22EC","nLtv":"\u226A\u0338","nmid":"\u2224","NoBreak":"\u2060","NonBreakingSpace":"\u00A0","nopf":"\uD835\uDD5F","Nopf":"\u2115","Not":"\u2AEC","not":"\u00AC","NotCongruent":"\u2262","NotCupCap":"\u226D","NotDoubleVerticalBar":"\u2226","NotElement":"\u2209","NotEqual":"\u2260","NotEqualTilde":"\u2242\u0338","NotExists":"\u2204","NotGreater":"\u226F","NotGreaterEqual":"\u2271","NotGreaterFullEqual":"\u2267\u0338","NotGreaterGreater":"\u226B\u0338","NotGreaterLess":"\u2279","NotGreaterSlantEqual":"\u2A7E\u0338","NotGreaterTilde":"\u2275","NotHumpDownHump":"\u224E\u0338","NotHumpEqual":"\u224F\u0338","notin":"\u2209","notindot":"\u22F5\u0338","notinE":"\u22F9\u0338","notinva":"\u2209","notinvb":"\u22F7","notinvc":"\u22F6","NotLeftTriangleBar":"\u29CF\u0338","NotLeftTriangle":"\u22EA","NotLeftTriangleEqual":"\u22EC","NotLess":"\u226E","NotLessEqual":"\u2270","NotLessGreater":"\u2278","NotLessLess":"\u226A\u0338","NotLessSlantEqual":"\u2A7D\u0338","NotLessTilde":"\u2274","NotNestedGreaterGreater":"\u2AA2\u0338","NotNestedLessLess":"\u2AA1\u0338","notni":"\u220C","notniva":"\u220C","notnivb":"\u22FE","notnivc":"\u22FD","NotPrecedes":"\u2280","NotPrecedesEqual":"\u2AAF\u0338","NotPrecedesSlantEqual":"\u22E0","NotReverseElement":"\u220C","NotRightTriangleBar":"\u29D0\u0338","NotRightTriangle":"\u22EB","NotRightTriangleEqual":"\u22ED","NotSquareSubset":"\u228F\u0338","NotSquareSubsetEqual":"\u22E2","NotSquareSuperset":"\u2290\u0338","NotSquareSupersetEqual":"\u22E3","NotSubset":"\u2282\u20D2","NotSubsetEqual":"\u2288","NotSucceeds":"\u2281","NotSucceedsEqual":"\u2AB0\u0338","NotSucceedsSlantEqual":"\u22E1","NotSucceedsTilde":"\u227F\u0338","NotSuperset":"\u2283\u20D2","NotSupersetEqual":"\u2289","NotTilde":"\u2241","NotTildeEqual":"\u2244","NotTildeFullEqual":"\u2247","NotTildeTilde":"\u2249","NotVerticalBar":"\u2224","nparallel":"\u2226","npar":"\u2226","nparsl":"\u2AFD\u20E5","npart":"\u2202\u0338","npolint":"\u2A14","npr":"\u2280","nprcue":"\u22E0","nprec":"\u2280","npreceq":"\u2AAF\u0338","npre":"\u2AAF\u0338","nrarrc":"\u2933\u0338","nrarr":"\u219B","nrArr":"\u21CF","nrarrw":"\u219D\u0338","nrightarrow":"\u219B","nRightarrow":"\u21CF","nrtri":"\u22EB","nrtrie":"\u22ED","nsc":"\u2281","nsccue":"\u22E1","nsce":"\u2AB0\u0338","Nscr":"\uD835\uDCA9","nscr":"\uD835\uDCC3","nshortmid":"\u2224","nshortparallel":"\u2226","nsim":"\u2241","nsime":"\u2244","nsimeq":"\u2244","nsmid":"\u2224","nspar":"\u2226","nsqsube":"\u22E2","nsqsupe":"\u22E3","nsub":"\u2284","nsubE":"\u2AC5\u0338","nsube":"\u2288","nsubset":"\u2282\u20D2","nsubseteq":"\u2288","nsubseteqq":"\u2AC5\u0338","nsucc":"\u2281","nsucceq":"\u2AB0\u0338","nsup":"\u2285","nsupE":"\u2AC6\u0338","nsupe":"\u2289","nsupset":"\u2283\u20D2","nsupseteq":"\u2289","nsupseteqq":"\u2AC6\u0338","ntgl":"\u2279","Ntilde":"\u00D1","ntilde":"\u00F1","ntlg":"\u2278","ntriangleleft":"\u22EA","ntrianglelefteq":"\u22EC","ntriangleright":"\u22EB","ntrianglerighteq":"\u22ED","Nu":"\u039D","nu":"\u03BD","num":"#","numero":"\u2116","numsp":"\u2007","nvap":"\u224D\u20D2","nvdash":"\u22AC","nvDash":"\u22AD","nVdash":"\u22AE","nVDash":"\u22AF","nvge":"\u2265\u20D2","nvgt":">\u20D2","nvHarr":"\u2904","nvinfin":"\u29DE","nvlArr":"\u2902","nvle":"\u2264\u20D2","nvlt":"<\u20D2","nvltrie":"\u22B4\u20D2","nvrArr":"\u2903","nvrtrie":"\u22B5\u20D2","nvsim":"\u223C\u20D2","nwarhk":"\u2923","nwarr":"\u2196","nwArr":"\u21D6","nwarrow":"\u2196","nwnear":"\u2927","Oacute":"\u00D3","oacute":"\u00F3","oast":"\u229B","Ocirc":"\u00D4","ocirc":"\u00F4","ocir":"\u229A","Ocy":"\u041E","ocy":"\u043E","odash":"\u229D","Odblac":"\u0150","odblac":"\u0151","odiv":"\u2A38","odot":"\u2299","odsold":"\u29BC","OElig":"\u0152","oelig":"\u0153","ofcir":"\u29BF","Ofr":"\uD835\uDD12","ofr":"\uD835\uDD2C","ogon":"\u02DB","Ograve":"\u00D2","ograve":"\u00F2","ogt":"\u29C1","ohbar":"\u29B5","ohm":"\u03A9","oint":"\u222E","olarr":"\u21BA","olcir":"\u29BE","olcross":"\u29BB","oline":"\u203E","olt":"\u29C0","Omacr":"\u014C","omacr":"\u014D","Omega":"\u03A9","omega":"\u03C9","Omicron":"\u039F","omicron":"\u03BF","omid":"\u29B6","ominus":"\u2296","Oopf":"\uD835\uDD46","oopf":"\uD835\uDD60","opar":"\u29B7","OpenCurlyDoubleQuote":"\u201C","OpenCurlyQuote":"\u2018","operp":"\u29B9","oplus":"\u2295","orarr":"\u21BB","Or":"\u2A54","or":"\u2228","ord":"\u2A5D","order":"\u2134","orderof":"\u2134","ordf":"\u00AA","ordm":"\u00BA","origof":"\u22B6","oror":"\u2A56","orslope":"\u2A57","orv":"\u2A5B","oS":"\u24C8","Oscr":"\uD835\uDCAA","oscr":"\u2134","Oslash":"\u00D8","oslash":"\u00F8","osol":"\u2298","Otilde":"\u00D5","otilde":"\u00F5","otimesas":"\u2A36","Otimes":"\u2A37","otimes":"\u2297","Ouml":"\u00D6","ouml":"\u00F6","ovbar":"\u233D","OverBar":"\u203E","OverBrace":"\u23DE","OverBracket":"\u23B4","OverParenthesis":"\u23DC","para":"\u00B6","parallel":"\u2225","par":"\u2225","parsim":"\u2AF3","parsl":"\u2AFD","part":"\u2202","PartialD":"\u2202","Pcy":"\u041F","pcy":"\u043F","percnt":"%","period":".","permil":"\u2030","perp":"\u22A5","pertenk":"\u2031","Pfr":"\uD835\uDD13","pfr":"\uD835\uDD2D","Phi":"\u03A6","phi":"\u03C6","phiv":"\u03D5","phmmat":"\u2133","phone":"\u260E","Pi":"\u03A0","pi":"\u03C0","pitchfork":"\u22D4","piv":"\u03D6","planck":"\u210F","planckh":"\u210E","plankv":"\u210F","plusacir":"\u2A23","plusb":"\u229E","pluscir":"\u2A22","plus":"+","plusdo":"\u2214","plusdu":"\u2A25","pluse":"\u2A72","PlusMinus":"\u00B1","plusmn":"\u00B1","plussim":"\u2A26","plustwo":"\u2A27","pm":"\u00B1","Poincareplane":"\u210C","pointint":"\u2A15","popf":"\uD835\uDD61","Popf":"\u2119","pound":"\u00A3","prap":"\u2AB7","Pr":"\u2ABB","pr":"\u227A","prcue":"\u227C","precapprox":"\u2AB7","prec":"\u227A","preccurlyeq":"\u227C","Precedes":"\u227A","PrecedesEqual":"\u2AAF","PrecedesSlantEqual":"\u227C","PrecedesTilde":"\u227E","preceq":"\u2AAF","precnapprox":"\u2AB9","precneqq":"\u2AB5","precnsim":"\u22E8","pre":"\u2AAF","prE":"\u2AB3","precsim":"\u227E","prime":"\u2032","Prime":"\u2033","primes":"\u2119","prnap":"\u2AB9","prnE":"\u2AB5","prnsim":"\u22E8","prod":"\u220F","Product":"\u220F","profalar":"\u232E","profline":"\u2312","profsurf":"\u2313","prop":"\u221D","Proportional":"\u221D","Proportion":"\u2237","propto":"\u221D","prsim":"\u227E","prurel":"\u22B0","Pscr":"\uD835\uDCAB","pscr":"\uD835\uDCC5","Psi":"\u03A8","psi":"\u03C8","puncsp":"\u2008","Qfr":"\uD835\uDD14","qfr":"\uD835\uDD2E","qint":"\u2A0C","qopf":"\uD835\uDD62","Qopf":"\u211A","qprime":"\u2057","Qscr":"\uD835\uDCAC","qscr":"\uD835\uDCC6","quaternions":"\u210D","quatint":"\u2A16","quest":"?","questeq":"\u225F","quot":"\"","QUOT":"\"","rAarr":"\u21DB","race":"\u223D\u0331","Racute":"\u0154","racute":"\u0155","radic":"\u221A","raemptyv":"\u29B3","rang":"\u27E9","Rang":"\u27EB","rangd":"\u2992","range":"\u29A5","rangle":"\u27E9","raquo":"\u00BB","rarrap":"\u2975","rarrb":"\u21E5","rarrbfs":"\u2920","rarrc":"\u2933","rarr":"\u2192","Rarr":"\u21A0","rArr":"\u21D2","rarrfs":"\u291E","rarrhk":"\u21AA","rarrlp":"\u21AC","rarrpl":"\u2945","rarrsim":"\u2974","Rarrtl":"\u2916","rarrtl":"\u21A3","rarrw":"\u219D","ratail":"\u291A","rAtail":"\u291C","ratio":"\u2236","rationals":"\u211A","rbarr":"\u290D","rBarr":"\u290F","RBarr":"\u2910","rbbrk":"\u2773","rbrace":"}","rbrack":"]","rbrke":"\u298C","rbrksld":"\u298E","rbrkslu":"\u2990","Rcaron":"\u0158","rcaron":"\u0159","Rcedil":"\u0156","rcedil":"\u0157","rceil":"\u2309","rcub":"}","Rcy":"\u0420","rcy":"\u0440","rdca":"\u2937","rdldhar":"\u2969","rdquo":"\u201D","rdquor":"\u201D","rdsh":"\u21B3","real":"\u211C","realine":"\u211B","realpart":"\u211C","reals":"\u211D","Re":"\u211C","rect":"\u25AD","reg":"\u00AE","REG":"\u00AE","ReverseElement":"\u220B","ReverseEquilibrium":"\u21CB","ReverseUpEquilibrium":"\u296F","rfisht":"\u297D","rfloor":"\u230B","rfr":"\uD835\uDD2F","Rfr":"\u211C","rHar":"\u2964","rhard":"\u21C1","rharu":"\u21C0","rharul":"\u296C","Rho":"\u03A1","rho":"\u03C1","rhov":"\u03F1","RightAngleBracket":"\u27E9","RightArrowBar":"\u21E5","rightarrow":"\u2192","RightArrow":"\u2192","Rightarrow":"\u21D2","RightArrowLeftArrow":"\u21C4","rightarrowtail":"\u21A3","RightCeiling":"\u2309","RightDoubleBracket":"\u27E7","RightDownTeeVector":"\u295D","RightDownVectorBar":"\u2955","RightDownVector":"\u21C2","RightFloor":"\u230B","rightharpoondown":"\u21C1","rightharpoonup":"\u21C0","rightleftarrows":"\u21C4","rightleftharpoons":"\u21CC","rightrightarrows":"\u21C9","rightsquigarrow":"\u219D","RightTeeArrow":"\u21A6","RightTee":"\u22A2","RightTeeVector":"\u295B","rightthreetimes":"\u22CC","RightTriangleBar":"\u29D0","RightTriangle":"\u22B3","RightTriangleEqual":"\u22B5","RightUpDownVector":"\u294F","RightUpTeeVector":"\u295C","RightUpVectorBar":"\u2954","RightUpVector":"\u21BE","RightVectorBar":"\u2953","RightVector":"\u21C0","ring":"\u02DA","risingdotseq":"\u2253","rlarr":"\u21C4","rlhar":"\u21CC","rlm":"\u200F","rmoustache":"\u23B1","rmoust":"\u23B1","rnmid":"\u2AEE","roang":"\u27ED","roarr":"\u21FE","robrk":"\u27E7","ropar":"\u2986","ropf":"\uD835\uDD63","Ropf":"\u211D","roplus":"\u2A2E","rotimes":"\u2A35","RoundImplies":"\u2970","rpar":")","rpargt":"\u2994","rppolint":"\u2A12","rrarr":"\u21C9","Rrightarrow":"\u21DB","rsaquo":"\u203A","rscr":"\uD835\uDCC7","Rscr":"\u211B","rsh":"\u21B1","Rsh":"\u21B1","rsqb":"]","rsquo":"\u2019","rsquor":"\u2019","rthree":"\u22CC","rtimes":"\u22CA","rtri":"\u25B9","rtrie":"\u22B5","rtrif":"\u25B8","rtriltri":"\u29CE","RuleDelayed":"\u29F4","ruluhar":"\u2968","rx":"\u211E","Sacute":"\u015A","sacute":"\u015B","sbquo":"\u201A","scap":"\u2AB8","Scaron":"\u0160","scaron":"\u0161","Sc":"\u2ABC","sc":"\u227B","sccue":"\u227D","sce":"\u2AB0","scE":"\u2AB4","Scedil":"\u015E","scedil":"\u015F","Scirc":"\u015C","scirc":"\u015D","scnap":"\u2ABA","scnE":"\u2AB6","scnsim":"\u22E9","scpolint":"\u2A13","scsim":"\u227F","Scy":"\u0421","scy":"\u0441","sdotb":"\u22A1","sdot":"\u22C5","sdote":"\u2A66","searhk":"\u2925","searr":"\u2198","seArr":"\u21D8","searrow":"\u2198","sect":"\u00A7","semi":";","seswar":"\u2929","setminus":"\u2216","setmn":"\u2216","sext":"\u2736","Sfr":"\uD835\uDD16","sfr":"\uD835\uDD30","sfrown":"\u2322","sharp":"\u266F","SHCHcy":"\u0429","shchcy":"\u0449","SHcy":"\u0428","shcy":"\u0448","ShortDownArrow":"\u2193","ShortLeftArrow":"\u2190","shortmid":"\u2223","shortparallel":"\u2225","ShortRightArrow":"\u2192","ShortUpArrow":"\u2191","shy":"\u00AD","Sigma":"\u03A3","sigma":"\u03C3","sigmaf":"\u03C2","sigmav":"\u03C2","sim":"\u223C","simdot":"\u2A6A","sime":"\u2243","simeq":"\u2243","simg":"\u2A9E","simgE":"\u2AA0","siml":"\u2A9D","simlE":"\u2A9F","simne":"\u2246","simplus":"\u2A24","simrarr":"\u2972","slarr":"\u2190","SmallCircle":"\u2218","smallsetminus":"\u2216","smashp":"\u2A33","smeparsl":"\u29E4","smid":"\u2223","smile":"\u2323","smt":"\u2AAA","smte":"\u2AAC","smtes":"\u2AAC\uFE00","SOFTcy":"\u042C","softcy":"\u044C","solbar":"\u233F","solb":"\u29C4","sol":"/","Sopf":"\uD835\uDD4A","sopf":"\uD835\uDD64","spades":"\u2660","spadesuit":"\u2660","spar":"\u2225","sqcap":"\u2293","sqcaps":"\u2293\uFE00","sqcup":"\u2294","sqcups":"\u2294\uFE00","Sqrt":"\u221A","sqsub":"\u228F","sqsube":"\u2291","sqsubset":"\u228F","sqsubseteq":"\u2291","sqsup":"\u2290","sqsupe":"\u2292","sqsupset":"\u2290","sqsupseteq":"\u2292","square":"\u25A1","Square":"\u25A1","SquareIntersection":"\u2293","SquareSubset":"\u228F","SquareSubsetEqual":"\u2291","SquareSuperset":"\u2290","SquareSupersetEqual":"\u2292","SquareUnion":"\u2294","squarf":"\u25AA","squ":"\u25A1","squf":"\u25AA","srarr":"\u2192","Sscr":"\uD835\uDCAE","sscr":"\uD835\uDCC8","ssetmn":"\u2216","ssmile":"\u2323","sstarf":"\u22C6","Star":"\u22C6","star":"\u2606","starf":"\u2605","straightepsilon":"\u03F5","straightphi":"\u03D5","strns":"\u00AF","sub":"\u2282","Sub":"\u22D0","subdot":"\u2ABD","subE":"\u2AC5","sube":"\u2286","subedot":"\u2AC3","submult":"\u2AC1","subnE":"\u2ACB","subne":"\u228A","subplus":"\u2ABF","subrarr":"\u2979","subset":"\u2282","Subset":"\u22D0","subseteq":"\u2286","subseteqq":"\u2AC5","SubsetEqual":"\u2286","subsetneq":"\u228A","subsetneqq":"\u2ACB","subsim":"\u2AC7","subsub":"\u2AD5","subsup":"\u2AD3","succapprox":"\u2AB8","succ":"\u227B","succcurlyeq":"\u227D","Succeeds":"\u227B","SucceedsEqual":"\u2AB0","SucceedsSlantEqual":"\u227D","SucceedsTilde":"\u227F","succeq":"\u2AB0","succnapprox":"\u2ABA","succneqq":"\u2AB6","succnsim":"\u22E9","succsim":"\u227F","SuchThat":"\u220B","sum":"\u2211","Sum":"\u2211","sung":"\u266A","sup1":"\u00B9","sup2":"\u00B2","sup3":"\u00B3","sup":"\u2283","Sup":"\u22D1","supdot":"\u2ABE","supdsub":"\u2AD8","supE":"\u2AC6","supe":"\u2287","supedot":"\u2AC4","Superset":"\u2283","SupersetEqual":"\u2287","suphsol":"\u27C9","suphsub":"\u2AD7","suplarr":"\u297B","supmult":"\u2AC2","supnE":"\u2ACC","supne":"\u228B","supplus":"\u2AC0","supset":"\u2283","Supset":"\u22D1","supseteq":"\u2287","supseteqq":"\u2AC6","supsetneq":"\u228B","supsetneqq":"\u2ACC","supsim":"\u2AC8","supsub":"\u2AD4","supsup":"\u2AD6","swarhk":"\u2926","swarr":"\u2199","swArr":"\u21D9","swarrow":"\u2199","swnwar":"\u292A","szlig":"\u00DF","Tab":"\t","target":"\u2316","Tau":"\u03A4","tau":"\u03C4","tbrk":"\u23B4","Tcaron":"\u0164","tcaron":"\u0165","Tcedil":"\u0162","tcedil":"\u0163","Tcy":"\u0422","tcy":"\u0442","tdot":"\u20DB","telrec":"\u2315","Tfr":"\uD835\uDD17","tfr":"\uD835\uDD31","there4":"\u2234","therefore":"\u2234","Therefore":"\u2234","Theta":"\u0398","theta":"\u03B8","thetasym":"\u03D1","thetav":"\u03D1","thickapprox":"\u2248","thicksim":"\u223C","ThickSpace":"\u205F\u200A","ThinSpace":"\u2009","thinsp":"\u2009","thkap":"\u2248","thksim":"\u223C","THORN":"\u00DE","thorn":"\u00FE","tilde":"\u02DC","Tilde":"\u223C","TildeEqual":"\u2243","TildeFullEqual":"\u2245","TildeTilde":"\u2248","timesbar":"\u2A31","timesb":"\u22A0","times":"\u00D7","timesd":"\u2A30","tint":"\u222D","toea":"\u2928","topbot":"\u2336","topcir":"\u2AF1","top":"\u22A4","Topf":"\uD835\uDD4B","topf":"\uD835\uDD65","topfork":"\u2ADA","tosa":"\u2929","tprime":"\u2034","trade":"\u2122","TRADE":"\u2122","triangle":"\u25B5","triangledown":"\u25BF","triangleleft":"\u25C3","trianglelefteq":"\u22B4","triangleq":"\u225C","triangleright":"\u25B9","trianglerighteq":"\u22B5","tridot":"\u25EC","trie":"\u225C","triminus":"\u2A3A","TripleDot":"\u20DB","triplus":"\u2A39","trisb":"\u29CD","tritime":"\u2A3B","trpezium":"\u23E2","Tscr":"\uD835\uDCAF","tscr":"\uD835\uDCC9","TScy":"\u0426","tscy":"\u0446","TSHcy":"\u040B","tshcy":"\u045B","Tstrok":"\u0166","tstrok":"\u0167","twixt":"\u226C","twoheadleftarrow":"\u219E","twoheadrightarrow":"\u21A0","Uacute":"\u00DA","uacute":"\u00FA","uarr":"\u2191","Uarr":"\u219F","uArr":"\u21D1","Uarrocir":"\u2949","Ubrcy":"\u040E","ubrcy":"\u045E","Ubreve":"\u016C","ubreve":"\u016D","Ucirc":"\u00DB","ucirc":"\u00FB","Ucy":"\u0423","ucy":"\u0443","udarr":"\u21C5","Udblac":"\u0170","udblac":"\u0171","udhar":"\u296E","ufisht":"\u297E","Ufr":"\uD835\uDD18","ufr":"\uD835\uDD32","Ugrave":"\u00D9","ugrave":"\u00F9","uHar":"\u2963","uharl":"\u21BF","uharr":"\u21BE","uhblk":"\u2580","ulcorn":"\u231C","ulcorner":"\u231C","ulcrop":"\u230F","ultri":"\u25F8","Umacr":"\u016A","umacr":"\u016B","uml":"\u00A8","UnderBar":"_","UnderBrace":"\u23DF","UnderBracket":"\u23B5","UnderParenthesis":"\u23DD","Union":"\u22C3","UnionPlus":"\u228E","Uogon":"\u0172","uogon":"\u0173","Uopf":"\uD835\uDD4C","uopf":"\uD835\uDD66","UpArrowBar":"\u2912","uparrow":"\u2191","UpArrow":"\u2191","Uparrow":"\u21D1","UpArrowDownArrow":"\u21C5","updownarrow":"\u2195","UpDownArrow":"\u2195","Updownarrow":"\u21D5","UpEquilibrium":"\u296E","upharpoonleft":"\u21BF","upharpoonright":"\u21BE","uplus":"\u228E","UpperLeftArrow":"\u2196","UpperRightArrow":"\u2197","upsi":"\u03C5","Upsi":"\u03D2","upsih":"\u03D2","Upsilon":"\u03A5","upsilon":"\u03C5","UpTeeArrow":"\u21A5","UpTee":"\u22A5","upuparrows":"\u21C8","urcorn":"\u231D","urcorner":"\u231D","urcrop":"\u230E","Uring":"\u016E","uring":"\u016F","urtri":"\u25F9","Uscr":"\uD835\uDCB0","uscr":"\uD835\uDCCA","utdot":"\u22F0","Utilde":"\u0168","utilde":"\u0169","utri":"\u25B5","utrif":"\u25B4","uuarr":"\u21C8","Uuml":"\u00DC","uuml":"\u00FC","uwangle":"\u29A7","vangrt":"\u299C","varepsilon":"\u03F5","varkappa":"\u03F0","varnothing":"\u2205","varphi":"\u03D5","varpi":"\u03D6","varpropto":"\u221D","varr":"\u2195","vArr":"\u21D5","varrho":"\u03F1","varsigma":"\u03C2","varsubsetneq":"\u228A\uFE00","varsubsetneqq":"\u2ACB\uFE00","varsupsetneq":"\u228B\uFE00","varsupsetneqq":"\u2ACC\uFE00","vartheta":"\u03D1","vartriangleleft":"\u22B2","vartriangleright":"\u22B3","vBar":"\u2AE8","Vbar":"\u2AEB","vBarv":"\u2AE9","Vcy":"\u0412","vcy":"\u0432","vdash":"\u22A2","vDash":"\u22A8","Vdash":"\u22A9","VDash":"\u22AB","Vdashl":"\u2AE6","veebar":"\u22BB","vee":"\u2228","Vee":"\u22C1","veeeq":"\u225A","vellip":"\u22EE","verbar":"|","Verbar":"\u2016","vert":"|","Vert":"\u2016","VerticalBar":"\u2223","VerticalLine":"|","VerticalSeparator":"\u2758","VerticalTilde":"\u2240","VeryThinSpace":"\u200A","Vfr":"\uD835\uDD19","vfr":"\uD835\uDD33","vltri":"\u22B2","vnsub":"\u2282\u20D2","vnsup":"\u2283\u20D2","Vopf":"\uD835\uDD4D","vopf":"\uD835\uDD67","vprop":"\u221D","vrtri":"\u22B3","Vscr":"\uD835\uDCB1","vscr":"\uD835\uDCCB","vsubnE":"\u2ACB\uFE00","vsubne":"\u228A\uFE00","vsupnE":"\u2ACC\uFE00","vsupne":"\u228B\uFE00","Vvdash":"\u22AA","vzigzag":"\u299A","Wcirc":"\u0174","wcirc":"\u0175","wedbar":"\u2A5F","wedge":"\u2227","Wedge":"\u22C0","wedgeq":"\u2259","weierp":"\u2118","Wfr":"\uD835\uDD1A","wfr":"\uD835\uDD34","Wopf":"\uD835\uDD4E","wopf":"\uD835\uDD68","wp":"\u2118","wr":"\u2240","wreath":"\u2240","Wscr":"\uD835\uDCB2","wscr":"\uD835\uDCCC","xcap":"\u22C2","xcirc":"\u25EF","xcup":"\u22C3","xdtri":"\u25BD","Xfr":"\uD835\uDD1B","xfr":"\uD835\uDD35","xharr":"\u27F7","xhArr":"\u27FA","Xi":"\u039E","xi":"\u03BE","xlarr":"\u27F5","xlArr":"\u27F8","xmap":"\u27FC","xnis":"\u22FB","xodot":"\u2A00","Xopf":"\uD835\uDD4F","xopf":"\uD835\uDD69","xoplus":"\u2A01","xotime":"\u2A02","xrarr":"\u27F6","xrArr":"\u27F9","Xscr":"\uD835\uDCB3","xscr":"\uD835\uDCCD","xsqcup":"\u2A06","xuplus":"\u2A04","xutri":"\u25B3","xvee":"\u22C1","xwedge":"\u22C0","Yacute":"\u00DD","yacute":"\u00FD","YAcy":"\u042F","yacy":"\u044F","Ycirc":"\u0176","ycirc":"\u0177","Ycy":"\u042B","ycy":"\u044B","yen":"\u00A5","Yfr":"\uD835\uDD1C","yfr":"\uD835\uDD36","YIcy":"\u0407","yicy":"\u0457","Yopf":"\uD835\uDD50","yopf":"\uD835\uDD6A","Yscr":"\uD835\uDCB4","yscr":"\uD835\uDCCE","YUcy":"\u042E","yucy":"\u044E","yuml":"\u00FF","Yuml":"\u0178","Zacute":"\u0179","zacute":"\u017A","Zcaron":"\u017D","zcaron":"\u017E","Zcy":"\u0417","zcy":"\u0437","Zdot":"\u017B","zdot":"\u017C","zeetrf":"\u2128","ZeroWidthSpace":"\u200B","Zeta":"\u0396","zeta":"\u03B6","zfr":"\uD835\uDD37","Zfr":"\u2128","ZHcy":"\u0416","zhcy":"\u0436","zigrarr":"\u21DD","zopf":"\uD835\uDD6B","Zopf":"\u2124","Zscr":"\uD835\uDCB5","zscr":"\uD835\uDCCF","zwj":"\u200D","zwnj":"\u200C"}
-},{}],68:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 module.exports={"Aacute":"\u00C1","aacute":"\u00E1","Acirc":"\u00C2","acirc":"\u00E2","acute":"\u00B4","AElig":"\u00C6","aelig":"\u00E6","Agrave":"\u00C0","agrave":"\u00E0","amp":"&","AMP":"&","Aring":"\u00C5","aring":"\u00E5","Atilde":"\u00C3","atilde":"\u00E3","Auml":"\u00C4","auml":"\u00E4","brvbar":"\u00A6","Ccedil":"\u00C7","ccedil":"\u00E7","cedil":"\u00B8","cent":"\u00A2","copy":"\u00A9","COPY":"\u00A9","curren":"\u00A4","deg":"\u00B0","divide":"\u00F7","Eacute":"\u00C9","eacute":"\u00E9","Ecirc":"\u00CA","ecirc":"\u00EA","Egrave":"\u00C8","egrave":"\u00E8","ETH":"\u00D0","eth":"\u00F0","Euml":"\u00CB","euml":"\u00EB","frac12":"\u00BD","frac14":"\u00BC","frac34":"\u00BE","gt":">","GT":">","Iacute":"\u00CD","iacute":"\u00ED","Icirc":"\u00CE","icirc":"\u00EE","iexcl":"\u00A1","Igrave":"\u00CC","igrave":"\u00EC","iquest":"\u00BF","Iuml":"\u00CF","iuml":"\u00EF","laquo":"\u00AB","lt":"<","LT":"<","macr":"\u00AF","micro":"\u00B5","middot":"\u00B7","nbsp":"\u00A0","not":"\u00AC","Ntilde":"\u00D1","ntilde":"\u00F1","Oacute":"\u00D3","oacute":"\u00F3","Ocirc":"\u00D4","ocirc":"\u00F4","Ograve":"\u00D2","ograve":"\u00F2","ordf":"\u00AA","ordm":"\u00BA","Oslash":"\u00D8","oslash":"\u00F8","Otilde":"\u00D5","otilde":"\u00F5","Ouml":"\u00D6","ouml":"\u00F6","para":"\u00B6","plusmn":"\u00B1","pound":"\u00A3","quot":"\"","QUOT":"\"","raquo":"\u00BB","reg":"\u00AE","REG":"\u00AE","sect":"\u00A7","shy":"\u00AD","sup1":"\u00B9","sup2":"\u00B2","sup3":"\u00B3","szlig":"\u00DF","THORN":"\u00DE","thorn":"\u00FE","times":"\u00D7","Uacute":"\u00DA","uacute":"\u00FA","Ucirc":"\u00DB","ucirc":"\u00FB","Ugrave":"\u00D9","ugrave":"\u00F9","uml":"\u00A8","Uuml":"\u00DC","uuml":"\u00FC","Yacute":"\u00DD","yacute":"\u00FD","yen":"\u00A5","yuml":"\u00FF"}
-},{}],69:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 module.exports={"amp":"&","apos":"'","gt":">","lt":"<","quot":"\""}
 
-},{}],70:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 // Inspired by Google Closure:
 // http://closure-library.googlecode.com/svn/docs/
 // closure_goog_array_array.js.html#goog.array.clear
@@ -7946,7 +7913,7 @@ module.exports = function () {
 	return this;
 };
 
-},{"../../object/valid-value":97}],71:[function(require,module,exports){
+},{"../../object/valid-value":95}],69:[function(require,module,exports){
 'use strict';
 
 var toPosInt = require('../../number/to-pos-integer')
@@ -7977,7 +7944,7 @@ module.exports = function (searchElement/*, fromIndex*/) {
 	return -1;
 };
 
-},{"../../number/to-pos-integer":77,"../../object/valid-value":97}],72:[function(require,module,exports){
+},{"../../number/to-pos-integer":75,"../../object/valid-value":95}],70:[function(require,module,exports){
 'use strict';
 
 var toString = Object.prototype.toString
@@ -7986,14 +7953,14 @@ var toString = Object.prototype.toString
 
 module.exports = function (x) { return (toString.call(x) === id); };
 
-},{}],73:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? Math.sign
 	: require('./shim');
 
-},{"./is-implemented":74,"./shim":75}],74:[function(require,module,exports){
+},{"./is-implemented":72,"./shim":73}],72:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -8002,7 +7969,7 @@ module.exports = function () {
 	return ((sign(10) === 1) && (sign(-20) === -1));
 };
 
-},{}],75:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 'use strict';
 
 module.exports = function (value) {
@@ -8011,7 +7978,7 @@ module.exports = function (value) {
 	return (value > 0) ? 1 : -1;
 };
 
-},{}],76:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 'use strict';
 
 var sign = require('../math/sign')
@@ -8025,7 +7992,7 @@ module.exports = function (value) {
 	return sign(value) * floor(abs(value));
 };
 
-},{"../math/sign":73}],77:[function(require,module,exports){
+},{"../math/sign":71}],75:[function(require,module,exports){
 'use strict';
 
 var toInteger = require('./to-integer')
@@ -8034,7 +8001,7 @@ var toInteger = require('./to-integer')
 
 module.exports = function (value) { return max(0, toInteger(value)); };
 
-},{"./to-integer":76}],78:[function(require,module,exports){
+},{"./to-integer":74}],76:[function(require,module,exports){
 // Internal method, used by iteration functions.
 // Calls a function for each key-value pair found in object
 // Optionally takes compareFn to iterate object in specific order
@@ -8065,14 +8032,14 @@ module.exports = function (method, defVal) {
 	};
 };
 
-},{"./valid-callable":96,"./valid-value":97}],79:[function(require,module,exports){
+},{"./valid-callable":94,"./valid-value":95}],77:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? Object.assign
 	: require('./shim');
 
-},{"./is-implemented":80,"./shim":81}],80:[function(require,module,exports){
+},{"./is-implemented":78,"./shim":79}],78:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -8083,7 +8050,7 @@ module.exports = function () {
 	return (obj.foo + obj.bar + obj.trzy) === 'razdwatrzy';
 };
 
-},{}],81:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 'use strict';
 
 var keys  = require('../keys')
@@ -8107,7 +8074,7 @@ module.exports = function (dest, src/*, …srcn*/) {
 	return dest;
 };
 
-},{"../keys":87,"../valid-value":97}],82:[function(require,module,exports){
+},{"../keys":85,"../valid-value":95}],80:[function(require,module,exports){
 'use strict';
 
 var assign = require('./assign')
@@ -8119,7 +8086,7 @@ module.exports = function (obj) {
 	return assign({}, obj);
 };
 
-},{"./assign":79,"./valid-value":97}],83:[function(require,module,exports){
+},{"./assign":77,"./valid-value":95}],81:[function(require,module,exports){
 // Workaround for http://code.google.com/p/v8/issues/detail?id=2804
 
 'use strict';
@@ -8157,19 +8124,19 @@ module.exports = (function () {
 	};
 }());
 
-},{"./set-prototype-of/is-implemented":94,"./set-prototype-of/shim":95}],84:[function(require,module,exports){
+},{"./set-prototype-of/is-implemented":92,"./set-prototype-of/shim":93}],82:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./_iterate')('forEach');
 
-},{"./_iterate":78}],85:[function(require,module,exports){
+},{"./_iterate":76}],83:[function(require,module,exports){
 // Deprecated
 
 'use strict';
 
 module.exports = function (obj) { return typeof obj === 'function'; };
 
-},{}],86:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 'use strict';
 
 var map = { function: true, object: true };
@@ -8178,14 +8145,14 @@ module.exports = function (x) {
 	return ((x != null) && map[typeof x]) || false;
 };
 
-},{}],87:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? Object.keys
 	: require('./shim');
 
-},{"./is-implemented":88,"./shim":89}],88:[function(require,module,exports){
+},{"./is-implemented":86,"./shim":87}],86:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -8195,7 +8162,7 @@ module.exports = function () {
 	} catch (e) { return false; }
 };
 
-},{}],89:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 'use strict';
 
 var keys = Object.keys;
@@ -8204,7 +8171,7 @@ module.exports = function (object) {
 	return keys(object == null ? object : Object(object));
 };
 
-},{}],90:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 'use strict';
 
 var callable = require('./valid-callable')
@@ -8221,7 +8188,7 @@ module.exports = function (obj, cb/*, thisArg*/) {
 	return o;
 };
 
-},{"./for-each":84,"./valid-callable":96}],91:[function(require,module,exports){
+},{"./for-each":82,"./valid-callable":94}],89:[function(require,module,exports){
 'use strict';
 
 var forEach = Array.prototype.forEach, create = Object.create;
@@ -8240,7 +8207,7 @@ module.exports = function (options/*, …options*/) {
 	return result;
 };
 
-},{}],92:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 'use strict';
 
 var forEach = Array.prototype.forEach, create = Object.create;
@@ -8251,14 +8218,14 @@ module.exports = function (arg/*, …args*/) {
 	return set;
 };
 
-},{}],93:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? Object.setPrototypeOf
 	: require('./shim');
 
-},{"./is-implemented":94,"./shim":95}],94:[function(require,module,exports){
+},{"./is-implemented":92,"./shim":93}],92:[function(require,module,exports){
 'use strict';
 
 var create = Object.create, getPrototypeOf = Object.getPrototypeOf
@@ -8271,7 +8238,7 @@ module.exports = function (/*customCreate*/) {
 	return getPrototypeOf(setPrototypeOf(customCreate(null), x)) === x;
 };
 
-},{}],95:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 // Big thanks to @WebReflection for sorting this out
 // https://gist.github.com/WebReflection/5593554
 
@@ -8346,7 +8313,7 @@ module.exports = (function (status) {
 
 require('../create');
 
-},{"../create":83,"../is-object":86,"../valid-value":97}],96:[function(require,module,exports){
+},{"../create":81,"../is-object":84,"../valid-value":95}],94:[function(require,module,exports){
 'use strict';
 
 module.exports = function (fn) {
@@ -8354,7 +8321,7 @@ module.exports = function (fn) {
 	return fn;
 };
 
-},{}],97:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 'use strict';
 
 module.exports = function (value) {
@@ -8362,14 +8329,14 @@ module.exports = function (value) {
 	return value;
 };
 
-},{}],98:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')()
 	? String.prototype.contains
 	: require('./shim');
 
-},{"./is-implemented":99,"./shim":100}],99:[function(require,module,exports){
+},{"./is-implemented":97,"./shim":98}],97:[function(require,module,exports){
 'use strict';
 
 var str = 'razdwatrzy';
@@ -8379,7 +8346,7 @@ module.exports = function () {
 	return ((str.contains('dwa') === true) && (str.contains('foo') === false));
 };
 
-},{}],100:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 'use strict';
 
 var indexOf = String.prototype.indexOf;
@@ -8388,7 +8355,7 @@ module.exports = function (searchString/*, position*/) {
 	return indexOf.call(this, searchString, arguments[1]) > -1;
 };
 
-},{}],101:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 'use strict';
 
 var toString = Object.prototype.toString
@@ -8400,7 +8367,7 @@ module.exports = function (x) {
 		((x instanceof String) || (toString.call(x) === id))) || false;
 };
 
-},{}],102:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 'use strict';
 
 var setPrototypeOf = require('es5-ext/object/set-prototype-of')
@@ -8432,7 +8399,7 @@ ArrayIterator.prototype = Object.create(Iterator.prototype, {
 	toString: d(function () { return '[object Array Iterator]'; })
 });
 
-},{"./":105,"d":45,"es5-ext/object/set-prototype-of":93,"es5-ext/string/#/contains":98}],103:[function(require,module,exports){
+},{"./":103,"d":45,"es5-ext/object/set-prototype-of":91,"es5-ext/string/#/contains":96}],101:[function(require,module,exports){
 'use strict';
 
 var isArguments = require('es5-ext/function/is-arguments')
@@ -8480,7 +8447,7 @@ module.exports = function (iterable, cb/*, thisArg*/) {
 	}
 };
 
-},{"./get":104,"es5-ext/function/is-arguments":72,"es5-ext/object/valid-callable":96,"es5-ext/string/is-string":101}],104:[function(require,module,exports){
+},{"./get":102,"es5-ext/function/is-arguments":70,"es5-ext/object/valid-callable":94,"es5-ext/string/is-string":99}],102:[function(require,module,exports){
 'use strict';
 
 var isArguments    = require('es5-ext/function/is-arguments')
@@ -8497,7 +8464,7 @@ module.exports = function (obj) {
 	return new ArrayIterator(obj);
 };
 
-},{"./array":102,"./string":107,"./valid-iterable":108,"es5-ext/function/is-arguments":72,"es5-ext/string/is-string":101,"es6-symbol":115}],105:[function(require,module,exports){
+},{"./array":100,"./string":105,"./valid-iterable":106,"es5-ext/function/is-arguments":70,"es5-ext/string/is-string":99,"es6-symbol":113}],103:[function(require,module,exports){
 'use strict';
 
 var clear    = require('es5-ext/array/#/clear')
@@ -8589,7 +8556,7 @@ defineProperty(Iterator.prototype, Symbol.iterator, d(function () {
 }));
 defineProperty(Iterator.prototype, Symbol.toStringTag, d('', 'Iterator'));
 
-},{"d":45,"d/auto-bind":44,"es5-ext/array/#/clear":70,"es5-ext/object/assign":79,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":97,"es6-symbol":115}],106:[function(require,module,exports){
+},{"d":45,"d/auto-bind":44,"es5-ext/array/#/clear":68,"es5-ext/object/assign":77,"es5-ext/object/valid-callable":94,"es5-ext/object/valid-value":95,"es6-symbol":113}],104:[function(require,module,exports){
 'use strict';
 
 var isArguments    = require('es5-ext/function/is-arguments')
@@ -8606,7 +8573,7 @@ module.exports = function (value) {
 	return (typeof value[iteratorSymbol] === 'function');
 };
 
-},{"es5-ext/function/is-arguments":72,"es5-ext/string/is-string":101,"es6-symbol":115}],107:[function(require,module,exports){
+},{"es5-ext/function/is-arguments":70,"es5-ext/string/is-string":99,"es6-symbol":113}],105:[function(require,module,exports){
 // Thanks @mathiasbynens
 // http://mathiasbynens.be/notes/javascript-unicode#iterating-over-symbols
 
@@ -8645,7 +8612,7 @@ StringIterator.prototype = Object.create(Iterator.prototype, {
 	toString: d(function () { return '[object String Iterator]'; })
 });
 
-},{"./":105,"d":45,"es5-ext/object/set-prototype-of":93}],108:[function(require,module,exports){
+},{"./":103,"d":45,"es5-ext/object/set-prototype-of":91}],106:[function(require,module,exports){
 'use strict';
 
 var isIterable = require('./is-iterable');
@@ -8655,12 +8622,12 @@ module.exports = function (value) {
 	return value;
 };
 
-},{"./is-iterable":106}],109:[function(require,module,exports){
+},{"./is-iterable":104}],107:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')() ? Map : require('./polyfill');
 
-},{"./is-implemented":110,"./polyfill":114}],110:[function(require,module,exports){
+},{"./is-implemented":108,"./polyfill":112}],108:[function(require,module,exports){
 'use strict';
 
 module.exports = function () {
@@ -8694,7 +8661,7 @@ module.exports = function () {
 	return true;
 };
 
-},{}],111:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 // Exports true if environment provides native `Map` implementation,
 // whatever that is.
 
@@ -8705,13 +8672,13 @@ module.exports = (function () {
 	return (Object.prototype.toString.call(new Map()) === '[object Map]');
 }());
 
-},{}],112:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 'use strict';
 
 module.exports = require('es5-ext/object/primitive-set')('key',
 	'value', 'key+value');
 
-},{"es5-ext/object/primitive-set":92}],113:[function(require,module,exports){
+},{"es5-ext/object/primitive-set":90}],111:[function(require,module,exports){
 'use strict';
 
 var setPrototypeOf    = require('es5-ext/object/set-prototype-of')
@@ -8751,7 +8718,7 @@ MapIterator.prototype = Object.create(Iterator.prototype, {
 Object.defineProperty(MapIterator.prototype, toStringTagSymbol,
 	d('c', 'Map Iterator'));
 
-},{"./iterator-kinds":112,"d":45,"es5-ext/object/set-prototype-of":93,"es6-iterator":105,"es6-symbol":115}],114:[function(require,module,exports){
+},{"./iterator-kinds":110,"d":45,"es5-ext/object/set-prototype-of":91,"es6-iterator":103,"es6-symbol":113}],112:[function(require,module,exports){
 'use strict';
 
 var clear          = require('es5-ext/array/#/clear')
@@ -8857,12 +8824,12 @@ Object.defineProperty(MapPoly.prototype, Symbol.iterator, d(function () {
 }));
 Object.defineProperty(MapPoly.prototype, Symbol.toStringTag, d('c', 'Map'));
 
-},{"./is-native-implemented":111,"./lib/iterator":113,"d":45,"es5-ext/array/#/clear":70,"es5-ext/array/#/e-index-of":71,"es5-ext/object/set-prototype-of":93,"es5-ext/object/valid-callable":96,"es5-ext/object/valid-value":97,"es6-iterator/for-of":103,"es6-iterator/valid-iterable":108,"es6-symbol":115,"event-emitter":121}],115:[function(require,module,exports){
+},{"./is-native-implemented":109,"./lib/iterator":111,"d":45,"es5-ext/array/#/clear":68,"es5-ext/array/#/e-index-of":69,"es5-ext/object/set-prototype-of":91,"es5-ext/object/valid-callable":94,"es5-ext/object/valid-value":95,"es6-iterator/for-of":101,"es6-iterator/valid-iterable":106,"es6-symbol":113,"event-emitter":119}],113:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./is-implemented')() ? Symbol : require('./polyfill');
 
-},{"./is-implemented":116,"./polyfill":118}],116:[function(require,module,exports){
+},{"./is-implemented":114,"./polyfill":116}],114:[function(require,module,exports){
 'use strict';
 
 var validTypes = { object: true, symbol: true };
@@ -8881,7 +8848,7 @@ module.exports = function () {
 	return true;
 };
 
-},{}],117:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 'use strict';
 
 module.exports = function (x) {
@@ -8892,7 +8859,7 @@ module.exports = function (x) {
 	return (x[x.constructor.toStringTag] === 'Symbol');
 };
 
-},{}],118:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 // ES2015 Symbol polyfill for environments that do not support it (or partially support it)
 
 'use strict';
@@ -9012,7 +8979,7 @@ defineProperty(HiddenSymbol.prototype, SymbolPolyfill.toStringTag,
 defineProperty(HiddenSymbol.prototype, SymbolPolyfill.toPrimitive,
 	d('c', SymbolPolyfill.prototype[SymbolPolyfill.toPrimitive]));
 
-},{"./validate-symbol":119,"d":45}],119:[function(require,module,exports){
+},{"./validate-symbol":117,"d":45}],117:[function(require,module,exports){
 'use strict';
 
 var isSymbol = require('./is-symbol');
@@ -9022,7 +8989,7 @@ module.exports = function (value) {
 	return value;
 };
 
-},{"./is-symbol":117}],120:[function(require,module,exports){
+},{"./is-symbol":115}],118:[function(require,module,exports){
 (function (global){
 /*! https://mths.be/esrever v0.2.0 by @mathias */
 ;(function(root) {
@@ -9098,7 +9065,7 @@ module.exports = function (value) {
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],121:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 'use strict';
 
 var d        = require('d')
@@ -9232,7 +9199,7 @@ module.exports = exports = function (o) {
 };
 exports.methods = methods;
 
-},{"d":45,"es5-ext/object/valid-callable":96}],122:[function(require,module,exports){
+},{"d":45,"es5-ext/object/valid-callable":94}],120:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -9536,7 +9503,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],123:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9622,7 +9589,7 @@ var EventListener = {
 
 module.exports = EventListener;
 }).call(this,require('_process'))
-},{"./emptyFunction":130,"_process":227}],124:[function(require,module,exports){
+},{"./emptyFunction":128,"_process":181}],122:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9658,7 +9625,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],125:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 "use strict";
 
 /**
@@ -9690,7 +9657,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],126:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9730,7 +9697,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":125}],127:[function(require,module,exports){
+},{"./camelize":123}],125:[function(require,module,exports){
 'use strict';
 
 /**
@@ -9770,7 +9737,7 @@ function containsNode(outerNode, innerNode) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":140}],128:[function(require,module,exports){
+},{"./isTextNode":138}],126:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9899,7 +9866,7 @@ function createArrayFromMixed(obj) {
 
 module.exports = createArrayFromMixed;
 }).call(this,require('_process'))
-},{"./invariant":138,"_process":227}],129:[function(require,module,exports){
+},{"./invariant":136,"_process":181}],127:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9985,7 +9952,7 @@ function createNodesFromMarkup(markup, handleScript) {
 
 module.exports = createNodesFromMarkup;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":124,"./createArrayFromMixed":128,"./getMarkupWrap":134,"./invariant":138,"_process":227}],130:[function(require,module,exports){
+},{"./ExecutionEnvironment":122,"./createArrayFromMixed":126,"./getMarkupWrap":132,"./invariant":136,"_process":181}],128:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10024,7 +9991,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],131:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -10046,7 +10013,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":227}],132:[function(require,module,exports){
+},{"_process":181}],130:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10073,7 +10040,7 @@ function focusNode(node) {
 }
 
 module.exports = focusNode;
-},{}],133:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 'use strict';
 
 /**
@@ -10108,7 +10075,7 @@ function getActiveElement() /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],134:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -10205,7 +10172,7 @@ function getMarkupWrap(nodeName) {
 
 module.exports = getMarkupWrap;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":124,"./invariant":138,"_process":227}],135:[function(require,module,exports){
+},{"./ExecutionEnvironment":122,"./invariant":136,"_process":181}],133:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10244,7 +10211,7 @@ function getUnboundedScrollPosition(scrollable) {
 }
 
 module.exports = getUnboundedScrollPosition;
-},{}],136:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 'use strict';
 
 /**
@@ -10277,7 +10244,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],137:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10316,7 +10283,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":136}],138:[function(require,module,exports){
+},{"./hyphenate":134}],136:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -10368,7 +10335,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":227}],139:[function(require,module,exports){
+},{"_process":181}],137:[function(require,module,exports){
 'use strict';
 
 /**
@@ -10391,7 +10358,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],140:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 'use strict';
 
 /**
@@ -10416,7 +10383,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":139}],141:[function(require,module,exports){
+},{"./isNode":137}],139:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -10466,7 +10433,7 @@ var keyMirror = function keyMirror(obj) {
 
 module.exports = keyMirror;
 }).call(this,require('_process'))
-},{"./invariant":138,"_process":227}],142:[function(require,module,exports){
+},{"./invariant":136,"_process":181}],140:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10501,7 +10468,7 @@ var keyOf = function keyOf(oneKeyObj) {
 };
 
 module.exports = keyOf;
-},{}],143:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10531,7 +10498,7 @@ function memoizeStringOnly(callback) {
 }
 
 module.exports = memoizeStringOnly;
-},{}],144:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10554,7 +10521,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = performance || {};
-},{"./ExecutionEnvironment":124}],145:[function(require,module,exports){
+},{"./ExecutionEnvironment":122}],143:[function(require,module,exports){
 'use strict';
 
 /**
@@ -10588,7 +10555,7 @@ if (performance.now) {
 }
 
 module.exports = performanceNow;
-},{"./performance":144}],146:[function(require,module,exports){
+},{"./performance":142}],144:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10656,7 +10623,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],147:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -10725,7 +10692,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":130,"_process":227}],148:[function(require,module,exports){
+},{"./emptyFunction":128,"_process":181}],146:[function(require,module,exports){
 
 /**
  * Module exports.
@@ -10784,7 +10751,7 @@ function getDocument(node) {
   }
 }
 
-},{}],149:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 
 /**
  * Module dependencies.
@@ -10845,13 +10812,13 @@ function getWindow(node) {
   }
 }
 
-},{"./needs-ie-fallback":150,"get-document":148}],150:[function(require,module,exports){
+},{"./needs-ie-fallback":148,"get-document":146}],148:[function(require,module,exports){
 // this is a browser-only module. There is a non-browser equivalent in the same
 // directory. This is done using a `package.json` browser field.
 // old-IE fallback logic: http://stackoverflow.com/a/10260692
 module.exports =  !!document.attachEvent && window !== document.parentWindow;
 
-},{}],151:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 module.exports = CollectingHandler;
 
 function CollectingHandler(cbs){
@@ -10908,7 +10875,7 @@ CollectingHandler.prototype.restart = function(){
 	}
 };
 
-},{"./":158}],152:[function(require,module,exports){
+},{"./":156}],150:[function(require,module,exports){
 var index = require("./index.js"),
     DomHandler = index.DomHandler,
     DomUtils = index.DomUtils;
@@ -11005,7 +10972,7 @@ FeedHandler.prototype.onend = function(){
 
 module.exports = FeedHandler;
 
-},{"./index.js":158,"inherits":161}],153:[function(require,module,exports){
+},{"./index.js":156,"inherits":159}],151:[function(require,module,exports){
 var Tokenizer = require("./Tokenizer.js");
 
 /*
@@ -11360,7 +11327,7 @@ Parser.prototype.done = Parser.prototype.end;
 
 module.exports = Parser;
 
-},{"./Tokenizer.js":156,"events":122,"inherits":161}],154:[function(require,module,exports){
+},{"./Tokenizer.js":154,"events":120,"inherits":159}],152:[function(require,module,exports){
 module.exports = ProxyHandler;
 
 function ProxyHandler(cbs){
@@ -11388,7 +11355,7 @@ Object.keys(EVENTS).forEach(function(name){
 		throw Error("wrong number of arguments");
 	}
 });
-},{"./":158}],155:[function(require,module,exports){
+},{"./":156}],153:[function(require,module,exports){
 module.exports = Stream;
 
 var Parser = require("./WritableStream.js");
@@ -11424,7 +11391,7 @@ Object.keys(EVENTS).forEach(function(name){
 		throw Error("wrong number of arguments!");
 	}
 });
-},{"../":158,"./WritableStream.js":157,"inherits":161}],156:[function(require,module,exports){
+},{"../":156,"./WritableStream.js":155,"inherits":159}],154:[function(require,module,exports){
 module.exports = Tokenizer;
 
 var decodeCodePoint = require("entities/lib/decode_codepoint.js"),
@@ -12332,7 +12299,7 @@ Tokenizer.prototype._emitPartial = function(value){
 	}
 };
 
-},{"entities/lib/decode_codepoint.js":64,"entities/maps/entities.json":67,"entities/maps/legacy.json":68,"entities/maps/xml.json":69}],157:[function(require,module,exports){
+},{"entities/lib/decode_codepoint.js":62,"entities/maps/entities.json":65,"entities/maps/legacy.json":66,"entities/maps/xml.json":67}],155:[function(require,module,exports){
 module.exports = Stream;
 
 var Parser = require("./Parser.js"),
@@ -12358,7 +12325,7 @@ WritableStream.prototype._write = function(chunk, encoding, cb){
 	this._parser.write(chunk);
 	cb();
 };
-},{"./Parser.js":153,"buffer":23,"inherits":161,"readable-stream":21,"stream":441,"string_decoder":442}],158:[function(require,module,exports){
+},{"./Parser.js":151,"buffer":23,"inherits":159,"readable-stream":21,"stream":397,"string_decoder":398}],156:[function(require,module,exports){
 var Parser = require("./Parser.js"),
     DomHandler = require("domhandler");
 
@@ -12428,7 +12395,7 @@ module.exports = {
 	}
 };
 
-},{"./CollectingHandler.js":151,"./FeedHandler.js":152,"./Parser.js":153,"./ProxyHandler.js":154,"./Stream.js":155,"./Tokenizer.js":156,"./WritableStream.js":157,"domelementtype":51,"domhandler":52,"domutils":55}],159:[function(require,module,exports){
+},{"./CollectingHandler.js":149,"./FeedHandler.js":150,"./Parser.js":151,"./ProxyHandler.js":152,"./Stream.js":153,"./Tokenizer.js":154,"./WritableStream.js":155,"domelementtype":49,"domhandler":50,"domutils":53}],157:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -12514,7 +12481,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],160:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 /**
  *  Copyright (c) 2014-2015, Facebook, Inc.
  *  All rights reserved.
@@ -17494,7 +17461,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   return Immutable;
 
 }));
-},{}],161:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -17519,7 +17486,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],162:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -17542,7 +17509,7 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],163:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 
 /**
  * Expose `isEmpty`.
@@ -17574,14 +17541,14 @@ function isEmpty (val) {
   return true;
 }
 
-},{}],164:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],165:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 // Source: http://jsfiddle.net/vWx8V/
 // http://stackoverflow.com/questions/5603195/full-list-of-javascript-keycodes
 
@@ -17729,7 +17696,7 @@ for (var alias in aliases) {
   codes[alias] = aliases[alias]
 }
 
-},{}],166:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -18357,7 +18324,7 @@ function keysIn(object) {
 
 module.exports = assignIn;
 
-},{}],167:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -19615,7 +19582,7 @@ bind.placeholder = {};
 module.exports = bind;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],168:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -20285,7 +20252,7 @@ function keysIn(object) {
 
 module.exports = defaults;
 
-},{}],169:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -22655,7 +22622,7 @@ function property(path) {
 module.exports = filter;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],170:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -23008,7 +22975,7 @@ function isObjectLike(value) {
 module.exports = flatten;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],171:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -23575,7 +23542,7 @@ function identity(value) {
 
 module.exports = forEach;
 
-},{}],172:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -25945,7 +25912,7 @@ function property(path) {
 module.exports = map;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],173:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -28156,7 +28123,7 @@ function stubFalse() {
 module.exports = merge;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],174:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -28663,7 +28630,7 @@ var pick = baseRest(function(object, props) {
 module.exports = pick;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],175:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -31039,7 +31006,7 @@ function property(path) {
 module.exports = reduce;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],176:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -33441,7 +33408,7 @@ function property(path) {
 module.exports = reject;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],177:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -35813,1336 +35780,7 @@ function property(path) {
 module.exports = some;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],178:[function(require,module,exports){
-var root = require('./_root');
-
-/** Built-in value references. */
-var Symbol = root.Symbol;
-
-module.exports = Symbol;
-
-},{"./_root":200}],179:[function(require,module,exports){
-var baseTimes = require('./_baseTimes'),
-    isArguments = require('./isArguments'),
-    isArray = require('./isArray'),
-    isBuffer = require('./isBuffer'),
-    isIndex = require('./_isIndex'),
-    isTypedArray = require('./isTypedArray');
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Creates an array of the enumerable property names of the array-like `value`.
- *
- * @private
- * @param {*} value The value to query.
- * @param {boolean} inherited Specify returning inherited property names.
- * @returns {Array} Returns the array of property names.
- */
-function arrayLikeKeys(value, inherited) {
-  var isArr = isArray(value),
-      isArg = !isArr && isArguments(value),
-      isBuff = !isArr && !isArg && isBuffer(value),
-      isType = !isArr && !isArg && !isBuff && isTypedArray(value),
-      skipIndexes = isArr || isArg || isBuff || isType,
-      result = skipIndexes ? baseTimes(value.length, String) : [],
-      length = result.length;
-
-  for (var key in value) {
-    if ((inherited || hasOwnProperty.call(value, key)) &&
-        !(skipIndexes && (
-           // Safari 9 has enumerable `arguments.length` in strict mode.
-           key == 'length' ||
-           // Node.js 0.10 has enumerable non-index properties on buffers.
-           (isBuff && (key == 'offset' || key == 'parent')) ||
-           // PhantomJS 2 has enumerable non-index properties on typed arrays.
-           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
-           // Skip index properties.
-           isIndex(key, length)
-        ))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-module.exports = arrayLikeKeys;
-
-},{"./_baseTimes":188,"./_isIndex":194,"./isArguments":203,"./isArray":204,"./isBuffer":206,"./isTypedArray":213}],180:[function(require,module,exports){
-/**
- * A specialized version of `_.map` for arrays without support for iteratee
- * shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the new mapped array.
- */
-function arrayMap(array, iteratee) {
-  var index = -1,
-      length = array == null ? 0 : array.length,
-      result = Array(length);
-
-  while (++index < length) {
-    result[index] = iteratee(array[index], index, array);
-  }
-  return result;
-}
-
-module.exports = arrayMap;
-
-},{}],181:[function(require,module,exports){
-/**
- * The base implementation of `_.findIndex` and `_.findLastIndex` without
- * support for iteratee shorthands.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {Function} predicate The function invoked per iteration.
- * @param {number} fromIndex The index to search from.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
-  var length = array.length,
-      index = fromIndex + (fromRight ? 1 : -1);
-
-  while ((fromRight ? index-- : ++index < length)) {
-    if (predicate(array[index], index, array)) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-module.exports = baseFindIndex;
-
-},{}],182:[function(require,module,exports){
-var Symbol = require('./_Symbol'),
-    getRawTag = require('./_getRawTag'),
-    objectToString = require('./_objectToString');
-
-/** `Object#toString` result references. */
-var nullTag = '[object Null]',
-    undefinedTag = '[object Undefined]';
-
-/** Built-in value references. */
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
-
-/**
- * The base implementation of `getTag` without fallbacks for buggy environments.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-function baseGetTag(value) {
-  if (value == null) {
-    return value === undefined ? undefinedTag : nullTag;
-  }
-  value = Object(value);
-  return (symToStringTag && symToStringTag in value)
-    ? getRawTag(value)
-    : objectToString(value);
-}
-
-module.exports = baseGetTag;
-
-},{"./_Symbol":178,"./_getRawTag":193,"./_objectToString":198}],183:[function(require,module,exports){
-var baseFindIndex = require('./_baseFindIndex'),
-    baseIsNaN = require('./_baseIsNaN'),
-    strictIndexOf = require('./_strictIndexOf');
-
-/**
- * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} value The value to search for.
- * @param {number} fromIndex The index to search from.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function baseIndexOf(array, value, fromIndex) {
-  return value === value
-    ? strictIndexOf(array, value, fromIndex)
-    : baseFindIndex(array, baseIsNaN, fromIndex);
-}
-
-module.exports = baseIndexOf;
-
-},{"./_baseFindIndex":181,"./_baseIsNaN":185,"./_strictIndexOf":201}],184:[function(require,module,exports){
-var baseGetTag = require('./_baseGetTag'),
-    isObjectLike = require('./isObjectLike');
-
-/** `Object#toString` result references. */
-var argsTag = '[object Arguments]';
-
-/**
- * The base implementation of `_.isArguments`.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an `arguments` object,
- */
-function baseIsArguments(value) {
-  return isObjectLike(value) && baseGetTag(value) == argsTag;
-}
-
-module.exports = baseIsArguments;
-
-},{"./_baseGetTag":182,"./isObjectLike":210}],185:[function(require,module,exports){
-/**
- * The base implementation of `_.isNaN` without support for number objects.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
- */
-function baseIsNaN(value) {
-  return value !== value;
-}
-
-module.exports = baseIsNaN;
-
-},{}],186:[function(require,module,exports){
-var baseGetTag = require('./_baseGetTag'),
-    isLength = require('./isLength'),
-    isObjectLike = require('./isObjectLike');
-
-/** `Object#toString` result references. */
-var argsTag = '[object Arguments]',
-    arrayTag = '[object Array]',
-    boolTag = '[object Boolean]',
-    dateTag = '[object Date]',
-    errorTag = '[object Error]',
-    funcTag = '[object Function]',
-    mapTag = '[object Map]',
-    numberTag = '[object Number]',
-    objectTag = '[object Object]',
-    regexpTag = '[object RegExp]',
-    setTag = '[object Set]',
-    stringTag = '[object String]',
-    weakMapTag = '[object WeakMap]';
-
-var arrayBufferTag = '[object ArrayBuffer]',
-    dataViewTag = '[object DataView]',
-    float32Tag = '[object Float32Array]',
-    float64Tag = '[object Float64Array]',
-    int8Tag = '[object Int8Array]',
-    int16Tag = '[object Int16Array]',
-    int32Tag = '[object Int32Array]',
-    uint8Tag = '[object Uint8Array]',
-    uint8ClampedTag = '[object Uint8ClampedArray]',
-    uint16Tag = '[object Uint16Array]',
-    uint32Tag = '[object Uint32Array]';
-
-/** Used to identify `toStringTag` values of typed arrays. */
-var typedArrayTags = {};
-typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
-typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
-typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
-typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
-typedArrayTags[uint32Tag] = true;
-typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
-typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
-typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
-typedArrayTags[errorTag] = typedArrayTags[funcTag] =
-typedArrayTags[mapTag] = typedArrayTags[numberTag] =
-typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
-typedArrayTags[setTag] = typedArrayTags[stringTag] =
-typedArrayTags[weakMapTag] = false;
-
-/**
- * The base implementation of `_.isTypedArray` without Node.js optimizations.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
- */
-function baseIsTypedArray(value) {
-  return isObjectLike(value) &&
-    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
-}
-
-module.exports = baseIsTypedArray;
-
-},{"./_baseGetTag":182,"./isLength":208,"./isObjectLike":210}],187:[function(require,module,exports){
-var isPrototype = require('./_isPrototype'),
-    nativeKeys = require('./_nativeKeys');
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- */
-function baseKeys(object) {
-  if (!isPrototype(object)) {
-    return nativeKeys(object);
-  }
-  var result = [];
-  for (var key in Object(object)) {
-    if (hasOwnProperty.call(object, key) && key != 'constructor') {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-module.exports = baseKeys;
-
-},{"./_isPrototype":195,"./_nativeKeys":196}],188:[function(require,module,exports){
-/**
- * The base implementation of `_.times` without support for iteratee shorthands
- * or max array length checks.
- *
- * @private
- * @param {number} n The number of times to invoke `iteratee`.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the array of results.
- */
-function baseTimes(n, iteratee) {
-  var index = -1,
-      result = Array(n);
-
-  while (++index < n) {
-    result[index] = iteratee(index);
-  }
-  return result;
-}
-
-module.exports = baseTimes;
-
-},{}],189:[function(require,module,exports){
-var Symbol = require('./_Symbol'),
-    arrayMap = require('./_arrayMap'),
-    isArray = require('./isArray'),
-    isSymbol = require('./isSymbol');
-
-/** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0;
-
-/** Used to convert symbols to primitives and strings. */
-var symbolProto = Symbol ? Symbol.prototype : undefined,
-    symbolToString = symbolProto ? symbolProto.toString : undefined;
-
-/**
- * The base implementation of `_.toString` which doesn't convert nullish
- * values to empty strings.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- */
-function baseToString(value) {
-  // Exit early for strings to avoid a performance hit in some environments.
-  if (typeof value == 'string') {
-    return value;
-  }
-  if (isArray(value)) {
-    // Recursively convert values (susceptible to call stack limits).
-    return arrayMap(value, baseToString) + '';
-  }
-  if (isSymbol(value)) {
-    return symbolToString ? symbolToString.call(value) : '';
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
-}
-
-module.exports = baseToString;
-
-},{"./_Symbol":178,"./_arrayMap":180,"./isArray":204,"./isSymbol":212}],190:[function(require,module,exports){
-/**
- * The base implementation of `_.unary` without support for storing metadata.
- *
- * @private
- * @param {Function} func The function to cap arguments for.
- * @returns {Function} Returns the new capped function.
- */
-function baseUnary(func) {
-  return function(value) {
-    return func(value);
-  };
-}
-
-module.exports = baseUnary;
-
-},{}],191:[function(require,module,exports){
-var arrayMap = require('./_arrayMap');
-
-/**
- * The base implementation of `_.values` and `_.valuesIn` which creates an
- * array of `object` property values corresponding to the property names
- * of `props`.
- *
- * @private
- * @param {Object} object The object to query.
- * @param {Array} props The property names to get values for.
- * @returns {Object} Returns the array of property values.
- */
-function baseValues(object, props) {
-  return arrayMap(props, function(key) {
-    return object[key];
-  });
-}
-
-module.exports = baseValues;
-
-},{"./_arrayMap":180}],192:[function(require,module,exports){
-(function (global){
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-module.exports = freeGlobal;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],193:[function(require,module,exports){
-var Symbol = require('./_Symbol');
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString = objectProto.toString;
-
-/** Built-in value references. */
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
-
-/**
- * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the raw `toStringTag`.
- */
-function getRawTag(value) {
-  var isOwn = hasOwnProperty.call(value, symToStringTag),
-      tag = value[symToStringTag];
-
-  try {
-    value[symToStringTag] = undefined;
-    var unmasked = true;
-  } catch (e) {}
-
-  var result = nativeObjectToString.call(value);
-  if (unmasked) {
-    if (isOwn) {
-      value[symToStringTag] = tag;
-    } else {
-      delete value[symToStringTag];
-    }
-  }
-  return result;
-}
-
-module.exports = getRawTag;
-
-},{"./_Symbol":178}],194:[function(require,module,exports){
-/** Used as references for various `Number` constants. */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^(?:0|[1-9]\d*)$/;
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return !!length &&
-    (typeof value == 'number' || reIsUint.test(value)) &&
-    (value > -1 && value % 1 == 0 && value < length);
-}
-
-module.exports = isIndex;
-
-},{}],195:[function(require,module,exports){
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/**
- * Checks if `value` is likely a prototype object.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
- */
-function isPrototype(value) {
-  var Ctor = value && value.constructor,
-      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
-
-  return value === proto;
-}
-
-module.exports = isPrototype;
-
-},{}],196:[function(require,module,exports){
-var overArg = require('./_overArg');
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeKeys = overArg(Object.keys, Object);
-
-module.exports = nativeKeys;
-
-},{"./_overArg":199}],197:[function(require,module,exports){
-var freeGlobal = require('./_freeGlobal');
-
-/** Detect free variable `exports`. */
-var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
-
-/** Detect free variable `module`. */
-var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
-
-/** Detect the popular CommonJS extension `module.exports`. */
-var moduleExports = freeModule && freeModule.exports === freeExports;
-
-/** Detect free variable `process` from Node.js. */
-var freeProcess = moduleExports && freeGlobal.process;
-
-/** Used to access faster Node.js helpers. */
-var nodeUtil = (function() {
-  try {
-    return freeProcess && freeProcess.binding('util');
-  } catch (e) {}
-}());
-
-module.exports = nodeUtil;
-
-},{"./_freeGlobal":192}],198:[function(require,module,exports){
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString = objectProto.toString;
-
-/**
- * Converts `value` to a string using `Object.prototype.toString`.
- *
- * @private
- * @param {*} value The value to convert.
- * @returns {string} Returns the converted string.
- */
-function objectToString(value) {
-  return nativeObjectToString.call(value);
-}
-
-module.exports = objectToString;
-
-},{}],199:[function(require,module,exports){
-/**
- * Creates a unary function that invokes `func` with its argument transformed.
- *
- * @private
- * @param {Function} func The function to wrap.
- * @param {Function} transform The argument transform.
- * @returns {Function} Returns the new function.
- */
-function overArg(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
-}
-
-module.exports = overArg;
-
-},{}],200:[function(require,module,exports){
-var freeGlobal = require('./_freeGlobal');
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-module.exports = root;
-
-},{"./_freeGlobal":192}],201:[function(require,module,exports){
-/**
- * A specialized version of `_.indexOf` which performs strict equality
- * comparisons of values, i.e. `===`.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} value The value to search for.
- * @param {number} fromIndex The index to search from.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function strictIndexOf(array, value, fromIndex) {
-  var index = fromIndex - 1,
-      length = array.length;
-
-  while (++index < length) {
-    if (array[index] === value) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-module.exports = strictIndexOf;
-
-},{}],202:[function(require,module,exports){
-var baseIndexOf = require('./_baseIndexOf'),
-    isArrayLike = require('./isArrayLike'),
-    isString = require('./isString'),
-    toInteger = require('./toInteger'),
-    values = require('./values');
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max;
-
-/**
- * Checks if `value` is in `collection`. If `collection` is a string, it's
- * checked for a substring of `value`, otherwise
- * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * is used for equality comparisons. If `fromIndex` is negative, it's used as
- * the offset from the end of `collection`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Collection
- * @param {Array|Object|string} collection The collection to inspect.
- * @param {*} value The value to search for.
- * @param {number} [fromIndex=0] The index to search from.
- * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
- * @returns {boolean} Returns `true` if `value` is found, else `false`.
- * @example
- *
- * _.includes([1, 2, 3], 1);
- * // => true
- *
- * _.includes([1, 2, 3], 1, 2);
- * // => false
- *
- * _.includes({ 'a': 1, 'b': 2 }, 1);
- * // => true
- *
- * _.includes('abcd', 'bc');
- * // => true
- */
-function includes(collection, value, fromIndex, guard) {
-  collection = isArrayLike(collection) ? collection : values(collection);
-  fromIndex = (fromIndex && !guard) ? toInteger(fromIndex) : 0;
-
-  var length = collection.length;
-  if (fromIndex < 0) {
-    fromIndex = nativeMax(length + fromIndex, 0);
-  }
-  return isString(collection)
-    ? (fromIndex <= length && collection.indexOf(value, fromIndex) > -1)
-    : (!!length && baseIndexOf(collection, value, fromIndex) > -1);
-}
-
-module.exports = includes;
-
-},{"./_baseIndexOf":183,"./isArrayLike":205,"./isString":211,"./toInteger":217,"./values":221}],203:[function(require,module,exports){
-var baseIsArguments = require('./_baseIsArguments'),
-    isObjectLike = require('./isObjectLike');
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/** Built-in value references. */
-var propertyIsEnumerable = objectProto.propertyIsEnumerable;
-
-/**
- * Checks if `value` is likely an `arguments` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an `arguments` object,
- *  else `false`.
- * @example
- *
- * _.isArguments(function() { return arguments; }());
- * // => true
- *
- * _.isArguments([1, 2, 3]);
- * // => false
- */
-var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
-  return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
-    !propertyIsEnumerable.call(value, 'callee');
-};
-
-module.exports = isArguments;
-
-},{"./_baseIsArguments":184,"./isObjectLike":210}],204:[function(require,module,exports){
-/**
- * Checks if `value` is classified as an `Array` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array, else `false`.
- * @example
- *
- * _.isArray([1, 2, 3]);
- * // => true
- *
- * _.isArray(document.body.children);
- * // => false
- *
- * _.isArray('abc');
- * // => false
- *
- * _.isArray(_.noop);
- * // => false
- */
-var isArray = Array.isArray;
-
-module.exports = isArray;
-
-},{}],205:[function(require,module,exports){
-var isFunction = require('./isFunction'),
-    isLength = require('./isLength');
-
-/**
- * Checks if `value` is array-like. A value is considered array-like if it's
- * not a function and has a `value.length` that's an integer greater than or
- * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- * @example
- *
- * _.isArrayLike([1, 2, 3]);
- * // => true
- *
- * _.isArrayLike(document.body.children);
- * // => true
- *
- * _.isArrayLike('abc');
- * // => true
- *
- * _.isArrayLike(_.noop);
- * // => false
- */
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
-}
-
-module.exports = isArrayLike;
-
-},{"./isFunction":207,"./isLength":208}],206:[function(require,module,exports){
-var root = require('./_root'),
-    stubFalse = require('./stubFalse');
-
-/** Detect free variable `exports`. */
-var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
-
-/** Detect free variable `module`. */
-var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
-
-/** Detect the popular CommonJS extension `module.exports`. */
-var moduleExports = freeModule && freeModule.exports === freeExports;
-
-/** Built-in value references. */
-var Buffer = moduleExports ? root.Buffer : undefined;
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
-
-/**
- * Checks if `value` is a buffer.
- *
- * @static
- * @memberOf _
- * @since 4.3.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
- * @example
- *
- * _.isBuffer(new Buffer(2));
- * // => true
- *
- * _.isBuffer(new Uint8Array(2));
- * // => false
- */
-var isBuffer = nativeIsBuffer || stubFalse;
-
-module.exports = isBuffer;
-
-},{"./_root":200,"./stubFalse":215}],207:[function(require,module,exports){
-var baseGetTag = require('./_baseGetTag'),
-    isObject = require('./isObject');
-
-/** `Object#toString` result references. */
-var asyncTag = '[object AsyncFunction]',
-    funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]',
-    proxyTag = '[object Proxy]';
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a function, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  if (!isObject(value)) {
-    return false;
-  }
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in Safari 9 which returns 'object' for typed arrays and other constructors.
-  var tag = baseGetTag(value);
-  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
-}
-
-module.exports = isFunction;
-
-},{"./_baseGetTag":182,"./isObject":209}],208:[function(require,module,exports){
-/** Used as references for various `Number` constants. */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This method is loosely based on
- * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- * @example
- *
- * _.isLength(3);
- * // => true
- *
- * _.isLength(Number.MIN_VALUE);
- * // => false
- *
- * _.isLength(Infinity);
- * // => false
- *
- * _.isLength('3');
- * // => false
- */
-function isLength(value) {
-  return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-module.exports = isLength;
-
-},{}],209:[function(require,module,exports){
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return value != null && (type == 'object' || type == 'function');
-}
-
-module.exports = isObject;
-
-},{}],210:[function(require,module,exports){
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return value != null && typeof value == 'object';
-}
-
-module.exports = isObjectLike;
-
-},{}],211:[function(require,module,exports){
-var baseGetTag = require('./_baseGetTag'),
-    isArray = require('./isArray'),
-    isObjectLike = require('./isObjectLike');
-
-/** `Object#toString` result references. */
-var stringTag = '[object String]';
-
-/**
- * Checks if `value` is classified as a `String` primitive or object.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a string, else `false`.
- * @example
- *
- * _.isString('abc');
- * // => true
- *
- * _.isString(1);
- * // => false
- */
-function isString(value) {
-  return typeof value == 'string' ||
-    (!isArray(value) && isObjectLike(value) && baseGetTag(value) == stringTag);
-}
-
-module.exports = isString;
-
-},{"./_baseGetTag":182,"./isArray":204,"./isObjectLike":210}],212:[function(require,module,exports){
-var baseGetTag = require('./_baseGetTag'),
-    isObjectLike = require('./isObjectLike');
-
-/** `Object#toString` result references. */
-var symbolTag = '[object Symbol]';
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && baseGetTag(value) == symbolTag);
-}
-
-module.exports = isSymbol;
-
-},{"./_baseGetTag":182,"./isObjectLike":210}],213:[function(require,module,exports){
-var baseIsTypedArray = require('./_baseIsTypedArray'),
-    baseUnary = require('./_baseUnary'),
-    nodeUtil = require('./_nodeUtil');
-
-/* Node.js helper references. */
-var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
-
-/**
- * Checks if `value` is classified as a typed array.
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
- * @example
- *
- * _.isTypedArray(new Uint8Array);
- * // => true
- *
- * _.isTypedArray([]);
- * // => false
- */
-var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
-
-module.exports = isTypedArray;
-
-},{"./_baseIsTypedArray":186,"./_baseUnary":190,"./_nodeUtil":197}],214:[function(require,module,exports){
-var arrayLikeKeys = require('./_arrayLikeKeys'),
-    baseKeys = require('./_baseKeys'),
-    isArrayLike = require('./isArrayLike');
-
-/**
- * Creates an array of the own enumerable property names of `object`.
- *
- * **Note:** Non-object values are coerced to objects. See the
- * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
- * for more details.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.keys(new Foo);
- * // => ['a', 'b'] (iteration order is not guaranteed)
- *
- * _.keys('hi');
- * // => ['0', '1']
- */
-function keys(object) {
-  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
-}
-
-module.exports = keys;
-
-},{"./_arrayLikeKeys":179,"./_baseKeys":187,"./isArrayLike":205}],215:[function(require,module,exports){
-/**
- * This method returns `false`.
- *
- * @static
- * @memberOf _
- * @since 4.13.0
- * @category Util
- * @returns {boolean} Returns `false`.
- * @example
- *
- * _.times(2, _.stubFalse);
- * // => [false, false]
- */
-function stubFalse() {
-  return false;
-}
-
-module.exports = stubFalse;
-
-},{}],216:[function(require,module,exports){
-var toNumber = require('./toNumber');
-
-/** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0,
-    MAX_INTEGER = 1.7976931348623157e+308;
-
-/**
- * Converts `value` to a finite number.
- *
- * @static
- * @memberOf _
- * @since 4.12.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {number} Returns the converted number.
- * @example
- *
- * _.toFinite(3.2);
- * // => 3.2
- *
- * _.toFinite(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toFinite(Infinity);
- * // => 1.7976931348623157e+308
- *
- * _.toFinite('3.2');
- * // => 3.2
- */
-function toFinite(value) {
-  if (!value) {
-    return value === 0 ? value : 0;
-  }
-  value = toNumber(value);
-  if (value === INFINITY || value === -INFINITY) {
-    var sign = (value < 0 ? -1 : 1);
-    return sign * MAX_INTEGER;
-  }
-  return value === value ? value : 0;
-}
-
-module.exports = toFinite;
-
-},{"./toNumber":218}],217:[function(require,module,exports){
-var toFinite = require('./toFinite');
-
-/**
- * Converts `value` to an integer.
- *
- * **Note:** This method is loosely based on
- * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {number} Returns the converted integer.
- * @example
- *
- * _.toInteger(3.2);
- * // => 3
- *
- * _.toInteger(Number.MIN_VALUE);
- * // => 0
- *
- * _.toInteger(Infinity);
- * // => 1.7976931348623157e+308
- *
- * _.toInteger('3.2');
- * // => 3
- */
-function toInteger(value) {
-  var result = toFinite(value),
-      remainder = result % 1;
-
-  return result === result ? (remainder ? result - remainder : result) : 0;
-}
-
-module.exports = toInteger;
-
-},{"./toFinite":216}],218:[function(require,module,exports){
-var isObject = require('./isObject'),
-    isSymbol = require('./isSymbol');
-
-/** Used as references for various `Number` constants. */
-var NAN = 0 / 0;
-
-/** Used to match leading and trailing whitespace. */
-var reTrim = /^\s+|\s+$/g;
-
-/** Used to detect bad signed hexadecimal string values. */
-var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
-
-/** Used to detect binary string values. */
-var reIsBinary = /^0b[01]+$/i;
-
-/** Used to detect octal string values. */
-var reIsOctal = /^0o[0-7]+$/i;
-
-/** Built-in method references without a dependency on `root`. */
-var freeParseInt = parseInt;
-
-/**
- * Converts `value` to a number.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {number} Returns the number.
- * @example
- *
- * _.toNumber(3.2);
- * // => 3.2
- *
- * _.toNumber(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toNumber(Infinity);
- * // => Infinity
- *
- * _.toNumber('3.2');
- * // => 3.2
- */
-function toNumber(value) {
-  if (typeof value == 'number') {
-    return value;
-  }
-  if (isSymbol(value)) {
-    return NAN;
-  }
-  if (isObject(value)) {
-    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? (other + '') : other;
-  }
-  if (typeof value != 'string') {
-    return value === 0 ? value : +value;
-  }
-  value = value.replace(reTrim, '');
-  var isBinary = reIsBinary.test(value);
-  return (isBinary || reIsOctal.test(value))
-    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
-    : (reIsBadHex.test(value) ? NAN : +value);
-}
-
-module.exports = toNumber;
-
-},{"./isObject":209,"./isSymbol":212}],219:[function(require,module,exports){
-var baseToString = require('./_baseToString');
-
-/**
- * Converts `value` to a string. An empty string is returned for `null`
- * and `undefined` values. The sign of `-0` is preserved.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {string} Returns the converted string.
- * @example
- *
- * _.toString(null);
- * // => ''
- *
- * _.toString(-0);
- * // => '-0'
- *
- * _.toString([1, 2, 3]);
- * // => '1,2,3'
- */
-function toString(value) {
-  return value == null ? '' : baseToString(value);
-}
-
-module.exports = toString;
-
-},{"./_baseToString":189}],220:[function(require,module,exports){
-var toString = require('./toString');
-
-/** Used to generate unique IDs. */
-var idCounter = 0;
-
-/**
- * Generates a unique ID. If `prefix` is given, the ID is appended to it.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Util
- * @param {string} [prefix=''] The value to prefix the ID with.
- * @returns {string} Returns the unique ID.
- * @example
- *
- * _.uniqueId('contact_');
- * // => 'contact_104'
- *
- * _.uniqueId();
- * // => '105'
- */
-function uniqueId(prefix) {
-  var id = ++idCounter;
-  return toString(prefix) + id;
-}
-
-module.exports = uniqueId;
-
-},{"./toString":219}],221:[function(require,module,exports){
-var baseValues = require('./_baseValues'),
-    keys = require('./keys');
-
-/**
- * Creates an array of the own enumerable string keyed property values of `object`.
- *
- * **Note:** Non-object values are coerced to objects.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property values.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.values(new Foo);
- * // => [1, 2] (iteration order is not guaranteed)
- *
- * _.values('hi');
- * // => ['h', 'i']
- */
-function values(object) {
-  return object == null ? [] : baseValues(object, keys(object));
-}
-
-module.exports = values;
-
-},{"./_baseValues":191,"./keys":214}],222:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 module.exports = compile;
 
 var BaseFuncs = require("boolbase"),
@@ -37183,7 +35821,7 @@ function compile(parsed){
 		return pos <= b && pos % a === bMod;
 	};
 }
-},{"boolbase":20}],223:[function(require,module,exports){
+},{"boolbase":20}],177:[function(require,module,exports){
 var parse = require("./parse.js"),
     compile = require("./compile.js");
 
@@ -37193,7 +35831,7 @@ module.exports = function nthCheck(formula){
 
 module.exports.parse = parse;
 module.exports.compile = compile;
-},{"./compile.js":222,"./parse.js":224}],224:[function(require,module,exports){
+},{"./compile.js":176,"./parse.js":178}],178:[function(require,module,exports){
 module.exports = parse;
 
 //following http://www.w3.org/TR/css3-selectors/#nth-child-pseudo
@@ -37235,7 +35873,7 @@ function parse(formula){
 	}
 }
 
-},{}],225:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 'use strict';
 /* eslint-disable no-unused-vars */
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -37320,7 +35958,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],226:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -37367,7 +36005,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 }
 
 }).call(this,require('_process'))
-},{"_process":227}],227:[function(require,module,exports){
+},{"_process":181}],181:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -37549,17 +36187,17 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],228:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 'use strict';
 
 module.exports = require('react/lib/ReactDOM');
 
-},{"react/lib/ReactDOM":267}],229:[function(require,module,exports){
+},{"react/lib/ReactDOM":221}],183:[function(require,module,exports){
 'use strict';
 
 module.exports = require('react/lib/ReactDOMServer');
 
-},{"react/lib/ReactDOMServer":282}],230:[function(require,module,exports){
+},{"react/lib/ReactDOMServer":236}],184:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -37584,7 +36222,7 @@ var AutoFocusUtils = {
 };
 
 module.exports = AutoFocusUtils;
-},{"./ReactDOMComponentTree":271,"fbjs/lib/focusNode":132}],231:[function(require,module,exports){
+},{"./ReactDOMComponentTree":225,"fbjs/lib/focusNode":130}],185:[function(require,module,exports){
 /**
  * Copyright 2013-present Facebook, Inc.
  * All rights reserved.
@@ -37975,7 +36613,7 @@ var BeforeInputEventPlugin = {
 };
 
 module.exports = BeforeInputEventPlugin;
-},{"./EventConstants":245,"./EventPropagators":249,"./FallbackCompositionState":250,"./SyntheticCompositionEvent":331,"./SyntheticInputEvent":335,"fbjs/lib/ExecutionEnvironment":124,"fbjs/lib/keyOf":142}],232:[function(require,module,exports){
+},{"./EventConstants":199,"./EventPropagators":203,"./FallbackCompositionState":204,"./SyntheticCompositionEvent":285,"./SyntheticInputEvent":289,"fbjs/lib/ExecutionEnvironment":122,"fbjs/lib/keyOf":140}],186:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -38124,7 +36762,7 @@ var CSSProperty = {
 };
 
 module.exports = CSSProperty;
-},{}],233:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -38332,7 +36970,7 @@ var CSSPropertyOperations = {
 
 module.exports = CSSPropertyOperations;
 }).call(this,require('_process'))
-},{"./CSSProperty":232,"./ReactInstrumentation":302,"./dangerousStyleValue":349,"_process":227,"fbjs/lib/ExecutionEnvironment":124,"fbjs/lib/camelizeStyleName":126,"fbjs/lib/hyphenateStyleName":137,"fbjs/lib/memoizeStringOnly":143,"fbjs/lib/warning":147}],234:[function(require,module,exports){
+},{"./CSSProperty":186,"./ReactInstrumentation":256,"./dangerousStyleValue":303,"_process":181,"fbjs/lib/ExecutionEnvironment":122,"fbjs/lib/camelizeStyleName":124,"fbjs/lib/hyphenateStyleName":135,"fbjs/lib/memoizeStringOnly":141,"fbjs/lib/warning":145}],188:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -38441,7 +37079,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 }).call(this,require('_process'))
-},{"./PooledClass":254,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"object-assign":225}],235:[function(require,module,exports){
+},{"./PooledClass":208,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"object-assign":179}],189:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -38767,7 +37405,7 @@ var ChangeEventPlugin = {
 };
 
 module.exports = ChangeEventPlugin;
-},{"./EventConstants":245,"./EventPluginHub":246,"./EventPropagators":249,"./ReactDOMComponentTree":271,"./ReactUpdates":324,"./SyntheticEvent":333,"./getEventTarget":357,"./isEventSupported":364,"./isTextInputElement":365,"fbjs/lib/ExecutionEnvironment":124,"fbjs/lib/keyOf":142}],236:[function(require,module,exports){
+},{"./EventConstants":199,"./EventPluginHub":200,"./EventPropagators":203,"./ReactDOMComponentTree":225,"./ReactUpdates":278,"./SyntheticEvent":287,"./getEventTarget":311,"./isEventSupported":318,"./isTextInputElement":319,"fbjs/lib/ExecutionEnvironment":122,"fbjs/lib/keyOf":140}],190:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -38964,7 +37602,7 @@ var DOMChildrenOperations = {
 
 module.exports = DOMChildrenOperations;
 }).call(this,require('_process'))
-},{"./DOMLazyTree":237,"./Danger":241,"./ReactDOMComponentTree":271,"./ReactInstrumentation":302,"./ReactMultiChildUpdateTypes":307,"./createMicrosoftUnsafeLocalFunction":348,"./setInnerHTML":370,"./setTextContent":371,"_process":227}],237:[function(require,module,exports){
+},{"./DOMLazyTree":191,"./Danger":195,"./ReactDOMComponentTree":225,"./ReactInstrumentation":256,"./ReactMultiChildUpdateTypes":261,"./createMicrosoftUnsafeLocalFunction":302,"./setInnerHTML":324,"./setTextContent":325,"_process":181}],191:[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -39083,7 +37721,7 @@ DOMLazyTree.queueHTML = queueHTML;
 DOMLazyTree.queueText = queueText;
 
 module.exports = DOMLazyTree;
-},{"./DOMNamespaces":238,"./createMicrosoftUnsafeLocalFunction":348,"./setInnerHTML":370,"./setTextContent":371}],238:[function(require,module,exports){
+},{"./DOMNamespaces":192,"./createMicrosoftUnsafeLocalFunction":302,"./setInnerHTML":324,"./setTextContent":325}],192:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -39104,7 +37742,7 @@ var DOMNamespaces = {
 };
 
 module.exports = DOMNamespaces;
-},{}],239:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -39313,7 +37951,7 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],240:[function(require,module,exports){
+},{"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],194:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -39537,7 +38175,7 @@ var DOMPropertyOperations = {
 
 module.exports = DOMPropertyOperations;
 }).call(this,require('_process'))
-},{"./DOMProperty":239,"./ReactDOMComponentTree":271,"./ReactInstrumentation":302,"./quoteAttributeValueForBrowser":367,"_process":227,"fbjs/lib/warning":147}],241:[function(require,module,exports){
+},{"./DOMProperty":193,"./ReactDOMComponentTree":225,"./ReactInstrumentation":256,"./quoteAttributeValueForBrowser":321,"_process":181,"fbjs/lib/warning":145}],195:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -39588,7 +38226,7 @@ var Danger = {
 
 module.exports = Danger;
 }).call(this,require('_process'))
-},{"./DOMLazyTree":237,"./reactProdInvariant":368,"_process":227,"fbjs/lib/ExecutionEnvironment":124,"fbjs/lib/createNodesFromMarkup":129,"fbjs/lib/emptyFunction":130,"fbjs/lib/invariant":138}],242:[function(require,module,exports){
+},{"./DOMLazyTree":191,"./reactProdInvariant":322,"_process":181,"fbjs/lib/ExecutionEnvironment":122,"fbjs/lib/createNodesFromMarkup":127,"fbjs/lib/emptyFunction":128,"fbjs/lib/invariant":136}],196:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -39616,7 +38254,7 @@ var keyOf = require('fbjs/lib/keyOf');
 var DefaultEventPluginOrder = [keyOf({ ResponderEventPlugin: null }), keyOf({ SimpleEventPlugin: null }), keyOf({ TapEventPlugin: null }), keyOf({ EnterLeaveEventPlugin: null }), keyOf({ ChangeEventPlugin: null }), keyOf({ SelectEventPlugin: null }), keyOf({ BeforeInputEventPlugin: null })];
 
 module.exports = DefaultEventPluginOrder;
-},{"fbjs/lib/keyOf":142}],243:[function(require,module,exports){
+},{"fbjs/lib/keyOf":140}],197:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -39667,7 +38305,7 @@ var DisabledInputUtils = {
 };
 
 module.exports = DisabledInputUtils;
-},{}],244:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -39773,7 +38411,7 @@ var EnterLeaveEventPlugin = {
 };
 
 module.exports = EnterLeaveEventPlugin;
-},{"./EventConstants":245,"./EventPropagators":249,"./ReactDOMComponentTree":271,"./SyntheticMouseEvent":337,"fbjs/lib/keyOf":142}],245:[function(require,module,exports){
+},{"./EventConstants":199,"./EventPropagators":203,"./ReactDOMComponentTree":225,"./SyntheticMouseEvent":291,"fbjs/lib/keyOf":140}],199:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -39871,7 +38509,7 @@ var EventConstants = {
 };
 
 module.exports = EventConstants;
-},{"fbjs/lib/keyMirror":141}],246:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":139}],200:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -40125,7 +38763,7 @@ var EventPluginHub = {
 
 module.exports = EventPluginHub;
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":247,"./EventPluginUtils":248,"./ReactErrorUtils":293,"./accumulateInto":344,"./forEachAccumulated":353,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],247:[function(require,module,exports){
+},{"./EventPluginRegistry":201,"./EventPluginUtils":202,"./ReactErrorUtils":247,"./accumulateInto":298,"./forEachAccumulated":307,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],201:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -40375,7 +39013,7 @@ var EventPluginRegistry = {
 
 module.exports = EventPluginRegistry;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],248:[function(require,module,exports){
+},{"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],202:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -40607,7 +39245,7 @@ var EventPluginUtils = {
 
 module.exports = EventPluginUtils;
 }).call(this,require('_process'))
-},{"./EventConstants":245,"./ReactErrorUtils":293,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147}],249:[function(require,module,exports){
+},{"./EventConstants":199,"./ReactErrorUtils":247,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145}],203:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -40747,7 +39385,7 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 }).call(this,require('_process'))
-},{"./EventConstants":245,"./EventPluginHub":246,"./EventPluginUtils":248,"./accumulateInto":344,"./forEachAccumulated":353,"_process":227,"fbjs/lib/warning":147}],250:[function(require,module,exports){
+},{"./EventConstants":199,"./EventPluginHub":200,"./EventPluginUtils":202,"./accumulateInto":298,"./forEachAccumulated":307,"_process":181,"fbjs/lib/warning":145}],204:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -40843,7 +39481,7 @@ _assign(FallbackCompositionState.prototype, {
 PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
-},{"./PooledClass":254,"./getTextContentAccessor":361,"object-assign":225}],251:[function(require,module,exports){
+},{"./PooledClass":208,"./getTextContentAccessor":315,"object-assign":179}],205:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -41056,7 +39694,7 @@ var HTMLDOMPropertyConfig = {
 };
 
 module.exports = HTMLDOMPropertyConfig;
-},{"./DOMProperty":239}],252:[function(require,module,exports){
+},{"./DOMProperty":193}],206:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -41116,7 +39754,7 @@ var KeyEscapeUtils = {
 };
 
 module.exports = KeyEscapeUtils;
-},{}],253:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -41255,7 +39893,7 @@ var LinkedValueUtils = {
 
 module.exports = LinkedValueUtils;
 }).call(this,require('_process'))
-},{"./ReactPropTypeLocations":312,"./ReactPropTypes":313,"./ReactPropTypesSecret":314,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147}],254:[function(require,module,exports){
+},{"./ReactPropTypeLocations":266,"./ReactPropTypes":267,"./ReactPropTypesSecret":268,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145}],208:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -41379,7 +40017,7 @@ var PooledClass = {
 
 module.exports = PooledClass;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],255:[function(require,module,exports){
+},{"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],209:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -41471,7 +40109,7 @@ var React = {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./ReactChildren":258,"./ReactClass":260,"./ReactComponent":261,"./ReactDOMFactories":274,"./ReactElement":290,"./ReactElementValidator":291,"./ReactPropTypes":313,"./ReactPureComponent":315,"./ReactVersion":325,"./onlyChild":366,"_process":227,"fbjs/lib/warning":147,"object-assign":225}],256:[function(require,module,exports){
+},{"./ReactChildren":212,"./ReactClass":214,"./ReactComponent":215,"./ReactDOMFactories":228,"./ReactElement":244,"./ReactElementValidator":245,"./ReactPropTypes":267,"./ReactPureComponent":269,"./ReactVersion":279,"./onlyChild":320,"_process":181,"fbjs/lib/warning":145,"object-assign":179}],210:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -41802,7 +40440,7 @@ var ReactBrowserEventEmitter = _assign({}, ReactEventEmitterMixin, {
 });
 
 module.exports = ReactBrowserEventEmitter;
-},{"./EventConstants":245,"./EventPluginRegistry":247,"./ReactEventEmitterMixin":294,"./ViewportMetrics":343,"./getVendorPrefixedEventName":362,"./isEventSupported":364,"object-assign":225}],257:[function(require,module,exports){
+},{"./EventConstants":199,"./EventPluginRegistry":201,"./ReactEventEmitterMixin":248,"./ViewportMetrics":297,"./getVendorPrefixedEventName":316,"./isEventSupported":318,"object-assign":179}],211:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -41959,7 +40597,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":252,"./ReactComponentTreeHook":264,"./ReactReconciler":317,"./instantiateReactComponent":363,"./shouldUpdateReactComponent":372,"./traverseAllChildren":373,"_process":227,"fbjs/lib/warning":147}],258:[function(require,module,exports){
+},{"./KeyEscapeUtils":206,"./ReactComponentTreeHook":218,"./ReactReconciler":271,"./instantiateReactComponent":317,"./shouldUpdateReactComponent":326,"./traverseAllChildren":327,"_process":181,"fbjs/lib/warning":145}],212:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -42151,7 +40789,7 @@ var ReactChildren = {
 };
 
 module.exports = ReactChildren;
-},{"./PooledClass":254,"./ReactElement":290,"./traverseAllChildren":373,"fbjs/lib/emptyFunction":130}],259:[function(require,module,exports){
+},{"./PooledClass":208,"./ReactElement":244,"./traverseAllChildren":327,"fbjs/lib/emptyFunction":128}],213:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -42208,7 +40846,7 @@ var ReactChildrenMutationWarningHook = {
 
 module.exports = ReactChildrenMutationWarningHook;
 }).call(this,require('_process'))
-},{"./ReactComponentTreeHook":264,"_process":227,"fbjs/lib/warning":147}],260:[function(require,module,exports){
+},{"./ReactComponentTreeHook":218,"_process":181,"fbjs/lib/warning":145}],214:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -42943,7 +41581,7 @@ var ReactClass = {
 
 module.exports = ReactClass;
 }).call(this,require('_process'))
-},{"./ReactComponent":261,"./ReactElement":290,"./ReactNoopUpdateQueue":309,"./ReactPropTypeLocationNames":311,"./ReactPropTypeLocations":312,"./reactProdInvariant":368,"_process":227,"fbjs/lib/emptyObject":131,"fbjs/lib/invariant":138,"fbjs/lib/keyMirror":141,"fbjs/lib/keyOf":142,"fbjs/lib/warning":147,"object-assign":225}],261:[function(require,module,exports){
+},{"./ReactComponent":215,"./ReactElement":244,"./ReactNoopUpdateQueue":263,"./ReactPropTypeLocationNames":265,"./ReactPropTypeLocations":266,"./reactProdInvariant":322,"_process":181,"fbjs/lib/emptyObject":129,"fbjs/lib/invariant":136,"fbjs/lib/keyMirror":139,"fbjs/lib/keyOf":140,"fbjs/lib/warning":145,"object-assign":179}],215:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -43064,7 +41702,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactComponent;
 }).call(this,require('_process'))
-},{"./ReactNoopUpdateQueue":309,"./canDefineProperty":346,"./reactProdInvariant":368,"_process":227,"fbjs/lib/emptyObject":131,"fbjs/lib/invariant":138,"fbjs/lib/warning":147}],262:[function(require,module,exports){
+},{"./ReactNoopUpdateQueue":263,"./canDefineProperty":300,"./reactProdInvariant":322,"_process":181,"fbjs/lib/emptyObject":129,"fbjs/lib/invariant":136,"fbjs/lib/warning":145}],216:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -43095,7 +41733,7 @@ var ReactComponentBrowserEnvironment = {
 };
 
 module.exports = ReactComponentBrowserEnvironment;
-},{"./DOMChildrenOperations":236,"./ReactDOMIDOperations":276}],263:[function(require,module,exports){
+},{"./DOMChildrenOperations":190,"./ReactDOMIDOperations":230}],217:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -43143,7 +41781,7 @@ var ReactComponentEnvironment = {
 
 module.exports = ReactComponentEnvironment;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],264:[function(require,module,exports){
+},{"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],218:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2016-present, Facebook, Inc.
@@ -43488,7 +42126,7 @@ var ReactComponentTreeHook = {
 
 module.exports = ReactComponentTreeHook;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":266,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147}],265:[function(require,module,exports){
+},{"./ReactCurrentOwner":220,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145}],219:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -44395,7 +43033,7 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 }).call(this,require('_process'))
-},{"./ReactComponentEnvironment":263,"./ReactCurrentOwner":266,"./ReactElement":290,"./ReactErrorUtils":293,"./ReactInstanceMap":301,"./ReactInstrumentation":302,"./ReactNodeTypes":308,"./ReactPropTypeLocations":312,"./ReactReconciler":317,"./checkReactTypeSpec":347,"./reactProdInvariant":368,"./shouldUpdateReactComponent":372,"_process":227,"fbjs/lib/emptyObject":131,"fbjs/lib/invariant":138,"fbjs/lib/shallowEqual":146,"fbjs/lib/warning":147,"object-assign":225}],266:[function(require,module,exports){
+},{"./ReactComponentEnvironment":217,"./ReactCurrentOwner":220,"./ReactElement":244,"./ReactErrorUtils":247,"./ReactInstanceMap":255,"./ReactInstrumentation":256,"./ReactNodeTypes":262,"./ReactPropTypeLocations":266,"./ReactReconciler":271,"./checkReactTypeSpec":301,"./reactProdInvariant":322,"./shouldUpdateReactComponent":326,"_process":181,"fbjs/lib/emptyObject":129,"fbjs/lib/invariant":136,"fbjs/lib/shallowEqual":144,"fbjs/lib/warning":145,"object-assign":179}],220:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -44427,7 +43065,7 @@ var ReactCurrentOwner = {
 };
 
 module.exports = ReactCurrentOwner;
-},{}],267:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -44540,7 +43178,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactDOM;
 }).call(this,require('_process'))
-},{"./ReactDOMComponentTree":271,"./ReactDOMNullInputValuePropHook":278,"./ReactDOMUnknownPropertyHook":286,"./ReactDefaultInjection":289,"./ReactInstrumentation":302,"./ReactMount":305,"./ReactReconciler":317,"./ReactUpdates":324,"./ReactVersion":325,"./findDOMNode":351,"./getHostComponentFromComposite":358,"./renderSubtreeIntoContainer":369,"_process":227,"fbjs/lib/ExecutionEnvironment":124,"fbjs/lib/warning":147}],268:[function(require,module,exports){
+},{"./ReactDOMComponentTree":225,"./ReactDOMNullInputValuePropHook":232,"./ReactDOMUnknownPropertyHook":240,"./ReactDefaultInjection":243,"./ReactInstrumentation":256,"./ReactMount":259,"./ReactReconciler":271,"./ReactUpdates":278,"./ReactVersion":279,"./findDOMNode":305,"./getHostComponentFromComposite":312,"./renderSubtreeIntoContainer":323,"_process":181,"fbjs/lib/ExecutionEnvironment":122,"fbjs/lib/warning":145}],222:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -44565,7 +43203,7 @@ var ReactDOMButton = {
 };
 
 module.exports = ReactDOMButton;
-},{"./DisabledInputUtils":243}],269:[function(require,module,exports){
+},{"./DisabledInputUtils":197}],223:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -45574,7 +44212,7 @@ _assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mi
 
 module.exports = ReactDOMComponent;
 }).call(this,require('_process'))
-},{"./AutoFocusUtils":230,"./CSSPropertyOperations":233,"./DOMLazyTree":237,"./DOMNamespaces":238,"./DOMProperty":239,"./DOMPropertyOperations":240,"./EventConstants":245,"./EventPluginHub":246,"./EventPluginRegistry":247,"./ReactBrowserEventEmitter":256,"./ReactDOMButton":268,"./ReactDOMComponentFlags":270,"./ReactDOMComponentTree":271,"./ReactDOMInput":277,"./ReactDOMOption":279,"./ReactDOMSelect":280,"./ReactDOMTextarea":284,"./ReactInstrumentation":302,"./ReactMultiChild":306,"./ReactServerRenderingTransaction":321,"./escapeTextContentForBrowser":350,"./isEventSupported":364,"./reactProdInvariant":368,"./validateDOMNesting":374,"_process":227,"fbjs/lib/emptyFunction":130,"fbjs/lib/invariant":138,"fbjs/lib/keyOf":142,"fbjs/lib/shallowEqual":146,"fbjs/lib/warning":147,"object-assign":225}],270:[function(require,module,exports){
+},{"./AutoFocusUtils":184,"./CSSPropertyOperations":187,"./DOMLazyTree":191,"./DOMNamespaces":192,"./DOMProperty":193,"./DOMPropertyOperations":194,"./EventConstants":199,"./EventPluginHub":200,"./EventPluginRegistry":201,"./ReactBrowserEventEmitter":210,"./ReactDOMButton":222,"./ReactDOMComponentFlags":224,"./ReactDOMComponentTree":225,"./ReactDOMInput":231,"./ReactDOMOption":233,"./ReactDOMSelect":234,"./ReactDOMTextarea":238,"./ReactInstrumentation":256,"./ReactMultiChild":260,"./ReactServerRenderingTransaction":275,"./escapeTextContentForBrowser":304,"./isEventSupported":318,"./reactProdInvariant":322,"./validateDOMNesting":328,"_process":181,"fbjs/lib/emptyFunction":128,"fbjs/lib/invariant":136,"fbjs/lib/keyOf":140,"fbjs/lib/shallowEqual":144,"fbjs/lib/warning":145,"object-assign":179}],224:[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -45593,7 +44231,7 @@ var ReactDOMComponentFlags = {
 };
 
 module.exports = ReactDOMComponentFlags;
-},{}],271:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -45784,7 +44422,7 @@ var ReactDOMComponentTree = {
 
 module.exports = ReactDOMComponentTree;
 }).call(this,require('_process'))
-},{"./DOMProperty":239,"./ReactDOMComponentFlags":270,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],272:[function(require,module,exports){
+},{"./DOMProperty":193,"./ReactDOMComponentFlags":224,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],226:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -45820,7 +44458,7 @@ function ReactDOMContainerInfo(topLevelWrapper, node) {
 
 module.exports = ReactDOMContainerInfo;
 }).call(this,require('_process'))
-},{"./validateDOMNesting":374,"_process":227}],273:[function(require,module,exports){
+},{"./validateDOMNesting":328,"_process":181}],227:[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -45881,7 +44519,7 @@ _assign(ReactDOMEmptyComponent.prototype, {
 });
 
 module.exports = ReactDOMEmptyComponent;
-},{"./DOMLazyTree":237,"./ReactDOMComponentTree":271,"object-assign":225}],274:[function(require,module,exports){
+},{"./DOMLazyTree":191,"./ReactDOMComponentTree":225,"object-assign":179}],228:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -46054,7 +44692,7 @@ var ReactDOMFactories = {
 
 module.exports = ReactDOMFactories;
 }).call(this,require('_process'))
-},{"./ReactElement":290,"./ReactElementValidator":291,"_process":227}],275:[function(require,module,exports){
+},{"./ReactElement":244,"./ReactElementValidator":245,"_process":181}],229:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -46073,7 +44711,7 @@ var ReactDOMFeatureFlags = {
 };
 
 module.exports = ReactDOMFeatureFlags;
-},{}],276:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -46108,7 +44746,7 @@ var ReactDOMIDOperations = {
 };
 
 module.exports = ReactDOMIDOperations;
-},{"./DOMChildrenOperations":236,"./ReactDOMComponentTree":271}],277:[function(require,module,exports){
+},{"./DOMChildrenOperations":190,"./ReactDOMComponentTree":225}],231:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -46380,7 +45018,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMInput;
 }).call(this,require('_process'))
-},{"./DOMPropertyOperations":240,"./DisabledInputUtils":243,"./LinkedValueUtils":253,"./ReactDOMComponentTree":271,"./ReactUpdates":324,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147,"object-assign":225}],278:[function(require,module,exports){
+},{"./DOMPropertyOperations":194,"./DisabledInputUtils":197,"./LinkedValueUtils":207,"./ReactDOMComponentTree":225,"./ReactUpdates":278,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145,"object-assign":179}],232:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -46426,7 +45064,7 @@ var ReactDOMNullInputValuePropHook = {
 
 module.exports = ReactDOMNullInputValuePropHook;
 }).call(this,require('_process'))
-},{"./ReactComponentTreeHook":264,"_process":227,"fbjs/lib/warning":147}],279:[function(require,module,exports){
+},{"./ReactComponentTreeHook":218,"_process":181,"fbjs/lib/warning":145}],233:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -46552,7 +45190,7 @@ var ReactDOMOption = {
 
 module.exports = ReactDOMOption;
 }).call(this,require('_process'))
-},{"./ReactChildren":258,"./ReactDOMComponentTree":271,"./ReactDOMSelect":280,"_process":227,"fbjs/lib/warning":147,"object-assign":225}],280:[function(require,module,exports){
+},{"./ReactChildren":212,"./ReactDOMComponentTree":225,"./ReactDOMSelect":234,"_process":181,"fbjs/lib/warning":145,"object-assign":179}],234:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -46756,7 +45394,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMSelect;
 }).call(this,require('_process'))
-},{"./DisabledInputUtils":243,"./LinkedValueUtils":253,"./ReactDOMComponentTree":271,"./ReactUpdates":324,"_process":227,"fbjs/lib/warning":147,"object-assign":225}],281:[function(require,module,exports){
+},{"./DisabledInputUtils":197,"./LinkedValueUtils":207,"./ReactDOMComponentTree":225,"./ReactUpdates":278,"_process":181,"fbjs/lib/warning":145,"object-assign":179}],235:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -46969,7 +45607,7 @@ var ReactDOMSelection = {
 };
 
 module.exports = ReactDOMSelection;
-},{"./getNodeForCharacterOffset":360,"./getTextContentAccessor":361,"fbjs/lib/ExecutionEnvironment":124}],282:[function(require,module,exports){
+},{"./getNodeForCharacterOffset":314,"./getTextContentAccessor":315,"fbjs/lib/ExecutionEnvironment":122}],236:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -46996,7 +45634,7 @@ var ReactDOMServer = {
 };
 
 module.exports = ReactDOMServer;
-},{"./ReactDefaultInjection":289,"./ReactServerRendering":320,"./ReactVersion":325}],283:[function(require,module,exports){
+},{"./ReactDefaultInjection":243,"./ReactServerRendering":274,"./ReactVersion":279}],237:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -47163,7 +45801,7 @@ _assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":236,"./DOMLazyTree":237,"./ReactDOMComponentTree":271,"./escapeTextContentForBrowser":350,"./reactProdInvariant":368,"./validateDOMNesting":374,"_process":227,"fbjs/lib/invariant":138,"object-assign":225}],284:[function(require,module,exports){
+},{"./DOMChildrenOperations":190,"./DOMLazyTree":191,"./ReactDOMComponentTree":225,"./escapeTextContentForBrowser":304,"./reactProdInvariant":322,"./validateDOMNesting":328,"_process":181,"fbjs/lib/invariant":136,"object-assign":179}],238:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -47321,7 +45959,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMTextarea;
 }).call(this,require('_process'))
-},{"./DisabledInputUtils":243,"./LinkedValueUtils":253,"./ReactDOMComponentTree":271,"./ReactUpdates":324,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147,"object-assign":225}],285:[function(require,module,exports){
+},{"./DisabledInputUtils":197,"./LinkedValueUtils":207,"./ReactDOMComponentTree":225,"./ReactUpdates":278,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145,"object-assign":179}],239:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -47460,7 +46098,7 @@ module.exports = {
   traverseEnterLeave: traverseEnterLeave
 };
 }).call(this,require('_process'))
-},{"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],286:[function(require,module,exports){
+},{"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],240:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -47575,7 +46213,7 @@ var ReactDOMUnknownPropertyHook = {
 
 module.exports = ReactDOMUnknownPropertyHook;
 }).call(this,require('_process'))
-},{"./DOMProperty":239,"./EventPluginRegistry":247,"./ReactComponentTreeHook":264,"_process":227,"fbjs/lib/warning":147}],287:[function(require,module,exports){
+},{"./DOMProperty":193,"./EventPluginRegistry":201,"./ReactComponentTreeHook":218,"_process":181,"fbjs/lib/warning":145}],241:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2016-present, Facebook, Inc.
@@ -47879,7 +46517,7 @@ if (/[?&]react_perf\b/.test(url)) {
 
 module.exports = ReactDebugTool;
 }).call(this,require('_process'))
-},{"./ReactChildrenMutationWarningHook":259,"./ReactComponentTreeHook":264,"./ReactHostOperationHistoryHook":298,"./ReactInvalidSetStateWarningHook":303,"_process":227,"fbjs/lib/ExecutionEnvironment":124,"fbjs/lib/performanceNow":145,"fbjs/lib/warning":147}],288:[function(require,module,exports){
+},{"./ReactChildrenMutationWarningHook":213,"./ReactComponentTreeHook":218,"./ReactHostOperationHistoryHook":252,"./ReactInvalidSetStateWarningHook":257,"_process":181,"fbjs/lib/ExecutionEnvironment":122,"fbjs/lib/performanceNow":143,"fbjs/lib/warning":145}],242:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -47948,7 +46586,7 @@ var ReactDefaultBatchingStrategy = {
 };
 
 module.exports = ReactDefaultBatchingStrategy;
-},{"./ReactUpdates":324,"./Transaction":342,"fbjs/lib/emptyFunction":130,"object-assign":225}],289:[function(require,module,exports){
+},{"./ReactUpdates":278,"./Transaction":296,"fbjs/lib/emptyFunction":128,"object-assign":179}],243:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -48033,7 +46671,7 @@ function inject() {
 module.exports = {
   inject: inject
 };
-},{"./BeforeInputEventPlugin":231,"./ChangeEventPlugin":235,"./DefaultEventPluginOrder":242,"./EnterLeaveEventPlugin":244,"./HTMLDOMPropertyConfig":251,"./ReactComponentBrowserEnvironment":262,"./ReactDOMComponent":269,"./ReactDOMComponentTree":271,"./ReactDOMEmptyComponent":273,"./ReactDOMTextComponent":283,"./ReactDOMTreeTraversal":285,"./ReactDefaultBatchingStrategy":288,"./ReactEventListener":295,"./ReactInjection":299,"./ReactReconcileTransaction":316,"./SVGDOMPropertyConfig":326,"./SelectEventPlugin":327,"./SimpleEventPlugin":328}],290:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":185,"./ChangeEventPlugin":189,"./DefaultEventPluginOrder":196,"./EnterLeaveEventPlugin":198,"./HTMLDOMPropertyConfig":205,"./ReactComponentBrowserEnvironment":216,"./ReactDOMComponent":223,"./ReactDOMComponentTree":225,"./ReactDOMEmptyComponent":227,"./ReactDOMTextComponent":237,"./ReactDOMTreeTraversal":239,"./ReactDefaultBatchingStrategy":242,"./ReactEventListener":249,"./ReactInjection":253,"./ReactReconcileTransaction":270,"./SVGDOMPropertyConfig":280,"./SelectEventPlugin":281,"./SimpleEventPlugin":282}],244:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -48384,7 +47022,7 @@ ReactElement.REACT_ELEMENT_TYPE = REACT_ELEMENT_TYPE;
 
 module.exports = ReactElement;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":266,"./canDefineProperty":346,"_process":227,"fbjs/lib/warning":147,"object-assign":225}],291:[function(require,module,exports){
+},{"./ReactCurrentOwner":220,"./canDefineProperty":300,"_process":181,"fbjs/lib/warning":145,"object-assign":179}],245:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -48615,7 +47253,7 @@ var ReactElementValidator = {
 
 module.exports = ReactElementValidator;
 }).call(this,require('_process'))
-},{"./ReactComponentTreeHook":264,"./ReactCurrentOwner":266,"./ReactElement":290,"./ReactPropTypeLocations":312,"./canDefineProperty":346,"./checkReactTypeSpec":347,"./getIteratorFn":359,"_process":227,"fbjs/lib/warning":147}],292:[function(require,module,exports){
+},{"./ReactComponentTreeHook":218,"./ReactCurrentOwner":220,"./ReactElement":244,"./ReactPropTypeLocations":266,"./canDefineProperty":300,"./checkReactTypeSpec":301,"./getIteratorFn":313,"_process":181,"fbjs/lib/warning":145}],246:[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -48646,7 +47284,7 @@ var ReactEmptyComponent = {
 ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 
 module.exports = ReactEmptyComponent;
-},{}],293:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -48725,7 +47363,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactErrorUtils;
 }).call(this,require('_process'))
-},{"_process":227}],294:[function(require,module,exports){
+},{"_process":181}],248:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -48759,7 +47397,7 @@ var ReactEventEmitterMixin = {
 };
 
 module.exports = ReactEventEmitterMixin;
-},{"./EventPluginHub":246}],295:[function(require,module,exports){
+},{"./EventPluginHub":200}],249:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -48917,7 +47555,7 @@ var ReactEventListener = {
 };
 
 module.exports = ReactEventListener;
-},{"./PooledClass":254,"./ReactDOMComponentTree":271,"./ReactUpdates":324,"./getEventTarget":357,"fbjs/lib/EventListener":123,"fbjs/lib/ExecutionEnvironment":124,"fbjs/lib/getUnboundedScrollPosition":135,"object-assign":225}],296:[function(require,module,exports){
+},{"./PooledClass":208,"./ReactDOMComponentTree":225,"./ReactUpdates":278,"./getEventTarget":311,"fbjs/lib/EventListener":121,"fbjs/lib/ExecutionEnvironment":122,"fbjs/lib/getUnboundedScrollPosition":133,"object-assign":179}],250:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -48940,7 +47578,7 @@ var ReactFeatureFlags = {
 };
 
 module.exports = ReactFeatureFlags;
-},{}],297:[function(require,module,exports){
+},{}],251:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -49019,7 +47657,7 @@ var ReactHostComponent = {
 
 module.exports = ReactHostComponent;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"object-assign":225}],298:[function(require,module,exports){
+},{"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"object-assign":179}],252:[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -49057,7 +47695,7 @@ var ReactHostOperationHistoryHook = {
 };
 
 module.exports = ReactHostOperationHistoryHook;
-},{}],299:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -49094,7 +47732,7 @@ var ReactInjection = {
 };
 
 module.exports = ReactInjection;
-},{"./DOMProperty":239,"./EventPluginHub":246,"./EventPluginUtils":248,"./ReactBrowserEventEmitter":256,"./ReactClass":260,"./ReactComponentEnvironment":263,"./ReactEmptyComponent":292,"./ReactHostComponent":297,"./ReactUpdates":324}],300:[function(require,module,exports){
+},{"./DOMProperty":193,"./EventPluginHub":200,"./EventPluginUtils":202,"./ReactBrowserEventEmitter":210,"./ReactClass":214,"./ReactComponentEnvironment":217,"./ReactEmptyComponent":246,"./ReactHostComponent":251,"./ReactUpdates":278}],254:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -49219,7 +47857,7 @@ var ReactInputSelection = {
 };
 
 module.exports = ReactInputSelection;
-},{"./ReactDOMSelection":281,"fbjs/lib/containsNode":127,"fbjs/lib/focusNode":132,"fbjs/lib/getActiveElement":133}],301:[function(require,module,exports){
+},{"./ReactDOMSelection":235,"fbjs/lib/containsNode":125,"fbjs/lib/focusNode":130,"fbjs/lib/getActiveElement":131}],255:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -49268,7 +47906,7 @@ var ReactInstanceMap = {
 };
 
 module.exports = ReactInstanceMap;
-},{}],302:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2016-present, Facebook, Inc.
@@ -49292,7 +47930,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = { debugTool: debugTool };
 }).call(this,require('_process'))
-},{"./ReactDebugTool":287,"_process":227}],303:[function(require,module,exports){
+},{"./ReactDebugTool":241,"_process":181}],257:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2016-present, Facebook, Inc.
@@ -49331,7 +47969,7 @@ var ReactInvalidSetStateWarningHook = {
 
 module.exports = ReactInvalidSetStateWarningHook;
 }).call(this,require('_process'))
-},{"_process":227,"fbjs/lib/warning":147}],304:[function(require,module,exports){
+},{"_process":181,"fbjs/lib/warning":145}],258:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -49382,7 +48020,7 @@ var ReactMarkupChecksum = {
 };
 
 module.exports = ReactMarkupChecksum;
-},{"./adler32":345}],305:[function(require,module,exports){
+},{"./adler32":299}],259:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -49919,7 +48557,7 @@ var ReactMount = {
 
 module.exports = ReactMount;
 }).call(this,require('_process'))
-},{"./DOMLazyTree":237,"./DOMProperty":239,"./ReactBrowserEventEmitter":256,"./ReactCurrentOwner":266,"./ReactDOMComponentTree":271,"./ReactDOMContainerInfo":272,"./ReactDOMFeatureFlags":275,"./ReactElement":290,"./ReactFeatureFlags":296,"./ReactInstanceMap":301,"./ReactInstrumentation":302,"./ReactMarkupChecksum":304,"./ReactReconciler":317,"./ReactUpdateQueue":323,"./ReactUpdates":324,"./instantiateReactComponent":363,"./reactProdInvariant":368,"./setInnerHTML":370,"./shouldUpdateReactComponent":372,"_process":227,"fbjs/lib/emptyObject":131,"fbjs/lib/invariant":138,"fbjs/lib/warning":147}],306:[function(require,module,exports){
+},{"./DOMLazyTree":191,"./DOMProperty":193,"./ReactBrowserEventEmitter":210,"./ReactCurrentOwner":220,"./ReactDOMComponentTree":225,"./ReactDOMContainerInfo":226,"./ReactDOMFeatureFlags":229,"./ReactElement":244,"./ReactFeatureFlags":250,"./ReactInstanceMap":255,"./ReactInstrumentation":256,"./ReactMarkupChecksum":258,"./ReactReconciler":271,"./ReactUpdateQueue":277,"./ReactUpdates":278,"./instantiateReactComponent":317,"./reactProdInvariant":322,"./setInnerHTML":324,"./shouldUpdateReactComponent":326,"_process":181,"fbjs/lib/emptyObject":129,"fbjs/lib/invariant":136,"fbjs/lib/warning":145}],260:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -50373,7 +49011,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 }).call(this,require('_process'))
-},{"./ReactChildReconciler":257,"./ReactComponentEnvironment":263,"./ReactCurrentOwner":266,"./ReactInstanceMap":301,"./ReactInstrumentation":302,"./ReactMultiChildUpdateTypes":307,"./ReactReconciler":317,"./flattenChildren":352,"./reactProdInvariant":368,"_process":227,"fbjs/lib/emptyFunction":130,"fbjs/lib/invariant":138}],307:[function(require,module,exports){
+},{"./ReactChildReconciler":211,"./ReactComponentEnvironment":217,"./ReactCurrentOwner":220,"./ReactInstanceMap":255,"./ReactInstrumentation":256,"./ReactMultiChildUpdateTypes":261,"./ReactReconciler":271,"./flattenChildren":306,"./reactProdInvariant":322,"_process":181,"fbjs/lib/emptyFunction":128,"fbjs/lib/invariant":136}],261:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -50406,7 +49044,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 });
 
 module.exports = ReactMultiChildUpdateTypes;
-},{"fbjs/lib/keyMirror":141}],308:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":139}],262:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -50449,7 +49087,7 @@ var ReactNodeTypes = {
 
 module.exports = ReactNodeTypes;
 }).call(this,require('_process'))
-},{"./ReactElement":290,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],309:[function(require,module,exports){
+},{"./ReactElement":244,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],263:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -50548,7 +49186,7 @@ var ReactNoopUpdateQueue = {
 
 module.exports = ReactNoopUpdateQueue;
 }).call(this,require('_process'))
-},{"_process":227,"fbjs/lib/warning":147}],310:[function(require,module,exports){
+},{"_process":181,"fbjs/lib/warning":145}],264:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -50645,7 +49283,7 @@ var ReactOwner = {
 
 module.exports = ReactOwner;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],311:[function(require,module,exports){
+},{"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],265:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -50672,7 +49310,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactPropTypeLocationNames;
 }).call(this,require('_process'))
-},{"_process":227}],312:[function(require,module,exports){
+},{"_process":181}],266:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -50695,7 +49333,7 @@ var ReactPropTypeLocations = keyMirror({
 });
 
 module.exports = ReactPropTypeLocations;
-},{"fbjs/lib/keyMirror":141}],313:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":139}],267:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -51129,7 +49767,7 @@ function getClassName(propValue) {
 
 module.exports = ReactPropTypes;
 }).call(this,require('_process'))
-},{"./ReactElement":290,"./ReactPropTypeLocationNames":311,"./ReactPropTypesSecret":314,"./getIteratorFn":359,"_process":227,"fbjs/lib/emptyFunction":130,"fbjs/lib/warning":147}],314:[function(require,module,exports){
+},{"./ReactElement":244,"./ReactPropTypeLocationNames":265,"./ReactPropTypesSecret":268,"./getIteratorFn":313,"_process":181,"fbjs/lib/emptyFunction":128,"fbjs/lib/warning":145}],268:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -51146,7 +49784,7 @@ module.exports = ReactPropTypes;
 var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
-},{}],315:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -51189,7 +49827,7 @@ _assign(ReactPureComponent.prototype, ReactComponent.prototype);
 ReactPureComponent.prototype.isPureReactComponent = true;
 
 module.exports = ReactPureComponent;
-},{"./ReactComponent":261,"./ReactNoopUpdateQueue":309,"fbjs/lib/emptyObject":131,"object-assign":225}],316:[function(require,module,exports){
+},{"./ReactComponent":215,"./ReactNoopUpdateQueue":263,"fbjs/lib/emptyObject":129,"object-assign":179}],270:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -51370,7 +50008,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 }).call(this,require('_process'))
-},{"./CallbackQueue":234,"./PooledClass":254,"./ReactBrowserEventEmitter":256,"./ReactInputSelection":300,"./ReactInstrumentation":302,"./ReactUpdateQueue":323,"./Transaction":342,"_process":227,"object-assign":225}],317:[function(require,module,exports){
+},{"./CallbackQueue":188,"./PooledClass":208,"./ReactBrowserEventEmitter":210,"./ReactInputSelection":254,"./ReactInstrumentation":256,"./ReactUpdateQueue":277,"./Transaction":296,"_process":181,"object-assign":179}],271:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -51541,7 +50179,7 @@ var ReactReconciler = {
 
 module.exports = ReactReconciler;
 }).call(this,require('_process'))
-},{"./ReactInstrumentation":302,"./ReactRef":318,"_process":227,"fbjs/lib/warning":147}],318:[function(require,module,exports){
+},{"./ReactInstrumentation":256,"./ReactRef":272,"_process":181,"fbjs/lib/warning":145}],272:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -51622,7 +50260,7 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-},{"./ReactOwner":310}],319:[function(require,module,exports){
+},{"./ReactOwner":264}],273:[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -51645,7 +50283,7 @@ var ReactServerBatchingStrategy = {
 };
 
 module.exports = ReactServerBatchingStrategy;
-},{}],320:[function(require,module,exports){
+},{}],274:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -51738,7 +50376,7 @@ module.exports = {
   renderToStaticMarkup: renderToStaticMarkup
 };
 }).call(this,require('_process'))
-},{"./ReactDOMContainerInfo":272,"./ReactDefaultBatchingStrategy":288,"./ReactElement":290,"./ReactInstrumentation":302,"./ReactMarkupChecksum":304,"./ReactReconciler":317,"./ReactServerBatchingStrategy":319,"./ReactServerRenderingTransaction":321,"./ReactUpdates":324,"./instantiateReactComponent":363,"./reactProdInvariant":368,"_process":227,"fbjs/lib/emptyObject":131,"fbjs/lib/invariant":138}],321:[function(require,module,exports){
+},{"./ReactDOMContainerInfo":226,"./ReactDefaultBatchingStrategy":242,"./ReactElement":244,"./ReactInstrumentation":256,"./ReactMarkupChecksum":258,"./ReactReconciler":271,"./ReactServerBatchingStrategy":273,"./ReactServerRenderingTransaction":275,"./ReactUpdates":278,"./instantiateReactComponent":317,"./reactProdInvariant":322,"_process":181,"fbjs/lib/emptyObject":129,"fbjs/lib/invariant":136}],275:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -51831,7 +50469,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 }).call(this,require('_process'))
-},{"./PooledClass":254,"./ReactInstrumentation":302,"./ReactServerUpdateQueue":322,"./Transaction":342,"_process":227,"object-assign":225}],322:[function(require,module,exports){
+},{"./PooledClass":208,"./ReactInstrumentation":256,"./ReactServerUpdateQueue":276,"./Transaction":296,"_process":181,"object-assign":179}],276:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -51975,7 +50613,7 @@ var ReactServerUpdateQueue = function () {
 
 module.exports = ReactServerUpdateQueue;
 }).call(this,require('_process'))
-},{"./ReactUpdateQueue":323,"./Transaction":342,"_process":227,"fbjs/lib/warning":147}],323:[function(require,module,exports){
+},{"./ReactUpdateQueue":277,"./Transaction":296,"_process":181,"fbjs/lib/warning":145}],277:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -52204,7 +50842,7 @@ var ReactUpdateQueue = {
 
 module.exports = ReactUpdateQueue;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":266,"./ReactInstanceMap":301,"./ReactInstrumentation":302,"./ReactUpdates":324,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147}],324:[function(require,module,exports){
+},{"./ReactCurrentOwner":220,"./ReactInstanceMap":255,"./ReactInstrumentation":256,"./ReactUpdates":278,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145}],278:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -52458,7 +51096,7 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 }).call(this,require('_process'))
-},{"./CallbackQueue":234,"./PooledClass":254,"./ReactFeatureFlags":296,"./ReactReconciler":317,"./Transaction":342,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"object-assign":225}],325:[function(require,module,exports){
+},{"./CallbackQueue":188,"./PooledClass":208,"./ReactFeatureFlags":250,"./ReactReconciler":271,"./Transaction":296,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"object-assign":179}],279:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52473,7 +51111,7 @@ module.exports = ReactUpdates;
 'use strict';
 
 module.exports = '15.3.2';
-},{}],326:[function(require,module,exports){
+},{}],280:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52776,7 +51414,7 @@ Object.keys(ATTRS).forEach(function (key) {
 });
 
 module.exports = SVGDOMPropertyConfig;
-},{}],327:[function(require,module,exports){
+},{}],281:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52973,7 +51611,7 @@ var SelectEventPlugin = {
 };
 
 module.exports = SelectEventPlugin;
-},{"./EventConstants":245,"./EventPropagators":249,"./ReactDOMComponentTree":271,"./ReactInputSelection":300,"./SyntheticEvent":333,"./isTextInputElement":365,"fbjs/lib/ExecutionEnvironment":124,"fbjs/lib/getActiveElement":133,"fbjs/lib/keyOf":142,"fbjs/lib/shallowEqual":146}],328:[function(require,module,exports){
+},{"./EventConstants":199,"./EventPropagators":203,"./ReactDOMComponentTree":225,"./ReactInputSelection":254,"./SyntheticEvent":287,"./isTextInputElement":319,"fbjs/lib/ExecutionEnvironment":122,"fbjs/lib/getActiveElement":131,"fbjs/lib/keyOf":140,"fbjs/lib/shallowEqual":144}],282:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -53611,7 +52249,7 @@ var SimpleEventPlugin = {
 
 module.exports = SimpleEventPlugin;
 }).call(this,require('_process'))
-},{"./EventConstants":245,"./EventPropagators":249,"./ReactDOMComponentTree":271,"./SyntheticAnimationEvent":329,"./SyntheticClipboardEvent":330,"./SyntheticDragEvent":332,"./SyntheticEvent":333,"./SyntheticFocusEvent":334,"./SyntheticKeyboardEvent":336,"./SyntheticMouseEvent":337,"./SyntheticTouchEvent":338,"./SyntheticTransitionEvent":339,"./SyntheticUIEvent":340,"./SyntheticWheelEvent":341,"./getEventCharCode":354,"./reactProdInvariant":368,"_process":227,"fbjs/lib/EventListener":123,"fbjs/lib/emptyFunction":130,"fbjs/lib/invariant":138,"fbjs/lib/keyOf":142}],329:[function(require,module,exports){
+},{"./EventConstants":199,"./EventPropagators":203,"./ReactDOMComponentTree":225,"./SyntheticAnimationEvent":283,"./SyntheticClipboardEvent":284,"./SyntheticDragEvent":286,"./SyntheticEvent":287,"./SyntheticFocusEvent":288,"./SyntheticKeyboardEvent":290,"./SyntheticMouseEvent":291,"./SyntheticTouchEvent":292,"./SyntheticTransitionEvent":293,"./SyntheticUIEvent":294,"./SyntheticWheelEvent":295,"./getEventCharCode":308,"./reactProdInvariant":322,"_process":181,"fbjs/lib/EventListener":121,"fbjs/lib/emptyFunction":128,"fbjs/lib/invariant":136,"fbjs/lib/keyOf":140}],283:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53651,7 +52289,7 @@ function SyntheticAnimationEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticAnimationEvent, AnimationEventInterface);
 
 module.exports = SyntheticAnimationEvent;
-},{"./SyntheticEvent":333}],330:[function(require,module,exports){
+},{"./SyntheticEvent":287}],284:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53690,7 +52328,7 @@ function SyntheticClipboardEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
-},{"./SyntheticEvent":333}],331:[function(require,module,exports){
+},{"./SyntheticEvent":287}],285:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53727,7 +52365,7 @@ function SyntheticCompositionEvent(dispatchConfig, dispatchMarker, nativeEvent, 
 SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface);
 
 module.exports = SyntheticCompositionEvent;
-},{"./SyntheticEvent":333}],332:[function(require,module,exports){
+},{"./SyntheticEvent":287}],286:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53764,7 +52402,7 @@ function SyntheticDragEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeE
 SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
-},{"./SyntheticMouseEvent":337}],333:[function(require,module,exports){
+},{"./SyntheticMouseEvent":291}],287:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -54035,7 +52673,7 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
   }
 }
 }).call(this,require('_process'))
-},{"./PooledClass":254,"_process":227,"fbjs/lib/emptyFunction":130,"fbjs/lib/warning":147,"object-assign":225}],334:[function(require,module,exports){
+},{"./PooledClass":208,"_process":181,"fbjs/lib/emptyFunction":128,"fbjs/lib/warning":145,"object-assign":179}],288:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54072,7 +52710,7 @@ function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
-},{"./SyntheticUIEvent":340}],335:[function(require,module,exports){
+},{"./SyntheticUIEvent":294}],289:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54110,7 +52748,7 @@ function SyntheticInputEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 
 module.exports = SyntheticInputEvent;
-},{"./SyntheticEvent":333}],336:[function(require,module,exports){
+},{"./SyntheticEvent":287}],290:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54195,7 +52833,7 @@ function SyntheticKeyboardEvent(dispatchConfig, dispatchMarker, nativeEvent, nat
 SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
-},{"./SyntheticUIEvent":340,"./getEventCharCode":354,"./getEventKey":355,"./getEventModifierState":356}],337:[function(require,module,exports){
+},{"./SyntheticUIEvent":294,"./getEventCharCode":308,"./getEventKey":309,"./getEventModifierState":310}],291:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54268,7 +52906,7 @@ function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
-},{"./SyntheticUIEvent":340,"./ViewportMetrics":343,"./getEventModifierState":356}],338:[function(require,module,exports){
+},{"./SyntheticUIEvent":294,"./ViewportMetrics":297,"./getEventModifierState":310}],292:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54314,7 +52952,7 @@ function SyntheticTouchEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
-},{"./SyntheticUIEvent":340,"./getEventModifierState":356}],339:[function(require,module,exports){
+},{"./SyntheticUIEvent":294,"./getEventModifierState":310}],293:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54354,7 +52992,7 @@ function SyntheticTransitionEvent(dispatchConfig, dispatchMarker, nativeEvent, n
 SyntheticEvent.augmentClass(SyntheticTransitionEvent, TransitionEventInterface);
 
 module.exports = SyntheticTransitionEvent;
-},{"./SyntheticEvent":333}],340:[function(require,module,exports){
+},{"./SyntheticEvent":287}],294:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54414,7 +53052,7 @@ function SyntheticUIEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEve
 SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
-},{"./SyntheticEvent":333,"./getEventTarget":357}],341:[function(require,module,exports){
+},{"./SyntheticEvent":287,"./getEventTarget":311}],295:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54469,7 +53107,7 @@ function SyntheticWheelEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
-},{"./SyntheticMouseEvent":337}],342:[function(require,module,exports){
+},{"./SyntheticMouseEvent":291}],296:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -54705,7 +53343,7 @@ var Transaction = {
 
 module.exports = Transaction;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],343:[function(require,module,exports){
+},{"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],297:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54733,7 +53371,7 @@ var ViewportMetrics = {
 };
 
 module.exports = ViewportMetrics;
-},{}],344:[function(require,module,exports){
+},{}],298:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -54794,7 +53432,7 @@ function accumulateInto(current, next) {
 
 module.exports = accumulateInto;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],345:[function(require,module,exports){
+},{"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],299:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54839,7 +53477,7 @@ function adler32(data) {
 }
 
 module.exports = adler32;
-},{}],346:[function(require,module,exports){
+},{}],300:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -54866,7 +53504,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = canDefineProperty;
 }).call(this,require('_process'))
-},{"_process":227}],347:[function(require,module,exports){
+},{"_process":181}],301:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -54956,7 +53594,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
 module.exports = checkReactTypeSpec;
 }).call(this,require('_process'))
-},{"./ReactComponentTreeHook":264,"./ReactPropTypeLocationNames":311,"./ReactPropTypesSecret":314,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147}],348:[function(require,module,exports){
+},{"./ReactComponentTreeHook":218,"./ReactPropTypeLocationNames":265,"./ReactPropTypesSecret":268,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145}],302:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54989,7 +53627,7 @@ var createMicrosoftUnsafeLocalFunction = function (func) {
 };
 
 module.exports = createMicrosoftUnsafeLocalFunction;
-},{}],349:[function(require,module,exports){
+},{}],303:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -55071,7 +53709,7 @@ function dangerousStyleValue(name, value, component) {
 
 module.exports = dangerousStyleValue;
 }).call(this,require('_process'))
-},{"./CSSProperty":232,"_process":227,"fbjs/lib/warning":147}],350:[function(require,module,exports){
+},{"./CSSProperty":186,"_process":181,"fbjs/lib/warning":145}],304:[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -55195,7 +53833,7 @@ function escapeTextContentForBrowser(text) {
 }
 
 module.exports = escapeTextContentForBrowser;
-},{}],351:[function(require,module,exports){
+},{}],305:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -55258,7 +53896,7 @@ function findDOMNode(componentOrElement) {
 
 module.exports = findDOMNode;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":266,"./ReactDOMComponentTree":271,"./ReactInstanceMap":301,"./getHostComponentFromComposite":358,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147}],352:[function(require,module,exports){
+},{"./ReactCurrentOwner":220,"./ReactDOMComponentTree":225,"./ReactInstanceMap":255,"./getHostComponentFromComposite":312,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145}],306:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -55337,7 +53975,7 @@ function flattenChildren(children, selfDebugID) {
 
 module.exports = flattenChildren;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":252,"./ReactComponentTreeHook":264,"./traverseAllChildren":373,"_process":227,"fbjs/lib/warning":147}],353:[function(require,module,exports){
+},{"./KeyEscapeUtils":206,"./ReactComponentTreeHook":218,"./traverseAllChildren":327,"_process":181,"fbjs/lib/warning":145}],307:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55369,7 +54007,7 @@ function forEachAccumulated(arr, cb, scope) {
 }
 
 module.exports = forEachAccumulated;
-},{}],354:[function(require,module,exports){
+},{}],308:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55420,7 +54058,7 @@ function getEventCharCode(nativeEvent) {
 }
 
 module.exports = getEventCharCode;
-},{}],355:[function(require,module,exports){
+},{}],309:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55523,7 +54161,7 @@ function getEventKey(nativeEvent) {
 }
 
 module.exports = getEventKey;
-},{"./getEventCharCode":354}],356:[function(require,module,exports){
+},{"./getEventCharCode":308}],310:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55567,7 +54205,7 @@ function getEventModifierState(nativeEvent) {
 }
 
 module.exports = getEventModifierState;
-},{}],357:[function(require,module,exports){
+},{}],311:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55603,7 +54241,7 @@ function getEventTarget(nativeEvent) {
 }
 
 module.exports = getEventTarget;
-},{}],358:[function(require,module,exports){
+},{}],312:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55634,7 +54272,7 @@ function getHostComponentFromComposite(inst) {
 }
 
 module.exports = getHostComponentFromComposite;
-},{"./ReactNodeTypes":308}],359:[function(require,module,exports){
+},{"./ReactNodeTypes":262}],313:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55676,7 +54314,7 @@ function getIteratorFn(maybeIterable) {
 }
 
 module.exports = getIteratorFn;
-},{}],360:[function(require,module,exports){
+},{}],314:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55751,7 +54389,7 @@ function getNodeForCharacterOffset(root, offset) {
 }
 
 module.exports = getNodeForCharacterOffset;
-},{}],361:[function(require,module,exports){
+},{}],315:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55785,7 +54423,7 @@ function getTextContentAccessor() {
 }
 
 module.exports = getTextContentAccessor;
-},{"fbjs/lib/ExecutionEnvironment":124}],362:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":122}],316:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55887,7 +54525,7 @@ function getVendorPrefixedEventName(eventName) {
 }
 
 module.exports = getVendorPrefixedEventName;
-},{"fbjs/lib/ExecutionEnvironment":124}],363:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":122}],317:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -56009,7 +54647,7 @@ function instantiateReactComponent(node, shouldHaveDebugID) {
 
 module.exports = instantiateReactComponent;
 }).call(this,require('_process'))
-},{"./ReactCompositeComponent":265,"./ReactEmptyComponent":292,"./ReactHostComponent":297,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147,"object-assign":225}],364:[function(require,module,exports){
+},{"./ReactCompositeComponent":219,"./ReactEmptyComponent":246,"./ReactHostComponent":251,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145,"object-assign":179}],318:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -56070,7 +54708,7 @@ function isEventSupported(eventNameSuffix, capture) {
 }
 
 module.exports = isEventSupported;
-},{"fbjs/lib/ExecutionEnvironment":124}],365:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":122}],319:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -56122,7 +54760,7 @@ function isTextInputElement(elem) {
 }
 
 module.exports = isTextInputElement;
-},{}],366:[function(require,module,exports){
+},{}],320:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -56163,7 +54801,7 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 }).call(this,require('_process'))
-},{"./ReactElement":290,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138}],367:[function(require,module,exports){
+},{"./ReactElement":244,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136}],321:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -56190,7 +54828,7 @@ function quoteAttributeValueForBrowser(value) {
 }
 
 module.exports = quoteAttributeValueForBrowser;
-},{"./escapeTextContentForBrowser":350}],368:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":304}],322:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -56230,7 +54868,7 @@ function reactProdInvariant(code) {
 }
 
 module.exports = reactProdInvariant;
-},{}],369:[function(require,module,exports){
+},{}],323:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -56247,7 +54885,7 @@ module.exports = reactProdInvariant;
 var ReactMount = require('./ReactMount');
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
-},{"./ReactMount":305}],370:[function(require,module,exports){
+},{"./ReactMount":259}],324:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -56346,7 +54984,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setInnerHTML;
-},{"./DOMNamespaces":238,"./createMicrosoftUnsafeLocalFunction":348,"fbjs/lib/ExecutionEnvironment":124}],371:[function(require,module,exports){
+},{"./DOMNamespaces":192,"./createMicrosoftUnsafeLocalFunction":302,"fbjs/lib/ExecutionEnvironment":122}],325:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -56395,7 +55033,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setTextContent;
-},{"./escapeTextContentForBrowser":350,"./setInnerHTML":370,"fbjs/lib/ExecutionEnvironment":124}],372:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":304,"./setInnerHTML":324,"fbjs/lib/ExecutionEnvironment":122}],326:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -56438,7 +55076,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 }
 
 module.exports = shouldUpdateReactComponent;
-},{}],373:[function(require,module,exports){
+},{}],327:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -56608,7 +55246,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":252,"./ReactCurrentOwner":266,"./ReactElement":290,"./getIteratorFn":359,"./reactProdInvariant":368,"_process":227,"fbjs/lib/invariant":138,"fbjs/lib/warning":147}],374:[function(require,module,exports){
+},{"./KeyEscapeUtils":206,"./ReactCurrentOwner":220,"./ReactElement":244,"./getIteratorFn":313,"./reactProdInvariant":322,"_process":181,"fbjs/lib/invariant":136,"fbjs/lib/warning":145}],328:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -56993,15 +55631,15 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = validateDOMNesting;
 }).call(this,require('_process'))
-},{"_process":227,"fbjs/lib/emptyFunction":130,"fbjs/lib/warning":147,"object-assign":225}],375:[function(require,module,exports){
+},{"_process":181,"fbjs/lib/emptyFunction":128,"fbjs/lib/warning":145,"object-assign":179}],329:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":255}],376:[function(require,module,exports){
+},{"./lib/React":209}],330:[function(require,module,exports){
 module.exports = require("./lib/_stream_duplex.js")
 
-},{"./lib/_stream_duplex.js":377}],377:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":331}],331:[function(require,module,exports){
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -57077,7 +55715,7 @@ function forEach(xs, f) {
     f(xs[i], i);
   }
 }
-},{"./_stream_readable":379,"./_stream_writable":381,"core-util-is":35,"inherits":161,"process-nextick-args":226}],378:[function(require,module,exports){
+},{"./_stream_readable":333,"./_stream_writable":335,"core-util-is":35,"inherits":159,"process-nextick-args":180}],332:[function(require,module,exports){
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -57104,7 +55742,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":380,"core-util-is":35,"inherits":161}],379:[function(require,module,exports){
+},{"./_stream_transform":334,"core-util-is":35,"inherits":159}],333:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -58044,7 +56682,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":377,"./internal/streams/BufferList":382,"_process":227,"buffer":23,"buffer-shims":22,"core-util-is":35,"events":122,"inherits":161,"isarray":164,"process-nextick-args":226,"string_decoder/":442,"util":21}],380:[function(require,module,exports){
+},{"./_stream_duplex":331,"./internal/streams/BufferList":336,"_process":181,"buffer":23,"buffer-shims":22,"core-util-is":35,"events":120,"inherits":159,"isarray":162,"process-nextick-args":180,"string_decoder/":398,"util":21}],334:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -58225,7 +56863,7 @@ function done(stream, er) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":377,"core-util-is":35,"inherits":161}],381:[function(require,module,exports){
+},{"./_stream_duplex":331,"core-util-is":35,"inherits":159}],335:[function(require,module,exports){
 (function (process){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
@@ -58754,7 +57392,7 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":377,"_process":227,"buffer":23,"buffer-shims":22,"core-util-is":35,"events":122,"inherits":161,"process-nextick-args":226,"util-deprecate":445}],382:[function(require,module,exports){
+},{"./_stream_duplex":331,"_process":181,"buffer":23,"buffer-shims":22,"core-util-is":35,"events":120,"inherits":159,"process-nextick-args":180,"util-deprecate":400}],336:[function(require,module,exports){
 'use strict';
 
 var Buffer = require('buffer').Buffer;
@@ -58819,10 +57457,10 @@ BufferList.prototype.concat = function (n) {
   }
   return ret;
 };
-},{"buffer":23,"buffer-shims":22}],383:[function(require,module,exports){
+},{"buffer":23,"buffer-shims":22}],337:[function(require,module,exports){
 module.exports = require("./lib/_stream_passthrough.js")
 
-},{"./lib/_stream_passthrough.js":378}],384:[function(require,module,exports){
+},{"./lib/_stream_passthrough.js":332}],338:[function(require,module,exports){
 (function (process){
 var Stream = (function (){
   try {
@@ -58842,13 +57480,13 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
 }
 
 }).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":377,"./lib/_stream_passthrough.js":378,"./lib/_stream_readable.js":379,"./lib/_stream_transform.js":380,"./lib/_stream_writable.js":381,"_process":227}],385:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":331,"./lib/_stream_passthrough.js":332,"./lib/_stream_readable.js":333,"./lib/_stream_transform.js":334,"./lib/_stream_writable.js":335,"_process":181}],339:[function(require,module,exports){
 module.exports = require("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":380}],386:[function(require,module,exports){
+},{"./lib/_stream_transform.js":334}],340:[function(require,module,exports){
 module.exports = require("./lib/_stream_writable.js")
 
-},{"./lib/_stream_writable.js":381}],387:[function(require,module,exports){
+},{"./lib/_stream_writable.js":335}],341:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -58902,10 +57540,6 @@ var _getWindow2 = _interopRequireDefault(_getWindow);
 var _keycode = require('keycode');
 
 var _keycode2 = _interopRequireDefault(_keycode);
-
-var _noop = require('../utils/noop');
-
-var _noop2 = _interopRequireDefault(_noop);
 
 var _environment = require('../constants/environment');
 
@@ -59028,13 +57662,13 @@ var Content = function (_React$Component) {
     /**
      * On before input, bubble up.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On blur, update the selection to be not focused.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
@@ -59046,7 +57680,7 @@ var Content = function (_React$Component) {
     /**
      * On composition start, set the `isComposing` flag.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
@@ -59054,69 +57688,75 @@ var Content = function (_React$Component) {
      * increment the `forces` key, which will force the contenteditable element
      * to completely re-render, since IME puts React in an unreconcilable state.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On copy, defer to `onCutCopy`, then bubble up.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On cut, defer to `onCutCopy`, then bubble up.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On drag end, unset the `isDragging` flag.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On drag over, set the `isDragging` flag and the `isInternalDrag` flag.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On drag start, set the `isDragging` flag and the `isInternalDrag` flag.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On drop.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On input, handle spellcheck and other similar edits that don't go trigger
      * the `onBeforeInput` and instead update the DOM directly.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On key down, prevent the default behavior of certain commands that will
      * leave the editor in an out-of-sync state, then bubble up.
      *
-     * @param {Event} e
+     * @param {Event} event
+     */
+
+    /**
+     * On key up, unset the `isShifting` flag.
+     *
+     * @param {Event} event
      */
 
     /**
      * On paste, determine the type and bubble up.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
      * On select, update the current state's selection.
      *
-     * @param {Event} e
+     * @param {Event} event
      */
 
     /**
@@ -59199,28 +57839,28 @@ var _initialiseProps = function _initialiseProps() {
     var element = _this2.element;
     var target = event.target;
 
-    return target.isContentEditable && (target === element || target.closest('[contenteditable]') == element);
+    return target.isContentEditable && (target === element || target.closest('[data-slate-editor]') === element);
   };
 
-  this.onBeforeInput = function (e) {
+  this.onBeforeInput = function (event) {
     if (_this2.props.readOnly) return;
-    if (!_this2.isInContentEditable(e)) return;
+    if (!_this2.isInContentEditable(event)) return;
 
     var data = {};
 
-    debug('onBeforeInput', data);
-    _this2.props.onBeforeInput(e, data);
+    debug('onBeforeInput', { event: event, data: data });
+    _this2.props.onBeforeInput(event, data);
   };
 
-  this.onBlur = function (e) {
+  this.onBlur = function (event) {
     if (_this2.props.readOnly) return;
     if (_this2.tmp.isCopying) return;
-    if (!_this2.isInContentEditable(e)) return;
+    if (!_this2.isInContentEditable(event)) return;
 
     var data = {};
 
-    debug('onBlur', data);
-    _this2.props.onBlur(e, data);
+    debug('onBlur', { event: event, data: data });
+    _this2.props.onBlur(event, data);
   };
 
   this.onChange = function (state) {
@@ -59228,17 +57868,17 @@ var _initialiseProps = function _initialiseProps() {
     _this2.props.onChange(state);
   };
 
-  this.onCompositionStart = function (e) {
-    if (!_this2.isInContentEditable(e)) return;
+  this.onCompositionStart = function (event) {
+    if (!_this2.isInContentEditable(event)) return;
 
     _this2.tmp.isComposing = true;
     _this2.tmp.compositions++;
 
-    debug('onCompositionStart');
+    debug('onCompositionStart', { event: event });
   };
 
-  this.onCompositionEnd = function (e) {
-    if (!_this2.isInContentEditable(e)) return;
+  this.onCompositionEnd = function (event) {
+    if (!_this2.isInContentEditable(event)) return;
 
     _this2.forces++;
     var count = _this2.tmp.compositions;
@@ -59251,12 +57891,12 @@ var _initialiseProps = function _initialiseProps() {
       _this2.tmp.isComposing = false;
     });
 
-    debug('onCompositionEnd');
+    debug('onCompositionEnd', { event: event });
   };
 
-  this.onCopy = function (e) {
-    if (!_this2.isInContentEditable(e)) return;
-    var window = (0, _getWindow2.default)(e.target);
+  this.onCopy = function (event) {
+    if (!_this2.isInContentEditable(event)) return;
+    var window = (0, _getWindow2.default)(event.target);
 
     _this2.tmp.isCopying = true;
     window.requestAnimationFrame(function () {
@@ -59269,14 +57909,14 @@ var _initialiseProps = function _initialiseProps() {
     data.type = 'fragment';
     data.fragment = state.fragment;
 
-    debug('onCopy', data);
-    _this2.props.onCopy(e, data);
+    debug('onCopy', { event: event, data: data });
+    _this2.props.onCopy(event, data);
   };
 
-  this.onCut = function (e) {
+  this.onCut = function (event) {
     if (_this2.props.readOnly) return;
-    if (!_this2.isInContentEditable(e)) return;
-    var window = (0, _getWindow2.default)(e.target);
+    if (!_this2.isInContentEditable(event)) return;
+    var window = (0, _getWindow2.default)(event.target);
 
     _this2.tmp.isCopying = true;
     window.requestAnimationFrame(function () {
@@ -59289,44 +57929,44 @@ var _initialiseProps = function _initialiseProps() {
     data.type = 'fragment';
     data.fragment = state.fragment;
 
-    debug('onCut', data);
-    _this2.props.onCut(e, data);
+    debug('onCut', { event: event, data: data });
+    _this2.props.onCut(event, data);
   };
 
-  this.onDragEnd = function (e) {
-    if (!_this2.isInContentEditable(e)) return;
+  this.onDragEnd = function (event) {
+    if (!_this2.isInContentEditable(event)) return;
 
     _this2.tmp.isDragging = false;
     _this2.tmp.isInternalDrag = null;
 
-    debug('onDragEnd');
+    debug('onDragEnd', { event: event });
   };
 
-  this.onDragOver = function (e) {
-    if (!_this2.isInContentEditable(e)) return;
+  this.onDragOver = function (event) {
+    if (!_this2.isInContentEditable(event)) return;
 
-    var dataTransfer = e.nativeEvent.dataTransfer;
+    var dataTransfer = event.nativeEvent.dataTransfer;
 
     var transfer = new _transfer2.default(dataTransfer);
 
     // Prevent default when nodes are dragged to allow dropping.
     if (transfer.getType() == 'node') {
-      e.preventDefault();
+      event.preventDefault();
     }
 
     if (_this2.tmp.isDragging) return;
     _this2.tmp.isDragging = true;
     _this2.tmp.isInternalDrag = false;
 
-    debug('onDragOver');
+    debug('onDragOver', { event: event });
   };
 
-  this.onDragStart = function (e) {
-    if (!_this2.isInContentEditable(e)) return;
+  this.onDragStart = function (event) {
+    if (!_this2.isInContentEditable(event)) return;
 
     _this2.tmp.isDragging = true;
     _this2.tmp.isInternalDrag = true;
-    var dataTransfer = e.nativeEvent.dataTransfer;
+    var dataTransfer = event.nativeEvent.dataTransfer;
 
     var transfer = new _transfer2.default(dataTransfer);
 
@@ -59339,21 +57979,21 @@ var _initialiseProps = function _initialiseProps() {
     var encoded = _base2.default.serializeNode(fragment);
     dataTransfer.setData(_types2.default.FRAGMENT, encoded);
 
-    debug('onDragStart');
+    debug('onDragStart', { event: event });
   };
 
-  this.onDrop = function (e) {
+  this.onDrop = function (event) {
     if (_this2.props.readOnly) return;
-    if (!_this2.isInContentEditable(e)) return;
+    if (!_this2.isInContentEditable(event)) return;
 
-    e.preventDefault();
+    event.preventDefault();
 
-    var window = (0, _getWindow2.default)(e.target);
+    var window = (0, _getWindow2.default)(event.target);
     var state = _this2.props.state;
-    var _e$nativeEvent = e.nativeEvent,
-        dataTransfer = _e$nativeEvent.dataTransfer,
-        x = _e$nativeEvent.x,
-        y = _e$nativeEvent.y;
+    var nativeEvent = event.nativeEvent;
+    var dataTransfer = nativeEvent.dataTransfer,
+        x = nativeEvent.x,
+        y = nativeEvent.y;
 
     var transfer = new _transfer2.default(dataTransfer);
     var data = transfer.getData();
@@ -59366,7 +58006,7 @@ var _initialiseProps = function _initialiseProps() {
       range = window.document.caretRangeFromPoint(x, y);
     } else {
       range = window.document.createRange();
-      range.setStart(e.nativeEvent.rangeParent, e.nativeEvent.rangeOffset);
+      range.setStart(nativeEvent.rangeParent, nativeEvent.rangeOffset);
     }
 
     var startNode = range.startContainer;
@@ -59391,17 +58031,17 @@ var _initialiseProps = function _initialiseProps() {
       data.isInternal = _this2.tmp.isInternalDrag;
     }
 
-    debug('onDrop', data);
-    _this2.props.onDrop(e, data);
+    debug('onDrop', { event: event, data: data });
+    _this2.props.onDrop(event, data);
   };
 
-  this.onInput = function (e) {
+  this.onInput = function (event) {
     if (_this2.tmp.isComposing) return;
     if (_this2.props.state.isBlurred) return;
-    if (!_this2.isInContentEditable(e)) return;
-    debug('onInput');
+    if (!_this2.isInContentEditable(event)) return;
+    debug('onInput', { event: event });
 
-    var window = (0, _getWindow2.default)(e.target);
+    var window = (0, _getWindow2.default)(event.target);
 
     // Get the selection point.
     var native = window.getSelection();
@@ -59466,63 +58106,90 @@ var _initialiseProps = function _initialiseProps() {
     _this2.onChange(next);
   };
 
-  this.onKeyDown = function (e) {
+  this.onKeyDown = function (event) {
     if (_this2.props.readOnly) return;
-    if (!_this2.isInContentEditable(e)) return;
+    if (!_this2.isInContentEditable(event)) return;
 
-    var key = (0, _keycode2.default)(e.which);
+    var altKey = event.altKey,
+        ctrlKey = event.ctrlKey,
+        metaKey = event.metaKey,
+        shiftKey = event.shiftKey,
+        which = event.which;
+
+    var key = (0, _keycode2.default)(which);
     var data = {};
+
+    // Keep track of an `isShifting` flag, because it's often used to trigger
+    // "Paste and Match Style" commands, but isn't available on the event in a
+    // normal paste event.
+    if (key == 'shift') {
+      _this2.tmp.isShifting = true;
+    }
 
     // When composing, these characters commit the composition but also move the
     // selection before we're able to handle it, so prevent their default,
     // selection-moving behavior.
     if (_this2.tmp.isComposing && (key == 'left' || key == 'right' || key == 'up' || key == 'down')) {
-      e.preventDefault();
+      event.preventDefault();
       return;
     }
 
     // Add helpful properties for handling hotkeys to the data object.
-    data.code = e.which;
+    data.code = which;
     data.key = key;
-    data.isAlt = e.altKey;
-    data.isCmd = _environment.IS_MAC ? e.metaKey && !e.altKey : false;
-    data.isCtrl = e.ctrlKey && !e.altKey;
-    data.isLine = _environment.IS_MAC ? e.metaKey : false;
-    data.isMeta = e.metaKey;
-    data.isMod = _environment.IS_MAC ? e.metaKey && !e.altKey : e.ctrlKey && !e.altKey;
-    data.isModAlt = _environment.IS_MAC ? e.metaKey && e.altKey : e.ctrlKey && e.altKey;
-    data.isShift = e.shiftKey;
-    data.isWord = _environment.IS_MAC ? e.altKey : e.ctrlKey;
+    data.isAlt = altKey;
+    data.isCmd = _environment.IS_MAC ? metaKey && !altKey : false;
+    data.isCtrl = ctrlKey && !altKey;
+    data.isLine = _environment.IS_MAC ? metaKey : false;
+    data.isMeta = metaKey;
+    data.isMod = _environment.IS_MAC ? metaKey && !altKey : ctrlKey && !altKey;
+    data.isModAlt = _environment.IS_MAC ? metaKey && altKey : ctrlKey && altKey;
+    data.isShift = shiftKey;
+    data.isWord = _environment.IS_MAC ? altKey : ctrlKey;
 
     // These key commands have native behavior in contenteditable elements which
     // will cause our state to be out of sync, so prevent them.
     if (key == 'enter' || key == 'backspace' || key == 'delete' || key == 'b' && data.isMod || key == 'i' && data.isMod || key == 'y' && data.isMod || key == 'z' && data.isMod) {
-      e.preventDefault();
+      event.preventDefault();
     }
 
-    debug('onKeyDown', data);
-    _this2.props.onKeyDown(e, data);
+    debug('onKeyDown', { event: event, data: data });
+    _this2.props.onKeyDown(event, data);
   };
 
-  this.onPaste = function (e) {
-    if (_this2.props.readOnly) return;
-    if (!_this2.isInContentEditable(e)) return;
+  this.onKeyUp = function (event) {
+    var which = event.which;
 
-    e.preventDefault();
-    var transfer = new _transfer2.default(e.clipboardData);
+    var key = (0, _keycode2.default)(which);
+
+    if (key == 'shift') {
+      _this2.tmp.isShifting = false;
+    }
+  };
+
+  this.onPaste = function (event) {
+    if (_this2.props.readOnly) return;
+    if (!_this2.isInContentEditable(event)) return;
+
+    event.preventDefault();
+    var transfer = new _transfer2.default(event.clipboardData);
     var data = transfer.getData();
 
-    debug('onPaste', data);
-    _this2.props.onPaste(e, data);
+    // Attach the `isShift` flag, so that people can use it to trigger "Paste
+    // and Match Style" logic.
+    data.isShift = !!_this2.tmp.isShifting;
+
+    debug('onPaste', { event: event, data: data });
+    _this2.props.onPaste(event, data);
   };
 
-  this.onSelect = function (e) {
+  this.onSelect = function (event) {
     if (_this2.props.readOnly) return;
     if (_this2.tmp.isCopying) return;
     if (_this2.tmp.isComposing) return;
-    if (!_this2.isInContentEditable(e)) return;
+    if (!_this2.isInContentEditable(event)) return;
 
-    var window = (0, _getWindow2.default)(e.target);
+    var window = (0, _getWindow2.default)(event.target);
     var state = _this2.props.state;
     var document = state.document,
         selection = state.selection;
@@ -59563,20 +58230,43 @@ var _initialiseProps = function _initialiseProps() {
           isBackward: null
         };
 
+        // If the selection is at the end of a non-void inline node, and there is
+        // a node after it, put it in the node after instead.
+        var anchorText = document.getNode(anchor.key);
+        var focusText = document.getNode(focus.key);
+        var anchorInline = document.getClosestInline(anchor.key);
+        var focusInline = document.getClosestInline(focus.key);
+
+        if (anchorInline && !anchorInline.isVoid && anchor.offset == anchorText.length) {
+          var block = document.getClosestBlock(anchor.key);
+          var next = block.getNextText(anchor.key);
+          if (next) {
+            properties.anchorKey = next.key;
+            properties.anchorOffset = 0;
+          }
+        }
+
+        if (focusInline && !focusInline.isVoid && focus.offset == focusText.length) {
+          var _block = document.getClosestBlock(focus.key);
+          var _next = _block.getNextText(focus.key);
+          if (_next) {
+            properties.focusKey = _next.key;
+            properties.focusOffset = 0;
+          }
+        }
+
         data.selection = selection.merge(properties).normalize(document);
       }
 
-    debug('onSelect', { data: data, selection: data.selection.toJS() });
-    _this2.props.onSelect(e, data);
+    debug('onSelect', { event: event, data: data });
+    _this2.props.onSelect(event, data);
   };
 
   this.render = function () {
-    debug('render');
-
-    var _props3 = _this2.props,
-        className = _props3.className,
-        readOnly = _props3.readOnly,
-        state = _props3.state;
+    var props = _this2.props;
+    var className = props.className,
+        readOnly = props.readOnly,
+        state = props.state;
     var document = state.document;
 
     var children = document.nodes.map(function (node) {
@@ -59590,16 +58280,19 @@ var _initialiseProps = function _initialiseProps() {
       whiteSpace: 'pre-wrap',
       // Allow words to break if they are too long.
       wordWrap: 'break-word'
-    }, readOnly ? {} : { WebkitUserModify: 'read-write-plaintext-only' }, _this2.props.style);
+    }, readOnly ? {} : { WebkitUserModify: 'read-write-plaintext-only' }, props.style);
 
     // COMPAT: In Firefox, spellchecking can remove entire wrapping elements
     // including inline ones like `<a>`, which is jarring for the user but also
     // causes the DOM to get into an irreconcilable state. (2016/09/01)
-    var spellCheck = _environment.IS_FIREFOX ? false : _this2.props.spellCheck;
+    var spellCheck = _environment.IS_FIREFOX ? false : props.spellCheck;
+
+    debug('render', { props: props });
 
     return _react2.default.createElement(
       'div',
       {
+        'data-slate-editor': true,
         key: _this2.forces,
         ref: _this2.ref,
         contentEditable: !readOnly,
@@ -59617,7 +58310,7 @@ var _initialiseProps = function _initialiseProps() {
         onDrop: _this2.onDrop,
         onInput: _this2.onInput,
         onKeyDown: _this2.onKeyDown,
-        onKeyUp: _noop2.default,
+        onKeyUp: _this2.onKeyUp,
         onPaste: _this2.onPaste,
         onSelect: _this2.onSelect,
         spellCheck: spellCheck,
@@ -59628,10 +58321,10 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.renderNode = function (node) {
-    var _props4 = _this2.props,
-        editor = _props4.editor,
-        schema = _props4.schema,
-        state = _props4.state;
+    var _props3 = _this2.props,
+        editor = _props3.editor,
+        schema = _props3.schema,
+        state = _props3.state;
 
 
     return _react2.default.createElement(_node2.default, {
@@ -59646,7 +58339,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Content;
-},{"../constants/environment":393,"../constants/types":395,"../models/selection":406,"../serializers/base-64":412,"../utils/noop":431,"../utils/offset-key":433,"../utils/transfer":436,"./node":390,"debug":438,"get-window":149,"keycode":165,"react":375,"react-dom":228}],388:[function(require,module,exports){
+},{"../constants/environment":347,"../constants/types":349,"../models/selection":360,"../serializers/base-64":366,"../utils/offset-key":389,"../utils/transfer":392,"./node":344,"debug":394,"get-window":147,"keycode":163,"react":329,"react-dom":182}],342:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -59674,6 +58367,10 @@ var _react2 = _interopRequireDefault(_react);
 var _schema3 = require('../models/schema');
 
 var _schema4 = _interopRequireDefault(_schema3);
+
+var _state = require('../models/state');
+
+var _state2 = _interopRequireDefault(_state);
 
 var _noop = require('../utils/noop');
 
@@ -59890,7 +58587,7 @@ Editor.propTypes = {
   readOnly: _react2.default.PropTypes.bool,
   schema: _react2.default.PropTypes.object,
   spellCheck: _react2.default.PropTypes.bool,
-  state: _react2.default.PropTypes.object.isRequired,
+  state: _react2.default.PropTypes.instanceOf(_state2.default).isRequired,
   style: _react2.default.PropTypes.object
 };
 Editor.defaultProps = {
@@ -60060,9 +58757,10 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.render = function () {
-    debug('render');
+    var props = _this2.props,
+        state = _this2.state;
 
-    var handlers = {};
+    var handlers = { onChange: _this2.onChange };
 
     var _iteratorNormalCompletion6 = true;
     var _didIteratorError6 = false;
@@ -60089,15 +58787,16 @@ var _initialiseProps = function _initialiseProps() {
       }
     }
 
+    debug('render', { props: props, state: state });
+
     return _react2.default.createElement(_content2.default, _extends({}, handlers, {
-      className: _this2.props.className,
+      className: props.className,
       editor: _this2,
-      onChange: _this2.onChange,
-      readOnly: _this2.props.readOnly,
-      schema: _this2.state.schema,
-      spellCheck: _this2.props.spellCheck,
-      state: _this2.state.state,
-      style: _this2.props.style
+      readOnly: props.readOnly,
+      schema: state.schema,
+      spellCheck: props.spellCheck,
+      state: state.state,
+      style: props.style
     }));
   };
 
@@ -60178,7 +58877,7 @@ try {
 }
 
 exports.default = Editor;
-},{"../models/schema":405,"../plugins/core":410,"../utils/noop":431,"./content":387,"debug":438,"react":375}],389:[function(require,module,exports){
+},{"../models/schema":359,"../models/state":361,"../plugins/core":364,"../utils/noop":386,"./content":341,"debug":394,"react":329}],343:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -60206,6 +58905,8 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 var _getWindow = require('get-window');
 
 var _getWindow2 = _interopRequireDefault(_getWindow);
+
+var _environment = require('../constants/environment');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60357,16 +59058,13 @@ var Leaf = function (_React$Component) {
     value: function updateSelection() {
       var _props2 = this.props,
           state = _props2.state,
-          ranges = _props2.ranges,
-          isVoid = _props2.isVoid;
+          ranges = _props2.ranges;
       var selection = state.selection;
 
       // If the selection is blurred we have nothing to do.
 
       if (selection.isBlurred) return;
 
-      var anchorOffset = selection.anchorOffset,
-          focusOffset = selection.focusOffset;
       var _props3 = this.props,
           node = _props3.node,
           index = _props3.index;
@@ -60375,19 +59073,13 @@ var Leaf = function (_React$Component) {
           start = _OffsetKey$findBounds3.start,
           end = _OffsetKey$findBounds3.end;
 
+      var anchorOffset = selection.anchorOffset - start;
+      var focusOffset = selection.focusOffset - start;
+
       // If neither matches, the selection doesn't start or end here, so exit.
-
-
       var hasAnchor = selection.hasAnchorBetween(node, start, end);
       var hasFocus = selection.hasFocusBetween(node, start, end);
       if (!hasAnchor && !hasFocus) return;
-
-      // If the leaf is a void leaf, ensure that it has no width. This is due to
-      // void nodes always rendering an empty leaf, for browser compatibility.
-      if (isVoid) {
-        anchorOffset = 0;
-        focusOffset = 0;
-      }
 
       // We have a selection to render, so prepare a few things...
       var ref = _reactDom2.default.findDOMNode(this);
@@ -60399,6 +59091,7 @@ var Leaf = function (_React$Component) {
       // COMPAT: In Firefox, it's not enough to create a range, you also need to
       // focus the contenteditable element. (2016/11/16)
       function focus() {
+        if (!_environment.IS_FIREFOX) return;
         if (parent) setTimeout(function () {
           return parent.focus();
         });
@@ -60408,9 +59101,9 @@ var Leaf = function (_React$Component) {
       if (hasAnchor && hasFocus) {
         native.removeAllRanges();
         var range = window.document.createRange();
-        range.setStart(el, anchorOffset - start);
+        range.setStart(el, anchorOffset);
         native.addRange(range);
-        native.extend(el, focusOffset - start);
+        native.extend(el, focusOffset);
         focus();
       }
 
@@ -60423,10 +59116,10 @@ var Leaf = function (_React$Component) {
             if (hasAnchor) {
               native.removeAllRanges();
               var _range = window.document.createRange();
-              _range.setStart(el, anchorOffset - start);
+              _range.setStart(el, anchorOffset);
               native.addRange(_range);
             } else if (hasFocus) {
-              native.extend(el, focusOffset - start);
+              native.extend(el, focusOffset);
               focus();
             }
           }
@@ -60439,14 +59132,14 @@ var Leaf = function (_React$Component) {
               if (hasFocus) {
                 native.removeAllRanges();
                 var _range2 = window.document.createRange();
-                _range2.setStart(el, focusOffset - start);
+                _range2.setStart(el, focusOffset);
                 native.addRange(_range2);
               } else if (hasAnchor) {
                 var endNode = native.focusNode;
                 var endOffset = native.focusOffset;
                 native.removeAllRanges();
                 var _range3 = window.document.createRange();
-                _range3.setStart(el, anchorOffset - start);
+                _range3.setStart(el, anchorOffset);
                 native.addRange(_range3);
                 native.extend(endNode, endOffset);
                 focus();
@@ -60454,7 +59147,7 @@ var Leaf = function (_React$Component) {
             }
         }
 
-      this.debug('updateSelection');
+      this.debug('updateSelection', { selection: selection });
     }
 
     /**
@@ -60466,8 +59159,6 @@ var Leaf = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      this.debug('render');
-
       var props = this.props;
       var node = props.node,
           index = props.index;
@@ -60482,6 +59173,8 @@ var Leaf = function (_React$Component) {
       // renders where we don't update the leaves cause React's internal state to
       // get out of sync, causing it to not realize the DOM needs updating.
       this.tmp.renders++;
+
+      this.debug('render', { props: props });
 
       return _react2.default.createElement(
         'span',
@@ -60517,7 +59210,7 @@ var Leaf = function (_React$Component) {
       // selection can be inserted next to it still.
       if (text == '') return _react2.default.createElement(
         'span',
-        { className: 'slate-zero-width-space' },
+        { 'data-slate-zero-width': true },
         '\u200B'
       );
 
@@ -60596,16 +59289,12 @@ function findDeepestNode(element) {
  */
 
 exports.default = Leaf;
-},{"../utils/offset-key":433,"debug":438,"get-window":149,"react":375,"react-dom":228}],390:[function(require,module,exports){
+},{"../constants/environment":347,"../utils/offset-key":389,"debug":394,"get-window":147,"react":329,"react-dom":182}],344:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _immutable = require('immutable');
-
-var _immutable2 = _interopRequireDefault(_immutable);
 
 var _base = require('../serializers/base-64');
 
@@ -60627,10 +59316,6 @@ var _types = require('../constants/types');
 
 var _types2 = _interopRequireDefault(_types);
 
-var _isDev = require('../constants/is-dev');
-
-var _isDev2 = _interopRequireDefault(_isDev);
-
 var _leaf = require('./leaf');
 
 var _leaf2 = _interopRequireDefault(_leaf);
@@ -60642,10 +59327,6 @@ var _void2 = _interopRequireDefault(_void);
 var _scrollTo = require('../utils/scroll-to');
 
 var _scrollTo2 = _interopRequireDefault(_scrollTo);
-
-var _warn = require('../utils/warn');
-
-var _warn2 = _interopRequireDefault(_warn);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60921,7 +59602,7 @@ var _initialiseProps = function _initialiseProps() {
   this.onDragStart = function (e) {
     var node = _this2.props.node;
 
-    var encoded = _base2.default.serializeNode(node);
+    var encoded = _base2.default.serializeNode(node, { preserveKeys: true });
     var data = e.nativeEvent.dataTransfer;
     data.setData(_types2.default.NODE, encoded);
 
@@ -60929,9 +59610,11 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.render = function () {
-    _this2.debug('render');
-
+    var props = _this2.props;
     var node = _this2.props.node;
+
+
+    _this2.debug('render', { props: props });
 
     return node.kind == 'text' ? _this2.renderText() : _this2.renderElement();
   };
@@ -61042,7 +59725,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Node;
-},{"../constants/is-dev":394,"../constants/types":395,"../serializers/base-64":412,"../utils/scroll-to":434,"../utils/warn":437,"./leaf":389,"./void":392,"debug":438,"immutable":160,"react":375,"react-dom":228}],391:[function(require,module,exports){
+},{"../constants/types":349,"../serializers/base-64":366,"../utils/scroll-to":390,"./leaf":343,"./void":346,"debug":394,"react":329,"react-dom":182}],345:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -61174,12 +59857,16 @@ Placeholder.propTypes = {
   style: _react2.default.PropTypes.object
 };
 exports.default = Placeholder;
-},{"react":375}],392:[function(require,module,exports){
+},{"react":329}],346:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _debug = require('debug');
+
+var _debug2 = _interopRequireDefault(_debug);
 
 var _leaf = require('./leaf');
 
@@ -61212,6 +59899,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
+ * Debug.
+ *
+ * @type {Function}
+ */
+
+var debug = (0, _debug2.default)('slate:void');
+
+/**
  * Void.
  *
  * @type {Component}
@@ -61231,99 +59926,7 @@ var Void = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Void.__proto__ || Object.getPrototypeOf(Void)).call.apply(_ref, [this].concat(args))), _this), _this.onClick = function (e) {
-      e.preventDefault();
-      var _this$props = _this.props,
-          node = _this$props.node,
-          editor = _this$props.editor;
-
-      var next = editor.getState().transform().collapseToStartOf(node).focus().apply();
-
-      editor.onChange(next);
-    }, _this.render = function () {
-      var _this$props2 = _this.props,
-          children = _this$props2.children,
-          node = _this$props2.node;
-
-      var Tag = node.kind == 'block' ? 'div' : 'span';
-
-      // Make the outer wrapper relative, so the spacer can overlay it.
-      var style = {
-        position: 'relative'
-      };
-
-      return _react2.default.createElement(
-        Tag,
-        { style: style, onClick: _this.onClick },
-        _this.renderSpacer(),
-        _react2.default.createElement(
-          Tag,
-          { contentEditable: false },
-          children
-        )
-      );
-    }, _this.renderSpacer = function () {
-      var node = _this.props.node;
-
-      var style = void 0;
-
-      if (node.kind == 'block') {
-        style = _environment.IS_FIREFOX ? {
-          pointerEvents: 'none',
-          width: '0px',
-          height: '0px',
-          lineHeight: '0px',
-          visibility: 'hidden'
-        } : {
-          position: 'absolute',
-          top: '0px',
-          left: '-9999px',
-          textIndent: '-9999px'
-        };
-      } else {
-        style = {
-          position: 'relative',
-          top: '0px',
-          left: '-9999px',
-          textIndent: '-9999px'
-        };
-      }
-
-      return _react2.default.createElement(
-        'span',
-        { style: style },
-        _this.renderLeaf()
-      );
-    }, _this.renderLeaf = function () {
-      var _this$props3 = _this.props,
-          node = _this$props3.node,
-          schema = _this$props3.schema,
-          state = _this$props3.state;
-
-      var child = node.getFirstText();
-      var ranges = child.getRanges();
-      var text = '';
-      var marks = _mark2.default.createSet();
-      var index = 0;
-      var offsetKey = _offsetKey2.default.stringify({
-        key: child.key,
-        index: index
-      });
-
-      return _react2.default.createElement(_leaf2.default, {
-        isVoid: true,
-        renderMark: _noop2.default,
-        key: offsetKey,
-        schema: schema,
-        state: state,
-        node: child,
-        parent: node,
-        ranges: ranges,
-        index: index,
-        text: text,
-        marks: marks
-      });
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Void.__proto__ || Object.getPrototypeOf(Void)).call.apply(_ref, [this].concat(args))), _this), _initialiseProps.call(_this), _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   /**
@@ -61333,9 +59936,16 @@ var Void = function (_React$Component) {
    */
 
   /**
+   * Debug.
+   *
+   * @param {String} message
+   * @param {Mixed} ...args
+   */
+
+  /**
    * When one of the wrapper elements it clicked, select the void node.
    *
-   * @param {Event} e
+   * @param {Event} event
    */
 
   /**
@@ -61376,29 +59986,238 @@ Void.propTypes = {
   schema: _react2.default.PropTypes.object.isRequired,
   state: _react2.default.PropTypes.object.isRequired
 };
+
+var _initialiseProps = function _initialiseProps() {
+  var _this2 = this;
+
+  this.debug = function (message) {
+    for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      args[_key2 - 1] = arguments[_key2];
+    }
+
+    var node = _this2.props.node;
+    var key = node.key,
+        type = node.type;
+
+    var id = key + ' (' + type + ')';
+    debug.apply(undefined, [message, '' + id].concat(args));
+  };
+
+  this.onClick = function (event) {
+    event.preventDefault();
+    _this2.debug('onClick', { event: event });
+
+    var _props = _this2.props,
+        node = _props.node,
+        editor = _props.editor;
+
+    var next = editor.getState().transform()
+    // COMPAT: In Chrome & Safari, selections that are at the zero offset of
+    // an inline node will be automatically replaced to be at the last offset
+    // of a previous inline node, which screws us up, so we always want to set
+    // it to the end of the node. (2016/11/29)
+    .collapseToEndOf(node).focus().apply();
+
+    editor.onChange(next);
+  };
+
+  this.render = function () {
+    var props = _this2.props;
+    var children = props.children,
+        node = props.node;
+
+    var Tag = node.kind == 'block' ? 'div' : 'span';
+
+    // Make the outer wrapper relative, so the spacer can overlay it.
+    var style = {
+      position: 'relative'
+    };
+
+    _this2.debug('render', { props: props });
+
+    return _react2.default.createElement(
+      Tag,
+      { 'data-slate-void': true, style: style, onClick: _this2.onClick },
+      _this2.renderSpacer(),
+      _react2.default.createElement(
+        Tag,
+        { contentEditable: false },
+        children
+      )
+    );
+  };
+
+  this.renderSpacer = function () {
+    var node = _this2.props.node;
+
+    var style = void 0;
+
+    if (node.kind == 'block') {
+      style = _environment.IS_FIREFOX ? {
+        pointerEvents: 'none',
+        width: '0px',
+        height: '0px',
+        lineHeight: '0px',
+        visibility: 'hidden'
+      } : {
+        position: 'absolute',
+        top: '0px',
+        left: '-9999px',
+        textIndent: '-9999px'
+      };
+    } else {
+      style = {
+        position: 'relative',
+        top: '0px',
+        left: '-9999px',
+        textIndent: '-9999px'
+      };
+    }
+
+    return _react2.default.createElement(
+      'span',
+      { style: style },
+      _this2.renderLeaf()
+    );
+  };
+
+  this.renderLeaf = function () {
+    var _props2 = _this2.props,
+        node = _props2.node,
+        schema = _props2.schema,
+        state = _props2.state;
+
+    var child = node.getFirstText();
+    var ranges = child.getRanges();
+    var text = '';
+    var marks = _mark2.default.createSet();
+    var index = 0;
+    var offsetKey = _offsetKey2.default.stringify({
+      key: child.key,
+      index: index
+    });
+
+    return _react2.default.createElement(_leaf2.default, {
+      isVoid: true,
+      renderMark: _noop2.default,
+      key: offsetKey,
+      schema: schema,
+      state: state,
+      node: child,
+      parent: node,
+      ranges: ranges,
+      index: index,
+      text: text,
+      marks: marks
+    });
+  };
+};
+
 exports.default = Void;
-},{"../constants/environment":393,"../models/mark":402,"../utils/noop":431,"../utils/offset-key":433,"./leaf":389,"react":375}],393:[function(require,module,exports){
+},{"../constants/environment":347,"../models/mark":356,"../utils/noop":386,"../utils/offset-key":389,"./leaf":343,"debug":394,"react":329}],347:[function(require,module,exports){
 (function (process){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.IS_WINDOWS = exports.IS_UBUNTU = exports.IS_SAFARI = exports.IS_MAC = exports.IS_IOS = exports.IS_IE = exports.IS_FIREFOX = exports.IS_EDGE = exports.IS_CHROME = exports.IS_ANDROID = undefined;
 
-var _uaParserJs = require('ua-parser-js');
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _uaParserJs2 = _interopRequireDefault(_uaParserJs);
+/**
+ * Browser matching rules.
+ *
+ * @type {Array}
+ */
 
-var _detectBrowser = require('detect-browser');
+var BROWSER_RULES = [['edge', /Edge\/([0-9\._]+)/], ['chrome', /(?!Chrom.*OPR)Chrom(?:e|ium)\/([0-9\.]+)(:?\s|$)/], ['firefox', /Firefox\/([0-9\.]+)(?:\s|$)/], ['opera', /Opera\/([0-9\.]+)(?:\s|$)/], ['opera', /OPR\/([0-9\.]+)(:?\s|$)$/], ['ie', /Trident\/7\.0.*rv\:([0-9\.]+)\).*Gecko$/], ['ie', /MSIE\s([0-9\.]+);.*Trident\/[4-7].0/], ['ie', /MSIE\s(7\.0)/], ['android', /Android\s([0-9\.]+)/], ['safari', /Version\/([0-9\._]+).*Safari/]];
 
-var _detectBrowser2 = _interopRequireDefault(_detectBrowser);
+/**
+ * Operating system matching rules.
+ *
+ * @type {Array}
+ */
 
-var _includes = require('lodash/includes');
+var OS_RULES = [['macos', /mac os x/i], ['ios', /os ([\.\_\d]+) like mac os/i], ['android', /android/i], ['firefoxos', /mozilla\/[a-z\.\_\d]+ \((?:mobile)|(?:tablet)/i], ['windows', /windows\s*(?:nt)?\s*([\.\_\d]+)/i]];
 
-var _includes2 = _interopRequireDefault(_includes);
+/**
+ * Define variables to store the result.
+ */
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var BROWSER = void 0;
+var OS = void 0;
+
+/**
+ * Run the matchers when in browser.
+ */
+
+if (process.browser) {
+  var userAgent = window.navigator.userAgent;
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+
+    for (var _iterator = BROWSER_RULES[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var rule = _step.value;
+
+      var _rule = _slicedToArray(rule, 2),
+          name = _rule[0],
+          regexp = _rule[1];
+
+      if (regexp.test(userAgent)) {
+        BROWSER = name;
+        break;
+      }
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
+
+  try {
+    for (var _iterator2 = OS_RULES[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var _rule2 = _step2.value;
+
+      var _rule3 = _slicedToArray(_rule2, 2),
+          name = _rule3[0],
+          regexp = _rule3[1];
+
+      if (regexp.test(userAgent)) {
+        OS = name;
+        break;
+      }
+    }
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
+      }
+    }
+  }
+}
 
 /**
  * Export.
@@ -61406,31 +60225,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @type {Object}
  */
 
-var IS_ANDROID = exports.IS_ANDROID = process.browser && _detectBrowser2.default.name == 'android';
-var IS_CHROME = exports.IS_CHROME = process.browser && _detectBrowser2.default.name == 'chrome';
-var IS_EDGE = exports.IS_EDGE = process.browser && _detectBrowser2.default.name == 'edge';
-var IS_FIREFOX = exports.IS_FIREFOX = process.browser && _detectBrowser2.default.name == 'firefox';
-var IS_IE = exports.IS_IE = process.browser && _detectBrowser2.default.name == 'ie';
-var IS_IOS = exports.IS_IOS = process.browser && _detectBrowser2.default.name == 'ios';
-var IS_MAC = exports.IS_MAC = process.browser && new _uaParserJs2.default().getOS().name == 'Mac OS';
-var IS_SAFARI = exports.IS_SAFARI = process.browser && _detectBrowser2.default.name == 'safari';
-var IS_UBUNTU = exports.IS_UBUNTU = process.browser && new _uaParserJs2.default().getOS().name == 'Ubuntu';
-var IS_WINDOWS = exports.IS_WINDOWS = process.browser && (0, _includes2.default)(new _uaParserJs2.default().getOS().name, 'Windows');
+var IS_CHROME = exports.IS_CHROME = BROWSER === 'chrome';
+var IS_FIREFOX = exports.IS_FIREFOX = BROWSER === 'firefox';
+var IS_SAFARI = exports.IS_SAFARI = BROWSER === 'safari';
 
-exports.default = {
-  IS_ANDROID: IS_ANDROID,
-  IS_CHROME: IS_CHROME,
-  IS_EDGE: IS_EDGE,
-  IS_FIREFOX: IS_FIREFOX,
-  IS_IE: IS_IE,
-  IS_IOS: IS_IOS,
-  IS_MAC: IS_MAC,
-  IS_SAFARI: IS_SAFARI,
-  IS_UBUNTU: IS_UBUNTU,
-  IS_WINDOWS: IS_WINDOWS
-};
+var IS_MAC = exports.IS_MAC = OS === 'macos';
+var IS_WINDOWS = exports.IS_WINDOWS = OS === 'windows';
 }).call(this,require('_process'))
-},{"_process":227,"detect-browser":46,"lodash/includes":202,"ua-parser-js":444}],394:[function(require,module,exports){
+},{"_process":181}],348:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -61454,7 +60256,7 @@ var IS_DEV = typeof process !== 'undefined' && process.env && process.env.NODE_E
 
 exports.default = IS_DEV;
 }).call(this,require('_process'))
-},{"_process":227}],395:[function(require,module,exports){
+},{"_process":181}],349:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -61479,13 +60281,13 @@ var TYPES = {
  */
 
 exports.default = TYPES;
-},{}],396:[function(require,module,exports){
+},{}],350:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setKeyGenerator = exports.findDOMNode = exports.Transforms = exports.Text = exports.State = exports.Selection = exports.Schema = exports.Raw = exports.Range = exports.Plain = exports.Placeholder = exports.Mark = exports.Inline = exports.Html = exports.Editor = exports.Document = exports.Data = exports.Character = exports.Block = undefined;
+exports.setKeyGenerator = exports.resetKeyGenerator = exports.findDOMNode = exports.Transforms = exports.Text = exports.State = exports.Selection = exports.Schema = exports.Raw = exports.Range = exports.Plain = exports.Placeholder = exports.Mark = exports.Inline = exports.Html = exports.Editor = exports.Document = exports.Data = exports.Character = exports.Block = undefined;
 
 var _editor = require('./components/editor');
 
@@ -61595,6 +60397,7 @@ exports.State = _state2.default;
 exports.Text = _text2.default;
 exports.Transforms = _transforms2.default;
 exports.findDOMNode = _findDomNode2.default;
+exports.resetKeyGenerator = _generateKey.resetKeyGenerator;
 exports.setKeyGenerator = _generateKey.setKeyGenerator;
 
 /**
@@ -61628,9 +60431,10 @@ exports.default = {
   Text: _text2.default,
   Transforms: _transforms2.default,
   findDOMNode: _findDomNode2.default,
+  resetKeyGenerator: _generateKey.resetKeyGenerator,
   setKeyGenerator: _generateKey.setKeyGenerator
 };
-},{"./components/editor":388,"./components/placeholder":391,"./models/block":397,"./models/character":398,"./models/data":399,"./models/document":400,"./models/inline":401,"./models/mark":402,"./models/range":404,"./models/schema":405,"./models/selection":406,"./models/state":407,"./models/text":408,"./serializers/html":413,"./serializers/plain":414,"./serializers/raw":415,"./transforms":420,"./utils/find-dom-node":425,"./utils/generate-key":426}],397:[function(require,module,exports){
+},{"./components/editor":342,"./components/placeholder":345,"./models/block":351,"./models/character":352,"./models/data":353,"./models/document":354,"./models/inline":355,"./models/mark":356,"./models/range":358,"./models/schema":359,"./models/selection":360,"./models/state":361,"./models/text":362,"./serializers/html":367,"./serializers/plain":368,"./serializers/raw":369,"./transforms":375,"./utils/find-dom-node":380,"./utils/generate-key":381}],351:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -61822,7 +60626,7 @@ for (var method in _node2.default) {
  */
 
 exports.default = Block;
-},{"../utils/generate-key":426,"./data":399,"./document":400,"./inline":401,"./node":403,"./text":408,"immutable":160}],398:[function(require,module,exports){
+},{"../utils/generate-key":381,"./data":353,"./document":354,"./inline":355,"./node":357,"./text":362,"immutable":158}],352:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -61948,7 +60752,7 @@ var Character = function (_ref) {
  */
 
 exports.default = Character;
-},{"./mark":402,"immutable":160}],399:[function(require,module,exports){
+},{"./mark":356,"immutable":158}],353:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -61989,7 +60793,7 @@ var Data = {
  */
 
 exports.default = Data;
-},{"immutable":160}],400:[function(require,module,exports){
+},{"immutable":158}],354:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -62037,7 +60841,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var DEFAULTS = {
   key: null,
-  nodes: new _immutable.OrderedMap()
+  nodes: new _immutable.List()
 };
 
 /**
@@ -62145,7 +60949,7 @@ for (var method in _node2.default) {
  */
 
 exports.default = Document;
-},{"../utils/generate-key":426,"./block":397,"./inline":401,"./node":403,"immutable":160}],401:[function(require,module,exports){
+},{"../utils/generate-key":381,"./block":351,"./inline":355,"./node":357,"immutable":158}],355:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -62337,7 +61141,7 @@ for (var method in _node2.default) {
  */
 
 exports.default = Inline;
-},{"../utils/generate-key":426,"./block":397,"./data":399,"./document":400,"./node":403,"./text":408,"immutable":160}],402:[function(require,module,exports){
+},{"../utils/generate-key":381,"./block":351,"./data":353,"./document":354,"./node":357,"./text":362,"immutable":158}],356:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -62470,7 +61274,7 @@ var Mark = function (_ref) {
  */
 
 exports.default = Mark;
-},{"../utils/memoize":430,"./data":399,"immutable":160}],403:[function(require,module,exports){
+},{"../utils/memoize":385,"./data":353,"immutable":158}],357:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -62922,6 +61726,9 @@ var Node = {
    */
 
   getCommonAncestor: function getCommonAncestor(one, two) {
+    one = _normalize2.default.key(one);
+    two = _normalize2.default.key(two);
+
     if (one == this.key) return this;
     if (two == this.key) return this;
 
@@ -63077,6 +61884,9 @@ var Node = {
    */
 
   areDescendantSorted: function areDescendantSorted(key1, key2) {
+    key1 = _normalize2.default.key(key1);
+    key2 = _normalize2.default.key(key2);
+
     var sorted = void 0;
 
     this.forEachDescendant(function (n) {
@@ -63326,7 +62136,7 @@ var Node = {
       last = block.getLastText();
     }
 
-    var next = this.getNextText(last);
+    var next = this.getNextText(last.key);
     if (!next) return null;
 
     return this.getClosestBlock(next.key);
@@ -63570,7 +62380,7 @@ var Node = {
       first = block.getFirstText();
     }
 
-    var previous = this.getPreviousText(first);
+    var previous = this.getPreviousText(first.key);
     if (!previous) return null;
 
     return this.getClosestBlock(previous.key);
@@ -63585,10 +62395,16 @@ var Node = {
    */
 
   getTextAtOffset: function getTextAtOffset(offset) {
+    // PERF: Add a few shortcuts for the obvious cases.
+    if (offset == 0) return this.getFirstText();
+    if (offset == this.length) return this.getLastText();
+    if (offset < 0 || offset > this.length) return null;
+
     var length = 0;
-    return this.getTexts().find(function (text) {
+
+    return this.getTexts().find(function (text, i, texts) {
       length += text.length;
-      return length >= offset;
+      return length > offset;
     });
   },
 
@@ -64114,7 +62930,7 @@ var Node = {
  */
 
 exports.default = Node;
-},{"../utils/generate-key":426,"../utils/is-in-range":428,"../utils/memoize":430,"../utils/normalize":432,"./block":397,"./character":398,"./document":400,"./mark":402,"direction":48,"immutable":160}],404:[function(require,module,exports){
+},{"../utils/generate-key":381,"../utils/is-in-range":383,"../utils/memoize":385,"../utils/normalize":388,"./block":351,"./character":352,"./document":354,"./mark":356,"direction":46,"immutable":158}],358:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -64232,7 +63048,7 @@ var Range = function (_ref) {
  */
 
 exports.default = Range;
-},{"./character":398,"./mark":402,"immutable":160}],405:[function(require,module,exports){
+},{"./character":352,"./mark":356,"immutable":158}],359:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -64561,7 +63377,7 @@ function normalizeMarkComponent(render) {
  */
 
 exports.default = Schema;
-},{"../utils/is-react-component":429,"immutable":160,"react":375,"type-of":443}],406:[function(require,module,exports){
+},{"../utils/is-react-component":384,"immutable":158,"react":329,"type-of":399}],360:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -65407,7 +64223,7 @@ EDGE_METHODS.forEach(function (pattern) {
  */
 
 exports.default = Selection;
-},{"../utils/get-leaf-text":427,"../utils/warn":437,"immutable":160}],407:[function(require,module,exports){
+},{"../utils/get-leaf-text":382,"../utils/warn":393,"immutable":158}],361:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -65949,7 +64765,7 @@ var State = function (_ref) {
 
       var state = new State({ document: document, selection: selection });
 
-      return state.transform({ normalized: false }).normalize(_core2.default).apply({ save: false });
+      return state.transform().normalize(_core2.default).apply({ save: false });
     }
   }]);
 
@@ -65961,7 +64777,7 @@ var State = function (_ref) {
  */
 
 exports.default = State;
-},{"../schemas/core":411,"./document":400,"./selection":406,"./transform":409,"immutable":160}],408:[function(require,module,exports){
+},{"../schemas/core":365,"./document":354,"./selection":360,"./transform":363,"immutable":158}],362:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -66475,7 +65291,7 @@ var Text = function (_ref) {
  */
 
 exports.default = Text;
-},{"../utils/generate-key":426,"../utils/memoize":430,"./character":398,"./mark":402,"./range":404,"immutable":160}],409:[function(require,module,exports){
+},{"../utils/generate-key":381,"../utils/memoize":385,"./character":352,"./mark":356,"./range":358,"immutable":158}],363:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -66517,18 +65333,14 @@ var Transform = function () {
    *
    * @param {Object} properties
    *   @property {State} properties.state
-   *   @property {Boolean} properties.normalized
    */
 
   function Transform(properties) {
     _classCallCheck(this, Transform);
 
-    var state = properties.state,
-        _properties$normalize = properties.normalized,
-        normalized = _properties$normalize === undefined ? true : _properties$normalize;
+    var state = properties.state;
 
     this.state = state;
-    this.prevState = normalized ? state : null;
     this.operations = [];
   }
 
@@ -66704,7 +65516,7 @@ function isContiguousRemoves(operations, previous) {
  */
 
 exports.default = Transform;
-},{"../transforms":420,"debug":438}],410:[function(require,module,exports){
+},{"../transforms":375,"debug":394}],364:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -66732,10 +65544,6 @@ var _placeholder2 = _interopRequireDefault(_placeholder);
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _string = require('../utils/string');
-
-var _string2 = _interopRequireDefault(_string);
 
 var _getWindow = require('get-window');
 
@@ -66808,12 +65616,17 @@ function Plugin() {
   function onBeforeInput(e, data, state, editor) {
     var document = state.document,
         startKey = state.startKey,
+        startBlock = state.startBlock,
         startOffset = state.startOffset,
         startInline = state.startInline,
         startText = state.startText;
 
-    // Determine what the characters would be if natively inserted.
+    var pText = startBlock.getPreviousText(startKey);
+    var pInline = pText && startBlock.getClosestInline(pText.key);
+    var nText = startBlock.getNextText(startKey);
+    var nInline = nText && startBlock.getClosestInline(nText.key);
 
+    // Determine what the characters would be if natively inserted.
     var schema = editor.getSchema();
     var decorators = document.getDescendantDecorators(startKey, schema);
     var initialChars = startText.getDecorations(decorators);
@@ -66836,11 +65649,29 @@ function Plugin() {
 
     // We do not have to re-render if the current selection is collapsed, the
     // current node is not empty, there are no marks on the cursor, the cursor
-    // is not at the edge of an inline node, and the natively inserted
+    // is not at the edge of an inline node, the cursor isn't at the starting
+    // edge of a text node after an inline node, and the natively inserted
     // characters would be the same as the non-native.
-    var isNative = state.isCollapsed && state.startText.text != '' && state.selection.marks == null && (
-    // Must not be, for example, at edge of an inline link
-    !startInline || !state.selection.isAtStartOf(startInline)) && (!startInline || !state.selection.isAtEndOf(startInline)) && chars.equals(nextChars);
+    var isNative =
+    // If the selection is expanded, we don't know what the edit will look
+    // like so we can't let it happen natively.
+    state.isCollapsed &&
+    // If the selection has marks, then we need to render it non-natively
+    // because we need to create the new marks as well.
+    state.selection.marks == null &&
+    // If the text node in question has no content, browsers might do weird
+    // things so we need to insert it normally instead.
+    state.startText.text != '' && (
+    // COMPAT: Browsers do weird things when typing at the edges of inline
+    // nodes, so we can't let them render natively. (?)
+    !startInline || !state.selection.isAtStartOf(startInline)) && (!startInline || !state.selection.isAtEndOf(startInline)) &&
+    // COMPAT: In Chrome & Safari, it isn't possible to have a selection at
+    // the starting edge of a text node after another inline node. It will
+    // have been automatically changed. So we can't render natively because
+    // the cursor isn't technique in the right spot. (2016/12/01)
+    !(pInline && !pInline.isVoid && startOffset == 0) && !(nInline && !nInline.isVoid && startOffset == startText.length) &&
+    // If the
+    chars.equals(nextChars);
 
     // Add the `isNative` flag directly, so we don't have to re-transform.
     if (isNative) {
@@ -66932,7 +65763,7 @@ function Plugin() {
 
     // Remove any zero-width space spans from the cloned DOM so that they don't
     // show up elsewhere when copied.
-    var zws = [].slice.call(contents.querySelectorAll('.slate-zero-width-space'));
+    var zws = [].slice.call(contents.querySelectorAll('[data-slate-zero-width]'));
     zws.forEach(function (zw) {
       return zw.parentNode.removeChild(zw);
     });
@@ -67073,12 +65904,20 @@ function Plugin() {
         return onKeyDownLeft(e, data, state);
       case 'right':
         return onKeyDownRight(e, data, state);
+      case 'up':
+        return onKeyDownUp(e, data, state);
+      case 'down':
+        return onKeyDownDown(e, data, state);
+      case 'd':
+        return onKeyDownD(e, data, state);
+      case 'h':
+        return onKeyDownH(e, data, state);
+      case 'k':
+        return onKeyDownK(e, data, state);
       case 'y':
         return onKeyDownY(e, data, state);
       case 'z':
         return onKeyDownZ(e, data, state);
-      case 'k':
-        return onKeyDownK(e, data, state);
     }
   }
 
@@ -67092,16 +65931,14 @@ function Plugin() {
    */
 
   function onKeyDownEnter(e, data, state) {
-    debug('onKeyDownEnter', { data: data });
-
     var document = state.document,
-        startKey = state.startKey,
-        startBlock = state.startBlock;
+        startKey = state.startKey;
 
-    // For void blocks, we don't want to split. Instead we just move to the
-    // start of the next text node if one exists.
+    var hasVoidParent = document.hasVoidParent(startKey);
 
-    if (startBlock && startBlock.isVoid) {
+    // For void nodes, we don't want to split. Instead we just move to the start
+    // of the next text node if one exists.
+    if (hasVoidParent) {
       var text = document.getNextText(startKey);
       if (!text) return;
       return state.transform().collapseToStartOf(text).apply();
@@ -67120,29 +65957,11 @@ function Plugin() {
    */
 
   function onKeyDownBackspace(e, data, state) {
-    debug('onKeyDownBackspace', { data: data });
+    var boundary = 'Char';
+    if (data.isWord) boundary = 'Word';
+    if (data.isLine) boundary = 'Line';
 
-    // If expanded, delete regularly.
-    if (state.isExpanded) {
-      return state.transform().delete().apply();
-    }
-
-    var startOffset = state.startOffset,
-        startBlock = state.startBlock;
-
-    var text = startBlock.text;
-    var n = void 0;
-
-    // Determine how far backwards to delete.
-    if (data.isWord) {
-      n = _string2.default.getWordOffsetBackward(text, startOffset);
-    } else if (data.isLine) {
-      n = startOffset;
-    } else {
-      n = _string2.default.getCharOffsetBackward(text, startOffset);
-    }
-
-    return state.transform().deleteBackward(n).apply();
+    return state.transform()['delete' + boundary + 'Backward']().apply();
   }
 
   /**
@@ -67155,35 +65974,20 @@ function Plugin() {
    */
 
   function onKeyDownDelete(e, data, state) {
-    debug('onKeyDownDelete', { data: data });
+    var boundary = 'Char';
+    if (data.isWord) boundary = 'Word';
+    if (data.isLine) boundary = 'Line';
 
-    // If expanded, delete regularly.
-    if (state.isExpanded) {
-      return state.transform().delete().apply();
-    }
-
-    var startOffset = state.startOffset,
-        startBlock = state.startBlock;
-
-    var text = startBlock.text;
-    var n = void 0;
-
-    // Determine how far forwards to delete.
-    if (data.isWord) {
-      n = _string2.default.getWordOffsetForward(text, startOffset);
-    } else if (data.isLine) {
-      n = text.length - startOffset;
-    } else {
-      n = _string2.default.getCharOffsetForward(text, startOffset);
-    }
-
-    return state.transform().deleteForward(n).apply();
+    return state.transform()['delete' + boundary + 'Forward']().apply();
   }
 
   /**
    * On `left` key down, move backward.
    *
-   * COMPAT: This is required to solve for the case where an inline void node is
+   * COMPAT: This is required to make navigating with the left arrow work when
+   * a void node is selected.
+   *
+   * COMPAT: This is also required to solve for the case where an inline node is
    * surrounded by empty text nodes with zero-width spaces in them. Without this
    * the zero-width spaces will cause two arrow keys to jump to the next text.
    *
@@ -67195,7 +65999,7 @@ function Plugin() {
 
   function onKeyDownLeft(e, data, state) {
     if (data.isCtrl) return;
-    if (data.isOpt) return;
+    if (data.isAlt) return;
     if (state.isExpanded) return;
 
     var document = state.document,
@@ -67204,23 +66008,45 @@ function Plugin() {
 
     var hasVoidParent = document.hasVoidParent(startKey);
 
+    // If the current text node is empty, or we're inside a void parent, we're
+    // going to need to handle the selection behavior.
     if (startText.text == '' || hasVoidParent) {
-      var previousText = document.getPreviousText(startKey);
-      if (!previousText) return;
-
-      debug('onKeyDownLeft', { data: data });
-
       e.preventDefault();
-      return state.transform().collapseToEndOf(previousText).apply();
+      var previous = document.getPreviousText(startKey);
+
+      // If there's no previous text node in the document, abort.
+      if (!previous) return;
+
+      // If the previous text is in the current block, and inside a non-void
+      // inline node, move one character into the inline node.
+      var startBlock = state.startBlock;
+
+      var previousBlock = document.getClosestBlock(previous.key);
+      var previousInline = document.getClosestInline(previous.key);
+
+      if (previousBlock == startBlock && previousInline && !previousInline.isVoid) {
+        return state.transform().collapseToEndOf(previous).moveBackward(1).apply();
+      }
+
+      // Otherwise, move to the end of the previous node.
+      return state.transform().collapseToEndOf(previous).apply();
     }
   }
 
   /**
    * On `right` key down, move forward.
    *
-   * COMPAT: This is required to solve for the case where an inline void node is
+   * COMPAT: This is required to make navigating with the right arrow work when
+   * a void node is selected.
+   *
+   * COMPAT: This is also required to solve for the case where an inline node is
    * surrounded by empty text nodes with zero-width spaces in them. Without this
    * the zero-width spaces will cause two arrow keys to jump to the next text.
+   *
+   * COMPAT: In Chrome & Safari, selections that are at the zero offset of
+   * an inline node will be automatically replaced to be at the last offset
+   * of a previous inline node, which screws us up, so we never want to set the
+   * selection to the very start of an inline node here. (2016/11/29)
    *
    * @param {Event} e
    * @param {Object} data
@@ -67230,7 +66056,7 @@ function Plugin() {
 
   function onKeyDownRight(e, data, state) {
     if (data.isCtrl) return;
-    if (data.isOpt) return;
+    if (data.isAlt) return;
     if (state.isExpanded) return;
 
     var document = state.document,
@@ -67239,15 +66065,143 @@ function Plugin() {
 
     var hasVoidParent = document.hasVoidParent(startKey);
 
+    // If the current text node is empty, or we're inside a void parent, we're
+    // going to need to handle the selection behavior.
     if (startText.text == '' || hasVoidParent) {
-      var nextText = document.getNextText(startKey);
-      if (!nextText) return state;
-
-      debug('onKeyDownRight', { data: data });
-
       e.preventDefault();
-      return state.transform().collapseToStartOf(nextText).apply();
+      var next = document.getNextText(startKey);
+
+      // If there's no next text node in the document, abort.
+      if (!next) return state;
+
+      // If the next text is inside a void node, move to the end of it.
+      var isInVoid = document.hasVoidParent(next.key);
+
+      if (isInVoid) {
+        return state.transform().collapseToEndOf(next).apply();
+      }
+
+      // If the next text is in the current block, and inside an inline node,
+      // move one character into the inline node.
+      var startBlock = state.startBlock;
+
+      var nextBlock = document.getClosestBlock(next.key);
+      var nextInline = document.getClosestInline(next.key);
+
+      if (nextBlock == startBlock && nextInline) {
+        return state.transform().collapseToStartOf(next).moveForward(1).apply();
+      }
+
+      // Otherwise, move to the start of the next text node.
+      return state.transform().collapseToStartOf(next).apply();
     }
+  }
+
+  /**
+   * On `up` key down, for Macs, move the selection to start of the block.
+   *
+   * COMPAT: Certain browsers don't handle the selection updates properly. In
+   * Chrome, option-shift-up doesn't properly extend the selection. And in
+   * Firefox, option-up doesn't properly move the selection.
+   *
+   * @param {Event} e
+   * @param {Object} data
+   * @param {State} state
+   * @return {State}
+   */
+
+  function onKeyDownUp(e, data, state) {
+    if (!_environment.IS_MAC || data.isCtrl || !data.isAlt) return;
+
+    var transform = data.isShift ? 'extendToStartOf' : 'collapseToStartOf';
+    var selection = state.selection,
+        document = state.document,
+        focusKey = state.focusKey,
+        focusBlock = state.focusBlock;
+
+    var block = selection.hasFocusAtStartOf(focusBlock) ? document.getPreviousBlock(focusKey) : focusBlock;
+
+    if (!block) return;
+    var text = block.getFirstText();
+
+    e.preventDefault();
+    return state.transform()[transform](text).apply();
+  }
+
+  /**
+   * On `down` key down, for Macs, move the selection to end of the block.
+   *
+   * COMPAT: Certain browsers don't handle the selection updates properly. In
+   * Chrome, option-shift-down doesn't properly extend the selection. And in
+   * Firefox, option-down doesn't properly move the selection.
+   *
+   * @param {Event} e
+   * @param {Object} data
+   * @param {State} state
+   * @return {State}
+   */
+
+  function onKeyDownDown(e, data, state) {
+    if (!_environment.IS_MAC || data.isCtrl || !data.isAlt) return;
+
+    var transform = data.isShift ? 'extendToEndOf' : 'collapseToEndOf';
+    var selection = state.selection,
+        document = state.document,
+        focusKey = state.focusKey,
+        focusBlock = state.focusBlock;
+
+    var block = selection.hasFocusAtEndOf(focusBlock) ? document.getNextBlock(focusKey) : focusBlock;
+
+    if (!block) return;
+    var text = block.getLastText();
+
+    e.preventDefault();
+    return state.transform()[transform](text).apply();
+  }
+
+  /**
+   * On `d` key down, for Macs, delete one character forward.
+   *
+   * @param {Event} e
+   * @param {Object} data
+   * @param {State} state
+   * @return {State}
+   */
+
+  function onKeyDownD(e, data, state) {
+    if (!_environment.IS_MAC || !data.isCtrl) return;
+    e.preventDefault();
+    return state.transform().deleteCharForward().apply();
+  }
+
+  /**
+   * On `h` key down, for Macs, delete until the end of the line.
+   *
+   * @param {Event} e
+   * @param {Object} data
+   * @param {State} state
+   * @return {State}
+   */
+
+  function onKeyDownH(e, data, state) {
+    if (!_environment.IS_MAC || !data.isCtrl) return;
+    e.preventDefault();
+    return state.transform().deleteCharBackward().apply();
+  }
+
+  /**
+   * On `k` key down, for Macs, delete until the end of the line.
+   *
+   * @param {Event} e
+   * @param {Object} data
+   * @param {State} state
+   * @return {State}
+   */
+
+  function onKeyDownK(e, data, state) {
+    if (!_environment.IS_MAC || !data.isCtrl) return;
+    e.preventDefault();
+    return state.transform().deleteLineForward().apply();
   }
 
   /**
@@ -67261,8 +66215,6 @@ function Plugin() {
 
   function onKeyDownY(e, data, state) {
     if (!data.isMod) return;
-
-    debug('onKeyDownY', { data: data });
 
     return state.transform().redo().apply({ save: false });
   }
@@ -67279,30 +66231,7 @@ function Plugin() {
   function onKeyDownZ(e, data, state) {
     if (!data.isMod) return;
 
-    debug('onKeyDownZ', { data: data });
-
     return state.transform()[data.isShift ? 'redo' : 'undo']().apply({ save: false });
-  }
-
-  /**
-   * On `k` key down, delete untill the end of the line (mac only)
-   *
-   * @param {Event} e
-   * @param {Object} data
-   * @param {State} state
-   * @return {State}
-   */
-
-  function onKeyDownK(e, data, state) {
-    if (!_environment.IS_MAC || !data.isCtrl) return;
-
-    debug('onKeyDownK', { data: data });
-
-    var startOffset = state.startOffset,
-        startBlock = state.startBlock;
-
-
-    return state.transform().deleteForward(startBlock.text.length - startOffset).apply();
   }
 
   /**
@@ -67373,15 +66302,9 @@ function Plugin() {
    */
 
   function onSelect(e, data, state) {
-    var selection = data.selection;
+    debug('onSelect', { data: data });
 
-
-    debug('onSelect', { data: data, selection: selection.toJS() });
-
-    return state.transform().moveTo(selection)
-    // Since the document has not changed, we only need to normalize the
-    // selection and this is done automatically in `transform.apply()`.
-    .apply();
+    return state.transform().moveTo(data.selection).apply();
   }
 
   /**
@@ -67470,7 +66393,7 @@ function Plugin() {
  */
 
 exports.default = Plugin;
-},{"../components/placeholder":391,"../constants/environment":393,"../models/character":398,"../serializers/base-64":412,"../utils/string":435,"debug":438,"get-window":149,"react":375}],411:[function(require,module,exports){
+},{"../components/placeholder":345,"../constants/environment":347,"../models/character":352,"../serializers/base-64":366,"debug":394,"get-window":147,"react":329}],365:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67500,12 +66423,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var OPTS = { normalize: false };
 
 /**
+ * Define the core schema rules, order-sensitive.
+ *
+ * @type {Array}
+ */
+
+var rules = [
+
+/**
  * Only allow block nodes in documents.
  *
  * @type {Object}
  */
 
-var DOCUMENT_CHILDREN_RULE = {
+{
   match: function match(node) {
     return node.kind == 'document';
   },
@@ -67520,7 +66451,7 @@ var DOCUMENT_CHILDREN_RULE = {
       transform.removeNodeByKey(node.key, OPTS);
     });
   }
-};
+},
 
 /**
  * Only allow block, inline and text nodes in blocks.
@@ -67528,7 +66459,7 @@ var DOCUMENT_CHILDREN_RULE = {
  * @type {Object}
  */
 
-var BLOCK_CHILDREN_RULE = {
+{
   match: function match(node) {
     return node.kind == 'block';
   },
@@ -67544,26 +66475,7 @@ var BLOCK_CHILDREN_RULE = {
       transform.removeNodeByKey(node.key, OPTS);
     });
   }
-};
-
-/**
- * Ensure that block and inline nodes have at least one text child.
- *
- * @type {Object}
- */
-
-var MIN_TEXT_RULE = {
-  match: function match(object) {
-    return object.kind == 'block' || object.kind == 'inline';
-  },
-  validate: function validate(node) {
-    return node.nodes.size == 0;
-  },
-  normalize: function normalize(transform, node) {
-    var text = _text2.default.create();
-    transform.insertNodeByKey(node.key, 0, text, OPTS);
-  }
-};
+},
 
 /**
  * Only allow inline and text nodes in inlines.
@@ -67571,7 +66483,7 @@ var MIN_TEXT_RULE = {
  * @type {Object}
  */
 
-var INLINE_CHILDREN_RULE = {
+{
   match: function match(object) {
     return object.kind == 'inline';
   },
@@ -67586,7 +66498,51 @@ var INLINE_CHILDREN_RULE = {
       transform.removeNodeByKey(node.key, OPTS);
     });
   }
-};
+},
+
+/**
+ * Ensure that block and inline nodes have at least one text child.
+ *
+ * @type {Object}
+ */
+
+{
+  match: function match(object) {
+    return object.kind == 'block' || object.kind == 'inline';
+  },
+  validate: function validate(node) {
+    return node.nodes.size == 0;
+  },
+  normalize: function normalize(transform, node) {
+    var text = _text2.default.create();
+    transform.insertNodeByKey(node.key, 0, text, OPTS);
+  }
+},
+
+/**
+ * Ensure that void nodes contain a text node with a single space of text.
+ *
+ * @type {Object}
+ */
+
+{
+  match: function match(object) {
+    return (object.kind == 'inline' || object.kind == 'block') && object.isVoid;
+  },
+  validate: function validate(node) {
+    return node.text !== ' ' || node.nodes.size !== 1;
+  },
+  normalize: function normalize(transform, node, result) {
+    var text = _text2.default.createFromString(' ');
+    var index = node.nodes.size;
+
+    transform.insertNodeByKey(node.key, index, text, OPTS);
+
+    node.nodes.forEach(function (child) {
+      transform.removeNodeByKey(child.key, OPTS);
+    });
+  }
+},
 
 /**
  * Ensure that inline nodes are never empty.
@@ -67599,7 +66555,7 @@ var INLINE_CHILDREN_RULE = {
  * @type {Object}
  */
 
-var INLINE_NO_EMPTY = {
+{
   match: function match(object) {
     return object.kind == 'block';
   },
@@ -67621,32 +66577,7 @@ var INLINE_NO_EMPTY = {
       transform.removeNodeByKey(node.key, OPTS);
     });
   }
-};
-
-/**
- * Ensure that void nodes contain a text node with a single space of text.
- *
- * @type {Object}
- */
-
-var VOID_TEXT_RULE = {
-  match: function match(object) {
-    return (object.kind == 'inline' || object.kind == 'block') && object.isVoid;
-  },
-  validate: function validate(node) {
-    return node.text !== ' ' || node.nodes.size !== 1;
-  },
-  normalize: function normalize(transform, node, result) {
-    var text = _text2.default.createFromString(' ');
-    var index = node.nodes.size;
-
-    transform.insertNodeByKey(node.key, index, text, OPTS);
-
-    node.nodes.forEach(function (child) {
-      transform.removeNodeByKey(child.key, OPTS);
-    });
-  }
-};
+},
 
 /**
  * Ensure that inline void nodes are surrounded by text nodes, by adding extra
@@ -67655,19 +66586,19 @@ var VOID_TEXT_RULE = {
  * @type {Object}
  */
 
-var INLINE_VOID_TEXTS_AROUND_RULE = {
+{
   match: function match(object) {
     return object.kind == 'block' || object.kind == 'inline';
   },
-  validate: function validate(block) {
-    var invalids = block.nodes.reduce(function (list, child, index) {
-      if (child.kind == 'block') return list;
-      if (!child.isVoid) return list;
+  validate: function validate(node) {
+    var invalids = node.nodes.reduce(function (list, child, index) {
+      if (child.kind !== 'inline') return list;
 
-      var prev = index > 0 ? block.nodes.get(index - 1) : null;
-      var next = block.nodes.get(index + 1);
+      var prev = index > 0 ? node.nodes.get(index - 1) : null;
+      var next = node.nodes.get(index + 1);
+      // We don't test if "prev" is inline, since it has already been processed in the loop
       var insertBefore = !prev;
-      var insertAfter = !next || isInlineVoid(next);
+      var insertAfter = !next || next.kind == 'inline';
 
       if (insertAfter || insertBefore) {
         list = list.push({ insertAfter: insertAfter, insertBefore: insertBefore, index: index });
@@ -67698,7 +66629,7 @@ var INLINE_VOID_TEXTS_AROUND_RULE = {
       }
     });
   }
-};
+},
 
 /**
  * Join adjacent text nodes.
@@ -67706,7 +66637,7 @@ var INLINE_VOID_TEXTS_AROUND_RULE = {
  * @type {Object}
  */
 
-var NO_ADJACENT_TEXT_RULE = {
+{
   match: function match(object) {
     return object.kind == 'block' || object.kind == 'inline';
   },
@@ -67731,7 +66662,7 @@ var NO_ADJACENT_TEXT_RULE = {
       return transform.joinNodeByKey(second.key, first.key, OPTS);
     });
   }
-};
+},
 
 /**
  * Prevent extra empty text nodes, except when adjacent to inline void nodes.
@@ -67739,7 +66670,7 @@ var NO_ADJACENT_TEXT_RULE = {
  * @type {Object}
  */
 
-var NO_EMPTY_TEXT_RULE = {
+{
   match: function match(object) {
     return object.kind == 'block' || object.kind == 'inline';
   },
@@ -67756,13 +66687,13 @@ var NO_EMPTY_TEXT_RULE = {
       var next = nodes.get(i + 1);
 
       // If it's the first node, and the next is a void, preserve it.
-      if (!prev && isInlineVoid(next)) return;
+      if (!prev && next.kind == 'inline') return;
 
-      // It it's the last node, and the previous is a void, preserve it.
-      if (!next && isInlineVoid(prev)) return;
+      // It it's the last node, and the previous is an inline, preserve it.
+      if (!next && prev.kind == 'inline') return;
 
-      // If it's surrounded by voids, preserve it.
-      if (next && prev && isInlineVoid(next) && isInlineVoid(prev)) return;
+      // If it's surrounded by inlines, preserve it.
+      if (next && prev && next.kind == 'inline' && prev.kind == 'inline') return;
 
       // Otherwise, remove it.
       return true;
@@ -67775,28 +66706,15 @@ var NO_EMPTY_TEXT_RULE = {
       transform.removeNodeByKey(text.key, OPTS);
     });
   }
-};
+}];
 
 /**
- * Test if a `node` is an inline void node.
- *
- * @param {Node} node
- * @return {Boolean}
- */
-
-function isInlineVoid(node) {
-  return node.kind == 'inline' && node.isVoid;
-}
-
-/**
- * The core schema.
+ * Create the core schema.
  *
  * @type {Schema}
  */
 
-var SCHEMA = _schema2.default.create({
-  rules: [DOCUMENT_CHILDREN_RULE, BLOCK_CHILDREN_RULE, INLINE_CHILDREN_RULE, VOID_TEXT_RULE, MIN_TEXT_RULE, INLINE_NO_EMPTY, INLINE_VOID_TEXTS_AROUND_RULE, NO_ADJACENT_TEXT_RULE, NO_EMPTY_TEXT_RULE]
-});
+var SCHEMA = _schema2.default.create({ rules: rules });
 
 /**
  * Export.
@@ -67805,7 +66723,7 @@ var SCHEMA = _schema2.default.create({
  */
 
 exports.default = SCHEMA;
-},{"../models/schema":405,"../models/text":408,"immutable":160}],412:[function(require,module,exports){
+},{"../models/schema":359,"../models/text":362,"immutable":158}],366:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67851,9 +66769,9 @@ function decode(string) {
  * @return {State}
  */
 
-function deserialize(string) {
+function deserialize(string, options) {
   var raw = decode(string);
-  var state = _raw2.default.deserialize(raw);
+  var state = _raw2.default.deserialize(raw, options);
   return state;
 }
 
@@ -67864,9 +66782,9 @@ function deserialize(string) {
  * @return {Node}
  */
 
-function deserializeNode(string) {
+function deserializeNode(string, options) {
   var raw = decode(string);
-  var node = _raw2.default.deserializeNode(raw);
+  var node = _raw2.default.deserializeNode(raw, options);
   return node;
 }
 
@@ -67877,8 +66795,8 @@ function deserializeNode(string) {
  * @return {String}
  */
 
-function serialize(state) {
-  var raw = _raw2.default.serialize(state);
+function serialize(state, options) {
+  var raw = _raw2.default.serialize(state, options);
   var encoded = encode(raw);
   return encoded;
 }
@@ -67890,8 +66808,8 @@ function serialize(state) {
  * @return {String}
  */
 
-function serializeNode(node) {
-  var raw = _raw2.default.serializeNode(node);
+function serializeNode(node, options) {
+  var raw = _raw2.default.serializeNode(node, options);
   var encoded = encode(raw);
   return encoded;
 }
@@ -67908,7 +66826,7 @@ exports.default = {
   serialize: serialize,
   serializeNode: serializeNode
 };
-},{"./raw":415}],413:[function(require,module,exports){
+},{"./raw":369}],367:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -68001,6 +66919,7 @@ var Html =
  *
  * @param {Object} options
  *   @property {Array} rules
+ *   @property {String} defaultBlockType
  */
 
 function Html() {
@@ -68011,6 +66930,8 @@ function Html() {
   _initialiseProps.call(this);
 
   this.rules = [].concat(_toConsumableArray(options.rules || []), [TEXT_RULE]);
+
+  this.defaultBlockType = options.defaultBlockType || 'paragraph';
 }
 
 /**
@@ -68103,7 +67024,7 @@ var _initialiseProps = function _initialiseProps() {
 
       var block = {
         kind: 'block',
-        type: 'paragraph',
+        type: _this.defaultBlockType,
         nodes: [node]
       };
 
@@ -68352,7 +67273,7 @@ function addKey(element) {
  */
 
 exports.default = Html;
-},{"./raw":415,"cheerio":24,"immutable":160,"react":375,"react-dom/server":229,"type-of":443}],414:[function(require,module,exports){
+},{"./raw":369,"cheerio":24,"immutable":158,"react":329,"react-dom/server":183,"type-of":399}],368:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -68442,7 +67363,7 @@ exports.default = {
   deserialize: deserialize,
   serialize: serialize
 };
-},{"../models/block":397,"../models/document":400,"../models/state":407,"../models/text":408}],415:[function(require,module,exports){
+},{"../models/block":351,"../models/document":354,"../models/state":361,"../models/text":362}],369:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -69125,7 +68046,7 @@ var Raw = {
  */
 
 exports.default = Raw;
-},{"../models/block":397,"../models/character":398,"../models/document":400,"../models/inline":401,"../models/mark":402,"../models/state":407,"../models/text":408,"is-empty":163}],416:[function(require,module,exports){
+},{"../models/block":351,"../models/character":352,"../models/document":354,"../models/inline":355,"../models/mark":356,"../models/state":361,"../models/text":362,"is-empty":161}],370:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -69609,69 +68530,57 @@ function splitNode(state, operation) {
       offset = operation.offset,
       count = operation.count;
   var _state12 = state,
-      document = _state12.document;
+      document = _state12.document,
+      selection = _state12.selection;
 
+  // If there's no offset, it's using the `count` instead.
 
-  if (offset === undefined) {
-    return state.merge({
-      document: document.splitNodeAfter(path, count)
-      // No need to update selection
-    });
-  } else {
-    // Update document
-    var newDocument = document.splitNode(path, offset);
-
-    // Update selection
-    var _state13 = state,
-        selection = _state13.selection;
-    var _selection5 = selection,
-        anchorKey = _selection5.anchorKey,
-        anchorOffset = _selection5.anchorOffset,
-        focusKey = _selection5.focusKey,
-        focusOffset = _selection5.focusOffset;
-
-
-    var node = document.assertPath(path);
-    // The text node that was split
-    var splittedText = node.kind == 'text' ? node : node.getTextAtOffset(offset);
-    var textOffset = node.kind == 'text' ? offset : offset - node.getOffset(splittedText.key);
-
-    // Should we update the selection ?
-    var shouldUpdateAnchor = splittedText.key == anchorKey && textOffset <= anchorOffset;
-    var shouldUpdateFocus = splittedText.key == focusKey && textOffset <= focusOffset;
-    if (shouldUpdateFocus || shouldUpdateAnchor) {
-      // The node next to `node`, resulting from the split
-      var secondNode = newDocument.getNextSibling(node.key);
-      var secondText = void 0,
-          newOffset = void 0;
-
-      if (shouldUpdateAnchor) {
-        newOffset = anchorOffset - textOffset;
-        secondText = secondNode.kind == 'text' ? secondNode : secondNode.getTextAtOffset(newOffset);
-        selection = selection.merge({
-          anchorKey: secondText.key,
-          anchorOffset: newOffset
-        });
-      }
-
-      if (shouldUpdateFocus) {
-        newOffset = focusOffset - textOffset;
-        secondText = secondNode.kind == 'text' ? secondNode : secondNode.getTextAtOffset(newOffset);
-        selection = selection.merge({
-          focusKey: secondText.key,
-          focusOffset: newOffset
-        });
-      }
-    }
-
-    state = state.merge({
-      document: newDocument,
-      selection: selection
-    });
+  if (offset == null) {
+    document = document.splitNodeAfter(path, count);
+    state = state.merge({ document: document });
     return state;
   }
+
+  // Otherwise, split using the `offset`, but calculate a few things first.
+  var node = document.assertPath(path);
+  var text = node.kind == 'text' ? node : node.getTextAtOffset(offset);
+  var textOffset = node.kind == 'text' ? offset : offset - node.getOffset(text.key);
+  var _selection5 = selection,
+      anchorKey = _selection5.anchorKey,
+      anchorOffset = _selection5.anchorOffset,
+      focusKey = _selection5.focusKey,
+      focusOffset = _selection5.focusOffset;
+
+
+  document = document.splitNode(path, offset);
+
+  // Determine whether we need to update the selection.
+  var splitAnchor = text.key == anchorKey && textOffset <= anchorOffset;
+  var splitFocus = text.key == focusKey && textOffset <= focusOffset;
+
+  // If either the anchor of focus was after the split, we need to update them.
+  if (splitFocus || splitAnchor) {
+    var nextText = document.getNextText(text.key);
+
+    if (splitAnchor) {
+      selection = selection.merge({
+        anchorKey: nextText.key,
+        anchorOffset: anchorOffset - textOffset
+      });
+    }
+
+    if (splitFocus) {
+      selection = selection.merge({
+        focusKey: nextText.key,
+        focusOffset: focusOffset - textOffset
+      });
+    }
+  }
+
+  state = state.merge({ document: document, selection: selection });
+  return state;
 }
-},{"../utils/warn":437,"debug":438}],417:[function(require,module,exports){
+},{"../utils/warn":393,"debug":394}],371:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -69680,7 +68589,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.addMark = addMark;
 exports._delete = _delete;
 exports.deleteBackward = deleteBackward;
+exports.deleteCharBackward = deleteCharBackward;
+exports.deleteLineBackward = deleteLineBackward;
+exports.deleteWordBackward = deleteWordBackward;
 exports.deleteForward = deleteForward;
+exports.deleteCharForward = deleteCharForward;
+exports.deleteLineForward = deleteLineForward;
+exports.deleteWordForward = deleteWordForward;
 exports.insertBlock = insertBlock;
 exports.insertFragment = insertFragment;
 exports.insertInline = insertInline;
@@ -69768,6 +68683,45 @@ function deleteBackward(transform) {
 }
 
 /**
+ * Delete backward until the character boundary at the current selection.
+ *
+ * @param {Transform} transform
+ */
+
+function deleteCharBackward(transform) {
+  var state = transform.state;
+  var selection = state.selection;
+
+  transform.deleteCharBackwardAtRange(selection);
+}
+
+/**
+ * Delete backward until the line boundary at the current selection.
+ *
+ * @param {Transform} transform
+ */
+
+function deleteLineBackward(transform) {
+  var state = transform.state;
+  var selection = state.selection;
+
+  transform.deleteLineBackwardAtRange(selection);
+}
+
+/**
+ * Delete backward until the word boundary at the current selection.
+ *
+ * @param {Transform} transform
+ */
+
+function deleteWordBackward(transform) {
+  var state = transform.state;
+  var selection = state.selection;
+
+  transform.deleteWordBackwardAtRange(selection);
+}
+
+/**
  * Delete forward `n` characters at the current selection.
  *
  * @param {Transform} transform
@@ -69780,6 +68734,45 @@ function deleteForward(transform) {
   var selection = state.selection;
 
   transform.deleteForwardAtRange(selection, n);
+}
+
+/**
+ * Delete forward until the character boundary at the current selection.
+ *
+ * @param {Transform} transform
+ */
+
+function deleteCharForward(transform) {
+  var state = transform.state;
+  var selection = state.selection;
+
+  transform.deleteCharForwardAtRange(selection);
+}
+
+/**
+ * Delete forward until the line boundary at the current selection.
+ *
+ * @param {Transform} transform
+ */
+
+function deleteLineForward(transform) {
+  var state = transform.state;
+  var selection = state.selection;
+
+  transform.deleteLineForwardAtRange(selection);
+}
+
+/**
+ * Delete forward until the word boundary at the current selection.
+ *
+ * @param {Transform} transform
+ */
+
+function deleteWordForward(transform) {
+  var state = transform.state;
+  var selection = state.selection;
+
+  transform.deleteWordForwardAtRange(selection);
 }
 
 /**
@@ -70119,7 +69112,7 @@ function wrapText(transform, prefix) {
     transform.moveStartOffset(0 - prefix.length);
   }
 }
-},{"../utils/normalize":432}],418:[function(require,module,exports){
+},{"../utils/normalize":388}],372:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -70127,7 +69120,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.addMarkAtRange = addMarkAtRange;
 exports.deleteAtRange = deleteAtRange;
+exports.deleteCharBackwardAtRange = deleteCharBackwardAtRange;
+exports.deleteLineBackwardAtRange = deleteLineBackwardAtRange;
+exports.deleteWordBackwardAtRange = deleteWordBackwardAtRange;
 exports.deleteBackwardAtRange = deleteBackwardAtRange;
+exports.deleteCharForwardAtRange = deleteCharForwardAtRange;
+exports.deleteLineForwardAtRange = deleteLineForwardAtRange;
+exports.deleteWordForwardAtRange = deleteWordForwardAtRange;
 exports.deleteForwardAtRange = deleteForwardAtRange;
 exports.insertBlockAtRange = insertBlockAtRange;
 exports.insertFragmentAtRange = insertFragmentAtRange;
@@ -70149,6 +69148,10 @@ var _normalize = require('../utils/normalize');
 
 var _normalize2 = _interopRequireDefault(_normalize);
 
+var _string = require('../utils/string');
+
+var _string2 = _interopRequireDefault(_string);
+
 var _core = require('../schemas/core');
 
 var _core2 = _interopRequireDefault(_core);
@@ -70163,6 +69166,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @type {Object}
  */
 
+/* eslint no-console: 0 */
+
 var OPTS = {
   normalize: false
 };
@@ -70176,8 +69181,6 @@ var OPTS = {
  * @param {Object} options
  *   @property {Boolean} normalize
  */
-
-/* eslint no-console: 0 */
 
 function addMarkAtRange(transform, range, mark) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
@@ -70230,6 +69233,7 @@ function deleteAtRange(transform, range) {
       endKey = range.endKey,
       endOffset = range.endOffset;
 
+  // If the start and end key are the same, we can just remove text.
 
   if (startKey == endKey) {
     var index = startOffset;
@@ -70238,11 +69242,10 @@ function deleteAtRange(transform, range) {
     return;
   }
 
+  // Split at the range edges within a common ancestor, without normalizing.
   var state = transform.state;
   var _state = state,
       document = _state.document;
-
-  // split the nodes at range, within the common ancestor
 
   var ancestor = document.getCommonAncestor(startKey, endKey);
   var startChild = ancestor.getHighestChild(startKey);
@@ -70253,12 +69256,9 @@ function deleteAtRange(transform, range) {
   transform.splitNodeByKey(startChild.key, startOff, OPTS);
   transform.splitNodeByKey(endChild.key, endOff, OPTS);
 
+  // Refresh variables.
   state = transform.state;
   document = state.document;
-  var startBlock = document.getClosestBlock(startKey);
-  var endBlock = document.getClosestBlock(document.getNextText(endKey).key);
-
-  // remove all of the nodes between range
   ancestor = document.getCommonAncestor(startKey, endKey);
   startChild = ancestor.getHighestChild(startKey);
   endChild = ancestor.getHighestChild(endKey);
@@ -70266,12 +69266,17 @@ function deleteAtRange(transform, range) {
   var endIndex = ancestor.nodes.indexOf(endChild);
   var middles = ancestor.nodes.slice(startIndex + 1, endIndex + 1);
 
+  // Remove all of the middle nodes, between the splits.
   if (middles.size) {
-    // remove first nodes directly so the document is not normalized
     middles.forEach(function (child) {
       transform.removeNodeByKey(child.key, OPTS);
     });
   }
+
+  // If the start and end block are different, move all of the nodes from the
+  // end block into the start block.
+  var startBlock = document.getClosestBlock(startKey);
+  var endBlock = document.getClosestBlock(document.getNextText(endKey).key);
 
   if (startBlock.key !== endBlock.key) {
     endBlock.nodes.forEach(function (child, i) {
@@ -70289,6 +69294,60 @@ function deleteAtRange(transform, range) {
   if (normalize) {
     transform.normalizeNodeByKey(ancestor.key, _core2.default);
   }
+}
+
+/**
+ * Delete backward until the character boundary at a `range`.
+ *
+ * @param {Transform} transform
+ * @param {Selection} range
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+function deleteCharBackwardAtRange(transform, range, options) {
+  var state = transform.state;
+  var startOffset = state.startOffset,
+      startBlock = state.startBlock;
+  var text = startBlock.text;
+
+  var n = _string2.default.getCharOffsetBackward(text, startOffset);
+  transform.deleteBackwardAtRange(range, n, options);
+}
+
+/**
+ * Delete backward until the line boundary at a `range`.
+ *
+ * @param {Transform} transform
+ * @param {Selection} range
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+function deleteLineBackwardAtRange(transform, range, options) {
+  var state = transform.state;
+  var startOffset = state.startOffset;
+
+  transform.deleteBackwardAtRange(range, startOffset, options);
+}
+
+/**
+ * Delete backward until the word boundary at a `range`.
+ *
+ * @param {Transform} transform
+ * @param {Selection} range
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+function deleteWordBackwardAtRange(transform, range, options) {
+  var state = transform.state;
+  var startOffset = state.startOffset,
+      startBlock = state.startBlock;
+  var text = startBlock.text;
+
+  var n = _string2.default.getWordOffsetBackward(text, startOffset);
+  transform.deleteBackwardAtRange(range, n, options);
 }
 
 /**
@@ -70312,59 +69371,126 @@ function deleteBackwardAtRange(transform, range) {
       startKey = _range.startKey,
       focusOffset = _range.focusOffset;
 
+  // If the range is expanded, perform a regular delete instead.
 
   if (range.isExpanded) {
     transform.deleteAtRange(range, { normalize: normalize });
     return;
   }
 
+  // If the closest block is void, delete it.
   var block = document.getClosestBlock(startKey);
   if (block && block.isVoid) {
     transform.removeNodeByKey(block.key, { normalize: normalize });
     return;
   }
 
+  // If the closest inline is void, delete it.
   var inline = document.getClosestInline(startKey);
   if (inline && inline.isVoid) {
     transform.removeNodeByKey(inline.key, { normalize: normalize });
     return;
   }
 
+  // If the range is at the start of the document, abort.
   if (range.isAtStartOf(document)) {
     return;
   }
 
+  // If the range is at the start of the text node, we need to figure out what
+  // is behind it to know how to delete...
   var text = document.getDescendant(startKey);
   if (range.isAtStartOf(text)) {
     var prev = document.getPreviousText(text.key);
     var prevBlock = document.getClosestBlock(prev.key);
     var prevInline = document.getClosestInline(prev.key);
 
+    // If the previous block is void, remove it.
     if (prevBlock && prevBlock.isVoid) {
       transform.removeNodeByKey(prevBlock.key, { normalize: normalize });
       return;
     }
 
+    // If the previous inline is void, remove it.
     if (prevInline && prevInline.isVoid) {
       transform.removeNodeByKey(prevInline.key, { normalize: normalize });
       return;
     }
 
+    // If the previous text's block is inside the current block, then we need
+    // to remove a character when deleteing. Otherwise, we just want to join
+    // the two blocks together.
     range = range.merge({
       anchorKey: prev.key,
-      anchorOffset: prev.length
+      anchorOffset: prevBlock == block ? prev.length - 1 : prev.length
     });
 
     transform.deleteAtRange(range, { normalize: normalize });
     return;
   }
 
+  // Otherwise, just remove a character backwards.
   range = range.merge({
     focusOffset: focusOffset - n,
     isBackward: true
   });
 
   transform.deleteAtRange(range, { normalize: normalize });
+}
+
+/**
+ * Delete forward until the character boundary at a `range`.
+ *
+ * @param {Transform} transform
+ * @param {Selection} range
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+function deleteCharForwardAtRange(transform, range, options) {
+  var state = transform.state;
+  var startOffset = state.startOffset,
+      startBlock = state.startBlock;
+  var text = startBlock.text;
+
+  var n = _string2.default.getCharOffsetForward(text, startOffset);
+  transform.deleteForwardAtRange(range, n, options);
+}
+
+/**
+ * Delete forward until the line boundary at a `range`.
+ *
+ * @param {Transform} transform
+ * @param {Selection} range
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+function deleteLineForwardAtRange(transform, range, options) {
+  var state = transform.state;
+  var startOffset = state.startOffset,
+      startBlock = state.startBlock;
+
+  transform.deleteForwardAtRange(range, startBlock.length - startOffset, options);
+}
+
+/**
+ * Delete forward until the word boundary at a `range`.
+ *
+ * @param {Transform} transform
+ * @param {Selection} range
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+function deleteWordForwardAtRange(transform, range, options) {
+  var state = transform.state;
+  var startOffset = state.startOffset,
+      startBlock = state.startBlock;
+  var text = startBlock.text;
+
+  var n = _string2.default.getWordOffsetForward(text, startOffset);
+  transform.deleteForwardAtRange(range, n, options);
 }
 
 /**
@@ -70426,9 +69552,12 @@ function deleteForwardAtRange(transform, range) {
       return;
     }
 
+    // If the next text's block is inside the current block, then we need
+    // to remove a character when deleteing. Otherwise, we just want to join
+    // the two blocks together.
     range = range.merge({
       focusKey: next.key,
-      focusOffset: 0
+      focusOffset: nextBlock == block ? 1 : 0
     });
 
     transform.deleteAtRange(range, { normalize: normalize });
@@ -70985,13 +70114,16 @@ function unwrapBlockAtRange(transform, range, properties) {
       transform.splitNodeByKey(block.key, offset, OPTS);
       state = transform.state;
       document = state.document;
-      var extra = document.getPreviousSibling(firstMatch.key);
 
       children.forEach(function (child, i) {
+        if (i == 0) {
+          var extra = child;
+          child = document.getNextBlock(child.key);
+          transform.removeNodeByKey(extra.key, OPTS);
+        }
+
         transform.moveNodeByKey(child.key, parent.key, index + 1 + i, OPTS);
       });
-
-      transform.removeNodeByKey(extra.key, OPTS);
     }
   });
 
@@ -71138,21 +70270,29 @@ function wrapBlockAtRange(transform, range, block) {
 
 function wrapInlineAtRange(transform, range, inline) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-
-  if (range.isCollapsed) return;
-
-  inline = _normalize2.default.inline(inline);
-  inline = inline.merge({ nodes: inline.nodes.clear() });
-
+  var state = transform.state;
+  var _state4 = state,
+      document = _state4.document;
   var _options$normalize17 = options.normalize,
       normalize = _options$normalize17 === undefined ? true : _options$normalize17;
   var startKey = range.startKey,
       startOffset = range.startOffset,
       endKey = range.endKey,
       endOffset = range.endOffset;
-  var state = transform.state;
-  var _state4 = state,
-      document = _state4.document;
+
+
+  if (range.isCollapsed) {
+    // Wrapping an inline void
+    var inlineParent = document.getClosestInline(startKey);
+    if (!inlineParent.isVoid) {
+      return;
+    }
+
+    return transform.wrapInlineByKey(inlineParent.key, inline, options);
+  }
+
+  inline = _normalize2.default.inline(inline);
+  inline = inline.merge({ nodes: inline.nodes.clear() });
 
   var blocks = document.getBlocksAtRange(range);
   var startBlock = document.getClosestBlock(startKey);
@@ -71279,7 +70419,7 @@ function wrapTextAtRange(transform, range, prefix) {
   transform.insertTextAtRange(start, prefix, [], { normalize: normalize });
   transform.insertTextAtRange(end, suffix, [], { normalize: normalize });
 }
-},{"../schemas/core":411,"../utils/normalize":432,"immutable":160}],419:[function(require,module,exports){
+},{"../schemas/core":365,"../utils/normalize":388,"../utils/string":391,"immutable":158}],373:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -71298,6 +70438,8 @@ exports.setNodeByKey = setNodeByKey;
 exports.splitNodeByKey = splitNodeByKey;
 exports.unwrapInlineByKey = unwrapInlineByKey;
 exports.unwrapBlockByKey = unwrapBlockByKey;
+exports.unwrapNodeByKey = unwrapNodeByKey;
+exports.wrapInlineByKey = wrapInlineByKey;
 exports.wrapBlockByKey = wrapBlockByKey;
 
 var _normalize = require('../utils/normalize');
@@ -71622,7 +70764,7 @@ function splitNodeByKey(transform, key, offset) {
 
   var path = document.getPath(key);
 
-  transform.splitNodeOperation(path, offset);
+  transform.splitNodeAtOffsetOperation(path, offset);
 
   if (normalize) {
     var parent = document.getParent(key);
@@ -71675,6 +70817,84 @@ function unwrapBlockByKey(transform, key, properties, options) {
 }
 
 /**
+ * Unwrap a single node from its parent.
+ *
+ * If the node is surrounded with siblings, its parent will be
+ * split. If the node is the only child, the parent is removed, and
+ * simply replaced by the node itself.  Cannot unwrap a root node.
+ *
+ * @param {Transform} transform
+ * @param {String} key
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+function unwrapNodeByKey(transform, key) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var _options$normalize12 = options.normalize,
+      normalize = _options$normalize12 === undefined ? true : _options$normalize12;
+  var state = transform.state;
+  var document = state.document;
+
+  var parent = document.getParent(key);
+  var node = parent.getChild(key);
+
+  var index = parent.nodes.indexOf(node);
+  var isFirst = index === 0;
+  var isLast = index === parent.nodes.size - 1;
+
+  var parentParent = document.getParent(parent.key);
+  var parentIndex = parentParent.nodes.indexOf(parent);
+
+  if (parent.nodes.size === 1) {
+    // Remove the parent
+    transform.removeNodeByKey(parent.key, { normalize: false });
+    // and replace it by the node itself
+    transform.insertNodeByKey(parentParent.key, parentIndex, node, options);
+  } else if (isFirst) {
+    // Just move the node before its parent
+    transform.moveNodeByKey(key, parentParent.key, parentIndex, options);
+  } else if (isLast) {
+    // Just move the node after its parent
+    transform.moveNodeByKey(key, parentParent.key, parentIndex + 1, options);
+  } else {
+    var parentPath = document.getPath(parent.key);
+    // Split the parent
+    transform.splitNodeOperation(parentPath, index);
+    // Extract the node in between the splitted parent
+    transform.moveNodeByKey(key, parentParent.key, parentIndex + 1, { normalize: false });
+
+    if (normalize) {
+      transform.normalizeNodeByKey(parentParent.key, _core2.default);
+    }
+  }
+}
+
+/**
+ * Wrap a node in an inline with `properties`.
+ *
+ * @param {Transform} transform
+ * @param {String} key The node to wrap
+ * @param {Block|Object|String} inline The wrapping inline (its children are discarded)
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+function wrapInlineByKey(transform, key, inline, options) {
+  inline = _normalize2.default.inline(inline);
+  inline = inline.merge({ nodes: inline.nodes.clear() });
+
+  var document = transform.state.document;
+
+  var node = document.assertDescendant(key);
+  var parent = document.getParent(node.key);
+  var index = parent.nodes.indexOf(node);
+
+  transform.insertNodeByKey(parent.key, index, inline, { normalize: false });
+  transform.moveNodeByKey(node.key, inline.key, 0, options);
+}
+
+/**
  * Wrap a node in a block with `properties`.
  *
  * @param {Transform} transform
@@ -71697,7 +70917,32 @@ function wrapBlockByKey(transform, key, block, options) {
   transform.insertNodeByKey(parent.key, index, block, { normalize: false });
   transform.moveNodeByKey(node.key, block.key, 0, options);
 }
-},{"../schemas/core":411,"../utils/normalize":432}],420:[function(require,module,exports){
+},{"../schemas/core":365,"../utils/normalize":388}],374:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = call;
+
+/**
+ * Call a `fn` as if it was a core transform. This is a convenience method to
+ * make using non-core transforms easier to read and chain.
+ *
+ * @param {Transform} transform
+ * @param {Function} fn
+ * @param {Mixed} ...args
+ */
+
+function call(transform, fn) {
+  for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    args[_key - 2] = arguments[_key];
+  }
+
+  fn.apply(undefined, [transform].concat(args));
+  return;
+}
+},{}],375:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -71705,6 +70950,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _applyOperation = require('./apply-operation');
+
+var _call = require('./call');
+
+var _call2 = _interopRequireDefault(_call);
 
 var _operations = require('./operations');
 
@@ -71719,6 +70968,8 @@ var _onSelection = require('./on-selection');
 var _onHistory = require('./on-history');
 
 var _normalize = require('./normalize');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Export.
@@ -71739,7 +70990,7 @@ var _normalize = require('./normalize');
  */
 
 /**
- * Apply operation.
+ * Call external transform.
  */
 
 exports.default = {
@@ -71749,6 +71000,12 @@ exports.default = {
    */
 
   applyOperation: _applyOperation.applyOperation,
+
+  /**
+   * Call external transform.
+   */
+
+  call: _call2.default,
 
   /**
    * Operations.
@@ -71765,6 +71022,7 @@ exports.default = {
   setMarkOperation: _operations.setMarkOperation,
   setNodeOperation: _operations.setNodeOperation,
   setSelectionOperation: _operations.setSelectionOperation,
+  splitNodeAtOffsetOperation: _operations.splitNodeAtOffsetOperation,
   splitNodeOperation: _operations.splitNodeOperation,
 
   /**
@@ -71773,7 +71031,13 @@ exports.default = {
 
   deleteAtRange: _atRange.deleteAtRange,
   deleteBackwardAtRange: _atRange.deleteBackwardAtRange,
+  deleteCharBackwardAtRange: _atRange.deleteCharBackwardAtRange,
+  deleteCharForwardAtRange: _atRange.deleteCharForwardAtRange,
   deleteForwardAtRange: _atRange.deleteForwardAtRange,
+  deleteLineBackwardAtRange: _atRange.deleteLineBackwardAtRange,
+  deleteLineForwardAtRange: _atRange.deleteLineForwardAtRange,
+  deleteWordBackwardAtRange: _atRange.deleteWordBackwardAtRange,
+  deleteWordForwardAtRange: _atRange.deleteWordForwardAtRange,
   insertBlockAtRange: _atRange.insertBlockAtRange,
   insertFragmentAtRange: _atRange.insertFragmentAtRange,
   insertInlineAtRange: _atRange.insertInlineAtRange,
@@ -71797,7 +71061,13 @@ exports.default = {
 
   delete: _atCurrentRange._delete,
   deleteBackward: _atCurrentRange.deleteBackward,
+  deleteCharBackward: _atCurrentRange.deleteCharBackward,
+  deleteCharForward: _atCurrentRange.deleteCharForward,
   deleteForward: _atCurrentRange.deleteForward,
+  deleteLineBackward: _atCurrentRange.deleteLineBackward,
+  deleteLineForward: _atCurrentRange.deleteLineForward,
+  deleteWordBackward: _atCurrentRange.deleteWordBackward,
+  deleteWordForward: _atCurrentRange.deleteWordForward,
   insertBlock: _atCurrentRange.insertBlock,
   insertFragment: _atCurrentRange.insertFragment,
   insertInline: _atCurrentRange.insertInline,
@@ -71832,7 +71102,9 @@ exports.default = {
   splitNodeByKey: _byKey.splitNodeByKey,
   unwrapInlineByKey: _byKey.unwrapInlineByKey,
   unwrapBlockByKey: _byKey.unwrapBlockByKey,
+  unwrapNodeByKey: _byKey.unwrapNodeByKey,
   wrapBlockByKey: _byKey.wrapBlockByKey,
+  wrapInlineByKey: _byKey.wrapInlineByKey,
 
   /**
    * On selection.
@@ -71902,7 +71174,11 @@ exports.default = {
 /**
  * Operations.
  */
-},{"./apply-operation":416,"./at-current-range":417,"./at-range":418,"./by-key":419,"./normalize":421,"./on-history":422,"./on-selection":423,"./operations":424}],421:[function(require,module,exports){
+
+/**
+ * Apply operation.
+ */
+},{"./apply-operation":370,"./at-current-range":371,"./at-range":372,"./by-key":373,"./call":374,"./normalize":376,"./on-history":377,"./on-selection":378,"./operations":379}],376:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72115,7 +71391,7 @@ function assertSchema(schema) {
     throw new Error('You passed an invalid `schema` object: ' + schema + '.');
   }
 }
-},{"../models/schema":405,"../utils/normalize":432,"../utils/warn":437}],422:[function(require,module,exports){
+},{"../models/schema":359,"../utils/normalize":388,"../utils/warn":393}],377:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72245,7 +71521,7 @@ function undo(transform) {
   // Update the transform.
   transform.state = state;
 }
-},{}],423:[function(require,module,exports){
+},{}],378:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72767,7 +72043,7 @@ function unsetSelection(transform) {
     isBackward: false
   });
 }
-},{}],424:[function(require,module,exports){
+},{}],379:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -72784,6 +72060,7 @@ exports.removeTextOperation = removeTextOperation;
 exports.setMarkOperation = setMarkOperation;
 exports.setNodeOperation = setNodeOperation;
 exports.setSelectionOperation = setSelectionOperation;
+exports.splitNodeAtOffsetOperation = splitNodeAtOffsetOperation;
 exports.splitNodeOperation = splitNodeOperation;
 
 var _normalize = require('../utils/normalize');
@@ -73226,7 +72503,7 @@ function setSelectionOperation(transform, properties) {
  * @param {Number} offset
  */
 
-function splitNodeOperation(transform, path, offset) {
+function splitNodeAtOffsetOperation(transform, path, offset) {
   var inversePath = path.slice();
   inversePath[path.length - 1] += 1;
 
@@ -73234,19 +72511,51 @@ function splitNodeOperation(transform, path, offset) {
     type: 'join_node',
     path: inversePath,
     withPath: path,
-    deep: true // we need to join nodes recursively
+    // we will split down to the text nodes, so we must join nodes recursively
+    deep: true
   }];
 
   var operation = {
     type: 'split_node',
     path: path,
     offset: offset,
+    count: null,
     inverse: inverse
   };
 
   transform.applyOperation(operation);
 }
-},{"../utils/normalize":432}],425:[function(require,module,exports){
+
+/**
+ * Split a node by `path` after its 'count' child.
+ *
+ * @param {Transform} transform
+ * @param {Array} path
+ * @param {Number} count
+ */
+
+function splitNodeOperation(transform, path, count) {
+  var inversePath = path.slice();
+  inversePath[path.length - 1] += 1;
+
+  var inverse = [{
+    type: 'join_node',
+    path: inversePath,
+    withPath: path,
+    deep: false
+  }];
+
+  var operation = {
+    type: 'split_node',
+    path: path,
+    offset: null,
+    count: count,
+    inverse: inverse
+  };
+
+  transform.applyOperation(operation);
+}
+},{"../utils/normalize":388}],380:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73264,7 +72573,7 @@ function findDOMNode(node) {
   var el = window.document.querySelector("[data-key=\"" + node.key + "\"]");
 
   if (!el) {
-    throw new Error("Unable to find a dom node for \"" + node.key + "\". This is\noften because of forgetting to add `props.attributes` to a component\nreturned from `renderNode`.");
+    throw new Error("Unable to find a DOM node for \"" + node.key + "\". This is\noften because of forgetting to add `props.attributes` to a component\nreturned from `renderNode`.");
   }
 
   return el;
@@ -73277,31 +72586,31 @@ function findDOMNode(node) {
  */
 
 exports.default = findDOMNode;
-},{}],426:[function(require,module,exports){
-'use strict';
+},{}],381:[function(require,module,exports){
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setKeyGenerator = exports.default = undefined;
-
-var _uniqueId = require('lodash/uniqueId');
-
-var _uniqueId2 = _interopRequireDefault(_uniqueId);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Default the generator function to Lodash's implementation, which just returns
- * incrementing numbers as strings.
+ * An auto-incrementing index for generating keys.
+ *
+ * @type {Number}
+ */
+
+var n = void 0;
+
+/**
+ * The global key generating function.
  *
  * @type {Function}
  */
 
-var generate = _uniqueId2.default;
+var generate = void 0;
 
 /**
- * Create a key.
+ * Generate a key.
  *
  * @return {String}
  */
@@ -73321,6 +72630,23 @@ function setKeyGenerator(func) {
 }
 
 /**
+ * Reset the key generating function to its initial state.
+ */
+
+function resetKeyGenerator() {
+  n = 0;
+  generate = function generate() {
+    return "" + n++;
+  };
+}
+
+/**
+ * Set the initial state.
+ */
+
+resetKeyGenerator();
+
+/**
  * Export.
  *
  * @type {Object}
@@ -73328,7 +72654,8 @@ function setKeyGenerator(func) {
 
 exports.default = generateKey;
 exports.setKeyGenerator = setKeyGenerator;
-},{"lodash/uniqueId":220}],427:[function(require,module,exports){
+exports.resetKeyGenerator = resetKeyGenerator;
+},{}],382:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73357,7 +72684,7 @@ function getLeafText(node) {
  */
 
 exports.default = getLeafText;
-},{}],428:[function(require,module,exports){
+},{}],383:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73398,7 +72725,7 @@ function isInRange(index, text, range) {
  */
 
 exports.default = isInRange;
-},{}],429:[function(require,module,exports){
+},{}],384:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73423,7 +72750,7 @@ function isReactComponent(object) {
  */
 
 exports.default = isReactComponent;
-},{}],430:[function(require,module,exports){
+},{}],385:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73691,7 +73018,7 @@ function __enable(enabled) {
 exports.default = memoize;
 exports.__clear = __clear;
 exports.__enable = __enable;
-},{"../constants/is-dev":394,"es6-map":109}],431:[function(require,module,exports){
+},{"../constants/is-dev":348,"es6-map":107}],386:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73713,7 +73040,96 @@ function noop() {}
  */
 
 exports.default = noop;
-},{}],432:[function(require,module,exports){
+},{}],387:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+/**
+ * From a DOM selection's `node` and `offset`, normalize so that it always
+ * refers to a text node.
+ *
+ * @param {Element} node
+ * @param {Number} offset
+ * @return {Object}
+ */
+
+function normalizeNodeAndOffset(node, offset) {
+  // If it's an element node, its offset refers to the index of its children
+  // including comment nodes, so try to find the right text child node.
+  if (node.nodeType == 1 && node.childNodes.length) {
+    var isLast = offset == node.childNodes.length;
+    var direction = isLast ? 'backward' : 'forward';
+    var index = isLast ? offset - 1 : offset;
+    node = getNonComment(node, index, direction);
+
+    // If the node has children, traverse until we have a leaf node. Leaf nodes
+    // can be either text nodes, or other void DOM nodes.
+    while (node.nodeType == 1 && node.childNodes.length) {
+      var i = isLast ? node.childNodes.length - 1 : 0;
+      node = getNonComment(node, i, direction);
+    }
+
+    // Determine the new offset inside the text node.
+    offset = isLast ? node.textContent.length : 0;
+  }
+
+  // Return the node and offset.
+  return { node: node, offset: offset };
+}
+
+/**
+ * Get the nearest non-comment to `index` in a `parent`, preferring `direction`.
+ *
+ * @param {Element} parent
+ * @param {Number} index
+ * @param {String} direction ('forward' or 'backward')
+ * @return {Element|Null}
+ */
+
+function getNonComment(parent, index, direction) {
+  var childNodes = parent.childNodes;
+
+  var child = childNodes[index];
+  var i = index;
+  var triedForward = false;
+  var triedBackward = false;
+
+  while (child.nodeType == 8) {
+    if (triedForward && triedBackward) break;
+
+    if (i >= childNodes.length) {
+      triedForward = true;
+      i = index - 1;
+      direction = 'backward';
+      continue;
+    }
+
+    if (i < 0) {
+      triedBackward = true;
+      i = index + 1;
+      direction = 'forward';
+      continue;
+    }
+
+    child = childNodes[i];
+    if (direction == 'forward') i++;
+    if (direction == 'backward') i--;
+  }
+
+  return child || null;
+}
+
+/**
+ * Export.
+ *
+ * @type {Function}
+ */
+
+exports.default = normalizeNodeAndOffset;
+},{}],388:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73971,7 +73387,7 @@ exports.default = {
   selection: selection,
   selectionProperties: selectionProperties
 };
-},{"../models/block":397,"../models/data":399,"../models/document":400,"../models/inline":401,"../models/mark":402,"../models/selection":406,"../models/text":408,"./warn":437,"type-of":443}],433:[function(require,module,exports){
+},{"../models/block":351,"../models/data":353,"../models/document":354,"../models/inline":355,"../models/mark":356,"../models/selection":360,"../models/text":362,"./warn":393,"type-of":399}],389:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73979,6 +73395,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _normalizeNodeAndOffset = require('./normalize-node-and-offset');
+
+var _normalizeNodeAndOffset2 = _interopRequireDefault(_normalizeNodeAndOffset);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Offset key parser regex.
@@ -74005,6 +73427,14 @@ var ATTRIBUTE = 'data-offset-key';
 var SELECTOR = '[' + ATTRIBUTE + ']';
 
 /**
+ * Void node selection.
+ *
+ * @type {String}
+ */
+
+var VOID_SELECTOR = '[data-slate-void]';
+
+/**
  * Find the start and end bounds from an `offsetKey` and `ranges`.
  *
  * @param {Number} index
@@ -74025,59 +73455,43 @@ function findBounds(index, ranges) {
 }
 
 /**
- * From a `element`, find the closest parent's offset key.
+ * From a DOM node, find the closest parent's offset key.
  *
- * @param {Element} element
- * @param {Number} offset
+ * @param {Element} rawNode
+ * @param {Number} rawOffset
  * @return {Object}
  */
 
-function findKey(element, offset) {
-  if (element.nodeType == 3) element = element.parentNode;
+function findKey(rawNode, rawOffset) {
+  var _normalizeNodeAndOffs = (0, _normalizeNodeAndOffset2.default)(rawNode, rawOffset),
+      node = _normalizeNodeAndOffs.node,
+      offset = _normalizeNodeAndOffs.offset;
 
-  var parent = element.closest(SELECTOR);
-  var children = element.querySelectorAll(SELECTOR);
+  var parentNode = node.parentNode;
+
+  // Find the closest parent with an offset key attribute.
+
+  var closest = parentNode.closest(SELECTOR);
   var offsetKey = void 0;
 
-  // Get the key from a parent if one exists.
-  if (parent) {
-    offsetKey = parent.getAttribute(ATTRIBUTE);
+  // For void nodes, the element with the offset key will be a cousin, not an
+  // ancestor, so find it by going down from the nearest void parent.
+  if (!closest) {
+    var closestVoid = parentNode.closest(VOID_SELECTOR);
+    closest = closestVoid.querySelector(SELECTOR);
+    offset = closest.textContent.length;
   }
 
-  // COMPAT: In Firefox, and potentially other browsers, when performing a
-  // "select all" action, a parent element is selected instead of the text. In
-  // this case, we need to select the proper inner text nodes. (2016/07/26)
-  else if (children.length) {
-      var child = children[0];
+  // Get the string value of the offset key attribute.
+  offsetKey = closest.getAttribute(ATTRIBUTE);
 
-      if (offset != 0) {
-        child = children[children.length - 1];
-        offset = child.textContent.length;
-      }
-
-      offsetKey = child.getAttribute(ATTRIBUTE);
-    }
-
-    // Otherwise, for void node scenarios, a cousin element will be selected, and
-    // we need to select the first text node cousin we can find.
-    else {
-        while (element = element.parentNode) {
-          var cousin = element.querySelector(SELECTOR);
-          if (!cousin) continue;
-          offsetKey = cousin.getAttribute(ATTRIBUTE);
-          offset = cousin.textContent.length;
-          break;
-        }
-      }
-
-  // If we still didn't find an offset key, error. This is a bug.
+  // If we still didn't find an offset key, this is a bug.
   if (!offsetKey) {
-    throw new Error('Unable to find offset key for ' + element + ' with offset "' + offset + '".');
+    throw new Error('Unable to find offset key for ' + node + ' with offset "' + offset + '".');
   }
 
-  // Parse the offset key.
+  // Return the parsed the offset key.
   var parsed = parse(offsetKey);
-
   return {
     key: parsed.key,
     index: parsed.index,
@@ -74167,7 +73581,7 @@ exports.default = {
   parse: parse,
   stringify: stringify
 };
-},{}],434:[function(require,module,exports){
+},{"./normalize-node-and-offset":387}],390:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74243,7 +73657,7 @@ function scrollTo(element, options) {
 }
 
 exports.default = scrollTo;
-},{"get-window":149}],435:[function(require,module,exports){
+},{"get-window":147}],391:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74441,7 +73855,7 @@ exports.default = {
   getWordOffsetBackward: getWordOffsetBackward,
   getWordOffsetForward: getWordOffsetForward
 };
-},{"esrever":120}],436:[function(require,module,exports){
+},{"esrever":118}],392:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74787,7 +74201,7 @@ var Transfer = function () {
  */
 
 exports.default = Transfer;
-},{"../constants/types":395,"../serializers/base-64":412}],437:[function(require,module,exports){
+},{"../constants/types":349,"../serializers/base-64":366}],393:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74839,7 +74253,7 @@ function warn(message) {
  */
 
 exports.default = warn;
-},{"../constants/is-dev":394}],438:[function(require,module,exports){
+},{"../constants/is-dev":348}],394:[function(require,module,exports){
 (function (process){
 
 /**
@@ -75020,7 +74434,7 @@ function localstorage(){
 }
 
 }).call(this,require('_process'))
-},{"./debug":439,"_process":227}],439:[function(require,module,exports){
+},{"./debug":395,"_process":181}],395:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -75222,7 +74636,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":440}],440:[function(require,module,exports){
+},{"ms":396}],396:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -75373,7 +74787,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's'
 }
 
-},{}],441:[function(require,module,exports){
+},{}],397:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75502,7 +74916,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":122,"inherits":161,"readable-stream/duplex.js":376,"readable-stream/passthrough.js":383,"readable-stream/readable.js":384,"readable-stream/transform.js":385,"readable-stream/writable.js":386}],442:[function(require,module,exports){
+},{"events":120,"inherits":159,"readable-stream/duplex.js":330,"readable-stream/passthrough.js":337,"readable-stream/readable.js":338,"readable-stream/transform.js":339,"readable-stream/writable.js":340}],398:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75725,7 +75139,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":23}],443:[function(require,module,exports){
+},{"buffer":23}],399:[function(require,module,exports){
 var toString = Object.prototype.toString
 
 module.exports = function(val){
@@ -75756,890 +75170,7 @@ module.exports = function(val){
   return typeof val
 }
 
-},{}],444:[function(require,module,exports){
-/**
- * UAParser.js v0.7.10
- * Lightweight JavaScript-based User-Agent string parser
- * https://github.com/faisalman/ua-parser-js
- *
- * Copyright © 2012-2015 Faisal Salman <fyzlman@gmail.com>
- * Dual licensed under GPLv2 & MIT
- */
-
-(function (window, undefined) {
-
-    'use strict';
-
-    //////////////
-    // Constants
-    /////////////
-
-
-    var LIBVERSION  = '0.7.10',
-        EMPTY       = '',
-        UNKNOWN     = '?',
-        FUNC_TYPE   = 'function',
-        UNDEF_TYPE  = 'undefined',
-        OBJ_TYPE    = 'object',
-        STR_TYPE    = 'string',
-        MAJOR       = 'major', // deprecated
-        MODEL       = 'model',
-        NAME        = 'name',
-        TYPE        = 'type',
-        VENDOR      = 'vendor',
-        VERSION     = 'version',
-        ARCHITECTURE= 'architecture',
-        CONSOLE     = 'console',
-        MOBILE      = 'mobile',
-        TABLET      = 'tablet',
-        SMARTTV     = 'smarttv',
-        WEARABLE    = 'wearable',
-        EMBEDDED    = 'embedded';
-
-
-    ///////////
-    // Helper
-    //////////
-
-
-    var util = {
-        extend : function (regexes, extensions) {
-            for (var i in extensions) {
-                if ("browser cpu device engine os".indexOf(i) !== -1 && extensions[i].length % 2 === 0) {
-                    regexes[i] = extensions[i].concat(regexes[i]);
-                }
-            }
-            return regexes;
-        },
-        has : function (str1, str2) {
-          if (typeof str1 === "string") {
-            return str2.toLowerCase().indexOf(str1.toLowerCase()) !== -1;
-          } else {
-            return false;
-          }
-        },
-        lowerize : function (str) {
-            return str.toLowerCase();
-        },
-        major : function (version) {
-            return typeof(version) === STR_TYPE ? version.split(".")[0] : undefined;
-        }
-    };
-
-
-    ///////////////
-    // Map helper
-    //////////////
-
-
-    var mapper = {
-
-        rgx : function () {
-
-            var result, i = 0, j, k, p, q, matches, match, args = arguments;
-
-            // loop through all regexes maps
-            while (i < args.length && !matches) {
-
-                var regex = args[i],       // even sequence (0,2,4,..)
-                    props = args[i + 1];   // odd sequence (1,3,5,..)
-
-                // construct object barebones
-                if (typeof result === UNDEF_TYPE) {
-                    result = {};
-                    for (p in props) {
-                        if (props.hasOwnProperty(p)){
-                            q = props[p];
-                            if (typeof q === OBJ_TYPE) {
-                                result[q[0]] = undefined;
-                            } else {
-                                result[q] = undefined;
-                            }
-                        }
-                    }
-                }
-
-                // try matching uastring with regexes
-                j = k = 0;
-                while (j < regex.length && !matches) {
-                    matches = regex[j++].exec(this.getUA());
-                    if (!!matches) {
-                        for (p = 0; p < props.length; p++) {
-                            match = matches[++k];
-                            q = props[p];
-                            // check if given property is actually array
-                            if (typeof q === OBJ_TYPE && q.length > 0) {
-                                if (q.length == 2) {
-                                    if (typeof q[1] == FUNC_TYPE) {
-                                        // assign modified match
-                                        result[q[0]] = q[1].call(this, match);
-                                    } else {
-                                        // assign given value, ignore regex match
-                                        result[q[0]] = q[1];
-                                    }
-                                } else if (q.length == 3) {
-                                    // check whether function or regex
-                                    if (typeof q[1] === FUNC_TYPE && !(q[1].exec && q[1].test)) {
-                                        // call function (usually string mapper)
-                                        result[q[0]] = match ? q[1].call(this, match, q[2]) : undefined;
-                                    } else {
-                                        // sanitize match using given regex
-                                        result[q[0]] = match ? match.replace(q[1], q[2]) : undefined;
-                                    }
-                                } else if (q.length == 4) {
-                                        result[q[0]] = match ? q[3].call(this, match.replace(q[1], q[2])) : undefined;
-                                }
-                            } else {
-                                result[q] = match ? match : undefined;
-                            }
-                        }
-                    }
-                }
-                i += 2;
-            }
-            return result;
-        },
-
-        str : function (str, map) {
-
-            for (var i in map) {
-                // check if array
-                if (typeof map[i] === OBJ_TYPE && map[i].length > 0) {
-                    for (var j = 0; j < map[i].length; j++) {
-                        if (util.has(map[i][j], str)) {
-                            return (i === UNKNOWN) ? undefined : i;
-                        }
-                    }
-                } else if (util.has(map[i], str)) {
-                    return (i === UNKNOWN) ? undefined : i;
-                }
-            }
-            return str;
-        }
-    };
-
-
-    ///////////////
-    // String map
-    //////////////
-
-
-    var maps = {
-
-        browser : {
-            oldsafari : {
-                version : {
-                    '1.0'   : '/8',
-                    '1.2'   : '/1',
-                    '1.3'   : '/3',
-                    '2.0'   : '/412',
-                    '2.0.2' : '/416',
-                    '2.0.3' : '/417',
-                    '2.0.4' : '/419',
-                    '?'     : '/'
-                }
-            }
-        },
-
-        device : {
-            amazon : {
-                model : {
-                    'Fire Phone' : ['SD', 'KF']
-                }
-            },
-            sprint : {
-                model : {
-                    'Evo Shift 4G' : '7373KT'
-                },
-                vendor : {
-                    'HTC'       : 'APA',
-                    'Sprint'    : 'Sprint'
-                }
-            }
-        },
-
-        os : {
-            windows : {
-                version : {
-                    'ME'        : '4.90',
-                    'NT 3.11'   : 'NT3.51',
-                    'NT 4.0'    : 'NT4.0',
-                    '2000'      : 'NT 5.0',
-                    'XP'        : ['NT 5.1', 'NT 5.2'],
-                    'Vista'     : 'NT 6.0',
-                    '7'         : 'NT 6.1',
-                    '8'         : 'NT 6.2',
-                    '8.1'       : 'NT 6.3',
-                    '10'        : ['NT 6.4', 'NT 10.0'],
-                    'RT'        : 'ARM'
-                }
-            }
-        }
-    };
-
-
-    //////////////
-    // Regex map
-    /////////////
-
-
-    var regexes = {
-
-        browser : [[
-
-            // Presto based
-            /(opera\smini)\/([\w\.-]+)/i,                                       // Opera Mini
-            /(opera\s[mobiletab]+).+version\/([\w\.-]+)/i,                      // Opera Mobi/Tablet
-            /(opera).+version\/([\w\.]+)/i,                                     // Opera > 9.80
-            /(opera)[\/\s]+([\w\.]+)/i                                          // Opera < 9.80
-
-            ], [NAME, VERSION], [
-
-            /\s(opr)\/([\w\.]+)/i                                               // Opera Webkit
-            ], [[NAME, 'Opera'], VERSION], [
-
-            // Mixed
-            /(kindle)\/([\w\.]+)/i,                                             // Kindle
-            /(lunascape|maxthon|netfront|jasmine|blazer)[\/\s]?([\w\.]+)*/i,
-                                                                                // Lunascape/Maxthon/Netfront/Jasmine/Blazer
-
-            // Trident based
-            /(avant\s|iemobile|slim|baidu)(?:browser)?[\/\s]?([\w\.]*)/i,
-                                                                                // Avant/IEMobile/SlimBrowser/Baidu
-            /(?:ms|\()(ie)\s([\w\.]+)/i,                                        // Internet Explorer
-
-            // Webkit/KHTML based
-            /(rekonq)\/([\w\.]+)*/i,                                            // Rekonq
-            /(chromium|flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs)\/([\w\.-]+)/i
-                                                                                // Chromium/Flock/RockMelt/Midori/Epiphany/Silk/Skyfire/Bolt/Iron/Iridium/PhantomJS
-            ], [NAME, VERSION], [
-
-            /(trident).+rv[:\s]([\w\.]+).+like\sgecko/i                         // IE11
-            ], [[NAME, 'IE'], VERSION], [
-
-            /(edge)\/((\d+)?[\w\.]+)/i                                          // Microsoft Edge
-            ], [NAME, VERSION], [
-
-            /(yabrowser)\/([\w\.]+)/i                                           // Yandex
-            ], [[NAME, 'Yandex'], VERSION], [
-
-            /(comodo_dragon)\/([\w\.]+)/i                                       // Comodo Dragon
-            ], [[NAME, /_/g, ' '], VERSION], [
-
-            /(chrome|omniweb|arora|[tizenoka]{5}\s?browser)\/v?([\w\.]+)/i,
-                                                                                // Chrome/OmniWeb/Arora/Tizen/Nokia
-            /(qqbrowser)[\/\s]?([\w\.]+)/i
-                                                                                // QQBrowser
-            ], [NAME, VERSION], [
-
-            /(uc\s?browser)[\/\s]?([\w\.]+)/i,
-            /ucweb.+(ucbrowser)[\/\s]?([\w\.]+)/i,
-            /JUC.+(ucweb)[\/\s]?([\w\.]+)/i
-                                                                                // UCBrowser
-            ], [[NAME, 'UCBrowser'], VERSION], [
-
-            /(dolfin)\/([\w\.]+)/i                                              // Dolphin
-            ], [[NAME, 'Dolphin'], VERSION], [
-
-            /((?:android.+)crmo|crios)\/([\w\.]+)/i                             // Chrome for Android/iOS
-            ], [[NAME, 'Chrome'], VERSION], [
-
-            /XiaoMi\/MiuiBrowser\/([\w\.]+)/i                                   // MIUI Browser
-            ], [VERSION, [NAME, 'MIUI Browser']], [
-
-            /android.+version\/([\w\.]+)\s+(?:mobile\s?safari|safari)/i         // Android Browser
-            ], [VERSION, [NAME, 'Android Browser']], [
-
-            /FBAV\/([\w\.]+);/i                                                 // Facebook App for iOS
-            ], [VERSION, [NAME, 'Facebook']], [
-
-            /fxios\/([\w\.-]+)/i                                                // Firefox for iOS
-            ], [VERSION, [NAME, 'Firefox']], [
-
-            /version\/([\w\.]+).+?mobile\/\w+\s(safari)/i                       // Mobile Safari
-            ], [VERSION, [NAME, 'Mobile Safari']], [
-
-            /version\/([\w\.]+).+?(mobile\s?safari|safari)/i                    // Safari & Safari Mobile
-            ], [VERSION, NAME], [
-
-            /webkit.+?(mobile\s?safari|safari)(\/[\w\.]+)/i                     // Safari < 3.0
-            ], [NAME, [VERSION, mapper.str, maps.browser.oldsafari.version]], [
-
-            /(konqueror)\/([\w\.]+)/i,                                          // Konqueror
-            /(webkit|khtml)\/([\w\.]+)/i
-            ], [NAME, VERSION], [
-
-            // Gecko based
-            /(navigator|netscape)\/([\w\.-]+)/i                                 // Netscape
-            ], [[NAME, 'Netscape'], VERSION], [
-            /(swiftfox)/i,                                                      // Swiftfox
-            /(icedragon|iceweasel|camino|chimera|fennec|maemo\sbrowser|minimo|conkeror)[\/\s]?([\w\.\+]+)/i,
-                                                                                // IceDragon/Iceweasel/Camino/Chimera/Fennec/Maemo/Minimo/Conkeror
-            /(firefox|seamonkey|k-meleon|icecat|iceape|firebird|phoenix)\/([\w\.-]+)/i,
-                                                                                // Firefox/SeaMonkey/K-Meleon/IceCat/IceApe/Firebird/Phoenix
-            /(mozilla)\/([\w\.]+).+rv\:.+gecko\/\d+/i,                          // Mozilla
-
-            // Other
-            /(polaris|lynx|dillo|icab|doris|amaya|w3m|netsurf|sleipnir)[\/\s]?([\w\.]+)/i,
-                                                                                // Polaris/Lynx/Dillo/iCab/Doris/Amaya/w3m/NetSurf/Sleipnir
-            /(links)\s\(([\w\.]+)/i,                                            // Links
-            /(gobrowser)\/?([\w\.]+)*/i,                                        // GoBrowser
-            /(ice\s?browser)\/v?([\w\._]+)/i,                                   // ICE Browser
-            /(mosaic)[\/\s]([\w\.]+)/i                                          // Mosaic
-            ], [NAME, VERSION]
-
-            /* /////////////////////
-            // Media players BEGIN
-            ////////////////////////
-
-            , [
-
-            /(apple(?:coremedia|))\/((\d+)[\w\._]+)/i,                          // Generic Apple CoreMedia
-            /(coremedia) v((\d+)[\w\._]+)/i
-            ], [NAME, VERSION], [
-
-            /(aqualung|lyssna|bsplayer)\/((\d+)?[\w\.-]+)/i                     // Aqualung/Lyssna/BSPlayer
-            ], [NAME, VERSION], [
-
-            /(ares|ossproxy)\s((\d+)[\w\.-]+)/i                                 // Ares/OSSProxy
-            ], [NAME, VERSION], [
-
-            /(audacious|audimusicstream|amarok|bass|core|dalvik|gnomemplayer|music on console|nsplayer|psp-internetradioplayer|videos)\/((\d+)[\w\.-]+)/i,
-                                                                                // Audacious/AudiMusicStream/Amarok/BASS/OpenCORE/Dalvik/GnomeMplayer/MoC
-                                                                                // NSPlayer/PSP-InternetRadioPlayer/Videos
-            /(clementine|music player daemon)\s((\d+)[\w\.-]+)/i,               // Clementine/MPD
-            /(lg player|nexplayer)\s((\d+)[\d\.]+)/i,
-            /player\/(nexplayer|lg player)\s((\d+)[\w\.-]+)/i                   // NexPlayer/LG Player
-            ], [NAME, VERSION], [
-            /(nexplayer)\s((\d+)[\w\.-]+)/i                                     // Nexplayer
-            ], [NAME, VERSION], [
-
-            /(flrp)\/((\d+)[\w\.-]+)/i                                          // Flip Player
-            ], [[NAME, 'Flip Player'], VERSION], [
-
-            /(fstream|nativehost|queryseekspider|ia-archiver|facebookexternalhit)/i
-                                                                                // FStream/NativeHost/QuerySeekSpider/IA Archiver/facebookexternalhit
-            ], [NAME], [
-
-            /(gstreamer) souphttpsrc (?:\([^\)]+\)){0,1} libsoup\/((\d+)[\w\.-]+)/i
-                                                                                // Gstreamer
-            ], [NAME, VERSION], [
-
-            /(htc streaming player)\s[\w_]+\s\/\s((\d+)[\d\.]+)/i,              // HTC Streaming Player
-            /(java|python-urllib|python-requests|wget|libcurl)\/((\d+)[\w\.-_]+)/i,
-                                                                                // Java/urllib/requests/wget/cURL
-            /(lavf)((\d+)[\d\.]+)/i                                             // Lavf (FFMPEG)
-            ], [NAME, VERSION], [
-
-            /(htc_one_s)\/((\d+)[\d\.]+)/i                                      // HTC One S
-            ], [[NAME, /_/g, ' '], VERSION], [
-
-            /(mplayer)(?:\s|\/)(?:(?:sherpya-){0,1}svn)(?:-|\s)(r\d+(?:-\d+[\w\.-]+){0,1})/i
-                                                                                // MPlayer SVN
-            ], [NAME, VERSION], [
-
-            /(mplayer)(?:\s|\/|[unkow-]+)((\d+)[\w\.-]+)/i                      // MPlayer
-            ], [NAME, VERSION], [
-
-            /(mplayer)/i,                                                       // MPlayer (no other info)
-            /(yourmuze)/i,                                                      // YourMuze
-            /(media player classic|nero showtime)/i                             // Media Player Classic/Nero ShowTime
-            ], [NAME], [
-
-            /(nero (?:home|scout))\/((\d+)[\w\.-]+)/i                           // Nero Home/Nero Scout
-            ], [NAME, VERSION], [
-
-            /(nokia\d+)\/((\d+)[\w\.-]+)/i                                      // Nokia
-            ], [NAME, VERSION], [
-
-            /\s(songbird)\/((\d+)[\w\.-]+)/i                                    // Songbird/Philips-Songbird
-            ], [NAME, VERSION], [
-
-            /(winamp)3 version ((\d+)[\w\.-]+)/i,                               // Winamp
-            /(winamp)\s((\d+)[\w\.-]+)/i,
-            /(winamp)mpeg\/((\d+)[\w\.-]+)/i
-            ], [NAME, VERSION], [
-
-            /(ocms-bot|tapinradio|tunein radio|unknown|winamp|inlight radio)/i  // OCMS-bot/tap in radio/tunein/unknown/winamp (no other info)
-                                                                                // inlight radio
-            ], [NAME], [
-
-            /(quicktime|rma|radioapp|radioclientapplication|soundtap|totem|stagefright|streamium)\/((\d+)[\w\.-]+)/i
-                                                                                // QuickTime/RealMedia/RadioApp/RadioClientApplication/
-                                                                                // SoundTap/Totem/Stagefright/Streamium
-            ], [NAME, VERSION], [
-
-            /(smp)((\d+)[\d\.]+)/i                                              // SMP
-            ], [NAME, VERSION], [
-
-            /(vlc) media player - version ((\d+)[\w\.]+)/i,                     // VLC Videolan
-            /(vlc)\/((\d+)[\w\.-]+)/i,
-            /(xbmc|gvfs|xine|xmms|irapp)\/((\d+)[\w\.-]+)/i,                    // XBMC/gvfs/Xine/XMMS/irapp
-            /(foobar2000)\/((\d+)[\d\.]+)/i,                                    // Foobar2000
-            /(itunes)\/((\d+)[\d\.]+)/i                                         // iTunes
-            ], [NAME, VERSION], [
-
-            /(wmplayer)\/((\d+)[\w\.-]+)/i,                                     // Windows Media Player
-            /(windows-media-player)\/((\d+)[\w\.-]+)/i
-            ], [[NAME, /-/g, ' '], VERSION], [
-
-            /windows\/((\d+)[\w\.-]+) upnp\/[\d\.]+ dlnadoc\/[\d\.]+ (home media server)/i
-                                                                                // Windows Media Server
-            ], [VERSION, [NAME, 'Windows']], [
-
-            /(com\.riseupradioalarm)\/((\d+)[\d\.]*)/i                          // RiseUP Radio Alarm
-            ], [NAME, VERSION], [
-
-            /(rad.io)\s((\d+)[\d\.]+)/i,                                        // Rad.io
-            /(radio.(?:de|at|fr))\s((\d+)[\d\.]+)/i
-            ], [[NAME, 'rad.io'], VERSION]
-
-            //////////////////////
-            // Media players END
-            ////////////////////*/
-
-        ],
-
-        cpu : [[
-
-            /(?:(amd|x(?:(?:86|64)[_-])?|wow|win)64)[;\)]/i                     // AMD64
-            ], [[ARCHITECTURE, 'amd64']], [
-
-            /(ia32(?=;))/i                                                      // IA32 (quicktime)
-            ], [[ARCHITECTURE, util.lowerize]], [
-
-            /((?:i[346]|x)86)[;\)]/i                                            // IA32
-            ], [[ARCHITECTURE, 'ia32']], [
-
-            // PocketPC mistakenly identified as PowerPC
-            /windows\s(ce|mobile);\sppc;/i
-            ], [[ARCHITECTURE, 'arm']], [
-
-            /((?:ppc|powerpc)(?:64)?)(?:\smac|;|\))/i                           // PowerPC
-            ], [[ARCHITECTURE, /ower/, '', util.lowerize]], [
-
-            /(sun4\w)[;\)]/i                                                    // SPARC
-            ], [[ARCHITECTURE, 'sparc']], [
-
-            /((?:avr32|ia64(?=;))|68k(?=\))|arm(?:64|(?=v\d+;))|(?=atmel\s)avr|(?:irix|mips|sparc)(?:64)?(?=;)|pa-risc)/i
-                                                                                // IA64, 68K, ARM/64, AVR/32, IRIX/64, MIPS/64, SPARC/64, PA-RISC
-            ], [[ARCHITECTURE, util.lowerize]]
-        ],
-
-        device : [[
-
-            /\((ipad|playbook);[\w\s\);-]+(rim|apple)/i                         // iPad/PlayBook
-            ], [MODEL, VENDOR, [TYPE, TABLET]], [
-
-            /applecoremedia\/[\w\.]+ \((ipad)/                                  // iPad
-            ], [MODEL, [VENDOR, 'Apple'], [TYPE, TABLET]], [
-
-            /(apple\s{0,1}tv)/i                                                 // Apple TV
-            ], [[MODEL, 'Apple TV'], [VENDOR, 'Apple']], [
-
-            /(archos)\s(gamepad2?)/i,                                           // Archos
-            /(hp).+(touchpad)/i,                                                // HP TouchPad
-            /(kindle)\/([\w\.]+)/i,                                             // Kindle
-            /\s(nook)[\w\s]+build\/(\w+)/i,                                     // Nook
-            /(dell)\s(strea[kpr\s\d]*[\dko])/i                                  // Dell Streak
-            ], [VENDOR, MODEL, [TYPE, TABLET]], [
-
-            /(kf[A-z]+)\sbuild\/[\w\.]+.*silk\//i                               // Kindle Fire HD
-            ], [MODEL, [VENDOR, 'Amazon'], [TYPE, TABLET]], [
-            /(sd|kf)[0349hijorstuw]+\sbuild\/[\w\.]+.*silk\//i                  // Fire Phone
-            ], [[MODEL, mapper.str, maps.device.amazon.model], [VENDOR, 'Amazon'], [TYPE, MOBILE]], [
-
-            /\((ip[honed|\s\w*]+);.+(apple)/i                                   // iPod/iPhone
-            ], [MODEL, VENDOR, [TYPE, MOBILE]], [
-            /\((ip[honed|\s\w*]+);/i                                            // iPod/iPhone
-            ], [MODEL, [VENDOR, 'Apple'], [TYPE, MOBILE]], [
-
-            /(blackberry)[\s-]?(\w+)/i,                                         // BlackBerry
-            /(blackberry|benq|palm(?=\-)|sonyericsson|acer|asus|dell|huawei|meizu|motorola|polytron)[\s_-]?([\w-]+)*/i,
-                                                                                // BenQ/Palm/Sony-Ericsson/Acer/Asus/Dell/Huawei/Meizu/Motorola/Polytron
-            /(hp)\s([\w\s]+\w)/i,                                               // HP iPAQ
-            /(asus)-?(\w+)/i                                                    // Asus
-            ], [VENDOR, MODEL, [TYPE, MOBILE]], [
-            /\(bb10;\s(\w+)/i                                                   // BlackBerry 10
-            ], [MODEL, [VENDOR, 'BlackBerry'], [TYPE, MOBILE]], [
-                                                                                // Asus Tablets
-            /android.+(transfo[prime\s]{4,10}\s\w+|eeepc|slider\s\w+|nexus 7)/i
-            ], [MODEL, [VENDOR, 'Asus'], [TYPE, TABLET]], [
-
-            /(sony)\s(tablet\s[ps])\sbuild\//i,                                  // Sony
-            /(sony)?(?:sgp.+)\sbuild\//i
-            ], [[VENDOR, 'Sony'], [MODEL, 'Xperia Tablet'], [TYPE, TABLET]], [
-            /(?:sony)?(?:(?:(?:c|d)\d{4})|(?:so[-l].+))\sbuild\//i
-            ], [[VENDOR, 'Sony'], [MODEL, 'Xperia Phone'], [TYPE, MOBILE]], [
-
-            /\s(ouya)\s/i,                                                      // Ouya
-            /(nintendo)\s([wids3u]+)/i                                          // Nintendo
-            ], [VENDOR, MODEL, [TYPE, CONSOLE]], [
-
-            /android.+;\s(shield)\sbuild/i                                      // Nvidia
-            ], [MODEL, [VENDOR, 'Nvidia'], [TYPE, CONSOLE]], [
-
-            /(playstation\s[34portablevi]+)/i                                   // Playstation
-            ], [MODEL, [VENDOR, 'Sony'], [TYPE, CONSOLE]], [
-
-            /(sprint\s(\w+))/i                                                  // Sprint Phones
-            ], [[VENDOR, mapper.str, maps.device.sprint.vendor], [MODEL, mapper.str, maps.device.sprint.model], [TYPE, MOBILE]], [
-
-            /(lenovo)\s?(S(?:5000|6000)+(?:[-][\w+]))/i                         // Lenovo tablets
-            ], [VENDOR, MODEL, [TYPE, TABLET]], [
-
-            /(htc)[;_\s-]+([\w\s]+(?=\))|\w+)*/i,                               // HTC
-            /(zte)-(\w+)*/i,                                                    // ZTE
-            /(alcatel|geeksphone|huawei|lenovo|nexian|panasonic|(?=;\s)sony)[_\s-]?([\w-]+)*/i
-                                                                                // Alcatel/GeeksPhone/Huawei/Lenovo/Nexian/Panasonic/Sony
-            ], [VENDOR, [MODEL, /_/g, ' '], [TYPE, MOBILE]], [
-                
-            /(nexus\s9)/i                                                       // HTC Nexus 9
-            ], [MODEL, [VENDOR, 'HTC'], [TYPE, TABLET]], [
-
-            /[\s\(;](xbox(?:\sone)?)[\s\);]/i                                   // Microsoft Xbox
-            ], [MODEL, [VENDOR, 'Microsoft'], [TYPE, CONSOLE]], [
-            /(kin\.[onetw]{3})/i                                                // Microsoft Kin
-            ], [[MODEL, /\./g, ' '], [VENDOR, 'Microsoft'], [TYPE, MOBILE]], [
-
-                                                                                // Motorola
-            /\s(milestone|droid(?:[2-4x]|\s(?:bionic|x2|pro|razr))?(:?\s4g)?)[\w\s]+build\//i,
-            /mot[\s-]?(\w+)*/i,
-            /(XT\d{3,4}) build\//i,
-            /(nexus\s[6])/i
-            ], [MODEL, [VENDOR, 'Motorola'], [TYPE, MOBILE]], [
-            /android.+\s(mz60\d|xoom[\s2]{0,2})\sbuild\//i
-            ], [MODEL, [VENDOR, 'Motorola'], [TYPE, TABLET]], [
-
-            /android.+((sch-i[89]0\d|shw-m380s|gt-p\d{4}|gt-n8000|sgh-t8[56]9|nexus 10))/i,
-            /((SM-T\w+))/i
-            ], [[VENDOR, 'Samsung'], MODEL, [TYPE, TABLET]], [                  // Samsung
-            /((s[cgp]h-\w+|gt-\w+|galaxy\snexus|sm-n900))/i,
-            /(sam[sung]*)[\s-]*(\w+-?[\w-]*)*/i,
-            /sec-((sgh\w+))/i
-            ], [[VENDOR, 'Samsung'], MODEL, [TYPE, MOBILE]], [
-            /(samsung);smarttv/i
-            ], [VENDOR, MODEL, [TYPE, SMARTTV]], [
-
-            /\(dtv[\);].+(aquos)/i                                              // Sharp
-            ], [MODEL, [VENDOR, 'Sharp'], [TYPE, SMARTTV]], [
-            /sie-(\w+)*/i                                                       // Siemens
-            ], [MODEL, [VENDOR, 'Siemens'], [TYPE, MOBILE]], [
-
-            /(maemo|nokia).*(n900|lumia\s\d+)/i,                                // Nokia
-            /(nokia)[\s_-]?([\w-]+)*/i
-            ], [[VENDOR, 'Nokia'], MODEL, [TYPE, MOBILE]], [
-
-            /android\s3\.[\s\w;-]{10}(a\d{3})/i                                 // Acer
-            ], [MODEL, [VENDOR, 'Acer'], [TYPE, TABLET]], [
-
-            /android\s3\.[\s\w;-]{10}(lg?)-([06cv9]{3,4})/i                     // LG Tablet
-            ], [[VENDOR, 'LG'], MODEL, [TYPE, TABLET]], [
-            /(lg) netcast\.tv/i                                                 // LG SmartTV
-            ], [VENDOR, MODEL, [TYPE, SMARTTV]], [
-            /(nexus\s[45])/i,                                                   // LG
-            /lg[e;\s\/-]+(\w+)*/i
-            ], [MODEL, [VENDOR, 'LG'], [TYPE, MOBILE]], [
-
-            /android.+(ideatab[a-z0-9\-\s]+)/i                                  // Lenovo
-            ], [MODEL, [VENDOR, 'Lenovo'], [TYPE, TABLET]], [
-
-            /linux;.+((jolla));/i                                               // Jolla
-            ], [VENDOR, MODEL, [TYPE, MOBILE]], [
-
-            /((pebble))app\/[\d\.]+\s/i                                         // Pebble
-            ], [VENDOR, MODEL, [TYPE, WEARABLE]], [
-
-            /android.+;\s(glass)\s\d/i                                          // Google Glass
-            ], [MODEL, [VENDOR, 'Google'], [TYPE, WEARABLE]], [
-
-            /android.+(\w+)\s+build\/hm\1/i,                                        // Xiaomi Hongmi 'numeric' models
-            /android.+(hm[\s\-_]*note?[\s_]*(?:\d\w)?)\s+build/i,                   // Xiaomi Hongmi
-            /android.+(mi[\s\-_]*(?:one|one[\s_]plus)?[\s_]*(?:\d\w)?)\s+build/i    // Xiaomi Mi
-            ], [[MODEL, /_/g, ' '], [VENDOR, 'Xiaomi'], [TYPE, MOBILE]], [
-
-            /\s(tablet)[;\/\s]/i,                                               // Unidentifiable Tablet
-            /\s(mobile)[;\/\s]/i                                                // Unidentifiable Mobile
-            ], [[TYPE, util.lowerize], VENDOR, MODEL]
-
-            /*//////////////////////////
-            // TODO: move to string map
-            ////////////////////////////
-
-            /(C6603)/i                                                          // Sony Xperia Z C6603
-            ], [[MODEL, 'Xperia Z C6603'], [VENDOR, 'Sony'], [TYPE, MOBILE]], [
-            /(C6903)/i                                                          // Sony Xperia Z 1
-            ], [[MODEL, 'Xperia Z 1'], [VENDOR, 'Sony'], [TYPE, MOBILE]], [
-
-            /(SM-G900[F|H])/i                                                   // Samsung Galaxy S5
-            ], [[MODEL, 'Galaxy S5'], [VENDOR, 'Samsung'], [TYPE, MOBILE]], [
-            /(SM-G7102)/i                                                       // Samsung Galaxy Grand 2
-            ], [[MODEL, 'Galaxy Grand 2'], [VENDOR, 'Samsung'], [TYPE, MOBILE]], [
-            /(SM-G530H)/i                                                       // Samsung Galaxy Grand Prime
-            ], [[MODEL, 'Galaxy Grand Prime'], [VENDOR, 'Samsung'], [TYPE, MOBILE]], [
-            /(SM-G313HZ)/i                                                      // Samsung Galaxy V
-            ], [[MODEL, 'Galaxy V'], [VENDOR, 'Samsung'], [TYPE, MOBILE]], [
-            /(SM-T805)/i                                                        // Samsung Galaxy Tab S 10.5
-            ], [[MODEL, 'Galaxy Tab S 10.5'], [VENDOR, 'Samsung'], [TYPE, TABLET]], [
-            /(SM-G800F)/i                                                       // Samsung Galaxy S5 Mini
-            ], [[MODEL, 'Galaxy S5 Mini'], [VENDOR, 'Samsung'], [TYPE, MOBILE]], [
-            /(SM-T311)/i                                                        // Samsung Galaxy Tab 3 8.0
-            ], [[MODEL, 'Galaxy Tab 3 8.0'], [VENDOR, 'Samsung'], [TYPE, TABLET]], [
-
-            /(R1001)/i                                                          // Oppo R1001
-            ], [MODEL, [VENDOR, 'OPPO'], [TYPE, MOBILE]], [
-            /(X9006)/i                                                          // Oppo Find 7a
-            ], [[MODEL, 'Find 7a'], [VENDOR, 'Oppo'], [TYPE, MOBILE]], [
-            /(R2001)/i                                                          // Oppo YOYO R2001
-            ], [[MODEL, 'Yoyo R2001'], [VENDOR, 'Oppo'], [TYPE, MOBILE]], [
-            /(R815)/i                                                           // Oppo Clover R815
-            ], [[MODEL, 'Clover R815'], [VENDOR, 'Oppo'], [TYPE, MOBILE]], [
-             /(U707)/i                                                          // Oppo Find Way S
-            ], [[MODEL, 'Find Way S'], [VENDOR, 'Oppo'], [TYPE, MOBILE]], [
-
-            /(T3C)/i                                                            // Advan Vandroid T3C
-            ], [MODEL, [VENDOR, 'Advan'], [TYPE, TABLET]], [
-            /(ADVAN T1J\+)/i                                                    // Advan Vandroid T1J+
-            ], [[MODEL, 'Vandroid T1J+'], [VENDOR, 'Advan'], [TYPE, TABLET]], [
-            /(ADVAN S4A)/i                                                      // Advan Vandroid S4A
-            ], [[MODEL, 'Vandroid S4A'], [VENDOR, 'Advan'], [TYPE, MOBILE]], [
-
-            /(V972M)/i                                                          // ZTE V972M
-            ], [MODEL, [VENDOR, 'ZTE'], [TYPE, MOBILE]], [
-
-            /(i-mobile)\s(IQ\s[\d\.]+)/i                                        // i-mobile IQ
-            ], [VENDOR, MODEL, [TYPE, MOBILE]], [
-            /(IQ6.3)/i                                                          // i-mobile IQ IQ 6.3
-            ], [[MODEL, 'IQ 6.3'], [VENDOR, 'i-mobile'], [TYPE, MOBILE]], [
-            /(i-mobile)\s(i-style\s[\d\.]+)/i                                   // i-mobile i-STYLE
-            ], [VENDOR, MODEL, [TYPE, MOBILE]], [
-            /(i-STYLE2.1)/i                                                     // i-mobile i-STYLE 2.1
-            ], [[MODEL, 'i-STYLE 2.1'], [VENDOR, 'i-mobile'], [TYPE, MOBILE]], [
-            
-            /(mobiistar touch LAI 512)/i                                        // mobiistar touch LAI 512
-            ], [[MODEL, 'Touch LAI 512'], [VENDOR, 'mobiistar'], [TYPE, MOBILE]], [
-
-            /////////////
-            // END TODO
-            ///////////*/
-
-        ],
-
-        engine : [[
-
-            /windows.+\sedge\/([\w\.]+)/i                                       // EdgeHTML
-            ], [VERSION, [NAME, 'EdgeHTML']], [
-
-            /(presto)\/([\w\.]+)/i,                                             // Presto
-            /(webkit|trident|netfront|netsurf|amaya|lynx|w3m)\/([\w\.]+)/i,     // WebKit/Trident/NetFront/NetSurf/Amaya/Lynx/w3m
-            /(khtml|tasman|links)[\/\s]\(?([\w\.]+)/i,                          // KHTML/Tasman/Links
-            /(icab)[\/\s]([23]\.[\d\.]+)/i                                      // iCab
-            ], [NAME, VERSION], [
-
-            /rv\:([\w\.]+).*(gecko)/i                                           // Gecko
-            ], [VERSION, NAME]
-        ],
-
-        os : [[
-
-            // Windows based
-            /microsoft\s(windows)\s(vista|xp)/i                                 // Windows (iTunes)
-            ], [NAME, VERSION], [
-            /(windows)\snt\s6\.2;\s(arm)/i,                                     // Windows RT
-            /(windows\sphone(?:\sos)*|windows\smobile|windows)[\s\/]?([ntce\d\.\s]+\w)/i
-            ], [NAME, [VERSION, mapper.str, maps.os.windows.version]], [
-            /(win(?=3|9|n)|win\s9x\s)([nt\d\.]+)/i
-            ], [[NAME, 'Windows'], [VERSION, mapper.str, maps.os.windows.version]], [
-
-            // Mobile/Embedded OS
-            /\((bb)(10);/i                                                      // BlackBerry 10
-            ], [[NAME, 'BlackBerry'], VERSION], [
-            /(blackberry)\w*\/?([\w\.]+)*/i,                                    // Blackberry
-            /(tizen)[\/\s]([\w\.]+)/i,                                          // Tizen
-            /(android|webos|palm\sos|qnx|bada|rim\stablet\sos|meego|contiki)[\/\s-]?([\w\.]+)*/i,
-                                                                                // Android/WebOS/Palm/QNX/Bada/RIM/MeeGo/Contiki
-            /linux;.+(sailfish);/i                                              // Sailfish OS
-            ], [NAME, VERSION], [
-            /(symbian\s?os|symbos|s60(?=;))[\/\s-]?([\w\.]+)*/i                 // Symbian
-            ], [[NAME, 'Symbian'], VERSION], [
-            /\((series40);/i                                                    // Series 40
-            ], [NAME], [
-            /mozilla.+\(mobile;.+gecko.+firefox/i                               // Firefox OS
-            ], [[NAME, 'Firefox OS'], VERSION], [
-
-            // Console
-            /(nintendo|playstation)\s([wids34portablevu]+)/i,                   // Nintendo/Playstation
-
-            // GNU/Linux based
-            /(mint)[\/\s\(]?(\w+)*/i,                                           // Mint
-            /(mageia|vectorlinux)[;\s]/i,                                       // Mageia/VectorLinux
-            /(joli|[kxln]?ubuntu|debian|[open]*suse|gentoo|(?=\s)arch|slackware|fedora|mandriva|centos|pclinuxos|redhat|zenwalk|linpus)[\/\s-]?([\w\.-]+)*/i,
-                                                                                // Joli/Ubuntu/Debian/SUSE/Gentoo/Arch/Slackware
-                                                                                // Fedora/Mandriva/CentOS/PCLinuxOS/RedHat/Zenwalk/Linpus
-            /(hurd|linux)\s?([\w\.]+)*/i,                                       // Hurd/Linux
-            /(gnu)\s?([\w\.]+)*/i                                               // GNU
-            ], [NAME, VERSION], [
-
-            /(cros)\s[\w]+\s([\w\.]+\w)/i                                       // Chromium OS
-            ], [[NAME, 'Chromium OS'], VERSION],[
-
-            // Solaris
-            /(sunos)\s?([\w\.]+\d)*/i                                           // Solaris
-            ], [[NAME, 'Solaris'], VERSION], [
-
-            // BSD based
-            /\s([frentopc-]{0,4}bsd|dragonfly)\s?([\w\.]+)*/i                   // FreeBSD/NetBSD/OpenBSD/PC-BSD/DragonFly
-            ], [NAME, VERSION],[
-
-            /(ip[honead]+)(?:.*os\s([\w]+)*\slike\smac|;\sopera)/i              // iOS
-            ], [[NAME, 'iOS'], [VERSION, /_/g, '.']], [
-
-            /(mac\sos\sx)\s?([\w\s\.]+\w)*/i,
-            /(macintosh|mac(?=_powerpc)\s)/i                                    // Mac OS
-            ], [[NAME, 'Mac OS'], [VERSION, /_/g, '.']], [
-
-            // Other
-            /((?:open)?solaris)[\/\s-]?([\w\.]+)*/i,                            // Solaris
-            /(haiku)\s(\w+)/i,                                                  // Haiku
-            /(aix)\s((\d)(?=\.|\)|\s)[\w\.]*)*/i,                               // AIX
-            /(plan\s9|minix|beos|os\/2|amigaos|morphos|risc\sos|openvms)/i,
-                                                                                // Plan9/Minix/BeOS/OS2/AmigaOS/MorphOS/RISCOS/OpenVMS
-            /(unix)\s?([\w\.]+)*/i                                              // UNIX
-            ], [NAME, VERSION]
-        ]
-    };
-
-
-    /////////////////
-    // Constructor
-    ////////////////
-
-
-    var UAParser = function (uastring, extensions) {
-
-        if (!(this instanceof UAParser)) {
-            return new UAParser(uastring, extensions).getResult();
-        }
-
-        var ua = uastring || ((window && window.navigator && window.navigator.userAgent) ? window.navigator.userAgent : EMPTY);
-        var rgxmap = extensions ? util.extend(regexes, extensions) : regexes;
-
-        this.getBrowser = function () {
-            var browser = mapper.rgx.apply(this, rgxmap.browser);
-            browser.major = util.major(browser.version);
-            return browser;
-        };
-        this.getCPU = function () {
-            return mapper.rgx.apply(this, rgxmap.cpu);
-        };
-        this.getDevice = function () {
-            return mapper.rgx.apply(this, rgxmap.device);
-        };
-        this.getEngine = function () {
-            return mapper.rgx.apply(this, rgxmap.engine);
-        };
-        this.getOS = function () {
-            return mapper.rgx.apply(this, rgxmap.os);
-        };
-        this.getResult = function() {
-            return {
-                ua      : this.getUA(),
-                browser : this.getBrowser(),
-                engine  : this.getEngine(),
-                os      : this.getOS(),
-                device  : this.getDevice(),
-                cpu     : this.getCPU()
-            };
-        };
-        this.getUA = function () {
-            return ua;
-        };
-        this.setUA = function (uastring) {
-            ua = uastring;
-            return this;
-        };
-        this.setUA(ua);
-        return this;
-    };
-
-    UAParser.VERSION = LIBVERSION;
-    UAParser.BROWSER = {
-        NAME    : NAME,
-        MAJOR   : MAJOR, // deprecated
-        VERSION : VERSION
-    };
-    UAParser.CPU = {
-        ARCHITECTURE : ARCHITECTURE
-    };
-    UAParser.DEVICE = {
-        MODEL   : MODEL,
-        VENDOR  : VENDOR,
-        TYPE    : TYPE,
-        CONSOLE : CONSOLE,
-        MOBILE  : MOBILE,
-        SMARTTV : SMARTTV,
-        TABLET  : TABLET,
-        WEARABLE: WEARABLE,
-        EMBEDDED: EMBEDDED
-    };
-    UAParser.ENGINE = {
-        NAME    : NAME,
-        VERSION : VERSION
-    };
-    UAParser.OS = {
-        NAME    : NAME,
-        VERSION : VERSION
-    };
-
-
-    ///////////
-    // Export
-    //////////
-
-
-    // check js environment
-    if (typeof(exports) !== UNDEF_TYPE) {
-        // nodejs env
-        if (typeof module !== UNDEF_TYPE && module.exports) {
-            exports = module.exports = UAParser;
-        }
-        exports.UAParser = UAParser;
-    } else {
-        // requirejs env (optional)
-        if (typeof(define) === FUNC_TYPE && define.amd) {
-            define(function () {
-                return UAParser;
-            });
-        } else {
-            // browser env
-            window.UAParser = UAParser;
-        }
-    }
-
-    // jQuery/Zepto specific (optional)
-    // Note: 
-    //   In AMD env the global scope should be kept clean, but jQuery is an exception.
-    //   jQuery always exports to global scope, unless jQuery.noConflict(true) is used,
-    //   and we should catch that.
-    var $ = window.jQuery || window.Zepto;
-    if (typeof $ !== UNDEF_TYPE) {
-        var parser = new UAParser();
-        $.ua = parser.getResult();
-        $.ua.get = function() {
-            return parser.getUA();
-        };
-        $.ua.set = function (uastring) {
-            parser.setUA(uastring);
-            var result = parser.getResult();
-            for (var prop in result) {
-                $.ua[prop] = result[prop];
-            }
-        };
-    }
-
-})(typeof window === 'object' ? window : this);
-
-},{}],445:[function(require,module,exports){
+},{}],400:[function(require,module,exports){
 (function (global){
 
 /**
