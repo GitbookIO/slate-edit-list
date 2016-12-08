@@ -20,12 +20,12 @@ nodes:
             type: paragraph
             nodes:
               - kind: text
+                key: '_selection_key'
                 text: ""
               - kind: inline
                 type: link
                 nodes:
                   - kind: text
-                    key: '_selection_key'
                     text: "Second item"
               - kind: text
                 text: ""

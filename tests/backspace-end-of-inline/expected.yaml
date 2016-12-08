@@ -24,7 +24,7 @@ nodes:
                 type: link
                 nodes:
                   - kind: text
-                    text: "Second ite"
+                    text: "Second item"
               - kind: text
                 text: ""
       - kind: block
