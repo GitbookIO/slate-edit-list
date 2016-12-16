@@ -1201,10 +1201,6 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
-detect-newline@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-2.1.0.tgz#f41f1c10be4b00e87b5f13da680759f2c5bfd3e2"
-
 detective@^4.0.0:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/detective/-/detective-4.3.2.tgz#77697e2e7947ac3fe7c8e26a6d6f115235afa91c"
@@ -1302,10 +1298,6 @@ encoding@^0.1.11:
   resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.12.tgz#538b66f3ee62cd1ab51ec323829d1f9480c74beb"
   dependencies:
     iconv-lite "~0.4.13"
-
-ends-with@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ends-with/-/ends-with-0.2.0.tgz#2f9da98d57a50cfda4571ce4339000500f4e6b8a"
 
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
@@ -3094,18 +3086,9 @@ slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
-slate-edit-code@^0.1.0:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/slate-edit-code/-/slate-edit-code-0.1.2.tgz#64e111b01737f314916def84303c95a2c0047066"
-  dependencies:
-    detect-indent "^4.0.0"
-    detect-newline "^2.1.0"
-    ends-with "^0.2.0"
-    immutable "^3.8.1"
-
-slate@GitbookIO/slate#dffd6803001c555e7f4aeae7449ceddbd9edc010:
-  version "0.16.3"
-  resolved "https://codeload.github.com/GitbookIO/slate/tar.gz/dffd6803001c555e7f4aeae7449ceddbd9edc010"
+slate@0.16.8:
+  version "0.16.8"
+  resolved "https://registry.yarnpkg.com/slate/-/slate-0.16.8.tgz#404053b9721ee15c1d3191e8a6ef01c6055b3b76"
   dependencies:
     cheerio "^0.22.0"
     debug "^2.3.2"

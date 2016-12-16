@@ -15,7 +15,6 @@ describe('slate-edit-list', function() {
 
         it(test, function() {
             const dir = path.resolve(__dirname, test);
-
             const inputPath = path.resolve(dir, 'input.yaml');
             const input = readMetadata.sync(inputPath);
 
@@ -32,7 +31,11 @@ describe('slate-edit-list', function() {
             const newState = runTransform(plugin, stateInput);
 
             if (expected) {
-                const newDocJSon = Slate.Raw.serialize(newState, { terse: true });
+                const newDocJSon = Slate.Raw.serialize(newState, {
+                    terse: true,
+                    preserveSelection: Boolean(expected.selection)
+                });
+
                 expect(newDocJSon).toEqual(expected);
             }
         });
