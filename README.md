@@ -46,6 +46,7 @@ This plugin accepts options to redefine the following block types:
 - ``[typeUL: String]`` — type for bulleted lists.
 - ``[typeOL: String]`` — type for numbered lists.
 - ``[typeItem: String]`` — type for list items.
+- ``[typeDefault: String]`` — type for default block in list items.
 
 #### Assumption about the schema
 
@@ -159,7 +160,7 @@ Wrap current block in a new list.
 
 #### `transforms.unwrapList`
 
-`plugin.transforms.unwrapList(transform: Transform) => Transform`
+`plugin.transforms.unwrapList(transform: Transform, ordered: Boolean?) => Transform`
 
 Unwrap block of current list.
 
