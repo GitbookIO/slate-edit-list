@@ -1,9 +1,11 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Slate = require('slate');
+const yaml = require('yaml-js');
+
 const PluginEditList = require('../lib/');
 
-const stateJson = require('./state');
+const stateJson = yaml.load(require('./state.yaml'));
 
 const plugins = [
     PluginEditList()
