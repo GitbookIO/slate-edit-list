@@ -43,10 +43,10 @@ const plugins = [
 
 This plugin accepts options to redefine the following block types:
 
-- ``[typeUL: String]`` — type for bulleted lists.
-- ``[typeOL: String]`` — type for numbered lists.
-- ``[typeItem: String]`` — type for list items.
-- ``[typeDefault: String]`` — type for default block in list items.
+- `<String> typeUL="ul_list"` — type for bulleted lists.
+- `<String typeOL="ol_list"` — type for numbered lists.
+- `<String> typeItem="list_item"` — type for list items.
+- `<String> typeDefault="paragraph"` — type for default block in list items.
 
 #### Assumption about the schema
 
@@ -58,13 +58,14 @@ Here is what a minimal list would look like:
 ```yaml
 nodes:
     - kind: block
-      type: ul_list
+      type: ul_list # Default type for bulleted lists container
       nodes:
           - kind: block
-            type: list_item
+            type: list_item # List containers can only contain list items
             nodes:
+              # List items must blocks. They cannot be the direct container of text.
               - kind: block
-                type: paragraph
+                type: paragraph # Default type of blocks in a list item
                 nodes:
                   - kind: text
                     text: Hello World
