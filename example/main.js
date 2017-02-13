@@ -10,23 +10,27 @@ const stateJson = yaml.load(require('./state.yaml'));
 const plugin = PluginEditList();
 const plugins = [plugin];
 
+let highlightedItems = (props) => {
+    const { node, state } = props;
+    const isCurrentItem = plugin.utils.getItemsAtRange(state).contains(node);
+
+    return (
+        <li className={isCurrentItem ? 'current-item' : ''}
+            title={isCurrentItem ? 'Current Item' : ''}
+            {...props.attributes}>
+            {props.children}
+        </li>
+    );
+};
+// To update the highlighting of nodes inside the selection
+highlightedItems.suppressShouldComponentUpdate = true;
+
 const SCHEMA = {
     nodes: {
         ul_list:   props => <ul {...props.attributes}>{props.children}</ul>,
         ol_list:   props => <ol {...props.attributes}>{props.children}</ol>,
 
-        list_item: (props) => {
-            const { node, state } = props;
-            const isCurrentItem = node === plugin.utils.getCurrentItem(state);
-
-            return (
-                <li className={isCurrentItem ? 'current-item' : ''}
-                    title={isCurrentItem ? 'Current Item' : ''}
-                    {...props.attributes}>
-                    {props.children}
-                </li>
-            );
-        },
+        list_item: highlightedItems,
 
         paragraph: props => <p {...props.attributes}>{props.children}</p>,
         heading:   props => <h1 {...props.attributes}>{props.children}</h1>
