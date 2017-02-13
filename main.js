@@ -1,19 +1,33 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Slate = require('slate');
+const yaml = require('yaml-js');
+
 const PluginEditList = require('../lib/');
 
-const stateJson = require('./state');
+const stateJson = yaml.load(require('./state.yaml'));
 
-const plugins = [
-    PluginEditList()
-];
+const plugin = PluginEditList();
+const plugins = [plugin];
 
 const SCHEMA = {
     nodes: {
         ul_list:   props => <ul {...props.attributes}>{props.children}</ul>,
         ol_list:   props => <ol {...props.attributes}>{props.children}</ol>,
-        list_item: props => <li {...props.attributes}>{props.children}</li>,
+
+        list_item: (props) => {
+            const { node, state } = props;
+            const isCurrentItem = node === plugin.utils.getCurrentItem(state);
+
+            return (
+                <li className={isCurrentItem ? 'current-item' : ''}
+                    title={isCurrentItem ? 'Current Item' : ''}
+                    {...props.attributes}>
+                    {props.children}
+                </li>
+            );
+        },
+
         paragraph: props => <p {...props.attributes}>{props.children}</p>,
         heading:   props => <h1 {...props.attributes}>{props.children}</h1>
     }
@@ -32,16 +46,33 @@ const Example = React.createClass({
         });
     },
 
+    call(transform) {
+        this.setState({
+            state: this.state.state.transform().call(transform).apply()
+        });
+    },
+
+    renderToolbar() {
+        const { wrapInList, unwrapList } = plugin.transforms;
+        return (
+            <div>
+                <button onClick={() => this.call(wrapInList)}>Wrap in list</button>
+                <button onClick={() => this.call(unwrapList)}>Unwrap from list</button>
+            </div>
+        );
+    },
+
     render() {
         return (
-            <Slate.Editor
-                placeholder={'Enter some text...'}
-                plugins={plugins}
-                state={this.state.state}
-                onChange={this.onChange}
-                schema={SCHEMA}
-            />
-    );
+            <div>
+                {this.renderToolbar()}
+                <Slate.Editor placeholder={'Enter some text...'}
+                              plugins={plugins}
+                              state={this.state.state}
+                              onChange={this.onChange}
+                              schema={SCHEMA} />
+            </div>
+        );
     }
 });
 
