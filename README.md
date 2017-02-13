@@ -157,13 +157,13 @@ Decrease the depth of the current item.
 
 `plugin.transforms.wrapInList(transform: Transform, ordered: Boolean?) => Transform`
 
-Wrap current block in a new list.
+Wrap the current blocks in list items.
 
 #### `transforms.unwrapList`
 
 `plugin.transforms.unwrapList(transform: Transform, ordered: Boolean?) => Transform`
 
-Unwrap block of current list.
+Unwrap the current block from the current list.
 
 #### `transforms.splitListItem`
 
