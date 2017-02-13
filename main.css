@@ -10,5 +10,14 @@
 }
 
 .current-item {
-    background: #e6e6e6;
+    position: relative;
+}
+
+.current-item:after {
+    position: absolute;
+    content: '';
+    border: 1px solid violet;
+    left: -25px;
+    height: 100%;
+    top: 0;
 }
