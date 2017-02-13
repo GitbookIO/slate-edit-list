@@ -6,7 +6,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.5.6...HEAD
+[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.6.0...HEAD
+
+Nothing
+
+## 0.6.0 - 2016-12-13
+
+- Added `utils.getItemsAtRange`
+- `wrapInList` now wraps the selected blocks in distinct items (not a big, single one)
+- `unwrapList` now unwraps all the selected items. Ignores complex ranges that span outside of lists.
+
+## 0.5.7 - 2016-02-13
 
 - Fix item being unwrapped when hitting Enter in an empty block
 
