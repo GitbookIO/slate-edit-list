@@ -63,7 +63,7 @@ nodes:
           - kind: block
             type: list_item # List containers can only contain list items
             nodes:
-              # List items must blocks. They cannot be the direct container of text.
+              # List items contain blocks. They cannot be the direct container of text.
               - kind: block
                 type: paragraph # Default type of blocks in a list item
                 nodes:
@@ -140,6 +140,14 @@ Returns the current item at selection (or at the given block).
 `plugin.utils.getCurrentList(state: State, block: Block?) => Block || Void`
 
 Returns the current list at selection (or at the given block).
+
+#### `utils.getItemsAtRange`
+
+`plugin.utils.getItemsAtRange(state: State, range: Selection?) => List<Node>`
+
+Return the list of items at the given range. The returned items are the highest list of of successive items that cover the given range.
+
+The returned list is empty if no such list can be found.
 
 #### `transforms.increaseItemDepth`
 
