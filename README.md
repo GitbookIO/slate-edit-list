@@ -64,7 +64,7 @@ nodes:
             type: list_item
             nodes:
               - kind: block
-                type: paragraph
+                type: paragraph (can be any block type)
                 nodes:
                   - kind: text
                     text: Hello World
