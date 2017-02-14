@@ -57,9 +57,28 @@ const Example = React.createClass({
     },
 
     renderToolbar() {
-        const { wrapInList, unwrapList } = plugin.transforms;
+        const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.transforms;
+        const inList = plugin.utils.isSelectionInList(this.state.state);
+
         return (
             <div>
+                <button className={inList ? 'active' : ''}
+                        onClick={() => this.call(inList ? unwrapList : wrapInList)}>
+                    <i className="fa fa-list-ul fa-lg"></i>
+                </button>
+
+                <button className={inList ? '' : 'disabled'}
+                        onClick={() => this.call(decreaseItemDepth)}>
+                    <i className="fa fa-outdent fa-lg"></i>
+                </button>
+
+                <button className={inList ? '' : 'disabled'}
+                        onClick={() => this.call(increaseItemDepth)}>
+                    <i className="fa fa-indent fa-lg"></i>
+                </button>
+
+                <span className="sep">·</span>
+
                 <button onClick={() => this.call(wrapInList)}>Wrap in list</button>
                 <button onClick={() => this.call(unwrapList)}>Unwrap from list</button>
             </div>
