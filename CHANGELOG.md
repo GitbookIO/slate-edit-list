@@ -8,9 +8,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.6.0...HEAD
 
-Nothing
+Nothing yet.
 
-## 0.6.0 - 2016-12-13
+## 0.6.1 - 2016-02-14
+
+- `wrapInList` now wraps the highest blocks in the selection, and merge selected list together.
+- Fixed schema rule for list items containing list items.
+
+## 0.6.0 - 2016-02-13
 
 - Added `utils.getItemsAtRange`
 - `wrapInList` now wraps the selected blocks in distinct items (not a big, single one)
