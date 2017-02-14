@@ -1,4 +1,4 @@
-const expect = require('expect');
+// const expect = require('expect');
 
 module.exports = function(plugin, state) {
     const { selection } = state;
@@ -13,8 +13,8 @@ module.exports = function(plugin, state) {
     state = state.transform()
         .moveTo(range)
         .apply();
-    const initialText = state.startBlock.text;
-    const initialSelection = state.selection;
+    // const initialText = state.startBlock.text;
+    // const initialSelection = state.selection;
 
     state = plugin.transforms
         .splitListItem(state.transform())

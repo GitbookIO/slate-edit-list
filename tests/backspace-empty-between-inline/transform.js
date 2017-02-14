@@ -1,4 +1,4 @@
-const expect = require('expect');
+// const expect = require('expect');
 
 module.exports = function(plugin, state) {
     const selectedBlock = state.document.getDescendant('_selection_key');
