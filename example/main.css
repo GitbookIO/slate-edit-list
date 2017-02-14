@@ -9,6 +9,33 @@
     padding: 10px;
 }
 
+button {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 6px;
+    border-radius: 2px;
+    margin: 0px;
+    background: white;
+    transition: background 0.3s;
+    outline: none;
+}
+button:hover {
+    background: #ccc;
+}
+
+button.active {
+    background: #d9edff;
+}
+
+button.disabled {
+    opacity: 0.4;
+    cursor: auto;
+}
+
+.sep {
+    margin: 15px;
+}
+
 .current-item {
     position: relative;
 }
@@ -16,7 +43,7 @@
 .current-item:after {
     position: absolute;
     content: '';
-    border: 1px solid violet;
+    border: 2px solid #d9edff;
     left: -25px;
     height: 100%;
     top: 0;
