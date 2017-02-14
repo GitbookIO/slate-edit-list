@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 Nothing yet.
 
+## 0.6.2 - 2016-02-14
+
+- `isSelectionInList` made smarter, adapted to fit the case where we can, and cannot, use `unwrapList`.
+
 ## 0.6.1 - 2016-02-14
 
 - `wrapInList` now wraps the highest blocks in the selection, and merge selected list together.
