@@ -10,7 +10,7 @@ const stateJson = yaml.load(require('./state.yaml'));
 const plugin = PluginEditList();
 const plugins = [plugin];
 
-let highlightedItems = (props) => {
+const highlightedItems = (props) => {
     const { node, state } = props;
     const isCurrentItem = plugin.utils.getItemsAtRange(state).contains(node);
 
