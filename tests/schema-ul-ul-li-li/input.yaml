@@ -1,0 +1,27 @@
+document:
+  nodes:
+    - kind: block
+      type: ul_list
+      nodes:
+        - kind: block
+          type: ul_list
+          nodes:
+            - kind: block
+              type: list_item
+              nodes:
+                - kind: block
+                  type: list_item
+                  nodes:
+                    - kind: block
+                      type: paragraph
+                      nodes:
+                        - kind: text
+                          key: 'start'
+                          text: '1st item'
+
+selection:
+  anchorKey: 'start'
+  anchorOffset: 2
+  focusKey: 'end'
+  focusOffset: 4
+  isFocused: true
