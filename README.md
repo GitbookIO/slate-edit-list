@@ -171,7 +171,7 @@ Wrap the current blocks in list items.
 
 `plugin.transforms.unwrapList(transform: Transform, ordered: Boolean?) => Transform`
 
-Unwrap the current block from the current list.
+Unwrap all items at range from their list.
 
 #### `transforms.splitListItem`
 
