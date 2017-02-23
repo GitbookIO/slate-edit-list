@@ -3282,9 +3282,9 @@ slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
-slate@0.16.17:
-  version "0.16.17"
-  resolved "https://registry.yarnpkg.com/slate/-/slate-0.16.17.tgz#03372062e18464b3aea2c45a2d292d5837a332ad"
+slate@^0.16.22:
+  version "0.16.22"
+  resolved "https://registry.yarnpkg.com/slate/-/slate-0.16.22.tgz#c08462f0f5ef74fa5e9c96b94863e4194d106673"
   dependencies:
     cheerio "^0.22.0"
     debug "^2.3.2"
