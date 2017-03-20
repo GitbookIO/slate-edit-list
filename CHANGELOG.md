@@ -6,9 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.6.0...HEAD
+[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.6.3...HEAD
 
 Nothing yet.
+
+## 0.6.3 - 2016-03-20
+
+- Fix normalization of list items containing just one inline node.
+- List items normalization now wraps all their children in a single default block, when needed.
 
 ## 0.6.2 - 2016-02-14
 
