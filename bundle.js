@@ -160,7 +160,7 @@ var Example = React.createClass({
 
 ReactDOM.render(React.createElement(Example, null), document.getElementById('example'));
 
-},{"../lib/":9,"./state.yaml":2,"react":333,"react-dom":186,"slate":354,"yaml-js":418}],2:[function(require,module,exports){
+},{"../lib/":9,"./state.yaml":2,"react":333,"react-dom":186,"slate":354,"yaml-js":417}],2:[function(require,module,exports){
 module.exports = "nodes:\n- kind: block\n  type: heading\n  nodes:\n  - kind: text\n    ranges:\n    - text: 'Slate + List Edition'\n- kind: block\n  type: paragraph\n  nodes:\n  - kind: text\n    ranges:\n    - text: This page is a basic example of Slate + slate-edit-list plugin. Press Enter in a list to create a new list item. Press Enter again to exit and Shift+Enter to create a paragraph in a list. The items at range are detected and highlighted, for demonstration purpose.\n- kind: block\n  type: ul_list\n  nodes:\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'First item in the list'\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: heading\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'With blocks:'\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'List item can contain blocks'\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'Third item in the list, with a nested list'\n    - kind: block\n      type: ol_list\n      nodes:\n      - kind: block\n        type: list_item\n        nodes:\n        - kind: block\n          type: paragraph\n          nodes:\n          - kind: text\n            ranges:\n            - text: 'First item in the nested list'\n      - kind: block\n        type: list_item\n        nodes:\n        - kind: block\n          type: paragraph\n          nodes:\n          - kind: text\n            ranges:\n            - text: 'Second item in the nested list'\n- kind: block\n  type: paragraph\n  nodes:\n  - kind: text\n    ranges:\n    - text: 'End paragraph'\n";
 
 },{}],3:[function(require,module,exports){
@@ -613,22 +613,27 @@ function itemsContainBlocks(opts) {
         match: isItem,
 
         validate: function validate(item) {
-            // Wrap text nodes in default block
-            var toWrap = item.nodes.filter(function (node) {
+            var shouldWrap = item.nodes.some(function (node) {
                 return node.kind !== 'block';
             });
 
-            return toWrap.isEmpty() ? null : { toWrap: toWrap };
+            return shouldWrap || null;
         },
 
 
         /**
-         * Wraps the given nodes in a default block
-         * @param {List<Nodes>} value.toWrap
+         * Wraps the children nodes in the default block
          */
-        normalize: function normalize(transform, node, value) {
-            return value.toWrap.reduce(function (tr, n) {
-                return tr.wrapBlockByKey(n.key, opts.typeDefault);
+        normalize: function normalize(transform, node, _) {
+            var noNorm = { normalize: false };
+
+            transform = transform.wrapBlockByKey(node.nodes.first().key, opts.typeDefault, noNorm);
+
+            var wrapper = transform.state.document.getDescendant(node.key).nodes.first();
+
+            // Add the remaining items
+            return node.nodes.rest().reduce(function (tr, n, index) {
+                return tr.moveNodeByKey(n.key, wrapper.key, index + 1, noNorm);
             }, transform);
         }
     };
@@ -977,7 +982,7 @@ module.exports = splitListItem;
 var getItemsAtRange = require('../getItemsAtRange');
 
 /**
- * Unwrap from list.
+ * Unwrap items at range from their list.
  *
  * @param  {PluginOptions} opts
  * @param  {Slate.Transform} transform
@@ -12405,7 +12410,7 @@ WritableStream.prototype._write = function(chunk, encoding, cb){
 	this._parser.write(chunk);
 	cb();
 };
-},{"./Parser.js":155,"buffer":27,"inherits":163,"readable-stream":24,"stream":402,"string_decoder":403}],160:[function(require,module,exports){
+},{"./Parser.js":155,"buffer":27,"inherits":163,"readable-stream":24,"stream":401,"string_decoder":402}],160:[function(require,module,exports){
 var Parser = require("./Parser.js"),
     DomHandler = require("domhandler");
 
@@ -56762,7 +56767,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":335,"./internal/streams/BufferList":340,"_process":185,"buffer":27,"buffer-shims":26,"core-util-is":39,"events":124,"inherits":163,"isarray":166,"process-nextick-args":184,"string_decoder/":403,"util":24}],338:[function(require,module,exports){
+},{"./_stream_duplex":335,"./internal/streams/BufferList":340,"_process":185,"buffer":27,"buffer-shims":26,"core-util-is":39,"events":124,"inherits":163,"isarray":166,"process-nextick-args":184,"string_decoder/":402,"util":24}],338:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -57472,7 +57477,7 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":335,"_process":185,"buffer":27,"buffer-shims":26,"core-util-is":39,"events":124,"inherits":163,"process-nextick-args":184,"util-deprecate":405}],340:[function(require,module,exports){
+},{"./_stream_duplex":335,"_process":185,"buffer":27,"buffer-shims":26,"core-util-is":39,"events":124,"inherits":163,"process-nextick-args":184,"util-deprecate":404}],340:[function(require,module,exports){
 'use strict';
 
 var Buffer = require('buffer').Buffer;
@@ -58432,7 +58437,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Content;
-},{"../constants/environment":351,"../constants/types":353,"../models/selection":364,"../serializers/base-64":371,"../utils/get-transfer-data":388,"../utils/offset-key":395,"./node":348,"debug":399,"get-window":151,"keycode":167,"react":333,"react-dom":186}],346:[function(require,module,exports){
+},{"../constants/environment":351,"../constants/types":353,"../models/selection":364,"../serializers/base-64":371,"../utils/get-transfer-data":387,"../utils/offset-key":394,"./node":348,"debug":398,"get-window":151,"keycode":167,"react":333,"react-dom":186}],346:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -58847,7 +58852,7 @@ try {
 }
 
 exports.default = Editor;
-},{"../models/stack":365,"../models/state":366,"../utils/noop":392,"./content":345,"debug":399,"react":333}],347:[function(require,module,exports){
+},{"../models/stack":365,"../models/state":366,"../utils/noop":391,"./content":345,"debug":398,"react":333}],347:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -58909,12 +58914,6 @@ var Leaf = function (_React$Component) {
    * @param {Object} props
    */
 
-  /**
-   * Property types.
-   *
-   * @type {Object}
-   */
-
   function Leaf(props) {
     _classCallCheck(this, Leaf);
 
@@ -58941,7 +58940,7 @@ var Leaf = function (_React$Component) {
    */
 
   /**
-   * Default properties.
+   * Property types.
    *
    * @type {Object}
    */
@@ -59178,11 +59177,16 @@ var Leaf = function (_React$Component) {
       // COMPAT: If the text is empty otherwise, it's because it's on the edge of
       // an inline void node, so we render a zero-width space so that the
       // selection can be inserted next to it still.
-      if (text == '') return _react2.default.createElement(
-        'span',
-        { 'data-slate-zero-width': true },
-        '\u200B'
-      );
+      if (text == '') {
+        // COMPAT: In Chrome, zero-width space produces graphics glitches, so use
+        // hair space in place of it. (2017/02/12)
+        var space = _environment.IS_FIREFOX ? '\u200B' : '\u200A';
+        return _react2.default.createElement(
+          'span',
+          { 'data-slate-zero-width': true },
+          space
+        );
+      }
 
       // COMPAT: Browsers will collapse trailing new lines at the end of blocks,
       // so we need to add an extra trailing new lines to prevent that.
@@ -59208,19 +59212,33 @@ var Leaf = function (_React$Component) {
     key: 'renderMarks',
     value: function renderMarks(props) {
       var marks = props.marks,
-          schema = props.schema;
+          schema = props.schema,
+          node = props.node,
+          offset = props.offset,
+          text = props.text,
+          state = props.state,
+          editor = props.editor;
 
-      var text = this.renderText(props);
+      var children = this.renderText(props);
 
-      return marks.reduce(function (children, mark) {
+      return marks.reduce(function (memo, mark) {
         var Component = mark.getComponent(schema);
-        if (!Component) return children;
+        if (!Component) return memo;
         return _react2.default.createElement(
           Component,
-          { mark: mark, marks: marks },
-          children
+          {
+            editor: editor,
+            mark: mark,
+            marks: marks,
+            node: node,
+            offset: offset,
+            schema: schema,
+            state: state,
+            text: text
+          },
+          memo
         );
-      }, text);
+      }, children);
     }
   }]);
 
@@ -59235,18 +59253,16 @@ var Leaf = function (_React$Component) {
  */
 
 Leaf.propTypes = {
+  editor: _react2.default.PropTypes.object.isRequired,
   index: _react2.default.PropTypes.number.isRequired,
-  isVoid: _react2.default.PropTypes.bool,
   marks: _react2.default.PropTypes.object.isRequired,
   node: _react2.default.PropTypes.object.isRequired,
+  offset: _react2.default.PropTypes.number.isRequired,
   parent: _react2.default.PropTypes.object.isRequired,
   ranges: _react2.default.PropTypes.object.isRequired,
   schema: _react2.default.PropTypes.object.isRequired,
   state: _react2.default.PropTypes.object.isRequired,
   text: _react2.default.PropTypes.string.isRequired
-};
-Leaf.defaultProps = {
-  isVoid: false
 };
 function findDeepestNode(element) {
   return element.firstChild ? findDeepestNode(element.firstChild) : element;
@@ -59259,7 +59275,7 @@ function findDeepestNode(element) {
  */
 
 exports.default = Leaf;
-},{"../constants/environment":351,"../utils/offset-key":395,"debug":399,"get-window":151,"react":333,"react-dom":186}],348:[function(require,module,exports){
+},{"../constants/environment":351,"../utils/offset-key":394,"debug":398,"get-window":151,"react":333,"react-dom":186}],348:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -59683,16 +59699,19 @@ var _initialiseProps = function _initialiseProps() {
         node = _props4.node,
         parent = _props4.parent,
         schema = _props4.schema,
-        state = _props4.state;
+        state = _props4.state,
+        editor = _props4.editor;
 
     var text = range.text;
     var marks = range.marks;
 
     return _react2.default.createElement(_leaf2.default, {
       key: node.key + '-' + index,
+      editor: editor,
       index: index,
       marks: marks,
       node: node,
+      offset: offset,
       parent: parent,
       ranges: ranges,
       schema: schema,
@@ -59703,7 +59722,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Node;
-},{"../constants/types":353,"../serializers/base-64":371,"../utils/scroll-to":396,"./leaf":347,"./void":350,"debug":399,"react":333,"react-dom":186}],349:[function(require,module,exports){
+},{"../constants/types":353,"../serializers/base-64":371,"../utils/scroll-to":395,"./leaf":347,"./void":350,"debug":398,"react":333,"react-dom":186}],349:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -59862,10 +59881,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _noop = require('../utils/noop');
-
-var _noop2 = _interopRequireDefault(_noop);
-
 var _environment = require('../constants/environment');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -59982,7 +59997,6 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onClick = function (event) {
-    event.preventDefault();
     _this2.debug('onClick', { event: event });
 
     var _props = _this2.props,
@@ -60010,17 +60024,9 @@ var _initialiseProps = function _initialiseProps() {
     // Make the outer wrapper relative, so the spacer can overlay it.
     if (node.kind === 'block') {
       Tag = 'div';
-      style = {
-        position: 'relative'
-      };
+      style = { position: 'relative' };
     } else {
       Tag = 'span';
-      // COMPAT: In Chrome, without setting `display: inline-block` the cursor
-      // will disappear when placed before an inline void node. (2017/02/07)
-      style = {
-        display: 'inline-block',
-        position: 'relative'
-      };
     }
 
     _this2.debug('render', { props: props });
@@ -60057,10 +60063,7 @@ var _initialiseProps = function _initialiseProps() {
       };
     } else {
       style = {
-        position: 'absolute',
-        top: '0px',
-        left: '-9999px',
-        textIndent: '-9999px'
+        color: 'transparent'
       };
     }
 
@@ -60075,11 +60078,13 @@ var _initialiseProps = function _initialiseProps() {
     var _props2 = _this2.props,
         node = _props2.node,
         schema = _props2.schema,
-        state = _props2.state;
+        state = _props2.state,
+        editor = _props2.editor;
 
     var child = node.getFirstText();
     var ranges = child.getRanges();
     var text = '';
+    var offset = 0;
     var marks = _mark2.default.createSet();
     var index = 0;
     var offsetKey = _offsetKey2.default.stringify({
@@ -60088,23 +60093,23 @@ var _initialiseProps = function _initialiseProps() {
     });
 
     return _react2.default.createElement(_leaf2.default, {
-      isVoid: true,
-      renderMark: _noop2.default,
       key: offsetKey,
-      schema: schema,
-      state: state,
+      editor: editor,
+      index: index,
+      marks: marks,
       node: child,
+      offset: offset,
       parent: node,
       ranges: ranges,
-      index: index,
-      text: text,
-      marks: marks
+      schema: schema,
+      state: state,
+      text: text
     });
   };
 };
 
 exports.default = Void;
-},{"../constants/environment":351,"../models/mark":360,"../utils/noop":392,"../utils/offset-key":395,"./leaf":347,"debug":399,"react":333}],351:[function(require,module,exports){
+},{"../constants/environment":351,"../models/mark":360,"../utils/offset-key":394,"./leaf":347,"debug":398,"react":333}],351:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -61276,7 +61281,7 @@ var Mark = function (_ref) {
  */
 
 exports.default = Mark;
-},{"../utils/memoize":391,"./data":357,"immutable":162}],361:[function(require,module,exports){
+},{"../utils/memoize":390,"./data":357,"immutable":162}],361:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -62941,7 +62946,7 @@ var Node = {
  */
 
 exports.default = Node;
-},{"../utils/generate-key":386,"../utils/is-in-range":389,"../utils/memoize":391,"../utils/normalize":394,"./block":355,"./character":356,"./document":358,"./mark":360,"direction":50,"immutable":162}],362:[function(require,module,exports){
+},{"../utils/generate-key":386,"../utils/is-in-range":388,"../utils/memoize":390,"../utils/normalize":393,"./block":355,"./character":356,"./document":358,"./mark":360,"direction":50,"immutable":162}],362:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -63388,7 +63393,7 @@ function normalizeMarkComponent(render) {
  */
 
 exports.default = Schema;
-},{"../utils/is-react-component":390,"immutable":162,"react":333,"type-of":404}],364:[function(require,module,exports){
+},{"../utils/is-react-component":389,"immutable":162,"react":333,"type-of":403}],364:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -63398,10 +63403,6 @@ Object.defineProperty(exports, "__esModule", {
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _getLeafText = require('../utils/get-leaf-text');
-
-var _getLeafText2 = _interopRequireDefault(_getLeafText);
 
 var _warn = require('../utils/warn');
 
@@ -63652,7 +63653,7 @@ var Selection = function (_ref) {
       if (anchorNode.kind != 'text') {
         (0, _warn2.default)('The selection anchor was set to a Node that is not a Text node. This should not happen and can degrade performance. The node in question was:', anchorNode);
         var anchorText = anchorNode.getTextAtOffset(anchorOffset);
-        var offset = anchorNode.getOffset(anchorText);
+        var offset = anchorNode.getOffset(anchorText.key);
         anchorOffset = anchorOffset - offset;
         anchorNode = anchorText;
       }
@@ -63661,7 +63662,7 @@ var Selection = function (_ref) {
       if (focusNode.kind != 'text') {
         (0, _warn2.default)('The selection focus was set to a Node that is not a Text node. This should not happen and can degrade performance. The node in question was:', focusNode);
         var focusText = focusNode.getTextAtOffset(focusOffset);
-        var _offset = focusNode.getOffset(focusText);
+        var _offset = focusNode.getOffset(focusText.key);
         focusOffset = focusOffset - _offset;
         focusNode = focusText;
       }
@@ -63755,8 +63756,7 @@ var Selection = function (_ref) {
   }, {
     key: 'collapseToStartOf',
     value: function collapseToStartOf(node) {
-      node = (0, _getLeafText2.default)(node);
-
+      node = node.kind == 'text' ? node : node.getFirstText();
       return this.merge({
         anchorKey: node.key,
         anchorOffset: 0,
@@ -63775,8 +63775,7 @@ var Selection = function (_ref) {
   }, {
     key: 'collapseToEndOf',
     value: function collapseToEndOf(node) {
-      node = (0, _getLeafText2.default)(node);
-
+      node = node.kind == 'text' ? node : node.getLastText();
       return this.merge({
         anchorKey: node.key,
         anchorOffset: node.length,
@@ -63800,9 +63799,8 @@ var Selection = function (_ref) {
     value: function moveToRangeOf(start) {
       var end = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : start;
 
-      start = (0, _getLeafText2.default)(start);
-      end = (0, _getLeafText2.default)(end);
-
+      start = start.kind == 'text' ? start : start.getFirstText();
+      end = end.kind == 'text' ? end : end.getLastText();
       return this.merge({
         anchorKey: start.key,
         anchorOffset: 0,
@@ -64248,7 +64246,7 @@ var Selection = function (_ref) {
  */
 
 exports.default = Selection;
-},{"../utils/get-leaf-text":387,"../utils/warn":398,"immutable":162}],365:[function(require,module,exports){
+},{"../utils/warn":397,"immutable":162}],365:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -64556,7 +64554,7 @@ function resolvePlugins(props) {
  */
 
 exports.default = Stack;
-},{"../plugins/core":369,"./schema":363,"./state":366,"debug":399,"immutable":162}],366:[function(require,module,exports){
+},{"../plugins/core":369,"./schema":363,"./state":366,"debug":398,"immutable":162}],366:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -65624,7 +65622,7 @@ var Text = function (_ref) {
  */
 
 exports.default = Text;
-},{"../utils/generate-key":386,"../utils/memoize":391,"./character":356,"./mark":360,"./range":362,"immutable":162}],368:[function(require,module,exports){
+},{"../utils/generate-key":386,"../utils/memoize":390,"./character":356,"./mark":360,"./range":362,"immutable":162}],368:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -65849,7 +65847,7 @@ function isContiguousRemoves(operations, previous) {
  */
 
 exports.default = Transform;
-},{"../transforms":380,"debug":399}],369:[function(require,module,exports){
+},{"../transforms":380,"debug":398}],369:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -66086,7 +66084,7 @@ function Plugin() {
   function onCutOrCopy(e, data, state) {
     var window = (0, _getWindow2.default)(e.target);
     var native = window.getSelection();
-    if (!native.rangeCount) return;
+    if (native.isCollapsed) return;
 
     var fragment = data.fragment;
 
@@ -66726,7 +66724,7 @@ function Plugin() {
  */
 
 exports.default = Plugin;
-},{"../components/placeholder":349,"../constants/environment":351,"../models/character":356,"../serializers/base-64":371,"debug":399,"get-window":151,"react":333}],370:[function(require,module,exports){
+},{"../components/placeholder":349,"../constants/environment":351,"../models/character":356,"../serializers/base-64":371,"debug":398,"get-window":151,"react":333}],370:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67628,7 +67626,7 @@ function addKey(element) {
  */
 
 exports.default = Html;
-},{"./raw":374,"cheerio":28,"immutable":162,"react":333,"react-dom/server":187,"type-of":404}],373:[function(require,module,exports){
+},{"./raw":374,"cheerio":28,"immutable":162,"react":333,"react-dom/server":187,"type-of":403}],373:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -69035,7 +69033,7 @@ function splitNode(state, operation) {
   state = state.merge({ document: document, selection: selection });
   return state;
 }
-},{"../utils/warn":398,"debug":399}],376:[function(require,module,exports){
+},{"../utils/warn":397,"debug":398}],376:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -69573,7 +69571,7 @@ function wrapText(transform, prefix) {
     transform.flipSelection();
   }
 }
-},{"../utils/normalize":394}],377:[function(require,module,exports){
+},{"../utils/normalize":393}],377:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -69853,9 +69851,14 @@ function deleteBackwardAtRange(transform, range) {
     return;
   }
 
-  // If the closest block is void, delete it.
   var block = document.getClosestBlock(startKey);
+  // If the closest block is void, delete it.
   if (block && block.isVoid) {
+    transform.removeNodeByKey(block.key, { normalize: normalize });
+    return;
+  }
+  // If the closest is not void, but empty, remove it
+  if (block && !block.isVoid && block.isEmpty) {
     transform.removeNodeByKey(block.key, { normalize: normalize });
     return;
   }
@@ -70048,9 +70051,14 @@ function deleteForwardAtRange(transform, range) {
     return;
   }
 
-  // If the closest block is void, delete it.
   var block = document.getClosestBlock(startKey);
+  // If the closest block is void, delete it.
   if (block && block.isVoid) {
+    transform.removeNodeByKey(block.key, { normalize: normalize });
+    return;
+  }
+  // If the closest is not void, but empty, remove it
+  if (block && !block.isVoid && block.isEmpty) {
     transform.removeNodeByKey(block.key, { normalize: normalize });
     return;
   }
@@ -70983,7 +70991,7 @@ function wrapTextAtRange(transform, range, prefix) {
   transform.insertTextAtRange(start, prefix, [], { normalize: normalize });
   transform.insertTextAtRange(end, suffix, [], { normalize: normalize });
 }
-},{"../schemas/core":370,"../utils/normalize":394,"../utils/string":397,"immutable":162}],378:[function(require,module,exports){
+},{"../schemas/core":370,"../utils/normalize":393,"../utils/string":396,"immutable":162}],378:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -71481,7 +71489,7 @@ function wrapBlockByKey(transform, key, block, options) {
   transform.insertNodeByKey(parent.key, index, block, { normalize: false });
   transform.moveNodeByKey(node.key, block.key, 0, options);
 }
-},{"../schemas/core":370,"../utils/normalize":394}],379:[function(require,module,exports){
+},{"../schemas/core":370,"../utils/normalize":393}],379:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -71981,7 +71989,7 @@ function assertSchema(schema) {
     throw new Error('You passed an invalid `schema` object: ' + schema + '.');
   }
 }
-},{"../models/schema":363,"../utils/normalize":394,"../utils/warn":398,"immutable":162}],382:[function(require,module,exports){
+},{"../models/schema":363,"../utils/normalize":393,"../utils/warn":397,"immutable":162}],382:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72168,7 +72176,7 @@ function collapseToEndOfNextBlock(transform) {
 
   var blocks = document.getBlocksAtRange(selection);
   var last = blocks.last();
-  var next = document.getNextBlock(last);
+  var next = document.getNextBlock(last.key);
   if (!next) return;
 
   var sel = selection.collapseToEndOf(next);
@@ -72188,7 +72196,7 @@ function collapseToEndOfNextText(transform) {
 
   var texts = document.getTextsAtRange(selection);
   var last = texts.last();
-  var next = document.getNextText(last);
+  var next = document.getNextText(last.key);
   if (!next) return;
 
   var sel = selection.collapseToEndOf(next);
@@ -72208,7 +72216,7 @@ function collapseToEndOfPreviousBlock(transform) {
 
   var blocks = document.getBlocksAtRange(selection);
   var first = blocks.first();
-  var previous = document.getPreviousBlock(first);
+  var previous = document.getPreviousBlock(first.key);
   if (!previous) return;
 
   var sel = selection.collapseToEndOf(previous);
@@ -72228,7 +72236,7 @@ function collapseToEndOfPreviousText(transform) {
 
   var texts = document.getTextsAtRange(selection);
   var first = texts.first();
-  var previous = document.getPreviousText(first);
+  var previous = document.getPreviousText(first.key);
   if (!previous) return;
 
   var sel = selection.collapseToEndOf(previous);
@@ -72248,7 +72256,7 @@ function collapseToStartOfNextBlock(transform) {
 
   var blocks = document.getBlocksAtRange(selection);
   var last = blocks.last();
-  var next = document.getNextBlock(last);
+  var next = document.getNextBlock(last.key);
   if (!next) return;
 
   var sel = selection.collapseToStartOf(next);
@@ -72268,7 +72276,7 @@ function collapseToStartOfNextText(transform) {
 
   var texts = document.getTextsAtRange(selection);
   var last = texts.last();
-  var next = document.getNextText(last);
+  var next = document.getNextText(last.key);
   if (!next) return;
 
   var sel = selection.collapseToStartOf(next);
@@ -72288,7 +72296,7 @@ function collapseToStartOfPreviousBlock(transform) {
 
   var blocks = document.getBlocksAtRange(selection);
   var first = blocks.first();
-  var previous = document.getPreviousBlock(first);
+  var previous = document.getPreviousBlock(first.key);
   if (!previous) return;
 
   var sel = selection.collapseToStartOf(previous);
@@ -72308,7 +72316,7 @@ function collapseToStartOfPreviousText(transform) {
 
   var texts = document.getTextsAtRange(selection);
   var first = texts.first();
-  var previous = document.getPreviousText(first);
+  var previous = document.getPreviousText(first.key);
   if (!previous) return;
 
   var sel = selection.collapseToStartOf(previous);
@@ -72899,7 +72907,7 @@ function splitNodeOperation(transform, path, count) {
 
   transform.applyOperation(operation);
 }
-},{"../utils/normalize":394}],385:[function(require,module,exports){
+},{"../utils/normalize":393}],385:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73000,35 +73008,6 @@ exports.default = generateKey;
 exports.setKeyGenerator = setKeyGenerator;
 exports.resetKeyGenerator = resetKeyGenerator;
 },{}],387:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-/**
- * Get leaf text for a node
- *
- * @param {Node} node
- * @return {Text}
- */
-
-function getLeafText(node) {
-  if (node.kind == 'text') {
-    return node;
-  }
-
-  return node.getFirstText();
-}
-
-/**
- * Export.
- *
- * @type {Function}
- */
-
-exports.default = getLeafText;
-},{}],388:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73139,7 +73118,7 @@ function getTransferType(data) {
  */
 
 exports.default = getTransferData;
-},{"../constants/types":353,"../serializers/base-64":371}],389:[function(require,module,exports){
+},{"../constants/types":353,"../serializers/base-64":371}],388:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73180,7 +73159,7 @@ function isInRange(index, text, range) {
  */
 
 exports.default = isInRange;
-},{}],390:[function(require,module,exports){
+},{}],389:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73205,7 +73184,7 @@ function isReactComponent(object) {
  */
 
 exports.default = isReactComponent;
-},{}],391:[function(require,module,exports){
+},{}],390:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73473,7 +73452,7 @@ function __enable(enabled) {
 exports.default = memoize;
 exports.__clear = __clear;
 exports.__enable = __enable;
-},{"../constants/is-dev":352,"es6-map":111}],392:[function(require,module,exports){
+},{"../constants/is-dev":352,"es6-map":111}],391:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73495,7 +73474,7 @@ function noop() {}
  */
 
 exports.default = noop;
-},{}],393:[function(require,module,exports){
+},{}],392:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73584,7 +73563,7 @@ function getNonComment(parent, index, direction) {
  */
 
 exports.default = normalizeNodeAndOffset;
-},{}],394:[function(require,module,exports){
+},{}],393:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73842,7 +73821,7 @@ exports.default = {
   selection: selection,
   selectionProperties: selectionProperties
 };
-},{"../models/block":355,"../models/data":357,"../models/document":358,"../models/inline":359,"../models/mark":360,"../models/selection":364,"../models/text":367,"./warn":398,"type-of":404}],395:[function(require,module,exports){
+},{"../models/block":355,"../models/data":357,"../models/document":358,"../models/inline":359,"../models/mark":360,"../models/selection":364,"../models/text":367,"./warn":397,"type-of":403}],394:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74035,7 +74014,7 @@ exports.default = {
   parse: parse,
   stringify: stringify
 };
-},{"./normalize-node-and-offset":393}],396:[function(require,module,exports){
+},{"./normalize-node-and-offset":392}],395:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74111,7 +74090,7 @@ function scrollTo(element, options) {
 }
 
 exports.default = scrollTo;
-},{"get-window":151}],397:[function(require,module,exports){
+},{"get-window":151}],396:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74313,7 +74292,7 @@ exports.default = {
   getWordOffsetBackward: getWordOffsetBackward,
   getWordOffsetForward: getWordOffsetForward
 };
-},{"esrever":122}],398:[function(require,module,exports){
+},{"esrever":122}],397:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74365,7 +74344,7 @@ function warn(message) {
  */
 
 exports.default = warn;
-},{"../constants/is-dev":352}],399:[function(require,module,exports){
+},{"../constants/is-dev":352}],398:[function(require,module,exports){
 (function (process){
 
 /**
@@ -74546,7 +74525,7 @@ function localstorage(){
 }
 
 }).call(this,require('_process'))
-},{"./debug":400,"_process":185}],400:[function(require,module,exports){
+},{"./debug":399,"_process":185}],399:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -74748,7 +74727,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":401}],401:[function(require,module,exports){
+},{"ms":400}],400:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -74899,7 +74878,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's'
 }
 
-},{}],402:[function(require,module,exports){
+},{}],401:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75028,7 +75007,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":124,"inherits":163,"readable-stream/duplex.js":334,"readable-stream/passthrough.js":341,"readable-stream/readable.js":342,"readable-stream/transform.js":343,"readable-stream/writable.js":344}],403:[function(require,module,exports){
+},{"events":124,"inherits":163,"readable-stream/duplex.js":334,"readable-stream/passthrough.js":341,"readable-stream/readable.js":342,"readable-stream/transform.js":343,"readable-stream/writable.js":344}],402:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75251,7 +75230,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":27}],404:[function(require,module,exports){
+},{"buffer":27}],403:[function(require,module,exports){
 var toString = Object.prototype.toString
 
 module.exports = function(val){
@@ -75282,7 +75261,7 @@ module.exports = function(val){
   return typeof val
 }
 
-},{}],405:[function(require,module,exports){
+},{}],404:[function(require,module,exports){
 (function (global){
 
 /**
@@ -75353,7 +75332,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],406:[function(require,module,exports){
+},{}],405:[function(require,module,exports){
 (function() {
   var MarkedYAMLError, events, nodes, _ref,
     __hasProp = {}.hasOwnProperty,
@@ -75519,7 +75498,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":408,"./events":409,"./nodes":411}],407:[function(require,module,exports){
+},{"./errors":407,"./events":408,"./nodes":410}],406:[function(require,module,exports){
 (function (Buffer){
 (function() {
   var MarkedYAMLError, nodes, util, _ref, _ref1,
@@ -76135,7 +76114,7 @@ function config (name) {
 }).call(this);
 
 }).call(this,require("buffer").Buffer)
-},{"./errors":408,"./nodes":411,"./util":417,"buffer":27}],408:[function(require,module,exports){
+},{"./errors":407,"./nodes":410,"./util":416,"buffer":27}],407:[function(require,module,exports){
 (function() {
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __hasProp = {}.hasOwnProperty,
@@ -76254,7 +76233,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],409:[function(require,module,exports){
+},{}],408:[function(require,module,exports){
 (function() {
   var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6,
     __hasProp = {}.hasOwnProperty,
@@ -76444,7 +76423,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],410:[function(require,module,exports){
+},{}],409:[function(require,module,exports){
 (function() {
   var composer, constructor, parser, reader, resolver, scanner, util;
 
@@ -76517,7 +76496,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./composer":406,"./constructor":407,"./parser":412,"./reader":413,"./resolver":414,"./scanner":415,"./util":417}],411:[function(require,module,exports){
+},{"./composer":405,"./constructor":406,"./parser":411,"./reader":412,"./resolver":413,"./scanner":414,"./util":416}],410:[function(require,module,exports){
 (function() {
   var unique_id, _ref, _ref1,
     __hasProp = {}.hasOwnProperty,
@@ -76602,7 +76581,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],412:[function(require,module,exports){
+},{}],411:[function(require,module,exports){
 (function() {
   var MarkedYAMLError, events, tokens, _ref,
     __hasProp = {}.hasOwnProperty,
@@ -77236,7 +77215,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":408,"./events":409,"./tokens":416}],413:[function(require,module,exports){
+},{"./errors":407,"./events":408,"./tokens":415}],412:[function(require,module,exports){
 (function() {
   var Mark, YAMLError, _ref,
     __hasProp = {}.hasOwnProperty,
@@ -77341,7 +77320,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":408}],414:[function(require,module,exports){
+},{"./errors":407}],413:[function(require,module,exports){
 (function() {
   var YAMLError, nodes, util, _ref, _ref1,
     __hasProp = {}.hasOwnProperty,
@@ -77554,7 +77533,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":408,"./nodes":411,"./util":417}],415:[function(require,module,exports){
+},{"./errors":407,"./nodes":410,"./util":416}],414:[function(require,module,exports){
 (function() {
   var MarkedYAMLError, SimpleKey, tokens, util, _ref,
     __hasProp = {}.hasOwnProperty,
@@ -79069,7 +79048,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":408,"./tokens":416,"./util":417}],416:[function(require,module,exports){
+},{"./errors":407,"./tokens":415,"./util":416}],415:[function(require,module,exports){
 (function() {
   var _ref, _ref1, _ref10, _ref11, _ref12, _ref13, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9,
     __hasProp = {}.hasOwnProperty,
@@ -79376,7 +79355,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],417:[function(require,module,exports){
+},{}],416:[function(require,module,exports){
 (function() {
   var __slice = [].slice,
     __hasProp = {}.hasOwnProperty;
@@ -79410,7 +79389,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],418:[function(require,module,exports){
+},{}],417:[function(require,module,exports){
 (function() {
   var fs;
 
@@ -79560,4 +79539,4 @@ function config (name) {
 
 }).call(this);
 
-},{"./composer":406,"./constructor":407,"./errors":408,"./events":409,"./loader":410,"./nodes":411,"./parser":412,"./reader":413,"./resolver":414,"./scanner":415,"./tokens":416,"fs":25}]},{},[1]);
+},{"./composer":405,"./constructor":406,"./errors":407,"./events":408,"./loader":409,"./nodes":410,"./parser":411,"./reader":412,"./resolver":413,"./scanner":414,"./tokens":415,"fs":25}]},{},[1]);
