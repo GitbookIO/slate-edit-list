@@ -27,7 +27,11 @@ highlightedItems.suppressShouldComponentUpdate = true;
 
 const SCHEMA = {
     nodes: {
-        ul_list:   props => <ul {...props.attributes}>{props.children}</ul>,
+        ul_list:   props => {
+            const { node: { data }, attributes, children } = props;
+            const style = Object.assign({}, attributes.style, data.get('style'));
+            return <ul {...attributes} style={style}>{children}</ul>;
+        },
         ol_list:   props => <ol {...props.attributes}>{props.children}</ol>,
 
         list_item: highlightedItems,
@@ -35,6 +39,12 @@ const SCHEMA = {
         paragraph: props => <p {...props.attributes}>{props.children}</p>,
         heading:   props => <h1 {...props.attributes}>{props.children}</h1>
     }
+};
+
+const listClassNameByStyle = {
+    'disc': 'fa-list-ul',
+    'square': 'fa-list',
+    'decimal': 'fa-list-ol'
 };
 
 const Example = React.createClass({
@@ -56,16 +66,42 @@ const Example = React.createClass({
         });
     },
 
+    wrapTo(listStyle) {
+        const { wrapInList } = plugin.transforms;
+        this.setState({
+            state: wrapInList(
+            this.state.state.transform(),
+            listStyle === 'decimal',
+            { style: { 'listStyleType': listStyle } }
+          ).apply()
+        });
+    },
+
+    hasList(listStyle) {
+        const list = plugin.utils.getCurrentList(this.state.state);
+        if (!list) {
+            return false;
+        }
+
+        const style = list.data.get('style');
+        return Boolean(style && listStyle === style.listStyleType);
+    },
+
     renderToolbar() {
         const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.transforms;
         const inList = plugin.utils.isSelectionInList(this.state.state);
 
         return (
             <div>
-                <button className={inList ? 'active' : ''}
-                        onClick={() => this.call(inList ? unwrapList : wrapInList)}>
-                    <i className="fa fa-list-ul fa-lg"></i>
-                </button>
+                {
+                    ['disc', 'square', 'decimal'].map((listStyle) => (
+                        <button key={listStyle}
+                                className={this.hasList(listStyle) ? 'active' : ''}
+                                onClick={() => this.hasList(listStyle) ? this.call(unwrapList) : this.wrapTo(listStyle)}>
+                            <i className={`fa ${listClassNameByStyle[listStyle]} fa-lg`}></i>
+                        </button>
+                    ))
+                }
 
                 <button className={inList ? '' : 'disabled'}
                         onClick={() => this.call(decreaseItemDepth)}>
