@@ -5,7 +5,7 @@ module.exports = function(plugin, state) {
 
     const withCursor = state.transform()
               .collapseToStartOf(selectedBlock)
-              .moveForward(2) // It|em 1
+              .move(2) // It|em 1
               .apply();
 
     const transform = withCursor.transform();

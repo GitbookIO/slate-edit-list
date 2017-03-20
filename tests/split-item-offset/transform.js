@@ -4,7 +4,7 @@ module.exports = function(plugin, state) {
 
     const withCursor = state.transform()
         .collapseToStartOf(p)
-        .moveToOffsets(5, 5)
+        .moveOffsetsTo(5, 5)
         .apply();
 
     const transform = withCursor.transform();

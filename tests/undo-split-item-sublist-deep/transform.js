@@ -11,7 +11,7 @@ module.exports = function(plugin, state) {
     });
 
     state = state.transform()
-        .moveTo(range)
+        .select(range)
         .apply();
     // const initialText = state.startBlock.text;
     // const initialSelection = state.selection;
