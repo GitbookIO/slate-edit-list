@@ -160,7 +160,7 @@ var Example = React.createClass({
 
 ReactDOM.render(React.createElement(Example, null), document.getElementById('example'));
 
-},{"../lib/":9,"./state.yaml":2,"react":333,"react-dom":186,"slate":354,"yaml-js":417}],2:[function(require,module,exports){
+},{"../lib/":9,"./state.yaml":2,"react":335,"react-dom":187,"slate":357,"yaml-js":420}],2:[function(require,module,exports){
 module.exports = "nodes:\n- kind: block\n  type: heading\n  nodes:\n  - kind: text\n    ranges:\n    - text: 'Slate + List Edition'\n- kind: block\n  type: paragraph\n  nodes:\n  - kind: text\n    ranges:\n    - text: This page is a basic example of Slate + slate-edit-list plugin. Press Enter in a list to create a new list item. Press Enter again to exit and Shift+Enter to create a paragraph in a list. The items at range are detected and highlighted, for demonstration purpose.\n- kind: block\n  type: ul_list\n  data:\n    style:\n      listStyleType: disc\n  nodes:\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'First item in the list'\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: heading\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'With blocks:'\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'List item can contain blocks'\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'Third item in the list, with a nested list'\n    - kind: block\n      type: ol_list\n      data:\n          style:\n            listStyleType: decimal\n      nodes:\n      - kind: block\n        type: list_item\n        nodes:\n        - kind: block\n          type: paragraph\n          nodes:\n          - kind: text\n            ranges:\n            - text: 'First item in the nested list'\n      - kind: block\n        type: list_item\n        nodes:\n        - kind: block\n          type: paragraph\n          nodes:\n          - kind: text\n            ranges:\n            - text: 'Second item in the nested list'\n- kind: block\n  type: paragraph\n  nodes:\n  - kind: text\n    ranges:\n    - text: 'End paragraph'\n";
 
 },{}],3:[function(require,module,exports){
@@ -886,7 +886,7 @@ function decreaseItemDepth(opts, transform, ordered) {
 
 module.exports = decreaseItemDepth;
 
-},{"../getCurrentItem":3,"../getItemDepth":5,"slate":354}],18:[function(require,module,exports){
+},{"../getCurrentItem":3,"../getItemDepth":5,"slate":357}],18:[function(require,module,exports){
 'use strict';
 
 var Slate = require('slate');
@@ -956,7 +956,7 @@ function moveAsSubItem(opts, transform, item, destKey) {
 
 module.exports = increaseItemDepth;
 
-},{"../getCurrentItem":3,"../getListForItem":7,"../getPreviousItem":8,"../isList":10,"slate":354}],19:[function(require,module,exports){
+},{"../getCurrentItem":3,"../getListForItem":7,"../getPreviousItem":8,"../isList":10,"slate":357}],19:[function(require,module,exports){
 'use strict';
 
 var getCurrentItem = require('../getCurrentItem');
@@ -1099,7 +1099,7 @@ function getHighestSelectedBlocks(state) {
 
 module.exports = wrapInList;
 
-},{"../isList":10,"immutable":162,"slate":354}],22:[function(require,module,exports){
+},{"../isList":10,"immutable":162,"slate":357}],22:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -3133,7 +3133,7 @@ function isnan (val) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":22,"ieee754":161,"isarray":166}],28:[function(require,module,exports){
+},{"base64-js":22,"ieee754":161,"isarray":167}],28:[function(require,module,exports){
 /**
  * Export cheerio (with )
  */
@@ -3643,7 +3643,7 @@ exports.is = function (selector) {
 };
 
 
-},{"../static":36,"../utils":37,"lodash.assignin":168,"lodash.foreach":173,"lodash.some":179}],30:[function(require,module,exports){
+},{"../static":36,"../utils":37,"lodash.assignin":169,"lodash.foreach":174,"lodash.some":180}],30:[function(require,module,exports){
 var domEach = require('../utils').domEach,
     _ = {
       pick: require('lodash.pick'),
@@ -3766,7 +3766,7 @@ function parse(styles) {
     }, {});
 }
 
-},{"../utils":37,"lodash.pick":176}],31:[function(require,module,exports){
+},{"../utils":37,"lodash.pick":177}],31:[function(require,module,exports){
 // https://github.com/jquery/jquery/blob/2.1.3/src/manipulation/var/rcheckableType.js
 // https://github.com/jquery/jquery/blob/2.1.3/src/serialize.js
 var submittableSelector = 'input,select,textarea,keygen',
@@ -3833,7 +3833,7 @@ exports.serializeArray = function() {
     }).get();
 };
 
-},{"lodash.map":174}],32:[function(require,module,exports){
+},{"lodash.map":175}],32:[function(require,module,exports){
 var parse = require('../parse'),
     $ = require('../static'),
     updateDOM = parse.update,
@@ -4260,7 +4260,7 @@ exports.clone = function() {
   return this._make(cloneDom(this.get(), this.options));
 };
 
-},{"../parse":35,"../static":36,"../utils":37,"lodash.bind":169,"lodash.flatten":172,"lodash.foreach":173}],33:[function(require,module,exports){
+},{"../parse":35,"../static":36,"../utils":37,"lodash.bind":170,"lodash.flatten":173,"lodash.foreach":174}],33:[function(require,module,exports){
 var select = require('css-select'),
     utils = require('../utils'),
     domEach = utils.domEach,
@@ -4691,7 +4691,7 @@ exports.addBack = function(selector) {
   );
 };
 
-},{"../utils":37,"css-select":40,"htmlparser2":160,"lodash.bind":169,"lodash.filter":171,"lodash.foreach":173,"lodash.reduce":177,"lodash.reject":178}],34:[function(require,module,exports){
+},{"../utils":37,"css-select":40,"htmlparser2":160,"lodash.bind":170,"lodash.filter":172,"lodash.foreach":174,"lodash.reduce":178,"lodash.reject":179}],34:[function(require,module,exports){
 /*
   Module dependencies
 */
@@ -4841,7 +4841,7 @@ var isNode = function(obj) {
   return obj.name || obj.type === 'text' || obj.type === 'comment';
 };
 
-},{"./api/attributes":29,"./api/css":30,"./api/forms":31,"./api/manipulation":32,"./api/traversing":33,"./parse":35,"./static":36,"./utils":37,"lodash.assignin":168,"lodash.bind":169,"lodash.defaults":170,"lodash.foreach":173}],35:[function(require,module,exports){
+},{"./api/attributes":29,"./api/css":30,"./api/forms":31,"./api/manipulation":32,"./api/traversing":33,"./parse":35,"./static":36,"./utils":37,"lodash.assignin":169,"lodash.bind":170,"lodash.defaults":171,"lodash.foreach":174}],35:[function(require,module,exports){
 (function (Buffer){
 /*
   Module Dependencies
@@ -5120,7 +5120,7 @@ exports.contains = function(container, contained) {
   return false;
 };
 
-},{"./cheerio":34,"./parse":35,"css-select":40,"dom-serializer":51,"lodash.defaults":170,"lodash.merge":175}],37:[function(require,module,exports){
+},{"./cheerio":34,"./parse":35,"css-select":40,"dom-serializer":51,"lodash.defaults":171,"lodash.merge":176}],37:[function(require,module,exports){
 var parse = require('./parse'),
     render = require('dom-serializer');
 
@@ -6313,7 +6313,7 @@ module.exports = {
 	pseudos: pseudos
 };
 
-},{"./attributes.js":41,"boolbase":23,"domutils":57,"nth-check":181}],46:[function(require,module,exports){
+},{"./attributes.js":41,"boolbase":23,"domutils":57,"nth-check":182}],46:[function(require,module,exports){
 module.exports = sortByProcedure;
 
 /*
@@ -9682,7 +9682,7 @@ var EventListener = {
 
 module.exports = EventListener;
 }).call(this,require('_process'))
-},{"./emptyFunction":132,"_process":185}],126:[function(require,module,exports){
+},{"./emptyFunction":132,"_process":186}],126:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9959,7 +9959,7 @@ function createArrayFromMixed(obj) {
 
 module.exports = createArrayFromMixed;
 }).call(this,require('_process'))
-},{"./invariant":140,"_process":185}],131:[function(require,module,exports){
+},{"./invariant":140,"_process":186}],131:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -10045,7 +10045,7 @@ function createNodesFromMarkup(markup, handleScript) {
 
 module.exports = createNodesFromMarkup;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":126,"./createArrayFromMixed":130,"./getMarkupWrap":136,"./invariant":140,"_process":185}],132:[function(require,module,exports){
+},{"./ExecutionEnvironment":126,"./createArrayFromMixed":130,"./getMarkupWrap":136,"./invariant":140,"_process":186}],132:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10106,7 +10106,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":185}],134:[function(require,module,exports){
+},{"_process":186}],134:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10265,7 +10265,7 @@ function getMarkupWrap(nodeName) {
 
 module.exports = getMarkupWrap;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":126,"./invariant":140,"_process":185}],137:[function(require,module,exports){
+},{"./ExecutionEnvironment":126,"./invariant":140,"_process":186}],137:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10428,7 +10428,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":185}],141:[function(require,module,exports){
+},{"_process":186}],141:[function(require,module,exports){
 'use strict';
 
 /**
@@ -10526,7 +10526,7 @@ var keyMirror = function keyMirror(obj) {
 
 module.exports = keyMirror;
 }).call(this,require('_process'))
-},{"./invariant":140,"_process":185}],144:[function(require,module,exports){
+},{"./invariant":140,"_process":186}],144:[function(require,module,exports){
 "use strict";
 
 /**
@@ -10785,7 +10785,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":132,"_process":185}],150:[function(require,module,exports){
+},{"./emptyFunction":132,"_process":186}],150:[function(require,module,exports){
 
 /**
  * Module exports.
@@ -12418,7 +12418,7 @@ WritableStream.prototype._write = function(chunk, encoding, cb){
 	this._parser.write(chunk);
 	cb();
 };
-},{"./Parser.js":155,"buffer":27,"inherits":163,"readable-stream":24,"stream":401,"string_decoder":402}],160:[function(require,module,exports){
+},{"./Parser.js":155,"buffer":27,"inherits":163,"readable-stream":24,"stream":404,"string_decoder":405}],160:[function(require,module,exports){
 var Parser = require("./Parser.js"),
     DomHandler = require("domhandler");
 
@@ -17635,13 +17635,25 @@ function isEmpty (val) {
 }
 
 },{}],166:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var isBrowser = exports.isBrowser = (typeof window === "undefined" ? "undefined" : _typeof(window)) === "object" && (typeof document === "undefined" ? "undefined" : _typeof(document)) === 'object' && document.nodeType === 9;
+
+exports.default = isBrowser;
+},{}],167:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],167:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 // Source: http://jsfiddle.net/vWx8V/
 // http://stackoverflow.com/questions/5603195/full-list-of-javascript-keycodes
 
@@ -17789,7 +17801,7 @@ for (var alias in aliases) {
   codes[alias] = aliases[alias]
 }
 
-},{}],168:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -18417,7 +18429,7 @@ function keysIn(object) {
 
 module.exports = assignIn;
 
-},{}],169:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -19675,7 +19687,7 @@ bind.placeholder = {};
 module.exports = bind;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],170:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -20345,7 +20357,7 @@ function keysIn(object) {
 
 module.exports = defaults;
 
-},{}],171:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -22715,7 +22727,7 @@ function property(path) {
 module.exports = filter;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],172:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -23068,7 +23080,7 @@ function isObjectLike(value) {
 module.exports = flatten;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],173:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -23635,7 +23647,7 @@ function identity(value) {
 
 module.exports = forEach;
 
-},{}],174:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -26005,7 +26017,7 @@ function property(path) {
 module.exports = map;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],175:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -28216,7 +28228,7 @@ function stubFalse() {
 module.exports = merge;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],176:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -28723,7 +28735,7 @@ var pick = baseRest(function(object, props) {
 module.exports = pick;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],177:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -31099,7 +31111,7 @@ function property(path) {
 module.exports = reduce;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],178:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -33501,7 +33513,7 @@ function property(path) {
 module.exports = reject;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],179:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 (function (global){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -35873,7 +35885,7 @@ function property(path) {
 module.exports = some;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],180:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 module.exports = compile;
 
 var BaseFuncs = require("boolbase"),
@@ -35914,7 +35926,7 @@ function compile(parsed){
 		return pos <= b && pos % a === bMod;
 	};
 }
-},{"boolbase":23}],181:[function(require,module,exports){
+},{"boolbase":23}],182:[function(require,module,exports){
 var parse = require("./parse.js"),
     compile = require("./compile.js");
 
@@ -35924,7 +35936,7 @@ module.exports = function nthCheck(formula){
 
 module.exports.parse = parse;
 module.exports.compile = compile;
-},{"./compile.js":180,"./parse.js":182}],182:[function(require,module,exports){
+},{"./compile.js":181,"./parse.js":183}],183:[function(require,module,exports){
 module.exports = parse;
 
 //following http://www.w3.org/TR/css3-selectors/#nth-child-pseudo
@@ -35966,7 +35978,7 @@ function parse(formula){
 	}
 }
 
-},{}],183:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 'use strict';
 /* eslint-disable no-unused-vars */
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -36051,7 +36063,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],184:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -36098,7 +36110,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 }
 
 }).call(this,require('_process'))
-},{"_process":185}],185:[function(require,module,exports){
+},{"_process":186}],186:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -36280,17 +36292,237 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],186:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 'use strict';
 
 module.exports = require('react/lib/ReactDOM');
 
-},{"react/lib/ReactDOM":225}],187:[function(require,module,exports){
+},{"react/lib/ReactDOM":227}],188:[function(require,module,exports){
 'use strict';
 
 module.exports = require('react/lib/ReactDOMServer');
 
-},{"react/lib/ReactDOMServer":240}],188:[function(require,module,exports){
+},{"react/lib/ReactDOMServer":242}],189:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var KEYCODES = {
+  ESCAPE: 27
+};
+
+var Portal = function (_React$Component) {
+  _inherits(Portal, _React$Component);
+
+  function Portal() {
+    _classCallCheck(this, Portal);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Portal).call(this));
+
+    _this.state = { active: false };
+    _this.handleWrapperClick = _this.handleWrapperClick.bind(_this);
+    _this.closePortal = _this.closePortal.bind(_this);
+    _this.handleOutsideMouseClick = _this.handleOutsideMouseClick.bind(_this);
+    _this.handleKeydown = _this.handleKeydown.bind(_this);
+    _this.portal = null;
+    _this.node = null;
+    return _this;
+  }
+
+  _createClass(Portal, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.props.closeOnEsc) {
+        document.addEventListener('keydown', this.handleKeydown);
+      }
+
+      if (this.props.closeOnOutsideClick) {
+        document.addEventListener('mouseup', this.handleOutsideMouseClick);
+        document.addEventListener('touchstart', this.handleOutsideMouseClick);
+      }
+
+      if (this.props.isOpened) {
+        this.openPortal();
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(newProps) {
+      // portal's 'is open' state is handled through the prop isOpened
+      if (typeof newProps.isOpened !== 'undefined') {
+        if (newProps.isOpened) {
+          if (this.state.active) {
+            this.renderPortal(newProps);
+          } else {
+            this.openPortal(newProps);
+          }
+        }
+        if (!newProps.isOpened && this.state.active) {
+          this.closePortal();
+        }
+      }
+
+      // portal handles its own 'is open' state
+      if (typeof newProps.isOpened === 'undefined' && this.state.active) {
+        this.renderPortal(newProps);
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      if (this.props.closeOnEsc) {
+        document.removeEventListener('keydown', this.handleKeydown);
+      }
+
+      if (this.props.closeOnOutsideClick) {
+        document.removeEventListener('mouseup', this.handleOutsideMouseClick);
+        document.removeEventListener('touchstart', this.handleOutsideMouseClick);
+      }
+
+      this.closePortal(true);
+    }
+  }, {
+    key: 'handleWrapperClick',
+    value: function handleWrapperClick(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (this.state.active) {
+        return;
+      }
+      this.openPortal();
+    }
+  }, {
+    key: 'openPortal',
+    value: function openPortal() {
+      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+
+      this.setState({ active: true });
+      this.renderPortal(props);
+      this.props.onOpen(this.node);
+    }
+  }, {
+    key: 'closePortal',
+    value: function closePortal() {
+      var _this2 = this;
+
+      var isUnmounted = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+
+      var resetPortalState = function resetPortalState() {
+        if (_this2.node) {
+          _reactDom2.default.unmountComponentAtNode(_this2.node);
+          document.body.removeChild(_this2.node);
+        }
+        _this2.portal = null;
+        _this2.node = null;
+        if (isUnmounted !== true) {
+          _this2.setState({ active: false });
+        }
+      };
+
+      if (this.state.active) {
+        if (this.props.beforeClose) {
+          this.props.beforeClose(this.node, resetPortalState);
+        } else {
+          resetPortalState();
+        }
+
+        this.props.onClose();
+      }
+    }
+  }, {
+    key: 'handleOutsideMouseClick',
+    value: function handleOutsideMouseClick(e) {
+      if (!this.state.active) {
+        return;
+      }
+
+      var root = (0, _reactDom.findDOMNode)(this.portal);
+      if (root.contains(e.target) || e.button && e.button !== 0) {
+        return;
+      }
+
+      e.stopPropagation();
+      this.closePortal();
+    }
+  }, {
+    key: 'handleKeydown',
+    value: function handleKeydown(e) {
+      if (e.keyCode === KEYCODES.ESCAPE && this.state.active) {
+        this.closePortal();
+      }
+    }
+  }, {
+    key: 'renderPortal',
+    value: function renderPortal(props) {
+      if (!this.node) {
+        this.node = document.createElement('div');
+        document.body.appendChild(this.node);
+      }
+
+      var children = props.children;
+      // https://gist.github.com/jimfb/d99e0678e9da715ccf6454961ef04d1b
+      if (typeof props.children.type === 'function') {
+        children = _react2.default.cloneElement(props.children, { closePortal: this.closePortal });
+      }
+
+      this.portal = _reactDom2.default.unstable_renderSubtreeIntoContainer(this, children, this.node, this.props.onUpdate);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.props.openByClickOn) {
+        return _react2.default.cloneElement(this.props.openByClickOn, { onClick: this.handleWrapperClick });
+      }
+      return null;
+    }
+  }]);
+
+  return Portal;
+}(_react2.default.Component);
+
+exports.default = Portal;
+
+
+Portal.propTypes = {
+  children: _react2.default.PropTypes.element.isRequired,
+  openByClickOn: _react2.default.PropTypes.element,
+  closeOnEsc: _react2.default.PropTypes.bool,
+  closeOnOutsideClick: _react2.default.PropTypes.bool,
+  isOpened: _react2.default.PropTypes.bool,
+  onOpen: _react2.default.PropTypes.func,
+  onClose: _react2.default.PropTypes.func,
+  beforeClose: _react2.default.PropTypes.func,
+  onUpdate: _react2.default.PropTypes.func
+};
+
+Portal.defaultProps = {
+  onOpen: function onOpen() {},
+  onClose: function onClose() {},
+  onUpdate: function onUpdate() {}
+};
+module.exports = exports['default'];
+
+},{"react":335,"react-dom":187}],190:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -36315,7 +36547,7 @@ var AutoFocusUtils = {
 };
 
 module.exports = AutoFocusUtils;
-},{"./ReactDOMComponentTree":229,"fbjs/lib/focusNode":134}],189:[function(require,module,exports){
+},{"./ReactDOMComponentTree":231,"fbjs/lib/focusNode":134}],191:[function(require,module,exports){
 /**
  * Copyright 2013-present Facebook, Inc.
  * All rights reserved.
@@ -36706,7 +36938,7 @@ var BeforeInputEventPlugin = {
 };
 
 module.exports = BeforeInputEventPlugin;
-},{"./EventConstants":203,"./EventPropagators":207,"./FallbackCompositionState":208,"./SyntheticCompositionEvent":289,"./SyntheticInputEvent":293,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/keyOf":144}],190:[function(require,module,exports){
+},{"./EventConstants":205,"./EventPropagators":209,"./FallbackCompositionState":210,"./SyntheticCompositionEvent":291,"./SyntheticInputEvent":295,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/keyOf":144}],192:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -36855,7 +37087,7 @@ var CSSProperty = {
 };
 
 module.exports = CSSProperty;
-},{}],191:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -37063,7 +37295,7 @@ var CSSPropertyOperations = {
 
 module.exports = CSSPropertyOperations;
 }).call(this,require('_process'))
-},{"./CSSProperty":190,"./ReactInstrumentation":260,"./dangerousStyleValue":307,"_process":185,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/camelizeStyleName":128,"fbjs/lib/hyphenateStyleName":139,"fbjs/lib/memoizeStringOnly":145,"fbjs/lib/warning":149}],192:[function(require,module,exports){
+},{"./CSSProperty":192,"./ReactInstrumentation":262,"./dangerousStyleValue":309,"_process":186,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/camelizeStyleName":128,"fbjs/lib/hyphenateStyleName":139,"fbjs/lib/memoizeStringOnly":145,"fbjs/lib/warning":149}],194:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -37172,7 +37404,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 }).call(this,require('_process'))
-},{"./PooledClass":212,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"object-assign":183}],193:[function(require,module,exports){
+},{"./PooledClass":214,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"object-assign":184}],195:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -37498,7 +37730,7 @@ var ChangeEventPlugin = {
 };
 
 module.exports = ChangeEventPlugin;
-},{"./EventConstants":203,"./EventPluginHub":204,"./EventPropagators":207,"./ReactDOMComponentTree":229,"./ReactUpdates":282,"./SyntheticEvent":291,"./getEventTarget":315,"./isEventSupported":322,"./isTextInputElement":323,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/keyOf":144}],194:[function(require,module,exports){
+},{"./EventConstants":205,"./EventPluginHub":206,"./EventPropagators":209,"./ReactDOMComponentTree":231,"./ReactUpdates":284,"./SyntheticEvent":293,"./getEventTarget":317,"./isEventSupported":324,"./isTextInputElement":325,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/keyOf":144}],196:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -37695,7 +37927,7 @@ var DOMChildrenOperations = {
 
 module.exports = DOMChildrenOperations;
 }).call(this,require('_process'))
-},{"./DOMLazyTree":195,"./Danger":199,"./ReactDOMComponentTree":229,"./ReactInstrumentation":260,"./ReactMultiChildUpdateTypes":265,"./createMicrosoftUnsafeLocalFunction":306,"./setInnerHTML":328,"./setTextContent":329,"_process":185}],195:[function(require,module,exports){
+},{"./DOMLazyTree":197,"./Danger":201,"./ReactDOMComponentTree":231,"./ReactInstrumentation":262,"./ReactMultiChildUpdateTypes":267,"./createMicrosoftUnsafeLocalFunction":308,"./setInnerHTML":330,"./setTextContent":331,"_process":186}],197:[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -37814,7 +38046,7 @@ DOMLazyTree.queueHTML = queueHTML;
 DOMLazyTree.queueText = queueText;
 
 module.exports = DOMLazyTree;
-},{"./DOMNamespaces":196,"./createMicrosoftUnsafeLocalFunction":306,"./setInnerHTML":328,"./setTextContent":329}],196:[function(require,module,exports){
+},{"./DOMNamespaces":198,"./createMicrosoftUnsafeLocalFunction":308,"./setInnerHTML":330,"./setTextContent":331}],198:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -37835,7 +38067,7 @@ var DOMNamespaces = {
 };
 
 module.exports = DOMNamespaces;
-},{}],197:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -38044,7 +38276,7 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],198:[function(require,module,exports){
+},{"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],200:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -38268,7 +38500,7 @@ var DOMPropertyOperations = {
 
 module.exports = DOMPropertyOperations;
 }).call(this,require('_process'))
-},{"./DOMProperty":197,"./ReactDOMComponentTree":229,"./ReactInstrumentation":260,"./quoteAttributeValueForBrowser":325,"_process":185,"fbjs/lib/warning":149}],199:[function(require,module,exports){
+},{"./DOMProperty":199,"./ReactDOMComponentTree":231,"./ReactInstrumentation":262,"./quoteAttributeValueForBrowser":327,"_process":186,"fbjs/lib/warning":149}],201:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -38319,7 +38551,7 @@ var Danger = {
 
 module.exports = Danger;
 }).call(this,require('_process'))
-},{"./DOMLazyTree":195,"./reactProdInvariant":326,"_process":185,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/createNodesFromMarkup":131,"fbjs/lib/emptyFunction":132,"fbjs/lib/invariant":140}],200:[function(require,module,exports){
+},{"./DOMLazyTree":197,"./reactProdInvariant":328,"_process":186,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/createNodesFromMarkup":131,"fbjs/lib/emptyFunction":132,"fbjs/lib/invariant":140}],202:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -38347,7 +38579,7 @@ var keyOf = require('fbjs/lib/keyOf');
 var DefaultEventPluginOrder = [keyOf({ ResponderEventPlugin: null }), keyOf({ SimpleEventPlugin: null }), keyOf({ TapEventPlugin: null }), keyOf({ EnterLeaveEventPlugin: null }), keyOf({ ChangeEventPlugin: null }), keyOf({ SelectEventPlugin: null }), keyOf({ BeforeInputEventPlugin: null })];
 
 module.exports = DefaultEventPluginOrder;
-},{"fbjs/lib/keyOf":144}],201:[function(require,module,exports){
+},{"fbjs/lib/keyOf":144}],203:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -38398,7 +38630,7 @@ var DisabledInputUtils = {
 };
 
 module.exports = DisabledInputUtils;
-},{}],202:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -38504,7 +38736,7 @@ var EnterLeaveEventPlugin = {
 };
 
 module.exports = EnterLeaveEventPlugin;
-},{"./EventConstants":203,"./EventPropagators":207,"./ReactDOMComponentTree":229,"./SyntheticMouseEvent":295,"fbjs/lib/keyOf":144}],203:[function(require,module,exports){
+},{"./EventConstants":205,"./EventPropagators":209,"./ReactDOMComponentTree":231,"./SyntheticMouseEvent":297,"fbjs/lib/keyOf":144}],205:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -38602,7 +38834,7 @@ var EventConstants = {
 };
 
 module.exports = EventConstants;
-},{"fbjs/lib/keyMirror":143}],204:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":143}],206:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -38856,7 +39088,7 @@ var EventPluginHub = {
 
 module.exports = EventPluginHub;
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":205,"./EventPluginUtils":206,"./ReactErrorUtils":251,"./accumulateInto":302,"./forEachAccumulated":311,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],205:[function(require,module,exports){
+},{"./EventPluginRegistry":207,"./EventPluginUtils":208,"./ReactErrorUtils":253,"./accumulateInto":304,"./forEachAccumulated":313,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],207:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -39106,7 +39338,7 @@ var EventPluginRegistry = {
 
 module.exports = EventPluginRegistry;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],206:[function(require,module,exports){
+},{"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],208:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -39338,7 +39570,7 @@ var EventPluginUtils = {
 
 module.exports = EventPluginUtils;
 }).call(this,require('_process'))
-},{"./EventConstants":203,"./ReactErrorUtils":251,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],207:[function(require,module,exports){
+},{"./EventConstants":205,"./ReactErrorUtils":253,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],209:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -39478,7 +39710,7 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 }).call(this,require('_process'))
-},{"./EventConstants":203,"./EventPluginHub":204,"./EventPluginUtils":206,"./accumulateInto":302,"./forEachAccumulated":311,"_process":185,"fbjs/lib/warning":149}],208:[function(require,module,exports){
+},{"./EventConstants":205,"./EventPluginHub":206,"./EventPluginUtils":208,"./accumulateInto":304,"./forEachAccumulated":313,"_process":186,"fbjs/lib/warning":149}],210:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -39574,7 +39806,7 @@ _assign(FallbackCompositionState.prototype, {
 PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
-},{"./PooledClass":212,"./getTextContentAccessor":319,"object-assign":183}],209:[function(require,module,exports){
+},{"./PooledClass":214,"./getTextContentAccessor":321,"object-assign":184}],211:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -39787,7 +40019,7 @@ var HTMLDOMPropertyConfig = {
 };
 
 module.exports = HTMLDOMPropertyConfig;
-},{"./DOMProperty":197}],210:[function(require,module,exports){
+},{"./DOMProperty":199}],212:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -39847,7 +40079,7 @@ var KeyEscapeUtils = {
 };
 
 module.exports = KeyEscapeUtils;
-},{}],211:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -39986,7 +40218,7 @@ var LinkedValueUtils = {
 
 module.exports = LinkedValueUtils;
 }).call(this,require('_process'))
-},{"./ReactPropTypeLocations":270,"./ReactPropTypes":271,"./ReactPropTypesSecret":272,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],212:[function(require,module,exports){
+},{"./ReactPropTypeLocations":272,"./ReactPropTypes":273,"./ReactPropTypesSecret":274,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],214:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -40110,7 +40342,7 @@ var PooledClass = {
 
 module.exports = PooledClass;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],213:[function(require,module,exports){
+},{"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],215:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -40202,7 +40434,7 @@ var React = {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./ReactChildren":216,"./ReactClass":218,"./ReactComponent":219,"./ReactDOMFactories":232,"./ReactElement":248,"./ReactElementValidator":249,"./ReactPropTypes":271,"./ReactPureComponent":273,"./ReactVersion":283,"./onlyChild":324,"_process":185,"fbjs/lib/warning":149,"object-assign":183}],214:[function(require,module,exports){
+},{"./ReactChildren":218,"./ReactClass":220,"./ReactComponent":221,"./ReactDOMFactories":234,"./ReactElement":250,"./ReactElementValidator":251,"./ReactPropTypes":273,"./ReactPureComponent":275,"./ReactVersion":285,"./onlyChild":326,"_process":186,"fbjs/lib/warning":149,"object-assign":184}],216:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -40533,7 +40765,7 @@ var ReactBrowserEventEmitter = _assign({}, ReactEventEmitterMixin, {
 });
 
 module.exports = ReactBrowserEventEmitter;
-},{"./EventConstants":203,"./EventPluginRegistry":205,"./ReactEventEmitterMixin":252,"./ViewportMetrics":301,"./getVendorPrefixedEventName":320,"./isEventSupported":322,"object-assign":183}],215:[function(require,module,exports){
+},{"./EventConstants":205,"./EventPluginRegistry":207,"./ReactEventEmitterMixin":254,"./ViewportMetrics":303,"./getVendorPrefixedEventName":322,"./isEventSupported":324,"object-assign":184}],217:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -40690,7 +40922,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":210,"./ReactComponentTreeHook":222,"./ReactReconciler":275,"./instantiateReactComponent":321,"./shouldUpdateReactComponent":330,"./traverseAllChildren":331,"_process":185,"fbjs/lib/warning":149}],216:[function(require,module,exports){
+},{"./KeyEscapeUtils":212,"./ReactComponentTreeHook":224,"./ReactReconciler":277,"./instantiateReactComponent":323,"./shouldUpdateReactComponent":332,"./traverseAllChildren":333,"_process":186,"fbjs/lib/warning":149}],218:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -40882,7 +41114,7 @@ var ReactChildren = {
 };
 
 module.exports = ReactChildren;
-},{"./PooledClass":212,"./ReactElement":248,"./traverseAllChildren":331,"fbjs/lib/emptyFunction":132}],217:[function(require,module,exports){
+},{"./PooledClass":214,"./ReactElement":250,"./traverseAllChildren":333,"fbjs/lib/emptyFunction":132}],219:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -40939,7 +41171,7 @@ var ReactChildrenMutationWarningHook = {
 
 module.exports = ReactChildrenMutationWarningHook;
 }).call(this,require('_process'))
-},{"./ReactComponentTreeHook":222,"_process":185,"fbjs/lib/warning":149}],218:[function(require,module,exports){
+},{"./ReactComponentTreeHook":224,"_process":186,"fbjs/lib/warning":149}],220:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -41674,7 +41906,7 @@ var ReactClass = {
 
 module.exports = ReactClass;
 }).call(this,require('_process'))
-},{"./ReactComponent":219,"./ReactElement":248,"./ReactNoopUpdateQueue":267,"./ReactPropTypeLocationNames":269,"./ReactPropTypeLocations":270,"./reactProdInvariant":326,"_process":185,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140,"fbjs/lib/keyMirror":143,"fbjs/lib/keyOf":144,"fbjs/lib/warning":149,"object-assign":183}],219:[function(require,module,exports){
+},{"./ReactComponent":221,"./ReactElement":250,"./ReactNoopUpdateQueue":269,"./ReactPropTypeLocationNames":271,"./ReactPropTypeLocations":272,"./reactProdInvariant":328,"_process":186,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140,"fbjs/lib/keyMirror":143,"fbjs/lib/keyOf":144,"fbjs/lib/warning":149,"object-assign":184}],221:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -41795,7 +42027,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactComponent;
 }).call(this,require('_process'))
-},{"./ReactNoopUpdateQueue":267,"./canDefineProperty":304,"./reactProdInvariant":326,"_process":185,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],220:[function(require,module,exports){
+},{"./ReactNoopUpdateQueue":269,"./canDefineProperty":306,"./reactProdInvariant":328,"_process":186,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],222:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -41826,7 +42058,7 @@ var ReactComponentBrowserEnvironment = {
 };
 
 module.exports = ReactComponentBrowserEnvironment;
-},{"./DOMChildrenOperations":194,"./ReactDOMIDOperations":234}],221:[function(require,module,exports){
+},{"./DOMChildrenOperations":196,"./ReactDOMIDOperations":236}],223:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -41874,7 +42106,7 @@ var ReactComponentEnvironment = {
 
 module.exports = ReactComponentEnvironment;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],222:[function(require,module,exports){
+},{"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],224:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2016-present, Facebook, Inc.
@@ -42219,7 +42451,7 @@ var ReactComponentTreeHook = {
 
 module.exports = ReactComponentTreeHook;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":224,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],223:[function(require,module,exports){
+},{"./ReactCurrentOwner":226,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],225:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -43126,7 +43358,7 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 }).call(this,require('_process'))
-},{"./ReactComponentEnvironment":221,"./ReactCurrentOwner":224,"./ReactElement":248,"./ReactErrorUtils":251,"./ReactInstanceMap":259,"./ReactInstrumentation":260,"./ReactNodeTypes":266,"./ReactPropTypeLocations":270,"./ReactReconciler":275,"./checkReactTypeSpec":305,"./reactProdInvariant":326,"./shouldUpdateReactComponent":330,"_process":185,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140,"fbjs/lib/shallowEqual":148,"fbjs/lib/warning":149,"object-assign":183}],224:[function(require,module,exports){
+},{"./ReactComponentEnvironment":223,"./ReactCurrentOwner":226,"./ReactElement":250,"./ReactErrorUtils":253,"./ReactInstanceMap":261,"./ReactInstrumentation":262,"./ReactNodeTypes":268,"./ReactPropTypeLocations":272,"./ReactReconciler":277,"./checkReactTypeSpec":307,"./reactProdInvariant":328,"./shouldUpdateReactComponent":332,"_process":186,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140,"fbjs/lib/shallowEqual":148,"fbjs/lib/warning":149,"object-assign":184}],226:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -43158,7 +43390,7 @@ var ReactCurrentOwner = {
 };
 
 module.exports = ReactCurrentOwner;
-},{}],225:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -43271,7 +43503,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactDOM;
 }).call(this,require('_process'))
-},{"./ReactDOMComponentTree":229,"./ReactDOMNullInputValuePropHook":236,"./ReactDOMUnknownPropertyHook":244,"./ReactDefaultInjection":247,"./ReactInstrumentation":260,"./ReactMount":263,"./ReactReconciler":275,"./ReactUpdates":282,"./ReactVersion":283,"./findDOMNode":309,"./getHostComponentFromComposite":316,"./renderSubtreeIntoContainer":327,"_process":185,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/warning":149}],226:[function(require,module,exports){
+},{"./ReactDOMComponentTree":231,"./ReactDOMNullInputValuePropHook":238,"./ReactDOMUnknownPropertyHook":246,"./ReactDefaultInjection":249,"./ReactInstrumentation":262,"./ReactMount":265,"./ReactReconciler":277,"./ReactUpdates":284,"./ReactVersion":285,"./findDOMNode":311,"./getHostComponentFromComposite":318,"./renderSubtreeIntoContainer":329,"_process":186,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/warning":149}],228:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -43296,7 +43528,7 @@ var ReactDOMButton = {
 };
 
 module.exports = ReactDOMButton;
-},{"./DisabledInputUtils":201}],227:[function(require,module,exports){
+},{"./DisabledInputUtils":203}],229:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -44305,7 +44537,7 @@ _assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mi
 
 module.exports = ReactDOMComponent;
 }).call(this,require('_process'))
-},{"./AutoFocusUtils":188,"./CSSPropertyOperations":191,"./DOMLazyTree":195,"./DOMNamespaces":196,"./DOMProperty":197,"./DOMPropertyOperations":198,"./EventConstants":203,"./EventPluginHub":204,"./EventPluginRegistry":205,"./ReactBrowserEventEmitter":214,"./ReactDOMButton":226,"./ReactDOMComponentFlags":228,"./ReactDOMComponentTree":229,"./ReactDOMInput":235,"./ReactDOMOption":237,"./ReactDOMSelect":238,"./ReactDOMTextarea":242,"./ReactInstrumentation":260,"./ReactMultiChild":264,"./ReactServerRenderingTransaction":279,"./escapeTextContentForBrowser":308,"./isEventSupported":322,"./reactProdInvariant":326,"./validateDOMNesting":332,"_process":185,"fbjs/lib/emptyFunction":132,"fbjs/lib/invariant":140,"fbjs/lib/keyOf":144,"fbjs/lib/shallowEqual":148,"fbjs/lib/warning":149,"object-assign":183}],228:[function(require,module,exports){
+},{"./AutoFocusUtils":190,"./CSSPropertyOperations":193,"./DOMLazyTree":197,"./DOMNamespaces":198,"./DOMProperty":199,"./DOMPropertyOperations":200,"./EventConstants":205,"./EventPluginHub":206,"./EventPluginRegistry":207,"./ReactBrowserEventEmitter":216,"./ReactDOMButton":228,"./ReactDOMComponentFlags":230,"./ReactDOMComponentTree":231,"./ReactDOMInput":237,"./ReactDOMOption":239,"./ReactDOMSelect":240,"./ReactDOMTextarea":244,"./ReactInstrumentation":262,"./ReactMultiChild":266,"./ReactServerRenderingTransaction":281,"./escapeTextContentForBrowser":310,"./isEventSupported":324,"./reactProdInvariant":328,"./validateDOMNesting":334,"_process":186,"fbjs/lib/emptyFunction":132,"fbjs/lib/invariant":140,"fbjs/lib/keyOf":144,"fbjs/lib/shallowEqual":148,"fbjs/lib/warning":149,"object-assign":184}],230:[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -44324,7 +44556,7 @@ var ReactDOMComponentFlags = {
 };
 
 module.exports = ReactDOMComponentFlags;
-},{}],229:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -44515,7 +44747,7 @@ var ReactDOMComponentTree = {
 
 module.exports = ReactDOMComponentTree;
 }).call(this,require('_process'))
-},{"./DOMProperty":197,"./ReactDOMComponentFlags":228,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],230:[function(require,module,exports){
+},{"./DOMProperty":199,"./ReactDOMComponentFlags":230,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],232:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -44551,7 +44783,7 @@ function ReactDOMContainerInfo(topLevelWrapper, node) {
 
 module.exports = ReactDOMContainerInfo;
 }).call(this,require('_process'))
-},{"./validateDOMNesting":332,"_process":185}],231:[function(require,module,exports){
+},{"./validateDOMNesting":334,"_process":186}],233:[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -44612,7 +44844,7 @@ _assign(ReactDOMEmptyComponent.prototype, {
 });
 
 module.exports = ReactDOMEmptyComponent;
-},{"./DOMLazyTree":195,"./ReactDOMComponentTree":229,"object-assign":183}],232:[function(require,module,exports){
+},{"./DOMLazyTree":197,"./ReactDOMComponentTree":231,"object-assign":184}],234:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -44785,7 +45017,7 @@ var ReactDOMFactories = {
 
 module.exports = ReactDOMFactories;
 }).call(this,require('_process'))
-},{"./ReactElement":248,"./ReactElementValidator":249,"_process":185}],233:[function(require,module,exports){
+},{"./ReactElement":250,"./ReactElementValidator":251,"_process":186}],235:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -44804,7 +45036,7 @@ var ReactDOMFeatureFlags = {
 };
 
 module.exports = ReactDOMFeatureFlags;
-},{}],234:[function(require,module,exports){
+},{}],236:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -44839,7 +45071,7 @@ var ReactDOMIDOperations = {
 };
 
 module.exports = ReactDOMIDOperations;
-},{"./DOMChildrenOperations":194,"./ReactDOMComponentTree":229}],235:[function(require,module,exports){
+},{"./DOMChildrenOperations":196,"./ReactDOMComponentTree":231}],237:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -45111,7 +45343,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMInput;
 }).call(this,require('_process'))
-},{"./DOMPropertyOperations":198,"./DisabledInputUtils":201,"./LinkedValueUtils":211,"./ReactDOMComponentTree":229,"./ReactUpdates":282,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149,"object-assign":183}],236:[function(require,module,exports){
+},{"./DOMPropertyOperations":200,"./DisabledInputUtils":203,"./LinkedValueUtils":213,"./ReactDOMComponentTree":231,"./ReactUpdates":284,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149,"object-assign":184}],238:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -45157,7 +45389,7 @@ var ReactDOMNullInputValuePropHook = {
 
 module.exports = ReactDOMNullInputValuePropHook;
 }).call(this,require('_process'))
-},{"./ReactComponentTreeHook":222,"_process":185,"fbjs/lib/warning":149}],237:[function(require,module,exports){
+},{"./ReactComponentTreeHook":224,"_process":186,"fbjs/lib/warning":149}],239:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -45283,7 +45515,7 @@ var ReactDOMOption = {
 
 module.exports = ReactDOMOption;
 }).call(this,require('_process'))
-},{"./ReactChildren":216,"./ReactDOMComponentTree":229,"./ReactDOMSelect":238,"_process":185,"fbjs/lib/warning":149,"object-assign":183}],238:[function(require,module,exports){
+},{"./ReactChildren":218,"./ReactDOMComponentTree":231,"./ReactDOMSelect":240,"_process":186,"fbjs/lib/warning":149,"object-assign":184}],240:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -45487,7 +45719,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMSelect;
 }).call(this,require('_process'))
-},{"./DisabledInputUtils":201,"./LinkedValueUtils":211,"./ReactDOMComponentTree":229,"./ReactUpdates":282,"_process":185,"fbjs/lib/warning":149,"object-assign":183}],239:[function(require,module,exports){
+},{"./DisabledInputUtils":203,"./LinkedValueUtils":213,"./ReactDOMComponentTree":231,"./ReactUpdates":284,"_process":186,"fbjs/lib/warning":149,"object-assign":184}],241:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -45700,7 +45932,7 @@ var ReactDOMSelection = {
 };
 
 module.exports = ReactDOMSelection;
-},{"./getNodeForCharacterOffset":318,"./getTextContentAccessor":319,"fbjs/lib/ExecutionEnvironment":126}],240:[function(require,module,exports){
+},{"./getNodeForCharacterOffset":320,"./getTextContentAccessor":321,"fbjs/lib/ExecutionEnvironment":126}],242:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -45727,7 +45959,7 @@ var ReactDOMServer = {
 };
 
 module.exports = ReactDOMServer;
-},{"./ReactDefaultInjection":247,"./ReactServerRendering":278,"./ReactVersion":283}],241:[function(require,module,exports){
+},{"./ReactDefaultInjection":249,"./ReactServerRendering":280,"./ReactVersion":285}],243:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -45894,7 +46126,7 @@ _assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":194,"./DOMLazyTree":195,"./ReactDOMComponentTree":229,"./escapeTextContentForBrowser":308,"./reactProdInvariant":326,"./validateDOMNesting":332,"_process":185,"fbjs/lib/invariant":140,"object-assign":183}],242:[function(require,module,exports){
+},{"./DOMChildrenOperations":196,"./DOMLazyTree":197,"./ReactDOMComponentTree":231,"./escapeTextContentForBrowser":310,"./reactProdInvariant":328,"./validateDOMNesting":334,"_process":186,"fbjs/lib/invariant":140,"object-assign":184}],244:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -46052,7 +46284,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMTextarea;
 }).call(this,require('_process'))
-},{"./DisabledInputUtils":201,"./LinkedValueUtils":211,"./ReactDOMComponentTree":229,"./ReactUpdates":282,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149,"object-assign":183}],243:[function(require,module,exports){
+},{"./DisabledInputUtils":203,"./LinkedValueUtils":213,"./ReactDOMComponentTree":231,"./ReactUpdates":284,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149,"object-assign":184}],245:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -46191,7 +46423,7 @@ module.exports = {
   traverseEnterLeave: traverseEnterLeave
 };
 }).call(this,require('_process'))
-},{"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],244:[function(require,module,exports){
+},{"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],246:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -46306,7 +46538,7 @@ var ReactDOMUnknownPropertyHook = {
 
 module.exports = ReactDOMUnknownPropertyHook;
 }).call(this,require('_process'))
-},{"./DOMProperty":197,"./EventPluginRegistry":205,"./ReactComponentTreeHook":222,"_process":185,"fbjs/lib/warning":149}],245:[function(require,module,exports){
+},{"./DOMProperty":199,"./EventPluginRegistry":207,"./ReactComponentTreeHook":224,"_process":186,"fbjs/lib/warning":149}],247:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2016-present, Facebook, Inc.
@@ -46610,7 +46842,7 @@ if (/[?&]react_perf\b/.test(url)) {
 
 module.exports = ReactDebugTool;
 }).call(this,require('_process'))
-},{"./ReactChildrenMutationWarningHook":217,"./ReactComponentTreeHook":222,"./ReactHostOperationHistoryHook":256,"./ReactInvalidSetStateWarningHook":261,"_process":185,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/performanceNow":147,"fbjs/lib/warning":149}],246:[function(require,module,exports){
+},{"./ReactChildrenMutationWarningHook":219,"./ReactComponentTreeHook":224,"./ReactHostOperationHistoryHook":258,"./ReactInvalidSetStateWarningHook":263,"_process":186,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/performanceNow":147,"fbjs/lib/warning":149}],248:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -46679,7 +46911,7 @@ var ReactDefaultBatchingStrategy = {
 };
 
 module.exports = ReactDefaultBatchingStrategy;
-},{"./ReactUpdates":282,"./Transaction":300,"fbjs/lib/emptyFunction":132,"object-assign":183}],247:[function(require,module,exports){
+},{"./ReactUpdates":284,"./Transaction":302,"fbjs/lib/emptyFunction":132,"object-assign":184}],249:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -46764,7 +46996,7 @@ function inject() {
 module.exports = {
   inject: inject
 };
-},{"./BeforeInputEventPlugin":189,"./ChangeEventPlugin":193,"./DefaultEventPluginOrder":200,"./EnterLeaveEventPlugin":202,"./HTMLDOMPropertyConfig":209,"./ReactComponentBrowserEnvironment":220,"./ReactDOMComponent":227,"./ReactDOMComponentTree":229,"./ReactDOMEmptyComponent":231,"./ReactDOMTextComponent":241,"./ReactDOMTreeTraversal":243,"./ReactDefaultBatchingStrategy":246,"./ReactEventListener":253,"./ReactInjection":257,"./ReactReconcileTransaction":274,"./SVGDOMPropertyConfig":284,"./SelectEventPlugin":285,"./SimpleEventPlugin":286}],248:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":191,"./ChangeEventPlugin":195,"./DefaultEventPluginOrder":202,"./EnterLeaveEventPlugin":204,"./HTMLDOMPropertyConfig":211,"./ReactComponentBrowserEnvironment":222,"./ReactDOMComponent":229,"./ReactDOMComponentTree":231,"./ReactDOMEmptyComponent":233,"./ReactDOMTextComponent":243,"./ReactDOMTreeTraversal":245,"./ReactDefaultBatchingStrategy":248,"./ReactEventListener":255,"./ReactInjection":259,"./ReactReconcileTransaction":276,"./SVGDOMPropertyConfig":286,"./SelectEventPlugin":287,"./SimpleEventPlugin":288}],250:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -47115,7 +47347,7 @@ ReactElement.REACT_ELEMENT_TYPE = REACT_ELEMENT_TYPE;
 
 module.exports = ReactElement;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":224,"./canDefineProperty":304,"_process":185,"fbjs/lib/warning":149,"object-assign":183}],249:[function(require,module,exports){
+},{"./ReactCurrentOwner":226,"./canDefineProperty":306,"_process":186,"fbjs/lib/warning":149,"object-assign":184}],251:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -47346,7 +47578,7 @@ var ReactElementValidator = {
 
 module.exports = ReactElementValidator;
 }).call(this,require('_process'))
-},{"./ReactComponentTreeHook":222,"./ReactCurrentOwner":224,"./ReactElement":248,"./ReactPropTypeLocations":270,"./canDefineProperty":304,"./checkReactTypeSpec":305,"./getIteratorFn":317,"_process":185,"fbjs/lib/warning":149}],250:[function(require,module,exports){
+},{"./ReactComponentTreeHook":224,"./ReactCurrentOwner":226,"./ReactElement":250,"./ReactPropTypeLocations":272,"./canDefineProperty":306,"./checkReactTypeSpec":307,"./getIteratorFn":319,"_process":186,"fbjs/lib/warning":149}],252:[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -47377,7 +47609,7 @@ var ReactEmptyComponent = {
 ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 
 module.exports = ReactEmptyComponent;
-},{}],251:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -47456,7 +47688,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactErrorUtils;
 }).call(this,require('_process'))
-},{"_process":185}],252:[function(require,module,exports){
+},{"_process":186}],254:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -47490,7 +47722,7 @@ var ReactEventEmitterMixin = {
 };
 
 module.exports = ReactEventEmitterMixin;
-},{"./EventPluginHub":204}],253:[function(require,module,exports){
+},{"./EventPluginHub":206}],255:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -47648,7 +47880,7 @@ var ReactEventListener = {
 };
 
 module.exports = ReactEventListener;
-},{"./PooledClass":212,"./ReactDOMComponentTree":229,"./ReactUpdates":282,"./getEventTarget":315,"fbjs/lib/EventListener":125,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/getUnboundedScrollPosition":137,"object-assign":183}],254:[function(require,module,exports){
+},{"./PooledClass":214,"./ReactDOMComponentTree":231,"./ReactUpdates":284,"./getEventTarget":317,"fbjs/lib/EventListener":125,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/getUnboundedScrollPosition":137,"object-assign":184}],256:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -47671,7 +47903,7 @@ var ReactFeatureFlags = {
 };
 
 module.exports = ReactFeatureFlags;
-},{}],255:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -47750,7 +47982,7 @@ var ReactHostComponent = {
 
 module.exports = ReactHostComponent;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"object-assign":183}],256:[function(require,module,exports){
+},{"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"object-assign":184}],258:[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -47788,7 +48020,7 @@ var ReactHostOperationHistoryHook = {
 };
 
 module.exports = ReactHostOperationHistoryHook;
-},{}],257:[function(require,module,exports){
+},{}],259:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -47825,7 +48057,7 @@ var ReactInjection = {
 };
 
 module.exports = ReactInjection;
-},{"./DOMProperty":197,"./EventPluginHub":204,"./EventPluginUtils":206,"./ReactBrowserEventEmitter":214,"./ReactClass":218,"./ReactComponentEnvironment":221,"./ReactEmptyComponent":250,"./ReactHostComponent":255,"./ReactUpdates":282}],258:[function(require,module,exports){
+},{"./DOMProperty":199,"./EventPluginHub":206,"./EventPluginUtils":208,"./ReactBrowserEventEmitter":216,"./ReactClass":220,"./ReactComponentEnvironment":223,"./ReactEmptyComponent":252,"./ReactHostComponent":257,"./ReactUpdates":284}],260:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -47950,7 +48182,7 @@ var ReactInputSelection = {
 };
 
 module.exports = ReactInputSelection;
-},{"./ReactDOMSelection":239,"fbjs/lib/containsNode":129,"fbjs/lib/focusNode":134,"fbjs/lib/getActiveElement":135}],259:[function(require,module,exports){
+},{"./ReactDOMSelection":241,"fbjs/lib/containsNode":129,"fbjs/lib/focusNode":134,"fbjs/lib/getActiveElement":135}],261:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -47999,7 +48231,7 @@ var ReactInstanceMap = {
 };
 
 module.exports = ReactInstanceMap;
-},{}],260:[function(require,module,exports){
+},{}],262:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2016-present, Facebook, Inc.
@@ -48023,7 +48255,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = { debugTool: debugTool };
 }).call(this,require('_process'))
-},{"./ReactDebugTool":245,"_process":185}],261:[function(require,module,exports){
+},{"./ReactDebugTool":247,"_process":186}],263:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2016-present, Facebook, Inc.
@@ -48062,7 +48294,7 @@ var ReactInvalidSetStateWarningHook = {
 
 module.exports = ReactInvalidSetStateWarningHook;
 }).call(this,require('_process'))
-},{"_process":185,"fbjs/lib/warning":149}],262:[function(require,module,exports){
+},{"_process":186,"fbjs/lib/warning":149}],264:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -48113,7 +48345,7 @@ var ReactMarkupChecksum = {
 };
 
 module.exports = ReactMarkupChecksum;
-},{"./adler32":303}],263:[function(require,module,exports){
+},{"./adler32":305}],265:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -48650,7 +48882,7 @@ var ReactMount = {
 
 module.exports = ReactMount;
 }).call(this,require('_process'))
-},{"./DOMLazyTree":195,"./DOMProperty":197,"./ReactBrowserEventEmitter":214,"./ReactCurrentOwner":224,"./ReactDOMComponentTree":229,"./ReactDOMContainerInfo":230,"./ReactDOMFeatureFlags":233,"./ReactElement":248,"./ReactFeatureFlags":254,"./ReactInstanceMap":259,"./ReactInstrumentation":260,"./ReactMarkupChecksum":262,"./ReactReconciler":275,"./ReactUpdateQueue":281,"./ReactUpdates":282,"./instantiateReactComponent":321,"./reactProdInvariant":326,"./setInnerHTML":328,"./shouldUpdateReactComponent":330,"_process":185,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],264:[function(require,module,exports){
+},{"./DOMLazyTree":197,"./DOMProperty":199,"./ReactBrowserEventEmitter":216,"./ReactCurrentOwner":226,"./ReactDOMComponentTree":231,"./ReactDOMContainerInfo":232,"./ReactDOMFeatureFlags":235,"./ReactElement":250,"./ReactFeatureFlags":256,"./ReactInstanceMap":261,"./ReactInstrumentation":262,"./ReactMarkupChecksum":264,"./ReactReconciler":277,"./ReactUpdateQueue":283,"./ReactUpdates":284,"./instantiateReactComponent":323,"./reactProdInvariant":328,"./setInnerHTML":330,"./shouldUpdateReactComponent":332,"_process":186,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],266:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -49104,7 +49336,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 }).call(this,require('_process'))
-},{"./ReactChildReconciler":215,"./ReactComponentEnvironment":221,"./ReactCurrentOwner":224,"./ReactInstanceMap":259,"./ReactInstrumentation":260,"./ReactMultiChildUpdateTypes":265,"./ReactReconciler":275,"./flattenChildren":310,"./reactProdInvariant":326,"_process":185,"fbjs/lib/emptyFunction":132,"fbjs/lib/invariant":140}],265:[function(require,module,exports){
+},{"./ReactChildReconciler":217,"./ReactComponentEnvironment":223,"./ReactCurrentOwner":226,"./ReactInstanceMap":261,"./ReactInstrumentation":262,"./ReactMultiChildUpdateTypes":267,"./ReactReconciler":277,"./flattenChildren":312,"./reactProdInvariant":328,"_process":186,"fbjs/lib/emptyFunction":132,"fbjs/lib/invariant":140}],267:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -49137,7 +49369,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 });
 
 module.exports = ReactMultiChildUpdateTypes;
-},{"fbjs/lib/keyMirror":143}],266:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":143}],268:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -49180,7 +49412,7 @@ var ReactNodeTypes = {
 
 module.exports = ReactNodeTypes;
 }).call(this,require('_process'))
-},{"./ReactElement":248,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],267:[function(require,module,exports){
+},{"./ReactElement":250,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],269:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -49279,7 +49511,7 @@ var ReactNoopUpdateQueue = {
 
 module.exports = ReactNoopUpdateQueue;
 }).call(this,require('_process'))
-},{"_process":185,"fbjs/lib/warning":149}],268:[function(require,module,exports){
+},{"_process":186,"fbjs/lib/warning":149}],270:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -49376,7 +49608,7 @@ var ReactOwner = {
 
 module.exports = ReactOwner;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],269:[function(require,module,exports){
+},{"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],271:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -49403,7 +49635,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactPropTypeLocationNames;
 }).call(this,require('_process'))
-},{"_process":185}],270:[function(require,module,exports){
+},{"_process":186}],272:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -49426,7 +49658,7 @@ var ReactPropTypeLocations = keyMirror({
 });
 
 module.exports = ReactPropTypeLocations;
-},{"fbjs/lib/keyMirror":143}],271:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":143}],273:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -49860,7 +50092,7 @@ function getClassName(propValue) {
 
 module.exports = ReactPropTypes;
 }).call(this,require('_process'))
-},{"./ReactElement":248,"./ReactPropTypeLocationNames":269,"./ReactPropTypesSecret":272,"./getIteratorFn":317,"_process":185,"fbjs/lib/emptyFunction":132,"fbjs/lib/warning":149}],272:[function(require,module,exports){
+},{"./ReactElement":250,"./ReactPropTypeLocationNames":271,"./ReactPropTypesSecret":274,"./getIteratorFn":319,"_process":186,"fbjs/lib/emptyFunction":132,"fbjs/lib/warning":149}],274:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -49877,7 +50109,7 @@ module.exports = ReactPropTypes;
 var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
-},{}],273:[function(require,module,exports){
+},{}],275:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -49920,7 +50152,7 @@ _assign(ReactPureComponent.prototype, ReactComponent.prototype);
 ReactPureComponent.prototype.isPureReactComponent = true;
 
 module.exports = ReactPureComponent;
-},{"./ReactComponent":219,"./ReactNoopUpdateQueue":267,"fbjs/lib/emptyObject":133,"object-assign":183}],274:[function(require,module,exports){
+},{"./ReactComponent":221,"./ReactNoopUpdateQueue":269,"fbjs/lib/emptyObject":133,"object-assign":184}],276:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -50101,7 +50333,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 }).call(this,require('_process'))
-},{"./CallbackQueue":192,"./PooledClass":212,"./ReactBrowserEventEmitter":214,"./ReactInputSelection":258,"./ReactInstrumentation":260,"./ReactUpdateQueue":281,"./Transaction":300,"_process":185,"object-assign":183}],275:[function(require,module,exports){
+},{"./CallbackQueue":194,"./PooledClass":214,"./ReactBrowserEventEmitter":216,"./ReactInputSelection":260,"./ReactInstrumentation":262,"./ReactUpdateQueue":283,"./Transaction":302,"_process":186,"object-assign":184}],277:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -50272,7 +50504,7 @@ var ReactReconciler = {
 
 module.exports = ReactReconciler;
 }).call(this,require('_process'))
-},{"./ReactInstrumentation":260,"./ReactRef":276,"_process":185,"fbjs/lib/warning":149}],276:[function(require,module,exports){
+},{"./ReactInstrumentation":262,"./ReactRef":278,"_process":186,"fbjs/lib/warning":149}],278:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -50353,7 +50585,7 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-},{"./ReactOwner":268}],277:[function(require,module,exports){
+},{"./ReactOwner":270}],279:[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -50376,7 +50608,7 @@ var ReactServerBatchingStrategy = {
 };
 
 module.exports = ReactServerBatchingStrategy;
-},{}],278:[function(require,module,exports){
+},{}],280:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -50469,7 +50701,7 @@ module.exports = {
   renderToStaticMarkup: renderToStaticMarkup
 };
 }).call(this,require('_process'))
-},{"./ReactDOMContainerInfo":230,"./ReactDefaultBatchingStrategy":246,"./ReactElement":248,"./ReactInstrumentation":260,"./ReactMarkupChecksum":262,"./ReactReconciler":275,"./ReactServerBatchingStrategy":277,"./ReactServerRenderingTransaction":279,"./ReactUpdates":282,"./instantiateReactComponent":321,"./reactProdInvariant":326,"_process":185,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140}],279:[function(require,module,exports){
+},{"./ReactDOMContainerInfo":232,"./ReactDefaultBatchingStrategy":248,"./ReactElement":250,"./ReactInstrumentation":262,"./ReactMarkupChecksum":264,"./ReactReconciler":277,"./ReactServerBatchingStrategy":279,"./ReactServerRenderingTransaction":281,"./ReactUpdates":284,"./instantiateReactComponent":323,"./reactProdInvariant":328,"_process":186,"fbjs/lib/emptyObject":133,"fbjs/lib/invariant":140}],281:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -50562,7 +50794,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 }).call(this,require('_process'))
-},{"./PooledClass":212,"./ReactInstrumentation":260,"./ReactServerUpdateQueue":280,"./Transaction":300,"_process":185,"object-assign":183}],280:[function(require,module,exports){
+},{"./PooledClass":214,"./ReactInstrumentation":262,"./ReactServerUpdateQueue":282,"./Transaction":302,"_process":186,"object-assign":184}],282:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -50706,7 +50938,7 @@ var ReactServerUpdateQueue = function () {
 
 module.exports = ReactServerUpdateQueue;
 }).call(this,require('_process'))
-},{"./ReactUpdateQueue":281,"./Transaction":300,"_process":185,"fbjs/lib/warning":149}],281:[function(require,module,exports){
+},{"./ReactUpdateQueue":283,"./Transaction":302,"_process":186,"fbjs/lib/warning":149}],283:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -50935,7 +51167,7 @@ var ReactUpdateQueue = {
 
 module.exports = ReactUpdateQueue;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":224,"./ReactInstanceMap":259,"./ReactInstrumentation":260,"./ReactUpdates":282,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],282:[function(require,module,exports){
+},{"./ReactCurrentOwner":226,"./ReactInstanceMap":261,"./ReactInstrumentation":262,"./ReactUpdates":284,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],284:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -51189,7 +51421,7 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 }).call(this,require('_process'))
-},{"./CallbackQueue":192,"./PooledClass":212,"./ReactFeatureFlags":254,"./ReactReconciler":275,"./Transaction":300,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"object-assign":183}],283:[function(require,module,exports){
+},{"./CallbackQueue":194,"./PooledClass":214,"./ReactFeatureFlags":256,"./ReactReconciler":277,"./Transaction":302,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"object-assign":184}],285:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -51204,7 +51436,7 @@ module.exports = ReactUpdates;
 'use strict';
 
 module.exports = '15.3.2';
-},{}],284:[function(require,module,exports){
+},{}],286:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -51507,7 +51739,7 @@ Object.keys(ATTRS).forEach(function (key) {
 });
 
 module.exports = SVGDOMPropertyConfig;
-},{}],285:[function(require,module,exports){
+},{}],287:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -51704,7 +51936,7 @@ var SelectEventPlugin = {
 };
 
 module.exports = SelectEventPlugin;
-},{"./EventConstants":203,"./EventPropagators":207,"./ReactDOMComponentTree":229,"./ReactInputSelection":258,"./SyntheticEvent":291,"./isTextInputElement":323,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/getActiveElement":135,"fbjs/lib/keyOf":144,"fbjs/lib/shallowEqual":148}],286:[function(require,module,exports){
+},{"./EventConstants":205,"./EventPropagators":209,"./ReactDOMComponentTree":231,"./ReactInputSelection":260,"./SyntheticEvent":293,"./isTextInputElement":325,"fbjs/lib/ExecutionEnvironment":126,"fbjs/lib/getActiveElement":135,"fbjs/lib/keyOf":144,"fbjs/lib/shallowEqual":148}],288:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -52342,7 +52574,7 @@ var SimpleEventPlugin = {
 
 module.exports = SimpleEventPlugin;
 }).call(this,require('_process'))
-},{"./EventConstants":203,"./EventPropagators":207,"./ReactDOMComponentTree":229,"./SyntheticAnimationEvent":287,"./SyntheticClipboardEvent":288,"./SyntheticDragEvent":290,"./SyntheticEvent":291,"./SyntheticFocusEvent":292,"./SyntheticKeyboardEvent":294,"./SyntheticMouseEvent":295,"./SyntheticTouchEvent":296,"./SyntheticTransitionEvent":297,"./SyntheticUIEvent":298,"./SyntheticWheelEvent":299,"./getEventCharCode":312,"./reactProdInvariant":326,"_process":185,"fbjs/lib/EventListener":125,"fbjs/lib/emptyFunction":132,"fbjs/lib/invariant":140,"fbjs/lib/keyOf":144}],287:[function(require,module,exports){
+},{"./EventConstants":205,"./EventPropagators":209,"./ReactDOMComponentTree":231,"./SyntheticAnimationEvent":289,"./SyntheticClipboardEvent":290,"./SyntheticDragEvent":292,"./SyntheticEvent":293,"./SyntheticFocusEvent":294,"./SyntheticKeyboardEvent":296,"./SyntheticMouseEvent":297,"./SyntheticTouchEvent":298,"./SyntheticTransitionEvent":299,"./SyntheticUIEvent":300,"./SyntheticWheelEvent":301,"./getEventCharCode":314,"./reactProdInvariant":328,"_process":186,"fbjs/lib/EventListener":125,"fbjs/lib/emptyFunction":132,"fbjs/lib/invariant":140,"fbjs/lib/keyOf":144}],289:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52382,7 +52614,7 @@ function SyntheticAnimationEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticAnimationEvent, AnimationEventInterface);
 
 module.exports = SyntheticAnimationEvent;
-},{"./SyntheticEvent":291}],288:[function(require,module,exports){
+},{"./SyntheticEvent":293}],290:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52421,7 +52653,7 @@ function SyntheticClipboardEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
-},{"./SyntheticEvent":291}],289:[function(require,module,exports){
+},{"./SyntheticEvent":293}],291:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52458,7 +52690,7 @@ function SyntheticCompositionEvent(dispatchConfig, dispatchMarker, nativeEvent, 
 SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface);
 
 module.exports = SyntheticCompositionEvent;
-},{"./SyntheticEvent":291}],290:[function(require,module,exports){
+},{"./SyntheticEvent":293}],292:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52495,7 +52727,7 @@ function SyntheticDragEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeE
 SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
-},{"./SyntheticMouseEvent":295}],291:[function(require,module,exports){
+},{"./SyntheticMouseEvent":297}],293:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -52766,7 +52998,7 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
   }
 }
 }).call(this,require('_process'))
-},{"./PooledClass":212,"_process":185,"fbjs/lib/emptyFunction":132,"fbjs/lib/warning":149,"object-assign":183}],292:[function(require,module,exports){
+},{"./PooledClass":214,"_process":186,"fbjs/lib/emptyFunction":132,"fbjs/lib/warning":149,"object-assign":184}],294:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52803,7 +53035,7 @@ function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
-},{"./SyntheticUIEvent":298}],293:[function(require,module,exports){
+},{"./SyntheticUIEvent":300}],295:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52841,7 +53073,7 @@ function SyntheticInputEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 
 module.exports = SyntheticInputEvent;
-},{"./SyntheticEvent":291}],294:[function(require,module,exports){
+},{"./SyntheticEvent":293}],296:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52926,7 +53158,7 @@ function SyntheticKeyboardEvent(dispatchConfig, dispatchMarker, nativeEvent, nat
 SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
-},{"./SyntheticUIEvent":298,"./getEventCharCode":312,"./getEventKey":313,"./getEventModifierState":314}],295:[function(require,module,exports){
+},{"./SyntheticUIEvent":300,"./getEventCharCode":314,"./getEventKey":315,"./getEventModifierState":316}],297:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -52999,7 +53231,7 @@ function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
-},{"./SyntheticUIEvent":298,"./ViewportMetrics":301,"./getEventModifierState":314}],296:[function(require,module,exports){
+},{"./SyntheticUIEvent":300,"./ViewportMetrics":303,"./getEventModifierState":316}],298:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53045,7 +53277,7 @@ function SyntheticTouchEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
-},{"./SyntheticUIEvent":298,"./getEventModifierState":314}],297:[function(require,module,exports){
+},{"./SyntheticUIEvent":300,"./getEventModifierState":316}],299:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53085,7 +53317,7 @@ function SyntheticTransitionEvent(dispatchConfig, dispatchMarker, nativeEvent, n
 SyntheticEvent.augmentClass(SyntheticTransitionEvent, TransitionEventInterface);
 
 module.exports = SyntheticTransitionEvent;
-},{"./SyntheticEvent":291}],298:[function(require,module,exports){
+},{"./SyntheticEvent":293}],300:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53145,7 +53377,7 @@ function SyntheticUIEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEve
 SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
-},{"./SyntheticEvent":291,"./getEventTarget":315}],299:[function(require,module,exports){
+},{"./SyntheticEvent":293,"./getEventTarget":317}],301:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53200,7 +53432,7 @@ function SyntheticWheelEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
-},{"./SyntheticMouseEvent":295}],300:[function(require,module,exports){
+},{"./SyntheticMouseEvent":297}],302:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -53436,7 +53668,7 @@ var Transaction = {
 
 module.exports = Transaction;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],301:[function(require,module,exports){
+},{"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],303:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53464,7 +53696,7 @@ var ViewportMetrics = {
 };
 
 module.exports = ViewportMetrics;
-},{}],302:[function(require,module,exports){
+},{}],304:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -53525,7 +53757,7 @@ function accumulateInto(current, next) {
 
 module.exports = accumulateInto;
 }).call(this,require('_process'))
-},{"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],303:[function(require,module,exports){
+},{"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],305:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53570,7 +53802,7 @@ function adler32(data) {
 }
 
 module.exports = adler32;
-},{}],304:[function(require,module,exports){
+},{}],306:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -53597,7 +53829,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = canDefineProperty;
 }).call(this,require('_process'))
-},{"_process":185}],305:[function(require,module,exports){
+},{"_process":186}],307:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -53687,7 +53919,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
 module.exports = checkReactTypeSpec;
 }).call(this,require('_process'))
-},{"./ReactComponentTreeHook":222,"./ReactPropTypeLocationNames":269,"./ReactPropTypesSecret":272,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],306:[function(require,module,exports){
+},{"./ReactComponentTreeHook":224,"./ReactPropTypeLocationNames":271,"./ReactPropTypesSecret":274,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],308:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -53720,7 +53952,7 @@ var createMicrosoftUnsafeLocalFunction = function (func) {
 };
 
 module.exports = createMicrosoftUnsafeLocalFunction;
-},{}],307:[function(require,module,exports){
+},{}],309:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -53802,7 +54034,7 @@ function dangerousStyleValue(name, value, component) {
 
 module.exports = dangerousStyleValue;
 }).call(this,require('_process'))
-},{"./CSSProperty":190,"_process":185,"fbjs/lib/warning":149}],308:[function(require,module,exports){
+},{"./CSSProperty":192,"_process":186,"fbjs/lib/warning":149}],310:[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -53926,7 +54158,7 @@ function escapeTextContentForBrowser(text) {
 }
 
 module.exports = escapeTextContentForBrowser;
-},{}],309:[function(require,module,exports){
+},{}],311:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -53989,7 +54221,7 @@ function findDOMNode(componentOrElement) {
 
 module.exports = findDOMNode;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":224,"./ReactDOMComponentTree":229,"./ReactInstanceMap":259,"./getHostComponentFromComposite":316,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],310:[function(require,module,exports){
+},{"./ReactCurrentOwner":226,"./ReactDOMComponentTree":231,"./ReactInstanceMap":261,"./getHostComponentFromComposite":318,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],312:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -54068,7 +54300,7 @@ function flattenChildren(children, selfDebugID) {
 
 module.exports = flattenChildren;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":210,"./ReactComponentTreeHook":222,"./traverseAllChildren":331,"_process":185,"fbjs/lib/warning":149}],311:[function(require,module,exports){
+},{"./KeyEscapeUtils":212,"./ReactComponentTreeHook":224,"./traverseAllChildren":333,"_process":186,"fbjs/lib/warning":149}],313:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54100,7 +54332,7 @@ function forEachAccumulated(arr, cb, scope) {
 }
 
 module.exports = forEachAccumulated;
-},{}],312:[function(require,module,exports){
+},{}],314:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54151,7 +54383,7 @@ function getEventCharCode(nativeEvent) {
 }
 
 module.exports = getEventCharCode;
-},{}],313:[function(require,module,exports){
+},{}],315:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54254,7 +54486,7 @@ function getEventKey(nativeEvent) {
 }
 
 module.exports = getEventKey;
-},{"./getEventCharCode":312}],314:[function(require,module,exports){
+},{"./getEventCharCode":314}],316:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54298,7 +54530,7 @@ function getEventModifierState(nativeEvent) {
 }
 
 module.exports = getEventModifierState;
-},{}],315:[function(require,module,exports){
+},{}],317:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54334,7 +54566,7 @@ function getEventTarget(nativeEvent) {
 }
 
 module.exports = getEventTarget;
-},{}],316:[function(require,module,exports){
+},{}],318:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54365,7 +54597,7 @@ function getHostComponentFromComposite(inst) {
 }
 
 module.exports = getHostComponentFromComposite;
-},{"./ReactNodeTypes":266}],317:[function(require,module,exports){
+},{"./ReactNodeTypes":268}],319:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54407,7 +54639,7 @@ function getIteratorFn(maybeIterable) {
 }
 
 module.exports = getIteratorFn;
-},{}],318:[function(require,module,exports){
+},{}],320:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54482,7 +54714,7 @@ function getNodeForCharacterOffset(root, offset) {
 }
 
 module.exports = getNodeForCharacterOffset;
-},{}],319:[function(require,module,exports){
+},{}],321:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54516,7 +54748,7 @@ function getTextContentAccessor() {
 }
 
 module.exports = getTextContentAccessor;
-},{"fbjs/lib/ExecutionEnvironment":126}],320:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":126}],322:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54618,7 +54850,7 @@ function getVendorPrefixedEventName(eventName) {
 }
 
 module.exports = getVendorPrefixedEventName;
-},{"fbjs/lib/ExecutionEnvironment":126}],321:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":126}],323:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -54740,7 +54972,7 @@ function instantiateReactComponent(node, shouldHaveDebugID) {
 
 module.exports = instantiateReactComponent;
 }).call(this,require('_process'))
-},{"./ReactCompositeComponent":223,"./ReactEmptyComponent":250,"./ReactHostComponent":255,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149,"object-assign":183}],322:[function(require,module,exports){
+},{"./ReactCompositeComponent":225,"./ReactEmptyComponent":252,"./ReactHostComponent":257,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149,"object-assign":184}],324:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54801,7 +55033,7 @@ function isEventSupported(eventNameSuffix, capture) {
 }
 
 module.exports = isEventSupported;
-},{"fbjs/lib/ExecutionEnvironment":126}],323:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":126}],325:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54853,7 +55085,7 @@ function isTextInputElement(elem) {
 }
 
 module.exports = isTextInputElement;
-},{}],324:[function(require,module,exports){
+},{}],326:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -54894,7 +55126,7 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 }).call(this,require('_process'))
-},{"./ReactElement":248,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140}],325:[function(require,module,exports){
+},{"./ReactElement":250,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140}],327:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54921,7 +55153,7 @@ function quoteAttributeValueForBrowser(value) {
 }
 
 module.exports = quoteAttributeValueForBrowser;
-},{"./escapeTextContentForBrowser":308}],326:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":310}],328:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54961,7 +55193,7 @@ function reactProdInvariant(code) {
 }
 
 module.exports = reactProdInvariant;
-},{}],327:[function(require,module,exports){
+},{}],329:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -54978,7 +55210,7 @@ module.exports = reactProdInvariant;
 var ReactMount = require('./ReactMount');
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
-},{"./ReactMount":263}],328:[function(require,module,exports){
+},{"./ReactMount":265}],330:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55077,7 +55309,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setInnerHTML;
-},{"./DOMNamespaces":196,"./createMicrosoftUnsafeLocalFunction":306,"fbjs/lib/ExecutionEnvironment":126}],329:[function(require,module,exports){
+},{"./DOMNamespaces":198,"./createMicrosoftUnsafeLocalFunction":308,"fbjs/lib/ExecutionEnvironment":126}],331:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55126,7 +55358,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setTextContent;
-},{"./escapeTextContentForBrowser":308,"./setInnerHTML":328,"fbjs/lib/ExecutionEnvironment":126}],330:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":310,"./setInnerHTML":330,"fbjs/lib/ExecutionEnvironment":126}],332:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -55169,7 +55401,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 }
 
 module.exports = shouldUpdateReactComponent;
-},{}],331:[function(require,module,exports){
+},{}],333:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -55339,7 +55571,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":210,"./ReactCurrentOwner":224,"./ReactElement":248,"./getIteratorFn":317,"./reactProdInvariant":326,"_process":185,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],332:[function(require,module,exports){
+},{"./KeyEscapeUtils":212,"./ReactCurrentOwner":226,"./ReactElement":250,"./getIteratorFn":319,"./reactProdInvariant":328,"_process":186,"fbjs/lib/invariant":140,"fbjs/lib/warning":149}],334:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015-present, Facebook, Inc.
@@ -55724,15 +55956,15 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = validateDOMNesting;
 }).call(this,require('_process'))
-},{"_process":185,"fbjs/lib/emptyFunction":132,"fbjs/lib/warning":149,"object-assign":183}],333:[function(require,module,exports){
+},{"_process":186,"fbjs/lib/emptyFunction":132,"fbjs/lib/warning":149,"object-assign":184}],335:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":213}],334:[function(require,module,exports){
+},{"./lib/React":215}],336:[function(require,module,exports){
 module.exports = require("./lib/_stream_duplex.js")
 
-},{"./lib/_stream_duplex.js":335}],335:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":337}],337:[function(require,module,exports){
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -55808,7 +56040,7 @@ function forEach(xs, f) {
     f(xs[i], i);
   }
 }
-},{"./_stream_readable":337,"./_stream_writable":339,"core-util-is":39,"inherits":163,"process-nextick-args":184}],336:[function(require,module,exports){
+},{"./_stream_readable":339,"./_stream_writable":341,"core-util-is":39,"inherits":163,"process-nextick-args":185}],338:[function(require,module,exports){
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -55835,7 +56067,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":338,"core-util-is":39,"inherits":163}],337:[function(require,module,exports){
+},{"./_stream_transform":340,"core-util-is":39,"inherits":163}],339:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -56775,7 +57007,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":335,"./internal/streams/BufferList":340,"_process":185,"buffer":27,"buffer-shims":26,"core-util-is":39,"events":124,"inherits":163,"isarray":166,"process-nextick-args":184,"string_decoder/":402,"util":24}],338:[function(require,module,exports){
+},{"./_stream_duplex":337,"./internal/streams/BufferList":342,"_process":186,"buffer":27,"buffer-shims":26,"core-util-is":39,"events":124,"inherits":163,"isarray":167,"process-nextick-args":185,"string_decoder/":405,"util":24}],340:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -56956,7 +57188,7 @@ function done(stream, er) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":335,"core-util-is":39,"inherits":163}],339:[function(require,module,exports){
+},{"./_stream_duplex":337,"core-util-is":39,"inherits":163}],341:[function(require,module,exports){
 (function (process){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
@@ -57485,7 +57717,7 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":335,"_process":185,"buffer":27,"buffer-shims":26,"core-util-is":39,"events":124,"inherits":163,"process-nextick-args":184,"util-deprecate":404}],340:[function(require,module,exports){
+},{"./_stream_duplex":337,"_process":186,"buffer":27,"buffer-shims":26,"core-util-is":39,"events":124,"inherits":163,"process-nextick-args":185,"util-deprecate":407}],342:[function(require,module,exports){
 'use strict';
 
 var Buffer = require('buffer').Buffer;
@@ -57550,10 +57782,10 @@ BufferList.prototype.concat = function (n) {
   }
   return ret;
 };
-},{"buffer":27,"buffer-shims":26}],341:[function(require,module,exports){
+},{"buffer":27,"buffer-shims":26}],343:[function(require,module,exports){
 module.exports = require("./lib/_stream_passthrough.js")
 
-},{"./lib/_stream_passthrough.js":336}],342:[function(require,module,exports){
+},{"./lib/_stream_passthrough.js":338}],344:[function(require,module,exports){
 (function (process){
 var Stream = (function (){
   try {
@@ -57573,13 +57805,27 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
 }
 
 }).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":335,"./lib/_stream_passthrough.js":336,"./lib/_stream_readable.js":337,"./lib/_stream_transform.js":338,"./lib/_stream_writable.js":339,"_process":185}],343:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":337,"./lib/_stream_passthrough.js":338,"./lib/_stream_readable.js":339,"./lib/_stream_transform.js":340,"./lib/_stream_writable.js":341,"_process":186}],345:[function(require,module,exports){
 module.exports = require("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":338}],344:[function(require,module,exports){
+},{"./lib/_stream_transform.js":340}],346:[function(require,module,exports){
 module.exports = require("./lib/_stream_writable.js")
 
-},{"./lib/_stream_writable.js":339}],345:[function(require,module,exports){
+},{"./lib/_stream_writable.js":341}],347:[function(require,module,exports){
+function isBackward(selection) {
+    var startNode = selection.anchorNode;
+    var startOffset = selection.anchorOffset;
+    var endNode = selection.focusNode;
+    var endOffset = selection.focusOffset;
+
+    var position = startNode.compareDocumentPosition(endNode);
+
+    return !(position === 4 || (position === 0 && startOffset < endOffset));
+}
+
+module.exports = isBackward;
+
+},{}],348:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -57701,6 +57947,10 @@ var Content = function (_React$Component) {
    */
 
   /**
+   * On mount, if `autoFocus` is set, focus the editor.
+   */
+
+  /**
    * On update, if the state is blurred now, but was focused before, and the
    * DOM still has a node inside the editor selected, we need to blur it.
    *
@@ -57727,12 +57977,19 @@ var Content = function (_React$Component) {
       var document = state.document;
 
       var schema = editor.getSchema();
+
+      // If we can't find an offset key, we can't get a point.
       var offsetKey = _offsetKey2.default.findKey(element, offset);
       if (!offsetKey) return null;
 
+      // COMPAT: If someone is clicking from one Slate editor into another, the
+      // select event fires two, once for the old editor's `element` first, and
+      // then afterwards for the correct `element`. (2017/03/03)
       var key = offsetKey.key;
 
       var node = document.getDescendant(key);
+      if (!node) return null;
+
       var decorators = document.getDescendantDecorators(key, schema);
       var ranges = node.getRanges(decorators);
       var point = _offsetKey2.default.findPoint(offsetKey, ranges);
@@ -57880,6 +58137,8 @@ var Content = function (_React$Component) {
 
 Content.propTypes = {
   autoCorrect: _react2.default.PropTypes.bool.isRequired,
+  autoFocus: _react2.default.PropTypes.bool.isRequired,
+  children: _react2.default.PropTypes.array.isRequired,
   className: _react2.default.PropTypes.string,
   editor: _react2.default.PropTypes.object.isRequired,
   onBeforeInput: _react2.default.PropTypes.func.isRequired,
@@ -57916,6 +58175,13 @@ var _initialiseProps = function _initialiseProps() {
     if (props.state.isNative) return false;
 
     return props.className != _this2.props.className || props.schema != _this2.props.schema || props.autoCorrect != _this2.props.autoCorrect || props.spellCheck != _this2.props.spellCheck || props.state != _this2.props.state || props.style != _this2.props.style;
+  };
+
+  this.componentDidMount = function () {
+    if (_this2.props.autoFocus) {
+      var el = _reactDom2.default.findDOMNode(_this2);
+      el.focus();
+    }
   };
 
   this.componentDidUpdate = function (prevProps, prevState) {
@@ -58106,9 +58372,11 @@ var _initialiseProps = function _initialiseProps() {
       range.setStart(nativeEvent.rangeParent, nativeEvent.rangeOffset);
     }
 
-    var startNode = range.startContainer;
-    var startOffset = range.startOffset;
-    var point = _this2.getPoint(startNode, startOffset);
+    var _range = range,
+        startContainer = _range.startContainer,
+        startOffset = _range.startOffset;
+
+    var point = _this2.getPoint(startContainer, startOffset);
     if (!point) return;
 
     var target = _selection2.default.create({
@@ -58191,15 +58459,15 @@ var _initialiseProps = function _initialiseProps() {
 
     // Determine what the selection should be after changing the text.
     var delta = textContent.length - text.length;
-    var after = selection.collapseToEnd().moveForward(delta);
+    var after = selection.collapseToEnd().move(delta);
 
     // Create an updated state with the text replaced.
-    var next = state.transform().moveTo({
+    var next = state.transform().select({
       anchorKey: key,
       anchorOffset: start,
       focusKey: key,
       focusOffset: end
-    }).delete().insertText(textContent, marks).moveTo(after).apply();
+    }).delete().insertText(textContent, marks).select(after).apply();
 
     // Change the current state.
     _this2.onChange(next);
@@ -58420,7 +58688,8 @@ var _initialiseProps = function _initialiseProps() {
         role: readOnly ? null : role || 'textbox',
         tabIndex: tabIndex
       },
-      children
+      children,
+      _this2.props.children
     );
   };
 
@@ -58445,7 +58714,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Content;
-},{"../constants/environment":351,"../constants/types":353,"../models/selection":364,"../serializers/base-64":371,"../utils/get-transfer-data":387,"../utils/offset-key":394,"./node":348,"debug":398,"get-window":151,"keycode":167,"react":333,"react-dom":186}],346:[function(require,module,exports){
+},{"../constants/environment":354,"../constants/types":356,"../models/selection":367,"../serializers/base-64":374,"../utils/get-transfer-data":390,"../utils/offset-key":397,"./node":351,"debug":401,"get-window":151,"keycode":168,"react":335,"react-dom":187}],349:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -58454,13 +58723,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _content = require('./content');
-
-var _content2 = _interopRequireDefault(_content);
-
 var _debug = require('debug');
 
 var _debug2 = _interopRequireDefault(_debug);
+
+var _reactPortal = require('react-portal');
+
+var _reactPortal2 = _interopRequireDefault(_reactPortal);
 
 var _react = require('react');
 
@@ -58661,6 +58930,7 @@ var Editor = function (_React$Component) {
 
 Editor.propTypes = {
   autoCorrect: _react2.default.PropTypes.bool,
+  autoFocus: _react2.default.PropTypes.bool,
   className: _react2.default.PropTypes.string,
   onBeforeChange: _react2.default.PropTypes.func,
   onChange: _react2.default.PropTypes.func,
@@ -58679,6 +58949,7 @@ Editor.propTypes = {
   tabIndex: _react2.default.PropTypes.number
 };
 Editor.defaultProps = {
+  autoFocus: false,
   autoCorrect: true,
   onChange: _noop2.default,
   onDocumentChange: _noop2.default,
@@ -58769,62 +59040,33 @@ var _initialiseProps = function _initialiseProps() {
     var onChange = props.onChange,
         onDocumentChange = props.onDocumentChange,
         onSelectionChange = props.onSelectionChange;
+    var document = tmp.document,
+        selection = tmp.selection;
 
 
     state = stack.onChange(state, _this2);
     onChange(state);
-    if (state.document != tmp.document) onDocumentChange(state.document, state);
-    if (state.selection != tmp.selection) onSelectionChange(state.selection, state);
-
-    _this2.cacheState(state);
+    if (state.document != document) onDocumentChange(state.document, state);
+    if (state.selection != selection) onSelectionChange(state.selection, state);
   };
 
   this.render = function () {
     var props = _this2.props,
         state = _this2.state;
+    var stack = state.stack;
 
-    var handlers = {};
-
-    var _iteratorNormalCompletion4 = true;
-    var _didIteratorError4 = false;
-    var _iteratorError4 = undefined;
-
-    try {
-      for (var _iterator4 = EVENT_HANDLERS[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-        var property = _step4.value;
-
-        handlers[property] = _this2[property];
-      }
-    } catch (err) {
-      _didIteratorError4 = true;
-      _iteratorError4 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion4 && _iterator4.return) {
-          _iterator4.return();
-        }
-      } finally {
-        if (_didIteratorError4) {
-          throw _iteratorError4;
-        }
-      }
-    }
+    var children = stack.renderPortal(state.state, _this2).map(function (child, i) {
+      return _react2.default.createElement(
+        _reactPortal2.default,
+        { key: i, isOpened: true },
+        child
+      );
+    });
 
     debug('render', { props: props, state: state });
 
-    return _react2.default.createElement(_content2.default, _extends({}, handlers, {
-      editor: _this2,
-      onChange: _this2.onChange,
-      schema: _this2.getSchema(),
-      state: _this2.getState(),
-      className: props.className,
-      readOnly: props.readOnly,
-      autoCorrect: props.autoCorrect,
-      spellCheck: props.spellCheck,
-      style: props.style,
-      tabIndex: props.tabIndex,
-      role: props.role
-    }));
+    var tree = stack.render(state.state, _this2, _extends({}, props, { children: children }));
+    return tree;
   };
 };
 
@@ -58860,7 +59102,7 @@ try {
 }
 
 exports.default = Editor;
-},{"../models/stack":365,"../models/state":366,"../utils/noop":391,"./content":345,"debug":398,"react":333}],347:[function(require,module,exports){
+},{"../models/stack":368,"../models/state":369,"../utils/noop":394,"debug":401,"react":335,"react-portal":189}],350:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -59085,44 +59327,40 @@ var Leaf = function (_React$Component) {
       }
 
       // Otherwise we need to set the selection across two different leaves.
-      else {
-          // If the selection is forward, we can set things in sequence. In the
-          // first leaf to render, reset the selection and set the new start. And
-          // then in the second leaf to render, extend to the new end.
-          if (selection.isForward) {
-            if (hasAnchor) {
-              native.removeAllRanges();
-              var _range = window.document.createRange();
-              _range.setStart(el, anchorOffset);
-              native.addRange(_range);
-            } else if (hasFocus) {
-              native.extend(el, focusOffset);
-              focus();
-            }
+      // If the selection is forward, we can set things in sequence. In the
+      // first leaf to render, reset the selection and set the new start. And
+      // then in the second leaf to render, extend to the new end.
+      else if (selection.isForward) {
+          if (hasAnchor) {
+            native.removeAllRanges();
+            var _range = window.document.createRange();
+            _range.setStart(el, anchorOffset);
+            native.addRange(_range);
+          } else if (hasFocus) {
+            native.extend(el, focusOffset);
+            focus();
           }
-
-          // Otherwise, if the selection is backward, we need to hack the order a bit.
-          // In the first leaf to render, set a phony start anchor to store the true
-          // end position. And then in the second leaf to render, set the start and
-          // extend the end to the stored value.
-          else {
-              if (hasFocus) {
-                native.removeAllRanges();
-                var _range2 = window.document.createRange();
-                _range2.setStart(el, focusOffset);
-                native.addRange(_range2);
-              } else if (hasAnchor) {
-                var endNode = native.focusNode;
-                var endOffset = native.focusOffset;
-                native.removeAllRanges();
-                var _range3 = window.document.createRange();
-                _range3.setStart(el, anchorOffset);
-                native.addRange(_range3);
-                native.extend(endNode, endOffset);
-                focus();
-              }
-            }
         }
+
+        // Otherwise, if the selection is backward, we need to hack the order a bit.
+        // In the first leaf to render, set a phony start anchor to store the true
+        // end position. And then in the second leaf to render, set the start and
+        // extend the end to the stored value.
+        else if (hasFocus) {
+            native.removeAllRanges();
+            var _range2 = window.document.createRange();
+            _range2.setStart(el, focusOffset);
+            native.addRange(_range2);
+          } else if (hasAnchor) {
+            var endNode = native.focusNode;
+            var endOffset = native.focusOffset;
+            native.removeAllRanges();
+            var _range3 = window.document.createRange();
+            _range3.setStart(el, anchorOffset);
+            native.addRange(_range3);
+            native.extend(endNode, endOffset);
+            focus();
+          }
 
       this.debug('updateSelection', { selection: selection });
     }
@@ -59283,7 +59521,7 @@ function findDeepestNode(element) {
  */
 
 exports.default = Leaf;
-},{"../constants/environment":351,"../utils/offset-key":394,"debug":398,"get-window":151,"react":333,"react-dom":186}],348:[function(require,module,exports){
+},{"../constants/environment":354,"../utils/offset-key":397,"debug":401,"get-window":151,"react":335,"react-dom":187}],351:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -59318,9 +59556,13 @@ var _void = require('./void');
 
 var _void2 = _interopRequireDefault(_void);
 
-var _scrollTo = require('../utils/scroll-to');
+var _getWindow = require('get-window');
 
-var _scrollTo2 = _interopRequireDefault(_scrollTo);
+var _getWindow2 = _interopRequireDefault(_getWindow);
+
+var _scrollToSelection = require('../utils/scroll-to-selection');
+
+var _scrollToSelection2 = _interopRequireDefault(_scrollToSelection);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59593,7 +59835,9 @@ var _initialiseProps = function _initialiseProps() {
     if (!selection.hasEndIn(node)) return;
 
     var el = _reactDom2.default.findDOMNode(_this2);
-    (0, _scrollTo2.default)(el);
+    var window = (0, _getWindow2.default)(el);
+    var native = window.getSelection();
+    (0, _scrollToSelection2.default)(native);
 
     _this2.debug('updateScroll', el);
   };
@@ -59709,9 +59953,9 @@ var _initialiseProps = function _initialiseProps() {
         schema = _props4.schema,
         state = _props4.state,
         editor = _props4.editor;
+    var text = range.text,
+        marks = range.marks;
 
-    var text = range.text;
-    var marks = range.marks;
 
     return _react2.default.createElement(_leaf2.default, {
       key: node.key + '-' + index,
@@ -59730,7 +59974,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Node;
-},{"../constants/types":353,"../serializers/base-64":371,"../utils/scroll-to":395,"./leaf":347,"./void":350,"debug":398,"react":333,"react-dom":186}],349:[function(require,module,exports){
+},{"../constants/types":356,"../serializers/base-64":374,"../utils/scroll-to-selection":398,"./leaf":350,"./void":353,"debug":401,"get-window":151,"react":335,"react-dom":187}],352:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -59862,7 +60106,7 @@ Placeholder.propTypes = {
   style: _react2.default.PropTypes.object
 };
 exports.default = Placeholder;
-},{"react":333}],350:[function(require,module,exports){
+},{"react":335}],353:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -60117,15 +60361,21 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Void;
-},{"../constants/environment":351,"../models/mark":360,"../utils/offset-key":394,"./leaf":347,"debug":398,"react":333}],351:[function(require,module,exports){
-(function (process){
+},{"../constants/environment":354,"../models/mark":363,"../utils/offset-key":397,"./leaf":350,"debug":401,"react":335}],354:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.IS_WINDOWS = exports.IS_MAC = exports.IS_SAFARI = exports.IS_FIREFOX = exports.IS_CHROME = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _isInBrowser = require('is-in-browser');
+
+var _isInBrowser2 = _interopRequireDefault(_isInBrowser);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Browser matching rules.
@@ -60154,7 +60404,7 @@ var OS = void 0;
  * Run the matchers when in browser.
  */
 
-if (process.browser) {
+if (_isInBrowser2.default) {
   var userAgent = window.navigator.userAgent;
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
@@ -60234,8 +60484,7 @@ var IS_SAFARI = exports.IS_SAFARI = BROWSER === 'safari';
 
 var IS_MAC = exports.IS_MAC = OS === 'macos';
 var IS_WINDOWS = exports.IS_WINDOWS = OS === 'windows';
-}).call(this,require('_process'))
-},{"_process":185}],352:[function(require,module,exports){
+},{"is-in-browser":166}],355:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -60259,7 +60508,7 @@ var IS_DEV = typeof process !== 'undefined' && process.env && process.env.NODE_E
 
 exports.default = IS_DEV;
 }).call(this,require('_process'))
-},{"_process":185}],353:[function(require,module,exports){
+},{"_process":186}],356:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -60284,7 +60533,7 @@ var TYPES = {
  */
 
 exports.default = TYPES;
-},{}],354:[function(require,module,exports){
+},{}],357:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -60443,7 +60692,7 @@ exports.default = {
   resetKeyGenerator: _generateKey.resetKeyGenerator,
   setKeyGenerator: _generateKey.setKeyGenerator
 };
-},{"./components/editor":346,"./components/placeholder":349,"./models/block":355,"./models/character":356,"./models/data":357,"./models/document":358,"./models/inline":359,"./models/mark":360,"./models/range":362,"./models/schema":363,"./models/selection":364,"./models/stack":365,"./models/state":366,"./models/text":367,"./serializers/html":372,"./serializers/plain":373,"./serializers/raw":374,"./transforms":380,"./utils/find-dom-node":385,"./utils/generate-key":386}],355:[function(require,module,exports){
+},{"./components/editor":349,"./components/placeholder":352,"./models/block":358,"./models/character":359,"./models/data":360,"./models/document":361,"./models/inline":362,"./models/mark":363,"./models/range":365,"./models/schema":366,"./models/selection":367,"./models/stack":368,"./models/state":369,"./models/text":370,"./serializers/html":375,"./serializers/plain":376,"./serializers/raw":377,"./transforms":383,"./utils/find-dom-node":388,"./utils/generate-key":389}],358:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -60635,7 +60884,7 @@ for (var method in _node2.default) {
  */
 
 exports.default = Block;
-},{"../utils/generate-key":386,"./data":357,"./document":358,"./inline":359,"./node":361,"./text":367,"immutable":162}],356:[function(require,module,exports){
+},{"../utils/generate-key":389,"./data":360,"./document":361,"./inline":362,"./node":364,"./text":370,"immutable":162}],359:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -60761,7 +61010,7 @@ var Character = function (_ref) {
  */
 
 exports.default = Character;
-},{"./mark":360,"immutable":162}],357:[function(require,module,exports){
+},{"./mark":363,"immutable":162}],360:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -60802,7 +61051,7 @@ var Data = {
  */
 
 exports.default = Data;
-},{"immutable":162}],358:[function(require,module,exports){
+},{"immutable":162}],361:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -60964,7 +61213,7 @@ for (var method in _node2.default) {
  */
 
 exports.default = Document;
-},{"../utils/generate-key":386,"./block":355,"./data":357,"./inline":359,"./node":361,"immutable":162}],359:[function(require,module,exports){
+},{"../utils/generate-key":389,"./block":358,"./data":360,"./inline":362,"./node":364,"immutable":162}],362:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -61156,7 +61405,7 @@ for (var method in _node2.default) {
  */
 
 exports.default = Inline;
-},{"../utils/generate-key":386,"./block":355,"./data":357,"./document":358,"./node":361,"./text":367,"immutable":162}],360:[function(require,module,exports){
+},{"../utils/generate-key":389,"./block":358,"./data":360,"./document":361,"./node":364,"./text":370,"immutable":162}],363:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -61289,28 +61538,16 @@ var Mark = function (_ref) {
  */
 
 exports.default = Mark;
-},{"../utils/memoize":390,"./data":357,"immutable":162}],361:[function(require,module,exports){
+},{"../utils/memoize":393,"./data":360,"immutable":162}],364:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _block = require('./block');
-
-var _block2 = _interopRequireDefault(_block);
-
-var _character = require('./character');
-
-var _character2 = _interopRequireDefault(_character);
-
 var _document = require('./document');
 
 var _document2 = _interopRequireDefault(_document);
-
-var _mark = require('./mark');
-
-var _mark2 = _interopRequireDefault(_mark);
 
 var _normalize = require('../utils/normalize');
 
@@ -61320,6 +61557,10 @@ var _direction = require('direction');
 
 var _direction2 = _interopRequireDefault(_direction);
 
+var _generateKey = require('../utils/generate-key');
+
+var _generateKey2 = _interopRequireDefault(_generateKey);
+
 var _isInRange = require('../utils/is-in-range');
 
 var _isInRange2 = _interopRequireDefault(_isInRange);
@@ -61328,9 +61569,9 @@ var _memoize = require('../utils/memoize');
 
 var _memoize2 = _interopRequireDefault(_memoize);
 
-var _generateKey = require('../utils/generate-key');
+var _warn = require('../utils/warn');
 
-var _generateKey2 = _interopRequireDefault(_generateKey);
+var _warn2 = _interopRequireDefault(_warn);
 
 var _immutable = require('immutable');
 
@@ -61348,32 +61589,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Node = {
 
   /**
-   * Return a set of all keys in the node.
+   * True if the node has both descendants in that order, false otherwise. The
+   * order is depth-first, post-order.
    *
-   * @return {Set<Node>}
+   * @param {String} first
+   * @param {String} second
+   * @return {Boolean}
    */
 
-  getKeys: function getKeys() {
-    var keys = [];
+  areDescendantsSorted: function areDescendantsSorted(first, second) {
+    first = _normalize2.default.key(first);
+    second = _normalize2.default.key(second);
 
-    this.forEachDescendant(function (desc) {
-      keys.push(desc.key);
+    var sorted = void 0;
+
+    this.forEachDescendant(function (n) {
+      if (n.key === first) {
+        sorted = true;
+        return false;
+      } else if (n.key === second) {
+        sorted = false;
+        return false;
+      }
     });
 
-    return (0, _immutable.Set)(keys);
-  },
-
-
-  /**
-   * Get the concatenated text `string` of all child nodes.
-   *
-   * @return {String}
-   */
-
-  getText: function getText() {
-    return this.nodes.reduce(function (result, node) {
-      return result + node.text;
-    }, '');
+    return sorted;
   },
 
 
@@ -61453,70 +61693,35 @@ var Node = {
 
 
   /**
-   * Concat children `nodes` on to the end of the node.
+   * Recursively filter all descendant nodes with `iterator`.
    *
-   * @param {List<Node>} nodes
-   * @return {Node}
+   * @param {Function} iterator
+   * @return {List<Node>}
    */
 
-  concatChildren: function concatChildren(nodes) {
-    nodes = this.nodes.concat(nodes);
-    return this.merge({ nodes: nodes });
-  },
+  filterDescendants: function filterDescendants(iterator) {
+    var matches = [];
 
-
-  /**
-   * Decorate all of the text nodes with a `decorator` function.
-   *
-   * @param {Function} decorator
-   * @return {Node}
-   */
-
-  decorateTexts: function decorateTexts(decorator) {
-    return this.mapDescendants(function (child) {
-      return child.kind == 'text' ? child.decorateCharacters(decorator) : child;
+    this.forEachDescendant(function (node, i, nodes) {
+      if (iterator(node, i, nodes)) matches.push(node);
     });
+
+    return (0, _immutable.List)(matches);
   },
 
 
   /**
-   * Recursively find all descendant nodes by `iterator`. Breadth first.
+   * Recursively find all descendant nodes by `iterator`.
    *
    * @param {Function} iterator
    * @return {Node|Null}
    */
 
   findDescendant: function findDescendant(iterator) {
-    var childFound = this.nodes.find(iterator);
-    if (childFound) return childFound;
-
-    var descendantFound = null;
-
-    this.nodes.find(function (node) {
-      if (node.kind != 'text') {
-        descendantFound = node.findDescendant(iterator);
-        return descendantFound;
-      } else {
-        return false;
-      }
-    });
-
-    return descendantFound;
-  },
-
-
-  /**
-   * Recursively find all descendant nodes by `iterator`. Depth first.
-   *
-   * @param {Function} iterator
-   * @return {Node|Null}
-   */
-
-  findDescendantDeep: function findDescendantDeep(iterator) {
     var found = void 0;
 
-    this.forEachDescendant(function (node) {
-      if (iterator(node)) {
+    this.forEachDescendant(function (node, i, nodes) {
+      if (iterator(node, i, nodes)) {
         found = node;
         return false;
       }
@@ -61527,13 +61732,13 @@ var Node = {
 
 
   /**
-   * Recursively iterate over all descendant nodes with `iterator`.
+   * Recursively iterate over all descendant nodes with `iterator`. If the
+   * iterator returns false it will break the loop.
    *
    * @param {Function} iterator
    */
 
   forEachDescendant: function forEachDescendant(iterator) {
-    // If the iterator returns false it will break the loop.
     var ret = void 0;
 
     this.nodes.forEach(function (child, i, nodes) {
@@ -61553,37 +61758,30 @@ var Node = {
 
 
   /**
-   * Recursively filter all descendant nodes with `iterator`.
+   * Get the path of ancestors of a descendant node by `key`.
    *
-   * @param {Function} iterator
-   * @return {List<Node>}
+   * @param {String|Node} key
+   * @return {List<Node>|Null}
    */
 
-  filterDescendants: function filterDescendants(iterator) {
-    var matches = [];
+  getAncestors: function getAncestors(key) {
+    key = _normalize2.default.key(key);
 
-    this.forEachDescendant(function (child, i, nodes) {
-      if (iterator(child, i, nodes)) matches.push(child);
+    if (key == this.key) return (0, _immutable.List)();
+    if (this.hasChild(key)) return (0, _immutable.List)([this]);
+
+    var ancestors = void 0;
+    this.nodes.find(function (node) {
+      if (node.kind == 'text') return false;
+      ancestors = node.getAncestors(key);
+      return ancestors;
     });
 
-    return (0, _immutable.List)(matches);
-  },
-
-
-  /**
-   * Recursively filter all descendant nodes with `iterator`, depth-first.
-   * It is different from `filterDescendants` in regard of the order of results.
-   *
-   * @param {Function} iterator
-   * @return {List<Node>}
-   */
-
-  filterDescendantsDeep: function filterDescendantsDeep(iterator) {
-    return this.nodes.reduce(function (matches, child, i, nodes) {
-      if (child.kind != 'text') matches = matches.concat(child.filterDescendantsDeep(iterator));
-      if (iterator(child, i, nodes)) matches = matches.push(child);
-      return matches;
-    }, _block2.default.createList());
+    if (ancestors) {
+      return ancestors.unshift(this);
+    } else {
+      return null;
+    }
   },
 
 
@@ -61599,7 +61797,7 @@ var Node = {
     return this.getTexts().map(function (text) {
       return _this.getClosestBlock(text.key);
     })
-    // Eliminate duplicates
+    // Eliminate duplicates by converting to a `Set` first.
     .toOrderedSet().toList();
   },
 
@@ -61617,8 +61815,21 @@ var Node = {
     return this.getTextsAtRange(range).map(function (text) {
       return _this2.getClosestBlock(text.key);
     })
-    // Eliminate duplicates
+    // Eliminate duplicates by converting to a `Set` first.
     .toOrderedSet().toList();
+  },
+
+
+  /**
+   * Get all of the characters for every text node.
+   *
+   * @return {List<Character>} characters
+   */
+
+  getCharacters: function getCharacters() {
+    return this.getTexts().reduce(function (chars, text) {
+      return chars.concat(text.characters);
+    }, new _immutable.List());
   },
 
 
@@ -61626,7 +61837,7 @@ var Node = {
    * Get a list of the characters in a `range`.
    *
    * @param {Selection} range
-   * @return {List<Node>} characters
+   * @return {List<Character>} characters
    */
 
   getCharactersAtRange: function getCharactersAtRange(range) {
@@ -61635,41 +61846,22 @@ var Node = {
         return (0, _isInRange2.default)(i, text, range);
       });
       return characters.concat(chars);
-    }, _character2.default.createList());
+    }, new _immutable.List());
   },
 
 
   /**
-   * Get children between two child keys.
+   * Get a child node by `key`.
    *
-   * @param {String} start
-   * @param {String} end
-   * @return {Node}
+   * @param {String} key
+   * @return {Node|Null}
    */
 
-  getChildrenBetween: function getChildrenBetween(start, end) {
-    start = this.assertChild(start);
-    start = this.nodes.indexOf(start);
-    end = this.assertChild(end);
-    end = this.nodes.indexOf(end);
-    return this.nodes.slice(start + 1, end);
-  },
-
-
-  /**
-   * Get children between two child keys, including the two children.
-   *
-   * @param {String} start
-   * @param {String} end
-   * @return {Node}
-   */
-
-  getChildrenBetweenIncluding: function getChildrenBetweenIncluding(start, end) {
-    start = this.assertChild(start);
-    start = this.nodes.indexOf(start);
-    end = this.assertChild(end);
-    end = this.nodes.indexOf(end);
-    return this.nodes.slice(start, end + 1);
+  getChild: function getChild(key) {
+    key = _normalize2.default.key(key);
+    return this.nodes.find(function (node) {
+      return node.key == key;
+    });
   },
 
 
@@ -61688,7 +61880,7 @@ var Node = {
       throw new Error('Could not find a descendant node with key "' + key + '".');
     }
 
-    // Exclude this node itself
+    // Exclude this node itself.
     return ancestors.rest().findLast(iterator);
   },
 
@@ -61722,16 +61914,15 @@ var Node = {
 
 
   /**
-   * Get a child node by `key`.
+   * Get the closest void parent of a `node`.
    *
    * @param {String} key
    * @return {Node|Null}
    */
 
-  getChild: function getChild(key) {
-    key = _normalize2.default.key(key);
-    return this.nodes.find(function (node) {
-      return node.key == key;
+  getClosestVoid: function getClosestVoid(key) {
+    return this.getClosest(key, function (parent) {
+      return parent.isVoid;
     });
   },
 
@@ -61794,29 +61985,18 @@ var Node = {
 
 
   /**
-   * Get the decorations for a descendant by `key` given a `schema`.
+   * Get the depth of a child node by `key`, with optional `startAt`.
    *
    * @param {String} key
-   * @param {Schema} schema
-   * @return {Array}
+   * @param {Number} startAt (optional)
+   * @return {Number} depth
    */
 
-  getDescendantDecorators: function getDescendantDecorators(key, schema) {
-    if (!schema.hasDecorators) {
-      return [];
-    }
+  getDepth: function getDepth(key) {
+    var startAt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
-    var descendant = this.assertDescendant(key);
-    var child = this.getHighestChild(key);
-    var decorators = [];
-
-    while (child != descendant) {
-      decorators = decorators.concat(child.getDecorators(schema));
-      child = child.getHighestChild(key);
-    }
-
-    decorators = decorators.concat(descendant.getDecorators(schema));
-    return decorators;
+    this.assertDescendant(key);
+    return this.hasChild(key) ? startAt : this.getFurthestAncestor(key).getDepth(key, startAt + 1);
   },
 
 
@@ -61829,19 +62009,13 @@ var Node = {
 
   getDescendant: function getDescendant(key) {
     key = _normalize2.default.key(key);
-    return this._getDescendant(key);
-  },
-
-
-  // This one is memoized
-  _getDescendant: function _getDescendant(key) {
     var descendantFound = null;
 
     var found = this.nodes.find(function (node) {
       if (node.key === key) {
         return node;
       } else if (node.kind !== 'text') {
-        descendantFound = node._getDescendant(key);
+        descendantFound = node.getDescendant(key);
         return descendantFound;
       } else {
         return false;
@@ -61894,47 +62068,48 @@ var Node = {
 
 
   /**
-   * True if the node has both descendants in that order, false
-   * otherwise. The order is depth-first, post-order.
+   * Get the decorators for a descendant by `key` given a `schema`.
    *
-   * @param {String} key1
-   * @param {String} key2
-   * @return {Boolean} True if nodes are found in this order
+   * @param {String} key
+   * @param {Schema} schema
+   * @return {Array}
    */
 
-  areDescendantSorted: function areDescendantSorted(key1, key2) {
-    key1 = _normalize2.default.key(key1);
-    key2 = _normalize2.default.key(key2);
+  getDescendantDecorators: function getDescendantDecorators(key, schema) {
+    if (!schema.hasDecorators) {
+      return [];
+    }
 
-    var sorted = void 0;
+    var descendant = this.assertDescendant(key);
+    var child = this.getFurthestAncestor(key);
+    var decorators = [];
 
-    this.forEachDescendant(function (n) {
-      if (n.key === key1) {
-        sorted = true;
-        return false;
-      } else if (n.key === key2) {
-        sorted = false;
-        return false;
-      }
-    });
+    while (child != descendant) {
+      decorators = decorators.concat(child.getDecorators(schema));
+      child = child.getFurthestAncestor(key);
+    }
 
-    return sorted;
+    decorators = decorators.concat(descendant.getDecorators(schema));
+    return decorators;
   },
 
 
   /**
-   * Get the depth of a child node by `key`, with optional `startAt`.
+   * Get the first child text node.
    *
-   * @param {String} key
-   * @param {Number} startAt (optional)
-   * @return {Number} depth
+   * @return {Node|Null}
    */
 
-  getDepth: function getDepth(key) {
-    var startAt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  getFirstText: function getFirstText() {
+    var descendantFound = null;
 
-    this.assertDescendant(key);
-    return this.hasChild(key) ? startAt : this.getHighestChild(key).getDepth(key, startAt + 1);
+    var found = this.nodes.find(function (node) {
+      if (node.kind == 'text') return true;
+      descendantFound = node.getFirstText();
+      return descendantFound;
+    });
+
+    return descendantFound || found;
   },
 
 
@@ -61947,7 +62122,7 @@ var Node = {
 
   getFragmentAtRange: function getFragmentAtRange(range) {
     var node = this;
-    var nodes = _block2.default.createList();
+    var nodes = new _immutable.List();
 
     // If the range is collapsed, there's nothing to do.
     if (range.isCollapsed) return _document2.default.create({ nodes: nodes });
@@ -61966,12 +62141,12 @@ var Node = {
     node = node.splitBlockAtRange(start, Infinity);
 
     var next = node.getNextText(startKey);
-    var end = startKey == endKey ? range.collapseToStartOf(next).moveForward(endOffset - startOffset) : range.collapseToEnd();
+    var end = startKey == endKey ? range.collapseToStartOf(next).move(endOffset - startOffset) : range.collapseToEnd();
     node = node.splitBlockAtRange(end, Infinity);
 
     // Get the start and end nodes.
-    var startNode = node.getNextSibling(node.getHighestChild(startKey).key);
-    var endNode = startKey == endKey ? node.getHighestChild(next.key) : node.getHighestChild(endKey);
+    var startNode = node.getNextSibling(node.getFurthestAncestor(startKey).key);
+    var endNode = startKey == endKey ? node.getFurthestAncestor(next.key) : node.getFurthestAncestor(endKey);
 
     nodes = node.getChildrenBetweenIncluding(startNode.key, endNode.key);
 
@@ -62029,13 +62204,13 @@ var Node = {
 
 
   /**
-   * Get the highest child ancestor of a node by `key`.
+   * Get the furthest ancestor of a node by `key`.
    *
    * @param {String} key
    * @return {Node|Null}
    */
 
-  getHighestChild: function getHighestChild(key) {
+  getFurthestAncestor: function getFurthestAncestor(key) {
     key = _normalize2.default.key(key);
     return this.nodes.find(function (node) {
       if (node.key == key) return true;
@@ -62046,13 +62221,13 @@ var Node = {
 
 
   /**
-   * Get the highest parent of a node by `key` which has an only child.
+   * Get the furthest ancestor of a node by `key` that has only one child.
    *
    * @param {String} key
    * @return {Node|Null}
    */
 
-  getHighestOnlyChildParent: function getHighestOnlyChildParent(key) {
+  getFurthestOnlyChildAncestor: function getFurthestOnlyChildAncestor(key) {
     var ancestors = this.getAncestors(key);
 
     if (!ancestors) {
@@ -62061,13 +62236,13 @@ var Node = {
     }
 
     return ancestors
-    // Skip this node
+    // Skip this node...
     .skipLast()
-    // Take parents until there are more than one child
+    // Take parents until there are more than one child...
     .reverse().takeUntil(function (p) {
       return p.nodes.size > 1;
     })
-    // Pick the highest
+    // And pick the highest.
     .last();
   },
 
@@ -62108,6 +62283,55 @@ var Node = {
 
 
   /**
+   * Return a set of all keys in the node.
+   *
+   * @return {Set<Node>}
+   */
+
+  getKeys: function getKeys() {
+    var keys = [];
+
+    this.forEachDescendant(function (desc) {
+      keys.push(desc.key);
+    });
+
+    return (0, _immutable.Set)(keys);
+  },
+
+
+  /**
+   * Get the last child text node.
+   *
+   * @return {Node|Null}
+   */
+
+  getLastText: function getLastText() {
+    var descendantFound = null;
+
+    var found = this.nodes.findLast(function (node) {
+      if (node.kind == 'text') return true;
+      descendantFound = node.getLastText();
+      return descendantFound;
+    });
+
+    return descendantFound || found;
+  },
+
+
+  /**
+   * Get all of the marks for all of the characters of every text node.
+   *
+   * @return {Set<Mark>}
+   */
+
+  getMarks: function getMarks() {
+    return this.getCharacters().reduce(function (marks, char) {
+      return marks.union(char.marks);
+    }, new _immutable.Set());
+  },
+
+
+  /**
    * Get a set of the marks in a `range`.
    *
    * @param {Selection} range
@@ -62120,12 +62344,11 @@ var Node = {
         startKey = _range.startKey,
         startOffset = _range.startOffset;
 
-    var marks = _mark2.default.createSet();
-
     // If the range is collapsed at the start of the node, check the previous.
+
     if (range.isCollapsed && startOffset == 0) {
       var previous = this.getPreviousText(startKey);
-      if (!previous || !previous.length) return marks;
+      if (!previous || !previous.length) return new _immutable.Set();
       var char = previous.characters.get(previous.length - 1);
       return char.marks;
     }
@@ -62230,7 +62453,7 @@ var Node = {
     this.assertDescendant(key);
 
     // Calculate the offset of the nodes before the highest child.
-    var child = this.getHighestChild(key);
+    var child = this.getFurthestAncestor(key);
     var offset = this.nodes.takeUntil(function (n) {
       return n == child;
     }).reduce(function (memo, n) {
@@ -62324,30 +62547,27 @@ var Node = {
 
 
   /**
-   * Get the path of ancestors of a descendant node by `key`.
+   * Get the block node before a descendant text node by `key`.
    *
-   * @param {String|Node} key
-   * @return {List<Node>|Null}
+   * @param {String} key
+   * @return {Node|Null}
    */
 
-  getAncestors: function getAncestors(key) {
-    key = _normalize2.default.key(key);
+  getPreviousBlock: function getPreviousBlock(key) {
+    var child = this.assertDescendant(key);
+    var first = void 0;
 
-    if (key == this.key) return (0, _immutable.List)();
-    if (this.hasChild(key)) return (0, _immutable.List)([this]);
-
-    var ancestors = void 0;
-    this.nodes.find(function (node) {
-      if (node.kind == 'text') return false;
-      ancestors = node.getAncestors(key);
-      return ancestors;
-    });
-
-    if (ancestors) {
-      return ancestors.unshift(this);
+    if (child.kind == 'block') {
+      first = child.getFirstText();
     } else {
-      return null;
+      var block = this.getClosestBlock(key);
+      first = block.getFirstText();
     }
+
+    var previous = this.getPreviousText(first.key);
+    if (!previous) return null;
+
+    return this.getClosestBlock(previous.key);
   },
 
 
@@ -62389,27 +62609,15 @@ var Node = {
 
 
   /**
-   * Get the block node before a descendant text node by `key`.
+   * Get the concatenated text `string` of all child nodes.
    *
-   * @param {String} key
-   * @return {Node|Null}
+   * @return {String}
    */
 
-  getPreviousBlock: function getPreviousBlock(key) {
-    var child = this.assertDescendant(key);
-    var first = void 0;
-
-    if (child.kind == 'block') {
-      first = child.getFirstText();
-    } else {
-      var block = this.getClosestBlock(key);
-      first = block.getFirstText();
-    }
-
-    var previous = this.getPreviousText(first.key);
-    if (!previous) return null;
-
-    return this.getClosestBlock(previous.key);
+  getText: function getText() {
+    return this.nodes.reduce(function (result, node) {
+      return result + node.text;
+    }, '');
   },
 
 
@@ -62442,8 +62650,7 @@ var Node = {
    */
 
   getTextDirection: function getTextDirection() {
-    var text = this.text;
-    var dir = (0, _direction2.default)(text);
+    var dir = (0, _direction2.default)(this.text);
     return dir == 'neutral' ? undefined : dir;
   },
 
@@ -62455,58 +62662,9 @@ var Node = {
    */
 
   getTexts: function getTexts() {
-    return (0, _immutable.List)(this._getTexts());
-  },
-
-
-  // This one is memoized for performance.
-  _getTexts: function _getTexts() {
     return this.nodes.reduce(function (texts, node) {
-      if (node.kind == 'text') {
-        texts.push(node);
-        return texts;
-      } else {
-        return texts.concat(node._getTexts());
-      }
-    }, []);
-  },
-
-
-  /**
-   * Get the first child text node.
-   *
-   * @return {Node|Null}
-   */
-
-  getFirstText: function getFirstText() {
-    var descendantFound = null;
-
-    var found = this.nodes.find(function (node) {
-      if (node.kind == 'text') return true;
-      descendantFound = node.getFirstText();
-      return descendantFound;
-    });
-
-    return descendantFound || found;
-  },
-
-
-  /**
-   * Get the last child text node.
-   *
-   * @return {Node|Null}
-   */
-
-  getLastText: function getLastText() {
-    var descendantFound = null;
-
-    var found = this.nodes.findLast(function (node) {
-      if (node.kind == 'text') return true;
-      descendantFound = node.getLastText();
-      return descendantFound;
-    });
-
-    return descendantFound || found;
+      return node.kind == 'text' ? texts.push(node) : texts.concat(node.getTexts());
+    }, new _immutable.List());
   },
 
 
@@ -62609,25 +62767,6 @@ var Node = {
 
 
   /**
-   * Check if the inline nodes are split at a `range`.
-   *
-   * @param {Selection} range
-   * @return {Boolean}
-   */
-
-  isInlineSplitAtRange: function isInlineSplitAtRange(range) {
-    range = range.normalize(this);
-    if (range.isExpanded) throw new Error();
-
-    var _range4 = range,
-        startKey = _range4.startKey;
-
-    var start = this.getFurthestInline(startKey) || this.getDescendant(startKey);
-    return range.isAtStartOf(start) || range.isAtEndOf(start);
-  },
-
-
-  /**
    * Join a children node `first` with another children node `second`.
    * `first` and `second` will be concatenated in that order.
    * `first` and `second` must be two Nodes or two Text.
@@ -62656,6 +62795,7 @@ var Node = {
       first = first.merge({ characters: characters });
     } else {
       var size = first.nodes.size;
+
       second.nodes.forEach(function (child, i) {
         first = first.insertNode(size + i, child);
       });
@@ -62686,6 +62826,7 @@ var Node = {
 
     var nodes = this.nodes;
 
+
     nodes.forEach(function (node, i) {
       var ret = iterator(node, i, _this5.nodes);
       if (ret != node) nodes = nodes.set(ret.key, ret);
@@ -62707,6 +62848,7 @@ var Node = {
     var _this6 = this;
 
     var nodes = this.nodes;
+
 
     nodes.forEach(function (node, i) {
       var ret = node;
@@ -62770,6 +62912,37 @@ var Node = {
   removeNode: function removeNode(index) {
     var nodes = this.nodes.splice(index, 1);
     return this.merge({ nodes: nodes });
+  },
+
+
+  /**
+   * Split the block nodes at a `range`, to optional `height`.
+   *
+   * @param {Selection} range
+   * @param {Number} height (optional)
+   * @return {Node}
+   */
+
+  splitBlockAtRange: function splitBlockAtRange(range) {
+    var height = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+    var startKey = range.startKey,
+        startOffset = range.startOffset;
+
+    var base = this;
+    var node = base.assertDescendant(startKey);
+    var parent = base.getClosestBlock(node.key);
+    var offset = startOffset;
+    var h = 0;
+
+    while (parent && parent.kind == 'block' && h < height) {
+      offset += parent.getOffset(node.key);
+      node = parent;
+      parent = base.getClosestBlock(parent.key);
+      h++;
+    }
+
+    var path = base.getPath(node.key);
+    return this.splitNode(path, offset);
   },
 
 
@@ -62872,37 +63045,6 @@ var Node = {
 
 
   /**
-   * Split the block nodes at a `range`, to optional `height`.
-   *
-   * @param {Selection} range
-   * @param {Number} height (optional)
-   * @return {Node}
-   */
-
-  splitBlockAtRange: function splitBlockAtRange(range) {
-    var height = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-    var startKey = range.startKey,
-        startOffset = range.startOffset;
-
-    var base = this;
-    var node = base.assertDescendant(startKey);
-    var parent = base.getClosestBlock(node.key);
-    var offset = startOffset;
-    var h = 0;
-
-    while (parent && parent.kind == 'block' && h < height) {
-      offset += parent.getOffset(node.key);
-      node = parent;
-      parent = base.getClosestBlock(parent.key);
-      h++;
-    }
-
-    var path = base.getPath(node.key);
-    return this.splitNode(path, offset);
-  },
-
-
-  /**
    * Set a new value for a child node by `key`.
    *
    * @param {Node} node
@@ -62938,6 +63080,172 @@ var Node = {
 
   validate: function validate(schema) {
     return schema.__validate(this);
+  },
+
+
+  /**
+   * True if the node has both descendants in that order, false otherwise. The
+   * order is depth-first, post-order.
+   *
+   * @param {String} first
+   * @param {String} second
+   * @return {Boolean}
+   */
+
+  areDescendantSorted: function areDescendantSorted(first, second) {
+    (0, _warn2.default)('The Node.areDescendantSorted(first, second) method is deprecated, please use `Node.areDescendantsSorted(first, second) instead.');
+    return this.areDescendantsSorted(first, second);
+  },
+
+
+  /**
+   * Concat children `nodes` on to the end of the node.
+   *
+   * @param {List<Node>} nodes
+   * @return {Node}
+   */
+
+  concatChildren: function concatChildren(nodes) {
+    (0, _warn2.default)('The `Node.concatChildren(nodes)` method is deprecated.');
+    nodes = this.nodes.concat(nodes);
+    return this.merge({ nodes: nodes });
+  },
+
+
+  /**
+   * Decorate all of the text nodes with a `decorator` function.
+   *
+   * @param {Function} decorator
+   * @return {Node}
+   */
+
+  decorateTexts: function decorateTexts(decorator) {
+    (0, _warn2.default)('The `Node.decorateTexts(decorator) method is deprecated.');
+    return this.mapDescendants(function (child) {
+      return child.kind == 'text' ? child.decorateCharacters(decorator) : child;
+    });
+  },
+
+
+  /**
+   * Recursively filter all descendant nodes with `iterator`, depth-first.
+   * It is different from `filterDescendants` in regard of the order of results.
+   *
+   * @param {Function} iterator
+   * @return {List<Node>}
+   */
+
+  filterDescendantsDeep: function filterDescendantsDeep(iterator) {
+    (0, _warn2.default)('The Node.filterDescendantsDeep(iterator) method is deprecated.');
+    return this.nodes.reduce(function (matches, child, i, nodes) {
+      if (child.kind != 'text') matches = matches.concat(child.filterDescendantsDeep(iterator));
+      if (iterator(child, i, nodes)) matches = matches.push(child);
+      return matches;
+    }, new _immutable.List());
+  },
+
+
+  /**
+   * Recursively find all descendant nodes by `iterator`. Depth first.
+   *
+   * @param {Function} iterator
+   * @return {Node|Null}
+   */
+
+  findDescendantDeep: function findDescendantDeep(iterator) {
+    (0, _warn2.default)('The Node.findDescendantDeep(iterator) method is deprecated.');
+    var found = void 0;
+
+    this.forEachDescendant(function (node) {
+      if (iterator(node)) {
+        found = node;
+        return false;
+      }
+    });
+
+    return found;
+  },
+
+
+  /**
+   * Get children between two child keys.
+   *
+   * @param {String} start
+   * @param {String} end
+   * @return {Node}
+   */
+
+  getChildrenBetween: function getChildrenBetween(start, end) {
+    (0, _warn2.default)('The `Node.getChildrenBetween(start, end)` method is deprecated.');
+    start = this.assertChild(start);
+    start = this.nodes.indexOf(start);
+    end = this.assertChild(end);
+    end = this.nodes.indexOf(end);
+    return this.nodes.slice(start + 1, end);
+  },
+
+
+  /**
+   * Get children between two child keys, including the two children.
+   *
+   * @param {String} start
+   * @param {String} end
+   * @return {Node}
+   */
+
+  getChildrenBetweenIncluding: function getChildrenBetweenIncluding(start, end) {
+    (0, _warn2.default)('The `Node.getChildrenBetweenIncluding(start, end)` method is deprecated.');
+    start = this.assertChild(start);
+    start = this.nodes.indexOf(start);
+    end = this.assertChild(end);
+    end = this.nodes.indexOf(end);
+    return this.nodes.slice(start, end + 1);
+  },
+
+
+  /**
+   * Get the highest child ancestor of a node by `key`.
+   *
+   * @param {String} key
+   * @return {Node|Null}
+   */
+
+  getHighestChild: function getHighestChild(key) {
+    (0, _warn2.default)('The `Node.getHighestChild(key) method is deprecated, please use `Node.getFurthestAncestor(key) instead.');
+    return this.getFurthestAncestor(key);
+  },
+
+
+  /**
+   * Get the highest parent of a node by `key` which has an only child.
+   *
+   * @param {String} key
+   * @return {Node|Null}
+   */
+
+  getHighestOnlyChildParent: function getHighestOnlyChildParent(key) {
+    (0, _warn2.default)('The `Node.getHighestOnlyChildParent(key)` method is deprecated, please use `Node.getFurthestOnlyChildAncestor` instead.');
+    return this.getFurthestOnlyChildAncestor(key);
+  },
+
+
+  /**
+   * Check if the inline nodes are split at a `range`.
+   *
+   * @param {Selection} range
+   * @return {Boolean}
+   */
+
+  isInlineSplitAtRange: function isInlineSplitAtRange(range) {
+    (0, _warn2.default)('The `Node.isInlineSplitAtRange(range)` method is deprecated.');
+    range = range.normalize(this);
+    if (range.isExpanded) throw new Error();
+
+    var _range4 = range,
+        startKey = _range4.startKey;
+
+    var start = this.getFurthestInline(startKey) || this.getDescendant(startKey);
+    return range.isAtStartOf(start) || range.isAtEndOf(start);
   }
 };
 
@@ -62945,7 +63253,7 @@ var Node = {
  * Memoize read methods.
  */
 
-(0, _memoize2.default)(Node, ['getText', 'getAncestors', 'getBlocks', 'getBlocksAtRange', 'getCharactersAtRange', 'getChild', 'getClosestBlock', 'getClosestInline', 'getComponent', 'getDecorators', 'getDepth', '_getDescendant', 'getDescendantAtPath', 'getDescendantDecorators', 'getFirstText', 'getFragmentAtRange', 'getFurthestBlock', 'getFurthestInline', 'getHighestChild', 'getHighestOnlyChildParent', 'getInlinesAtRange', 'getLastText', 'getMarksAtRange', 'getNextBlock', 'getNextSibling', 'getNextText', 'getNode', 'getOffset', 'getOffsetAtRange', 'getParent', 'getPreviousBlock', 'getPreviousSibling', 'getPreviousText', 'getTextAtOffset', 'getTextDirection', '_getTexts', 'getTextsAtRange', 'hasVoidParent', 'isInlineSplitAtRange', 'validate']);
+(0, _memoize2.default)(Node, ['areDescendantsSorted', 'getAncestors', 'getBlocks', 'getBlocksAtRange', 'getCharacters', 'getCharactersAtRange', 'getChild', 'getChildrenBetween', 'getChildrenBetweenIncluding', 'getClosestBlock', 'getClosestInline', 'getClosestVoid', 'getCommonAncestor', 'getComponent', 'getDecorators', 'getDepth', 'getDescendant', 'getDescendant', 'getDescendantAtPath', 'getDescendantDecorators', 'getFirstText', 'getFragmentAtRange', 'getFurthestBlock', 'getFurthestInline', 'getFurthestAncestor', 'getFurthestOnlyChildAncestor', 'getInlines', 'getInlinesAtRange', 'getKeys', 'getLastText', 'getMarks', 'getMarksAtRange', 'getNextBlock', 'getNextSibling', 'getNextText', 'getNode', 'getOffset', 'getOffsetAtRange', 'getParent', 'getPath', 'getPreviousBlock', 'getPreviousSibling', 'getPreviousText', 'getText', 'getTextAtOffset', 'getTextDirection', 'getTexts', 'getTextsAtRange', 'hasChild', 'hasDescendant', 'hasNode', 'hasVoidParent', 'isInlineSplitAtRange', 'validate']);
 
 /**
  * Export.
@@ -62954,7 +63262,7 @@ var Node = {
  */
 
 exports.default = Node;
-},{"../utils/generate-key":386,"../utils/is-in-range":388,"../utils/memoize":390,"../utils/normalize":393,"./block":355,"./character":356,"./document":358,"./mark":360,"direction":50,"immutable":162}],362:[function(require,module,exports){
+},{"../utils/generate-key":389,"../utils/is-in-range":391,"../utils/memoize":393,"../utils/normalize":396,"../utils/warn":400,"./document":361,"direction":50,"immutable":162}],365:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -63072,7 +63380,7 @@ var Range = function (_ref) {
  */
 
 exports.default = Range;
-},{"./character":356,"./mark":360,"immutable":162}],363:[function(require,module,exports){
+},{"./character":359,"./mark":363,"immutable":162}],366:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -63401,7 +63709,7 @@ function normalizeMarkComponent(render) {
  */
 
 exports.default = Schema;
-},{"../utils/is-react-component":389,"immutable":162,"react":333,"type-of":403}],364:[function(require,module,exports){
+},{"../utils/is-react-component":392,"immutable":162,"react":335,"type-of":406}],367:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -63469,8 +63777,9 @@ var Selection = function (_ref) {
      */
 
     value: function hasAnchorAtStartOf(node) {
+      // PERF: Do a check for a `0` offset first since it's quickest.
       if (this.anchorOffset != 0) return false;
-      var first = node.kind == 'text' ? node : node.getFirstText();
+      var first = getFirst(node);
       return this.anchorKey == first.key;
     }
 
@@ -63484,7 +63793,7 @@ var Selection = function (_ref) {
   }, {
     key: 'hasAnchorAtEndOf',
     value: function hasAnchorAtEndOf(node) {
-      var last = node.kind == 'text' ? node : node.getLastText();
+      var last = getLast(node);
       return this.anchorKey == last.key && this.anchorOffset == last.length;
     }
 
@@ -63514,11 +63823,7 @@ var Selection = function (_ref) {
   }, {
     key: 'hasAnchorIn',
     value: function hasAnchorIn(node) {
-      if (node.kind == 'text') {
-        return node.key === this.anchorKey;
-      } else {
-        return node.hasDescendant(this.anchorKey);
-      }
+      return node.kind == 'text' ? node.key == this.anchorKey : node.hasDescendant(this.anchorKey);
     }
 
     /**
@@ -63531,7 +63836,7 @@ var Selection = function (_ref) {
   }, {
     key: 'hasFocusAtEndOf',
     value: function hasFocusAtEndOf(node) {
-      var last = node.kind == 'text' ? node : node.getLastText();
+      var last = getLast(node);
       return this.focusKey == last.key && this.focusOffset == last.length;
     }
 
@@ -63546,7 +63851,7 @@ var Selection = function (_ref) {
     key: 'hasFocusAtStartOf',
     value: function hasFocusAtStartOf(node) {
       if (this.focusOffset != 0) return false;
-      var first = node.kind == 'text' ? node : node.getFirstText();
+      var first = getFirst(node);
       return this.focusKey == first.key;
     }
 
@@ -63576,11 +63881,7 @@ var Selection = function (_ref) {
   }, {
     key: 'hasFocusIn',
     value: function hasFocusIn(node) {
-      if (node.kind == 'text') {
-        return node.key === this.focusKey;
-      } else {
-        return node.hasDescendant(this.focusKey);
-      }
+      return node.kind == 'text' ? node.key == this.focusKey : node.hasDescendant(this.focusKey);
     }
 
     /**
@@ -63593,14 +63894,7 @@ var Selection = function (_ref) {
   }, {
     key: 'isAtStartOf',
     value: function isAtStartOf(node) {
-      var isExpanded = this.isExpanded,
-          startKey = this.startKey,
-          startOffset = this.startOffset;
-
-      if (isExpanded) return false;
-      if (startOffset != 0) return false;
-      var first = node.kind == 'text' ? node : node.getFirstText();
-      return startKey == first.key;
+      return this.isCollapsed && this.hasAnchorAtStartOf(node);
     }
 
     /**
@@ -63613,13 +63907,308 @@ var Selection = function (_ref) {
   }, {
     key: 'isAtEndOf',
     value: function isAtEndOf(node) {
-      var endKey = this.endKey,
-          endOffset = this.endOffset,
-          isExpanded = this.isExpanded;
+      return this.isCollapsed && this.hasAnchorAtEndOf(node);
+    }
 
-      if (isExpanded) return false;
-      var last = node.kind == 'text' ? node : node.getLastText();
-      return endKey == last.key && endOffset == last.length;
+    /**
+     * Focus the selection.
+     *
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'focus',
+    value: function focus() {
+      return this.merge({
+        isFocused: true
+      });
+    }
+
+    /**
+     * Blur the selection.
+     *
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'blur',
+    value: function blur() {
+      return this.merge({
+        isFocused: false
+      });
+    }
+
+    /**
+     * Unset the selection.
+     *
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'deselect',
+    value: function deselect() {
+      return this.merge({
+        anchorKey: null,
+        anchorOffset: 0,
+        focusKey: null,
+        focusOffset: 0,
+        isFocused: false,
+        isBackward: false
+      });
+    }
+
+    /**
+     * Flip the selection.
+     *
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'flip',
+    value: function flip() {
+      return this.merge({
+        anchorKey: this.focusKey,
+        anchorOffset: this.focusOffset,
+        focusKey: this.anchorKey,
+        focusOffset: this.anchorOffset,
+        isBackward: this.isBackward == null ? null : !this.isBackward
+      });
+    }
+
+    /**
+     * Move the anchor offset `n` characters.
+     *
+     * @param {Number} n (optional)
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveAnchor',
+    value: function moveAnchor() {
+      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var anchorKey = this.anchorKey,
+          focusKey = this.focusKey,
+          focusOffset = this.focusOffset,
+          isBackward = this.isBackward;
+
+      var anchorOffset = this.anchorOffset + n;
+      return this.merge({
+        anchorOffset: anchorOffset,
+        isBackward: anchorKey == focusKey ? anchorOffset > focusOffset : isBackward
+      });
+    }
+
+    /**
+     * Move the anchor offset `n` characters.
+     *
+     * @param {Number} n (optional)
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveFocus',
+    value: function moveFocus() {
+      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var anchorKey = this.anchorKey,
+          anchorOffset = this.anchorOffset,
+          focusKey = this.focusKey,
+          isBackward = this.isBackward;
+
+      var focusOffset = this.focusOffset + n;
+      return this.merge({
+        focusOffset: focusOffset,
+        isBackward: focusKey == anchorKey ? anchorOffset > focusOffset : isBackward
+      });
+    }
+
+    /**
+     * Move the selection's anchor point to a `key` and `offset`.
+     *
+     * @param {String} key
+     * @param {Number} offset
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveAnchorTo',
+    value: function moveAnchorTo(key, offset) {
+      var anchorKey = this.anchorKey,
+          focusKey = this.focusKey,
+          focusOffset = this.focusOffset,
+          isBackward = this.isBackward;
+
+      return this.merge({
+        anchorKey: key,
+        anchorOffset: offset,
+        isBackward: key == focusKey ? offset > focusOffset : key == anchorKey ? isBackward : null
+      });
+    }
+
+    /**
+     * Move the selection's focus point to a `key` and `offset`.
+     *
+     * @param {String} key
+     * @param {Number} offset
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveFocusTo',
+    value: function moveFocusTo(key, offset) {
+      var focusKey = this.focusKey,
+          anchorKey = this.anchorKey,
+          anchorOffset = this.anchorOffset,
+          isBackward = this.isBackward;
+
+      return this.merge({
+        focusKey: key,
+        focusOffset: offset,
+        isBackward: key == anchorKey ? anchorOffset > offset : key == focusKey ? isBackward : null
+      });
+    }
+
+    /**
+     * Move the selection to `anchorOffset`.
+     *
+     * @param {Number} anchorOffset
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveAnchorOffsetTo',
+    value: function moveAnchorOffsetTo(anchorOffset) {
+      return this.merge({
+        anchorOffset: anchorOffset,
+        isBackward: this.anchorKey == this.focusKey ? anchorOffset > this.focusOffset : this.isBackward
+      });
+    }
+
+    /**
+     * Move the selection to `focusOffset`.
+     *
+     * @param {Number} focusOffset
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveFocusOffsetTo',
+    value: function moveFocusOffsetTo(focusOffset) {
+      return this.merge({
+        focusOffset: focusOffset,
+        isBackward: this.anchorKey == this.focusKey ? this.anchorOffset > focusOffset : this.isBackward
+      });
+    }
+
+    /**
+     * Move the selection to `anchorOffset` and `focusOffset`.
+     *
+     * @param {Number} anchorOffset
+     * @param {Number} focusOffset (optional)
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveOffsetsTo',
+    value: function moveOffsetsTo(anchorOffset) {
+      var focusOffset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : anchorOffset;
+
+      return this.moveAnchorOffsetTo(anchorOffset).moveFocusOffsetTo(focusOffset);
+    }
+
+    /**
+     * Move the focus point to the anchor point.
+     *
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveToAnchor',
+    value: function moveToAnchor() {
+      return this.moveFocusTo(this.anchorKey, this.anchorOffset);
+    }
+
+    /**
+     * Move the anchor point to the focus point.
+     *
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveToFocus',
+    value: function moveToFocus() {
+      return this.moveAnchorTo(this.focusKey, this.focusOffset);
+    }
+
+    /**
+     * Move the selection's anchor point to the start of a `node`.
+     *
+     * @param {Node} node
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveAnchorToStartOf',
+    value: function moveAnchorToStartOf(node) {
+      node = getFirst(node);
+      return this.moveAnchorTo(node.key, 0);
+    }
+
+    /**
+     * Move the selection's anchor point to the end of a `node`.
+     *
+     * @param {Node} node
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveAnchorToEndOf',
+    value: function moveAnchorToEndOf(node) {
+      node = getLast(node);
+      return this.moveAnchorTo(node.key, node.length);
+    }
+
+    /**
+     * Move the selection's focus point to the start of a `node`.
+     *
+     * @param {Node} node
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveFocusToStartOf',
+    value: function moveFocusToStartOf(node) {
+      node = getFirst(node);
+      return this.moveFocusTo(node.key, 0);
+    }
+
+    /**
+     * Move the selection's focus point to the end of a `node`.
+     *
+     * @param {Node} node
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveFocusToEndOf',
+    value: function moveFocusToEndOf(node) {
+      node = getLast(node);
+      return this.moveFocusTo(node.key, node.length);
+    }
+
+    /**
+     * Move to the entire range of `start` and `end` nodes.
+     *
+     * @param {Node} start
+     * @param {Node} end (optional)
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveToRangeOf',
+    value: function moveToRangeOf(start) {
+      var end = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : start;
+
+      return this.moveAnchorToStartOf(start).moveFocusToEndOf(end);
     }
 
     /**
@@ -63680,7 +64269,7 @@ var Selection = function (_ref) {
         if (anchorNode.key === focusNode.key) {
           isBackward = anchorOffset > focusOffset;
         } else {
-          isBackward = !node.areDescendantSorted(anchorNode.key, focusNode.key);
+          isBackward = !node.areDescendantsSorted(anchorNode.key, focusNode.key);
         }
       }
 
@@ -63695,127 +64284,16 @@ var Selection = function (_ref) {
     }
 
     /**
-     * Focus the selection.
+     * Unset the selection.
      *
      * @return {Selection}
      */
 
   }, {
-    key: 'focus',
-    value: function focus() {
-      return this.merge({
-        isFocused: true
-      });
-    }
-
-    /**
-     * Blur the selection.
-     *
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'blur',
-    value: function blur() {
-      return this.merge({
-        isFocused: false
-      });
-    }
-
-    /**
-     * Move the focus point to the anchor point.
-     *
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'collapseToAnchor',
-    value: function collapseToAnchor() {
-      return this.merge({
-        focusKey: this.anchorKey,
-        focusOffset: this.anchorOffset,
-        isBackward: false
-      });
-    }
-
-    /**
-     * Move the anchor point to the focus point.
-     *
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'collapseToFocus',
-    value: function collapseToFocus() {
-      return this.merge({
-        anchorKey: this.focusKey,
-        anchorOffset: this.focusOffset,
-        isBackward: false
-      });
-    }
-
-    /**
-     * Move to the start of a `node`.
-     *
-     * @param {Node} node
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'collapseToStartOf',
-    value: function collapseToStartOf(node) {
-      node = node.kind == 'text' ? node : node.getFirstText();
-      return this.merge({
-        anchorKey: node.key,
-        anchorOffset: 0,
-        focusKey: node.key,
-        focusOffset: 0,
-        isBackward: false
-      });
-    }
-
-    /**
-     * Move to the end of a `node`.
-     *
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'collapseToEndOf',
-    value: function collapseToEndOf(node) {
-      node = node.kind == 'text' ? node : node.getLastText();
-      return this.merge({
-        anchorKey: node.key,
-        anchorOffset: node.length,
-        focusKey: node.key,
-        focusOffset: node.length,
-        isBackward: false
-      });
-    }
-
-    /**
-     * Move to the entire range of `start` and `end` nodes.
-     *
-     * @param {Node} start
-     * @param {Node} end (optional)
-     * @param {Document} document
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'moveToRangeOf',
-    value: function moveToRangeOf(start) {
-      var end = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : start;
-
-      start = start.kind == 'text' ? start : start.getFirstText();
-      end = end.kind == 'text' ? end : end.getLastText();
-      return this.merge({
-        anchorKey: start.key,
-        anchorOffset: 0,
-        focusKey: end.key,
-        focusOffset: end.length,
-        isBackward: null
-      });
+    key: 'unset',
+    value: function unset() {
+      (0, _warn2.default)('The `Selection.unset` method is deprecated, please switch to using `Selection.deselect` instead.');
+      return this.deselect();
     }
 
     /**
@@ -63830,10 +64308,8 @@ var Selection = function (_ref) {
     value: function moveForward() {
       var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
-      return this.merge({
-        anchorOffset: this.anchorOffset + n,
-        focusOffset: this.focusOffset + n
-      });
+      (0, _warn2.default)('The `Selection.moveForward(n)` method is deprecated, please switch to using `Selection.move(n)` instead.');
+      return this.move(n);
     }
 
     /**
@@ -63848,34 +64324,72 @@ var Selection = function (_ref) {
     value: function moveBackward() {
       var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
-      return this.merge({
-        anchorOffset: this.anchorOffset - n,
-        focusOffset: this.focusOffset - n
-      });
+      (0, _warn2.default)('The `Selection.moveBackward(n)` method is deprecated, please switch to using `Selection.move(-n)` (with a negative number) instead.');
+      return this.move(0 - n);
     }
 
     /**
-     * Move the selection to `anchor` and `focus` offsets.
+     * Move the anchor offset `n` characters.
      *
-     * @param {Number} anchor
-     * @param {Number} focus (optional)
+     * @param {Number} n (optional)
      * @return {Selection}
      */
 
   }, {
-    key: 'moveToOffsets',
-    value: function moveToOffsets(anchor) {
-      var focus = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : anchor;
+    key: 'moveAnchorOffset',
+    value: function moveAnchorOffset() {
+      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
-      var props = {};
-      props.anchorOffset = anchor;
-      props.focusOffset = focus;
+      (0, _warn2.default)('The `Selection.moveAnchorOffset(n)` method is deprecated, please switch to using `Selection.moveAnchor(n)` instead.');
+      return this.moveAnchor(n);
+    }
 
-      if (this.anchorKey == this.focusKey) {
-        props.isBackward = anchor > focus;
-      }
+    /**
+     * Move the focus offset `n` characters.
+     *
+     * @param {Number} n (optional)
+     * @return {Selection}
+     */
 
-      return this.merge(props);
+  }, {
+    key: 'moveFocusOffset',
+    value: function moveFocusOffset() {
+      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+      (0, _warn2.default)('The `Selection.moveFocusOffset(n)` method is deprecated, please switch to using `Selection.moveFocus(n)` instead.');
+      return this.moveFocus(n);
+    }
+
+    /**
+     * Move the start offset `n` characters.
+     *
+     * @param {Number} n (optional)
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveStartOffset',
+    value: function moveStartOffset() {
+      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+      (0, _warn2.default)('The `Selection.moveStartOffset(n)` method is deprecated, please switch to using `Selection.moveStart(n)` instead.');
+      return this.moveStart(n);
+    }
+
+    /**
+     * Move the focus offset `n` characters.
+     *
+     * @param {Number} n (optional)
+     * @return {Selection}
+     */
+
+  }, {
+    key: 'moveEndOffset',
+    value: function moveEndOffset() {
+      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+      (0, _warn2.default)('The `Selection.moveEndOffset(n)` method is deprecated, please switch to using `Selection.moveEnd(n)` instead.');
+      return this.moveEnd(n);
     }
 
     /**
@@ -63890,10 +64404,8 @@ var Selection = function (_ref) {
     value: function extendForward() {
       var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
-      return this.merge({
-        focusOffset: this.focusOffset + n,
-        isBackward: null
-      });
+      (0, _warn2.default)('The `Selection.extendForward(n)` method is deprecated, please switch to using `Selection.extend(n)` instead.');
+      return this.extend(n);
     }
 
     /**
@@ -63908,179 +64420,25 @@ var Selection = function (_ref) {
     value: function extendBackward() {
       var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
-      return this.merge({
-        focusOffset: this.focusOffset - n,
-        isBackward: null
-      });
+      (0, _warn2.default)('The `Selection.extendBackward(n)` method is deprecated, please switch to using `Selection.extend(-n)` (with a negative number) instead.');
+      return this.extend(0 - n);
     }
 
     /**
-     * Move the anchor offset `n` characters.
+     * Move the selection to `anchorOffset` and `focusOffset`.
      *
-     * @param {Number} n (optional)
+     * @param {Number} anchorOffset
+     * @param {Number} focusOffset (optional)
      * @return {Selection}
      */
 
   }, {
-    key: 'moveAnchorOffset',
-    value: function moveAnchorOffset() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      var anchorKey = this.anchorKey,
-          focusKey = this.focusKey,
-          focusOffset = this.focusOffset;
+    key: 'moveToOffsets',
+    value: function moveToOffsets(anchorOffset) {
+      var focusOffset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : anchorOffset;
 
-      var anchorOffset = this.anchorOffset + n;
-      return this.merge({
-        anchorOffset: anchorOffset,
-        isBackward: anchorKey == focusKey ? anchorOffset > focusOffset : this.isBackward
-      });
-    }
-
-    /**
-     * Move the anchor offset `n` characters.
-     *
-     * @param {Number} n (optional)
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'moveFocusOffset',
-    value: function moveFocusOffset() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      var focusKey = this.focusKey,
-          anchorKey = this.anchorKey,
-          anchorOffset = this.anchorOffset;
-
-      var focusOffset = this.focusOffset + n;
-      return this.merge({
-        focusOffset: focusOffset,
-        isBackward: focusKey == anchorKey ? anchorOffset > focusOffset : this.isBackward
-      });
-    }
-
-    /**
-     * Move the start key, while preserving the direction
-     *
-     * @param {String} key
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'moveStartTo',
-    value: function moveStartTo(key) {
-      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-      if (this.isBackward) {
-        return this.merge({
-          focusKey: key,
-          focusOffset: offset,
-          isBackward: null
-        });
-      } else {
-        return this.merge({
-          anchorKey: key,
-          anchorOffset: offset,
-          isBackward: null
-        });
-      }
-    }
-
-    /**
-     * Move the end key, while preserving the direction
-     *
-     * @param {String} key
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'moveEndTo',
-    value: function moveEndTo(key) {
-      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-      if (this.isBackward) {
-        return this.merge({
-          anchorKey: key,
-          anchorOffset: offset,
-          isBackward: null
-        });
-      } else {
-        return this.merge({
-          focusKey: key,
-          focusOffset: offset,
-          isBackward: null
-        });
-      }
-    }
-
-    /**
-     * Extend the focus point to the start of a `node`.
-     *
-     * @param {Node} node
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'extendToStartOf',
-    value: function extendToStartOf(node) {
-      return this.merge({
-        focusKey: node.key,
-        focusOffset: 0,
-        isBackward: null
-      });
-    }
-
-    /**
-     * Extend the focus point to the end of a `node`.
-     *
-     * @param {Node} node
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'extendToEndOf',
-    value: function extendToEndOf(node) {
-      return this.merge({
-        focusKey: node.key,
-        focusOffset: node.length,
-        isBackward: null
-      });
-    }
-
-    /**
-     * Unset the selection
-     *
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'unset',
-    value: function unset() {
-      return this.merge({
-        anchorKey: null,
-        anchorOffset: 0,
-        focusKey: null,
-        focusOffset: 0,
-        isFocused: false,
-        isBackward: false
-      });
-    }
-
-    /**
-     * Flip the selection.
-     *
-     * @return {Selection}
-     */
-
-  }, {
-    key: 'flip',
-    value: function flip() {
-      return this.merge({
-        anchorKey: this.focusKey,
-        anchorOffset: this.focusOffset,
-        focusKey: this.anchorKey,
-        focusOffset: this.anchorOffset,
-        isBackward: this.isBackward == null ? null : !this.isBackward
-      });
+      (0, _warn2.default)('The `Selection.moveToOffsets` method is deprecated, please switch to using `Selection.moveOffsetsTo` instead.');
+      return this.moveOffsetsTo(anchorOffset, focusOffset);
     }
   }, {
     key: 'kind',
@@ -64097,7 +64455,7 @@ var Selection = function (_ref) {
     }
 
     /**
-     * Get whether the selection is blurred.
+     * Check whether the selection is blurred.
      *
      * @return {Boolean}
      */
@@ -64109,7 +64467,7 @@ var Selection = function (_ref) {
     }
 
     /**
-     * Get whether the selection is collapsed.
+     * Check whether the selection is collapsed.
      *
      * @return {Boolean}
      */
@@ -64121,7 +64479,7 @@ var Selection = function (_ref) {
     }
 
     /**
-     * Get whether the selection is expanded.
+     * Check whether the selection is expanded.
      *
      * @return {Boolean}
      */
@@ -64133,7 +64491,7 @@ var Selection = function (_ref) {
     }
 
     /**
-     * Get whether the selection is forward.
+     * Check whether the selection is forward.
      *
      * @return {Boolean}
      */
@@ -64179,16 +64537,37 @@ var Selection = function (_ref) {
     get: function get() {
       return this.isBackward ? this.focusKey : this.anchorKey;
     }
+
+    /**
+     * Get the start offset.
+     *
+     * @return {String}
+     */
+
   }, {
     key: 'startOffset',
     get: function get() {
       return this.isBackward ? this.focusOffset : this.anchorOffset;
     }
+
+    /**
+     * Get the end key.
+     *
+     * @return {String}
+     */
+
   }, {
     key: 'endKey',
     get: function get() {
       return this.isBackward ? this.anchorKey : this.focusKey;
     }
+
+    /**
+     * Get the end offset.
+     *
+     * @return {String}
+     */
+
   }, {
     key: 'endOffset',
     get: function get() {
@@ -64217,35 +64596,90 @@ var Selection = function (_ref) {
 }(new _immutable.Record(DEFAULTS));
 
 /**
- * Add start, end and edge convenience methods.
+ * Mix in some "move" convenience methods.
  */
 
-[['has', 'AtStartOf', true], ['has', 'AtEndOf', true], ['has', 'Between', true], ['has', 'In', true], ['collapseTo', ''], ['move', 'Offset']].forEach(function (opts) {
-  var _opts = _slicedToArray(opts, 3),
-      p = _opts[0],
-      s = _opts[1],
-      hasEdge = _opts[2];
+var MOVE_METHODS = [['move', ''], ['move', 'To'], ['move', 'ToStartOf'], ['move', 'ToEndOf']];
+
+MOVE_METHODS.forEach(function (_ref2) {
+  var _ref3 = _slicedToArray(_ref2, 2),
+      p = _ref3[0],
+      s = _ref3[1];
+
+  Selection.prototype['' + p + s] = function () {
+    var _ref4;
+
+    return (_ref4 = this[p + 'Anchor' + s].apply(this, arguments))[p + 'Focus' + s].apply(_ref4, arguments);
+  };
+});
+
+/**
+ * Mix in the "start", "end" and "edge" convenience methods.
+ */
+
+var EDGE_METHODS = [['has', 'AtStartOf', true], ['has', 'AtEndOf', true], ['has', 'Between', true], ['has', 'In', true], ['collapseTo', ''], ['move', ''], ['moveTo', ''], ['move', 'To'], ['move', 'OffsetTo']];
+
+EDGE_METHODS.forEach(function (_ref5) {
+  var _ref6 = _slicedToArray(_ref5, 3),
+      p = _ref6[0],
+      s = _ref6[1],
+      hasEdge = _ref6[2];
 
   var anchor = p + 'Anchor' + s;
-  var edge = p + 'Edge' + s;
-  var end = p + 'End' + s;
   var focus = p + 'Focus' + s;
-  var start = p + 'Start' + s;
 
-  Selection.prototype[start] = function () {
+  Selection.prototype[p + 'Start' + s] = function () {
     return this.isBackward ? this[focus].apply(this, arguments) : this[anchor].apply(this, arguments);
   };
 
-  Selection.prototype[end] = function () {
+  Selection.prototype[p + 'End' + s] = function () {
     return this.isBackward ? this[anchor].apply(this, arguments) : this[focus].apply(this, arguments);
   };
 
   if (hasEdge) {
-    Selection.prototype[edge] = function () {
+    Selection.prototype[p + 'Edge' + s] = function () {
       return this[anchor].apply(this, arguments) || this[focus].apply(this, arguments);
     };
   }
 });
+
+/**
+ * Mix in some aliases for convenience / parallelism with the browser APIs.
+ */
+
+var ALIAS_METHODS = [['collapseTo', 'moveTo'], ['collapseToAnchor', 'moveToAnchor'], ['collapseToFocus', 'moveToFocus'], ['collapseToStart', 'moveToStart'], ['collapseToEnd', 'moveToEnd'], ['collapseToStartOf', 'moveToStartOf'], ['collapseToEndOf', 'moveToEndOf'], ['extend', 'moveFocus'], ['extendTo', 'moveFocusTo'], ['extendToStartOf', 'moveFocusToStartOf'], ['extendToEndOf', 'moveFocusToEndOf']];
+
+ALIAS_METHODS.forEach(function (_ref7) {
+  var _ref8 = _slicedToArray(_ref7, 2),
+      alias = _ref8[0],
+      method = _ref8[1];
+
+  Selection.prototype[alias] = function () {
+    return this[method].apply(this, arguments);
+  };
+});
+
+/**
+ * Get the first text of a `node`.
+ *
+ * @param {Node} node
+ * @return {Text}
+ */
+
+function getFirst(node) {
+  return node.kind == 'text' ? node : node.getFirstText();
+}
+
+/**
+ * Get the last text of a `node`.
+ *
+ * @param {Node} node
+ * @return {Text}
+ */
+
+function getLast(node) {
+  return node.kind == 'text' ? node : node.getLastText();
+}
 
 /**
  * Export.
@@ -64254,7 +64688,7 @@ var Selection = function (_ref) {
  */
 
 exports.default = Selection;
-},{"../utils/warn":397,"immutable":162}],365:[function(require,module,exports){
+},{"../utils/warn":400,"immutable":162}],368:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -64307,7 +64741,7 @@ var debug = (0, _debug2.default)('slate:stack');
  * @type {Array}
  */
 
-var EVENT_METHODS = ['onBeforeInput', 'onBlur', 'onCopy', 'onCut', 'onDrop', 'onKeyDown', 'onPaste', 'onSelect'];
+var EVENT_HANDLER_METHODS = ['onBeforeInput', 'onBlur', 'onCopy', 'onCut', 'onDrop', 'onKeyDown', 'onPaste', 'onSelect'];
 
 /**
  * Methods that accumulate an updated state.
@@ -64315,15 +64749,7 @@ var EVENT_METHODS = ['onBeforeInput', 'onBlur', 'onCopy', 'onCut', 'onDrop', 'on
  * @type {Array}
  */
 
-var ACCUMULATOR_METHODS = ['onBeforeChange', 'onChange'];
-
-/**
- * All the runnable methods.
- *
- * @type {Array}
- */
-
-var RUNNABLE_METHODS = [].concat(EVENT_METHODS).concat(ACCUMULATOR_METHODS);
+var STATE_ACCUMULATOR_METHODS = ['onBeforeChange', 'onChange'];
 
 /**
  * Default properties.
@@ -64346,55 +64772,32 @@ var Stack = function (_ref) {
   _inherits(Stack, _ref);
 
   function Stack() {
+    var _ref2;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Stack);
 
-    return _possibleConstructorReturn(this, (Stack.__proto__ || Object.getPrototypeOf(Stack)).apply(this, arguments));
-  }
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-  _createClass(Stack, [{
-    key: 'run',
-
-
-    /**
-     * Run a `method` in the stack with `state`.
-     *
-     * @param {String} method
-     * @param {State} state
-     * @param {Editor} editor
-     * @param {Mixed} ...args
-     * @return {State}
-     */
-
-    value: function run(method, state, editor) {
-      debug(method);
-
-      if (method == 'onChange') {
-        state = this.onBeforeChange(state, editor);
-      }
-
-      for (var _len = arguments.length, args = Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
-        args[_key - 3] = arguments[_key];
-      }
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref2 = Stack.__proto__ || Object.getPrototypeOf(Stack)).call.apply(_ref2, [this].concat(args))), _this), _this.render = function (state, editor, props) {
+      debug('render');
+      var plugins = _this.plugins.slice().reverse();
+      var children = void 0;
 
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = this.plugins[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = plugins[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var plugin = _step.value;
 
-          if (!plugin[method]) continue;
-          var next = plugin[method].apply(plugin, args.concat([state, editor]));
-
-          if (next == null) {
-            continue;
-          } else if (next instanceof _state2.default) {
-            state = next;
-            if (!ACCUMULATOR_METHODS.includes(method)) break;
-          } else {
-            throw new Error('A plugin returned an unexpected state value: ' + next);
-          }
+          if (!plugin.render) continue;
+          children = plugin.render(props, state, editor);
+          props.children = children;
         }
       } catch (err) {
         _didIteratorError = true;
@@ -64411,9 +64814,44 @@ var Stack = function (_ref) {
         }
       }
 
-      return state;
-    }
-  }, {
+      return children;
+    }, _this.renderPortal = function (state, editor) {
+      debug('renderPortal');
+      var portals = [];
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = _this.plugins[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var plugin = _step2.value;
+
+          if (!plugin.renderPortal) continue;
+          var portal = plugin.renderPortal(state, editor);
+          if (portal == null) continue;
+          portals.push(portal);
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      return portals;
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Stack, [{
     key: 'kind',
 
 
@@ -64426,6 +64864,26 @@ var Stack = function (_ref) {
     get: function get() {
       return 'stack';
     }
+
+    /**
+     * Invoke `render` on all of the plugins in reverse, building up a tree of
+     * higher-order components.
+     *
+     * @param {State} state
+     * @param {Editor} editor
+     * @param {Object} children
+     * @param {Object} props
+     * @return {Component}
+     */
+
+    /**
+     * Invoke `renderPortal` on all of the plugins, building a list of portals.
+     *
+     * @param {State} state
+     * @param {Editor} editor
+     * @return {Array}
+     */
+
   }], [{
     key: 'create',
 
@@ -64450,77 +64908,203 @@ var Stack = function (_ref) {
 }(new _immutable.Record(DEFAULTS));
 
 /**
- * Mix in the runnable methods.
+ * Mix in the event handler methods.
+ *
+ * @param {State} state
+ * @param {Editor} editor
+ * @param {Mixed} ...args
+ * @return {State|Null}
  */
 
-var _iteratorNormalCompletion2 = true;
-var _didIteratorError2 = false;
-var _iteratorError2 = undefined;
+var _iteratorNormalCompletion3 = true;
+var _didIteratorError3 = false;
+var _iteratorError3 = undefined;
 
 try {
   var _loop = function _loop() {
-    var method = _step2.value;
+    var method = _step3.value;
 
-    Stack.prototype[method] = function () {
-      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
+    Stack.prototype[method] = function (state, editor) {
+      debug(method);
+
+      if (method == 'onChange') {
+        state = this.onBeforeChange(state, editor);
       }
 
-      return this.run.apply(this, [method].concat(args));
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
+      }
+
+      var _iteratorNormalCompletion6 = true;
+      var _didIteratorError6 = false;
+      var _iteratorError6 = undefined;
+
+      try {
+        for (var _iterator6 = this.plugins[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+          var plugin = _step6.value;
+
+          if (!plugin[method]) continue;
+          var next = plugin[method].apply(plugin, args.concat([state, editor]));
+          if (next == null) continue;
+          assertState(next);
+          return next;
+        }
+      } catch (err) {
+        _didIteratorError6 = true;
+        _iteratorError6 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion6 && _iterator6.return) {
+            _iterator6.return();
+          }
+        } finally {
+          if (_didIteratorError6) {
+            throw _iteratorError6;
+          }
+        }
+      }
+
+      return state;
     };
   };
 
-  for (var _iterator2 = RUNNABLE_METHODS[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+  for (var _iterator3 = EVENT_HANDLER_METHODS[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
     _loop();
   }
 
   /**
-   * Resolve a schema from a set of `plugins`.
+   * Mix in the state accumulator methods.
    *
-   * @param {Array} plugins
-   * @return {Schema}
+   * @param {State} state
+   * @param {Editor} editor
+   * @param {Mixed} ...args
+   * @return {State|Null}
    */
 } catch (err) {
-  _didIteratorError2 = true;
-  _iteratorError2 = err;
+  _didIteratorError3 = true;
+  _iteratorError3 = err;
 } finally {
   try {
-    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-      _iterator2.return();
+    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+      _iterator3.return();
     }
   } finally {
-    if (_didIteratorError2) {
-      throw _iteratorError2;
+    if (_didIteratorError3) {
+      throw _iteratorError3;
     }
   }
 }
 
+var _iteratorNormalCompletion4 = true;
+var _didIteratorError4 = false;
+var _iteratorError4 = undefined;
+
+try {
+  var _loop2 = function _loop2() {
+    var method = _step4.value;
+
+    Stack.prototype[method] = function (state, editor) {
+      debug(method);
+
+      for (var _len3 = arguments.length, args = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
+        args[_key3 - 2] = arguments[_key3];
+      }
+
+      var _iteratorNormalCompletion7 = true;
+      var _didIteratorError7 = false;
+      var _iteratorError7 = undefined;
+
+      try {
+        for (var _iterator7 = this.plugins[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+          var plugin = _step7.value;
+
+          if (!plugin[method]) continue;
+          var next = plugin[method].apply(plugin, args.concat([state, editor]));
+          if (next == null) continue;
+          assertState(next);
+          state = next;
+        }
+      } catch (err) {
+        _didIteratorError7 = true;
+        _iteratorError7 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion7 && _iterator7.return) {
+            _iterator7.return();
+          }
+        } finally {
+          if (_didIteratorError7) {
+            throw _iteratorError7;
+          }
+        }
+      }
+
+      return state;
+    };
+  };
+
+  for (var _iterator4 = STATE_ACCUMULATOR_METHODS[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+    _loop2();
+  }
+
+  /**
+   * Assert that a `value` is a state object.
+   *
+   * @param {Mixed} value
+   */
+} catch (err) {
+  _didIteratorError4 = true;
+  _iteratorError4 = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+      _iterator4.return();
+    }
+  } finally {
+    if (_didIteratorError4) {
+      throw _iteratorError4;
+    }
+  }
+}
+
+function assertState(value) {
+  if (value instanceof _state2.default) return;
+  throw new Error('A plugin returned an unexpected state value: ' + value);
+}
+
+/**
+ * Resolve a schema from a set of `plugins`.
+ *
+ * @param {Array} plugins
+ * @return {Schema}
+ */
+
 function resolveSchema(plugins) {
   var rules = [];
 
-  var _iteratorNormalCompletion3 = true;
-  var _didIteratorError3 = false;
-  var _iteratorError3 = undefined;
+  var _iteratorNormalCompletion5 = true;
+  var _didIteratorError5 = false;
+  var _iteratorError5 = undefined;
 
   try {
-    for (var _iterator3 = plugins[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-      var plugin = _step3.value;
+    for (var _iterator5 = plugins[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+      var plugin = _step5.value;
 
       if (plugin.schema == null) continue;
       var _schema = _schema3.default.create(plugin.schema);
       rules = rules.concat(_schema.rules);
     }
   } catch (err) {
-    _didIteratorError3 = true;
-    _iteratorError3 = err;
+    _didIteratorError5 = true;
+    _iteratorError5 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion3 && _iterator3.return) {
-        _iterator3.return();
+      if (!_iteratorNormalCompletion5 && _iterator5.return) {
+        _iterator5.return();
       }
     } finally {
-      if (_didIteratorError3) {
-        throw _iteratorError3;
+      if (_didIteratorError5) {
+        throw _iteratorError5;
       }
     }
   }
@@ -64562,7 +65146,7 @@ function resolvePlugins(props) {
  */
 
 exports.default = Stack;
-},{"../plugins/core":369,"./schema":363,"./state":366,"debug":398,"immutable":162}],366:[function(require,module,exports){
+},{"../plugins/core":372,"./schema":366,"./state":369,"debug":401,"immutable":162}],369:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -65086,11 +65670,14 @@ var State = function (_ref) {
      * Create a new `State` with `properties`.
      *
      * @param {Object|State} properties
+     * @param {Object} options
+     *   @property {Boolean} normalize
      * @return {State}
      */
 
     value: function create() {
       var properties = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       if (properties instanceof State) return properties;
 
@@ -65104,7 +65691,7 @@ var State = function (_ref) {
 
       var state = new State({ document: document, selection: selection });
 
-      return state.transform().normalize(_core2.default).apply({ save: false });
+      return options.normalize === false ? state : state.transform().normalize(_core2.default).apply({ save: false });
     }
   }]);
 
@@ -65116,7 +65703,7 @@ var State = function (_ref) {
  */
 
 exports.default = State;
-},{"../schemas/core":370,"./document":358,"./selection":364,"./transform":368,"immutable":162}],367:[function(require,module,exports){
+},{"../schemas/core":373,"./document":361,"./selection":367,"./transform":371,"immutable":162}],370:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -65621,7 +66208,7 @@ var Text = function (_ref) {
  * Memoize read methods.
  */
 
-(0, _memoize2.default)(Text.prototype, ['getDecorations', 'getDecorators', 'getRanges', 'validate']);
+(0, _memoize2.default)(Text.prototype, ['getDecorations', 'getDecorators', 'getMarksAtIndex', 'getRanges', 'validate']);
 
 /**
  * Export.
@@ -65630,7 +66217,7 @@ var Text = function (_ref) {
  */
 
 exports.default = Text;
-},{"../utils/generate-key":386,"../utils/memoize":390,"./character":356,"./mark":360,"./range":362,"immutable":162}],368:[function(require,module,exports){
+},{"../utils/generate-key":389,"../utils/memoize":393,"./character":359,"./mark":363,"./range":365,"immutable":162}],371:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -65855,7 +66442,7 @@ function isContiguousRemoves(operations, previous) {
  */
 
 exports.default = Transform;
-},{"../transforms":380,"debug":398}],369:[function(require,module,exports){
+},{"../transforms":383,"debug":401}],372:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -65867,6 +66454,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var _base = require('../serializers/base-64');
 
 var _base2 = _interopRequireDefault(_base);
+
+var _content = require('../components/content');
+
+var _content2 = _interopRequireDefault(_content);
 
 var _character = require('../models/character');
 
@@ -66185,14 +66776,14 @@ function Plugin() {
     // needs to account for the selection's content being deleted.
 
     if (isInternal && selection.endKey == target.endKey && selection.endOffset < target.endOffset) {
-      target = target.moveBackward(selection.startKey == selection.endKey ? selection.endOffset - selection.startOffset : selection.endOffset);
+      target = target.move(selection.startKey == selection.endKey ? 0 - selection.endOffset - selection.startOffset : 0 - selection.endOffset);
     }
 
     var transform = state.transform();
 
     if (isInternal) transform.delete();
 
-    return transform.moveTo(target).insertFragment(fragment).apply();
+    return transform.select(target).insertFragment(fragment).apply();
   }
 
   /**
@@ -66210,7 +66801,7 @@ function Plugin() {
     var text = data.text,
         target = data.target;
 
-    var transform = state.transform().moveTo(target);
+    var transform = state.transform().select(target);
 
     text.split('\n').forEach(function (line, i) {
       if (i > 0) transform.splitBlock();
@@ -66363,8 +66954,9 @@ function Plugin() {
       var previousBlock = document.getClosestBlock(previous.key);
       var previousInline = document.getClosestInline(previous.key);
 
-      if (previousBlock == startBlock && previousInline && !previousInline.isVoid) {
-        return state.transform().collapseToEndOf(previous).moveBackward(1).apply();
+      if (previousBlock === startBlock && previousInline && !previousInline.isVoid) {
+        var extendOrMove = data.isShift ? 'extend' : 'move';
+        return state.transform().collapseToEndOf(previous)[extendOrMove](-1).apply();
       }
 
       // Otherwise, move to the end of the previous node.
@@ -66428,7 +67020,8 @@ function Plugin() {
       var nextInline = document.getClosestInline(next.key);
 
       if (nextBlock == startBlock && nextInline) {
-        return state.transform().collapseToStartOf(next).moveForward(1).apply();
+        var extendOrMove = data.isShift ? 'extend' : 'move';
+        return state.transform().collapseToStartOf(next)[extendOrMove](1).apply();
       }
 
       // Otherwise, move to the start of the next text node.
@@ -66643,7 +67236,42 @@ function Plugin() {
   function onSelect(e, data, state) {
     debug('onSelect', { data: data });
 
-    return state.transform().moveTo(data.selection).apply();
+    return state.transform().select(data.selection).apply();
+  }
+
+  /**
+   * Render.
+   *
+   * @param {Object} props
+   * @param {State} state
+   * @param {Editor} editor
+   * @return {Object}
+   */
+
+  function render(props, state, editor) {
+    return _react2.default.createElement(_content2.default, {
+      autoCorrect: props.autoCorrect,
+      autoFocus: props.autoFocus,
+      className: props.className,
+      children: props.children,
+      editor: editor,
+      onBeforeInput: editor.onBeforeInput,
+      onBlur: editor.onBlur,
+      onChange: editor.onChange,
+      onCopy: editor.onCopy,
+      onCut: editor.onCut,
+      onDrop: editor.onDrop,
+      onKeyDown: editor.onKeyDown,
+      onPaste: editor.onPaste,
+      onSelect: editor.onSelect,
+      readOnly: props.readOnly,
+      role: props.role,
+      schema: editor.getSchema(),
+      spellCheck: props.spellCheck,
+      state: state,
+      style: props.style,
+      tabIndex: props.tabIndex
+    });
   }
 
   /**
@@ -66721,6 +67349,7 @@ function Plugin() {
     onKeyDown: onKeyDown,
     onPaste: onPaste,
     onSelect: onSelect,
+    render: render,
     schema: schema
   };
 }
@@ -66732,7 +67361,7 @@ function Plugin() {
  */
 
 exports.default = Plugin;
-},{"../components/placeholder":349,"../constants/environment":351,"../models/character":356,"../serializers/base-64":371,"debug":398,"get-window":151,"react":333}],370:[function(require,module,exports){
+},{"../components/content":348,"../components/placeholder":352,"../constants/environment":354,"../models/character":359,"../serializers/base-64":374,"debug":401,"get-window":151,"react":335}],373:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67062,7 +67691,7 @@ var SCHEMA = _schema2.default.create({ rules: rules });
  */
 
 exports.default = SCHEMA;
-},{"../models/schema":363,"../models/text":367,"immutable":162}],371:[function(require,module,exports){
+},{"../models/schema":366,"../models/text":370,"immutable":162}],374:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67165,7 +67794,7 @@ exports.default = {
   serialize: serialize,
   serializeNode: serializeNode
 };
-},{"./raw":374}],372:[function(require,module,exports){
+},{"./raw":377}],375:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67634,7 +68263,7 @@ function addKey(element) {
  */
 
 exports.default = Html;
-},{"./raw":374,"cheerio":28,"immutable":162,"react":333,"react-dom/server":187,"type-of":403}],373:[function(require,module,exports){
+},{"./raw":377,"cheerio":28,"immutable":162,"react":335,"react-dom/server":188,"type-of":406}],376:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67705,7 +68334,7 @@ exports.default = {
   deserialize: deserialize,
   serialize: serialize
 };
-},{"../serializers/raw":374}],374:[function(require,module,exports){
+},{"../serializers/raw":377}],377:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -67944,7 +68573,7 @@ var Raw = {
       selection = Raw.deserializeSelection(object.selection, options);
     }
 
-    return _state2.default.create({ document: document, selection: selection });
+    return _state2.default.create({ document: document, selection: selection }, options);
   },
 
 
@@ -68507,7 +69136,7 @@ var Raw = {
  */
 
 exports.default = Raw;
-},{"../models/block":355,"../models/character":356,"../models/document":358,"../models/inline":359,"../models/mark":360,"../models/selection":364,"../models/state":366,"../models/text":367,"is-empty":165}],375:[function(require,module,exports){
+},{"../models/block":358,"../models/character":359,"../models/document":361,"../models/inline":362,"../models/mark":363,"../models/selection":367,"../models/state":369,"../models/text":370,"is-empty":165}],378:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -68515,8 +69144,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-exports.applyOperation = applyOperation;
 
 var _debug = require('debug');
 
@@ -68535,6 +69162,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 var debug = (0, _debug2.default)('slate:operation');
+
+/**
+ * Transforms.
+ *
+ * @type {Object}
+ */
+
+var Transforms = {};
 
 /**
  * Operations.
@@ -68568,7 +69203,7 @@ var OPERATIONS = {
  * @param {Object} operation
  */
 
-function applyOperation(transform, operation) {
+Transforms.applyOperation = function (transform, operation) {
   var state = transform.state,
       operations = transform.operations;
   var type = operation.type;
@@ -68582,7 +69217,7 @@ function applyOperation(transform, operation) {
   debug(type, operation);
   transform.state = fn(state, operation);
   transform.operations = operations.concat([operation]);
-}
+};
 
 /**
  * Add mark to text at `offset` and `length` in node by `path`.
@@ -68660,10 +69295,10 @@ function insertText(state, operation) {
 
   // Update the selection
   if (anchorKey == node.key && anchorOffset >= offset) {
-    selection = selection.moveAnchorOffset(text.length);
+    selection = selection.moveAnchor(text.length);
   }
   if (focusKey == node.key && focusOffset >= offset) {
-    selection = selection.moveFocusOffset(text.length);
+    selection = selection.moveFocus(text.length);
   }
 
   state = state.merge({ document: document, selection: selection });
@@ -68816,7 +69451,7 @@ function removeNode(state, operation) {
       } else if (next) {
         selection = selection.moveStartTo(next.key, 0);
       } else {
-        selection = selection.unset();
+        selection = selection.deselect();
       }
     }
 
@@ -68829,7 +69464,7 @@ function removeNode(state, operation) {
       } else if (_next) {
         selection = selection.moveEndTo(_next.key, 0);
       } else {
-        selection = selection.unset();
+        selection = selection.deselect();
       }
     }
   }
@@ -68873,10 +69508,10 @@ function removeText(state, operation) {
 
   // Update the selection
   if (anchorKey == node.key && anchorOffset >= rangeOffset) {
-    selection = selection.moveAnchorOffset(-length);
+    selection = selection.moveAnchor(-length);
   }
   if (focusKey == node.key && focusOffset >= rangeOffset) {
-    selection = selection.moveFocusOffset(-length);
+    selection = selection.moveFocus(-length);
   }
 
   node = node.removeText(offset, length);
@@ -69041,37 +69676,20 @@ function splitNode(state, operation) {
   state = state.merge({ document: document, selection: selection });
   return state;
 }
-},{"../utils/warn":397,"debug":398}],376:[function(require,module,exports){
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = Transforms;
+},{"../utils/warn":400,"debug":401}],379:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addMark = addMark;
-exports._delete = _delete;
-exports.deleteBackward = deleteBackward;
-exports.deleteCharBackward = deleteCharBackward;
-exports.deleteLineBackward = deleteLineBackward;
-exports.deleteWordBackward = deleteWordBackward;
-exports.deleteForward = deleteForward;
-exports.deleteCharForward = deleteCharForward;
-exports.deleteLineForward = deleteLineForward;
-exports.deleteWordForward = deleteWordForward;
-exports.insertBlock = insertBlock;
-exports.insertFragment = insertFragment;
-exports.insertInline = insertInline;
-exports.insertText = insertText;
-exports.setBlock = setBlock;
-exports.setInline = setInline;
-exports.splitBlock = splitBlock;
-exports.splitInline = splitInline;
-exports.removeMark = removeMark;
-exports.toggleMark = toggleMark;
-exports.unwrapBlock = unwrapBlock;
-exports.unwrapInline = unwrapInline;
-exports.wrapBlock = wrapBlock;
-exports.wrapInline = wrapInline;
-exports.wrapText = wrapText;
 
 var _normalize = require('../utils/normalize');
 
@@ -69080,13 +69698,21 @@ var _normalize2 = _interopRequireDefault(_normalize);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
+ * Transforms.
+ *
+ * @type {Object}
+ */
+
+var Transforms = {};
+
+/**
  * Add a `mark` to the characters in the current selection.
  *
  * @param {Transform} transform
  * @param {Mark} mark
  */
 
-function addMark(transform, mark) {
+Transforms.addMark = function (transform, mark) {
   mark = _normalize2.default.mark(mark);
   var state = transform.state;
   var document = state.document,
@@ -69101,14 +69727,14 @@ function addMark(transform, mark) {
   if (selection.marks) {
     var _marks = selection.marks.add(mark);
     var _sel = selection.merge({ marks: _marks });
-    transform.moveTo(_sel);
+    transform.select(_sel);
     return;
   }
 
   var marks = document.getMarksAtRange(selection).add(mark);
   var sel = selection.merge({ marks: marks });
-  transform.moveTo(sel);
-}
+  transform.select(sel);
+};
 
 /**
  * Delete at the current selection.
@@ -69116,7 +69742,7 @@ function addMark(transform, mark) {
  * @param {Transform} transform
  */
 
-function _delete(transform) {
+Transforms.delete = function (transform) {
   var state = transform.state;
   var selection = state.selection;
 
@@ -69126,7 +69752,7 @@ function _delete(transform) {
   // Ensure that the selection is collapsed to the start, because in certain
   // cases when deleting across inline nodes this isn't guaranteed.
   .collapseToStart().snapshotSelection();
-}
+};
 
 /**
  * Delete backward `n` characters at the current selection.
@@ -69135,13 +69761,13 @@ function _delete(transform) {
  * @param {Number} n (optional)
  */
 
-function deleteBackward(transform) {
+Transforms.deleteBackward = function (transform) {
   var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var state = transform.state;
   var selection = state.selection;
 
   transform.deleteBackwardAtRange(selection, n);
-}
+};
 
 /**
  * Delete backward until the character boundary at the current selection.
@@ -69149,12 +69775,12 @@ function deleteBackward(transform) {
  * @param {Transform} transform
  */
 
-function deleteCharBackward(transform) {
+Transforms.deleteCharBackward = function (transform) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.deleteCharBackwardAtRange(selection);
-}
+};
 
 /**
  * Delete backward until the line boundary at the current selection.
@@ -69162,12 +69788,12 @@ function deleteCharBackward(transform) {
  * @param {Transform} transform
  */
 
-function deleteLineBackward(transform) {
+Transforms.deleteLineBackward = function (transform) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.deleteLineBackwardAtRange(selection);
-}
+};
 
 /**
  * Delete backward until the word boundary at the current selection.
@@ -69175,12 +69801,12 @@ function deleteLineBackward(transform) {
  * @param {Transform} transform
  */
 
-function deleteWordBackward(transform) {
+Transforms.deleteWordBackward = function (transform) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.deleteWordBackwardAtRange(selection);
-}
+};
 
 /**
  * Delete forward `n` characters at the current selection.
@@ -69189,13 +69815,13 @@ function deleteWordBackward(transform) {
  * @param {Number} n (optional)
  */
 
-function deleteForward(transform) {
+Transforms.deleteForward = function (transform) {
   var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var state = transform.state;
   var selection = state.selection;
 
   transform.deleteForwardAtRange(selection, n);
-}
+};
 
 /**
  * Delete forward until the character boundary at the current selection.
@@ -69203,12 +69829,12 @@ function deleteForward(transform) {
  * @param {Transform} transform
  */
 
-function deleteCharForward(transform) {
+Transforms.deleteCharForward = function (transform) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.deleteCharForwardAtRange(selection);
-}
+};
 
 /**
  * Delete forward until the line boundary at the current selection.
@@ -69216,12 +69842,12 @@ function deleteCharForward(transform) {
  * @param {Transform} transform
  */
 
-function deleteLineForward(transform) {
+Transforms.deleteLineForward = function (transform) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.deleteLineForwardAtRange(selection);
-}
+};
 
 /**
  * Delete forward until the word boundary at the current selection.
@@ -69229,12 +69855,12 @@ function deleteLineForward(transform) {
  * @param {Transform} transform
  */
 
-function deleteWordForward(transform) {
+Transforms.deleteWordForward = function (transform) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.deleteWordForwardAtRange(selection);
-}
+};
 
 /**
  * Insert a `block` at the current selection.
@@ -69243,7 +69869,7 @@ function deleteWordForward(transform) {
  * @param {String|Object|Block} block
  */
 
-function insertBlock(transform, block) {
+Transforms.insertBlock = function (transform, block) {
   block = _normalize2.default.block(block);
   var state = transform.state;
   var selection = state.selection;
@@ -69253,7 +69879,7 @@ function insertBlock(transform, block) {
   // If the node was successfully inserted, update the selection.
   var node = transform.state.document.getNode(block.key);
   if (node) transform.collapseToEndOf(node);
-}
+};
 
 /**
  * Insert a `fragment` at the current selection.
@@ -69262,7 +69888,7 @@ function insertBlock(transform, block) {
  * @param {Document} fragment
  */
 
-function insertFragment(transform, fragment) {
+Transforms.insertFragment = function (transform, fragment) {
   var state = transform.state;
   var _state = state,
       document = _state.document,
@@ -69282,7 +69908,7 @@ function insertFragment(transform, fragment) {
   });
   var isAppending = selection.hasEdgeAtEndOf(endText) || selection.hasEdgeAtStartOf(startText);
 
-  transform.unsetSelection();
+  transform.deselect();
   transform.insertFragmentAtRange(selection, fragment);
   state = transform.state;
   document = state.document;
@@ -69296,13 +69922,13 @@ function insertFragment(transform, fragment) {
   if (newText && lastInline) {
     after = selection.collapseToEndOf(newText);
   } else if (newText) {
-    after = selection.collapseToStartOf(newText).moveForward(lastText.length);
+    after = selection.collapseToStartOf(newText).move(lastText.length);
   } else {
-    after = selection.collapseToStart().moveForward(lastText.length);
+    after = selection.collapseToStart().move(lastText.length);
   }
 
-  transform.moveTo(after);
-}
+  transform.select(after);
+};
 
 /**
  * Insert a `inline` at the current selection.
@@ -69311,7 +69937,7 @@ function insertFragment(transform, fragment) {
  * @param {String|Object|Block} inline
  */
 
-function insertInline(transform, inline) {
+Transforms.insertInline = function (transform, inline) {
   inline = _normalize2.default.inline(inline);
   var state = transform.state;
   var selection = state.selection;
@@ -69321,7 +69947,7 @@ function insertInline(transform, inline) {
   // If the node was successfully inserted, update the selection.
   var node = transform.state.document.getNode(inline.key);
   if (node) transform.collapseToEndOf(node);
-}
+};
 
 /**
  * Insert a `text` string at the current selection.
@@ -69331,7 +69957,7 @@ function insertInline(transform, inline) {
  * @param {Set<Mark>} marks (optional)
  */
 
-function insertText(transform, text, marks) {
+Transforms.insertText = function (transform, text, marks) {
   var state = transform.state;
   var document = state.document,
       selection = state.selection;
@@ -69342,9 +69968,9 @@ function insertText(transform, text, marks) {
   // If the text was successfully inserted, and the selection had marks on it,
   // unset the selection's marks.
   if (selection.marks && document != transform.state.document) {
-    transform.unsetMarks();
+    transform.select({ marks: null });
   }
-}
+};
 
 /**
  * Set `properties` of the block nodes in the current selection.
@@ -69353,12 +69979,12 @@ function insertText(transform, text, marks) {
  * @param {Object} properties
  */
 
-function setBlock(transform, properties) {
+Transforms.setBlock = function (transform, properties) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.setBlockAtRange(selection, properties);
-}
+};
 
 /**
  * Set `properties` of the inline nodes in the current selection.
@@ -69367,12 +69993,12 @@ function setBlock(transform, properties) {
  * @param {Object} properties
  */
 
-function setInline(transform, properties) {
+Transforms.setInline = function (transform, properties) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.setInlineAtRange(selection, properties);
-}
+};
 
 /**
  * Split the block node at the current selection, to optional `depth`.
@@ -69381,13 +70007,13 @@ function setInline(transform, properties) {
  * @param {Number} depth (optional)
  */
 
-function splitBlock(transform) {
+Transforms.splitBlock = function (transform) {
   var depth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var state = transform.state;
   var selection = state.selection;
 
   transform.snapshotSelection().splitBlockAtRange(selection, depth).collapseToEnd().snapshotSelection();
-}
+};
 
 /**
  * Split the inline nodes at the current selection, to optional `depth`.
@@ -69396,13 +70022,13 @@ function splitBlock(transform) {
  * @param {Number} depth (optional)
  */
 
-function splitInline(transform) {
+Transforms.splitInline = function (transform) {
   var depth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Infinity;
   var state = transform.state;
   var selection = state.selection;
 
   transform.snapshotSelection().splitInlineAtRange(selection, depth).snapshotSelection();
-}
+};
 
 /**
  * Remove a `mark` from the characters in the current selection.
@@ -69411,7 +70037,7 @@ function splitInline(transform) {
  * @param {Mark} mark
  */
 
-function removeMark(transform, mark) {
+Transforms.removeMark = function (transform, mark) {
   mark = _normalize2.default.mark(mark);
   var state = transform.state;
   var document = state.document,
@@ -69426,14 +70052,14 @@ function removeMark(transform, mark) {
   if (selection.marks) {
     var _marks2 = selection.marks.remove(mark);
     var _sel2 = selection.merge({ marks: _marks2 });
-    transform.moveTo(_sel2);
+    transform.select(_sel2);
     return;
   }
 
   var marks = document.getMarksAtRange(selection).remove(mark);
   var sel = selection.merge({ marks: marks });
-  transform.moveTo(sel);
-}
+  transform.select(sel);
+};
 
 /**
  * Add or remove a `mark` from the characters in the current selection,
@@ -69443,7 +70069,7 @@ function removeMark(transform, mark) {
  * @param {Mark} mark
  */
 
-function toggleMark(transform, mark) {
+Transforms.toggleMark = function (transform, mark) {
   mark = _normalize2.default.mark(mark);
   var state = transform.state;
 
@@ -69456,7 +70082,7 @@ function toggleMark(transform, mark) {
   } else {
     transform.addMark(mark);
   }
-}
+};
 
 /**
  * Unwrap the current selection from a block parent with `properties`.
@@ -69465,12 +70091,12 @@ function toggleMark(transform, mark) {
  * @param {Object|String} properties
  */
 
-function unwrapBlock(transform, properties) {
+Transforms.unwrapBlock = function (transform, properties) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.unwrapBlockAtRange(selection, properties);
-}
+};
 
 /**
  * Unwrap the current selection from an inline parent with `properties`.
@@ -69479,12 +70105,12 @@ function unwrapBlock(transform, properties) {
  * @param {Object|String} properties
  */
 
-function unwrapInline(transform, properties) {
+Transforms.unwrapInline = function (transform, properties) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.unwrapInlineAtRange(selection, properties);
-}
+};
 
 /**
  * Wrap the block nodes in the current selection with a new block node with
@@ -69494,12 +70120,12 @@ function unwrapInline(transform, properties) {
  * @param {Object|String} properties
  */
 
-function wrapBlock(transform, properties) {
+Transforms.wrapBlock = function (transform, properties) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.wrapBlockAtRange(selection, properties);
-}
+};
 
 /**
  * Wrap the current selection in new inline nodes with `properties`.
@@ -69508,7 +70134,7 @@ function wrapBlock(transform, properties) {
  * @param {Object|String} properties
  */
 
-function wrapInline(transform, properties) {
+Transforms.wrapInline = function (transform, properties) {
   var state = transform.state;
   var _state3 = state,
       document = _state3.document,
@@ -69520,7 +70146,7 @@ function wrapInline(transform, properties) {
 
   var previous = document.getPreviousText(startKey);
 
-  transform.unsetSelection();
+  transform.deselect();
   transform.wrapInlineAtRange(selection, properties);
   state = transform.state;
   document = state.document;
@@ -69546,8 +70172,8 @@ function wrapInline(transform, properties) {
   }
 
   after = after.normalize(document);
-  transform.moveTo(after);
-}
+  transform.select(after);
+};
 
 /**
  * Wrap the current selection with prefix/suffix.
@@ -69557,7 +70183,7 @@ function wrapInline(transform, properties) {
  * @param {String} suffix
  */
 
-function wrapText(transform, prefix) {
+Transforms.wrapText = function (transform, prefix) {
   var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : prefix;
   var state = transform.state;
   var selection = state.selection;
@@ -69566,50 +70192,33 @@ function wrapText(transform, prefix) {
 
   // If the selection was collapsed, it will have moved the start offset too.
   if (selection.isCollapsed) {
-    transform.moveStartOffset(0 - prefix.length);
+    transform.moveStart(0 - prefix.length);
   }
 
   // Adding the suffix will have pushed the end of the selection further on, so
   // we need to move it back to account for this.
-  transform.moveEndOffset(0 - suffix.length);
+  transform.moveEnd(0 - suffix.length);
 
   // There's a chance that the selection points moved "through" each other,
   // resulting in a now-incorrect selection direction.
   if (selection.isForward != transform.state.selection.isForward) {
-    transform.flipSelection();
+    transform.flip();
   }
-}
-},{"../utils/normalize":393}],377:[function(require,module,exports){
+};
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = Transforms;
+},{"../utils/normalize":396}],380:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addMarkAtRange = addMarkAtRange;
-exports.deleteAtRange = deleteAtRange;
-exports.deleteCharBackwardAtRange = deleteCharBackwardAtRange;
-exports.deleteLineBackwardAtRange = deleteLineBackwardAtRange;
-exports.deleteWordBackwardAtRange = deleteWordBackwardAtRange;
-exports.deleteBackwardAtRange = deleteBackwardAtRange;
-exports.deleteCharForwardAtRange = deleteCharForwardAtRange;
-exports.deleteLineForwardAtRange = deleteLineForwardAtRange;
-exports.deleteWordForwardAtRange = deleteWordForwardAtRange;
-exports.deleteForwardAtRange = deleteForwardAtRange;
-exports.insertBlockAtRange = insertBlockAtRange;
-exports.insertFragmentAtRange = insertFragmentAtRange;
-exports.insertInlineAtRange = insertInlineAtRange;
-exports.insertTextAtRange = insertTextAtRange;
-exports.removeMarkAtRange = removeMarkAtRange;
-exports.setBlockAtRange = setBlockAtRange;
-exports.setInlineAtRange = setInlineAtRange;
-exports.splitBlockAtRange = splitBlockAtRange;
-exports.splitInlineAtRange = splitInlineAtRange;
-exports.toggleMarkAtRange = toggleMarkAtRange;
-exports.unwrapBlockAtRange = unwrapBlockAtRange;
-exports.unwrapInlineAtRange = unwrapInlineAtRange;
-exports.wrapBlockAtRange = wrapBlockAtRange;
-exports.wrapInlineAtRange = wrapInlineAtRange;
-exports.wrapTextAtRange = wrapTextAtRange;
 
 var _normalize = require('../utils/normalize');
 
@@ -69628,12 +70237,20 @@ var _immutable = require('immutable');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * An options object with normalize set to `false`.
+ * Transforms.
  *
  * @type {Object}
  */
 
 /* eslint no-console: 0 */
+
+var Transforms = {};
+
+/**
+ * An options object with normalize set to `false`.
+ *
+ * @type {Object}
+ */
 
 var OPTS = {
   normalize: false
@@ -69649,7 +70266,7 @@ var OPTS = {
  *   @property {Boolean} normalize
  */
 
-function addMarkAtRange(transform, range, mark) {
+Transforms.addMarkAtRange = function (transform, range, mark) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
   if (range.isCollapsed) return;
@@ -69677,7 +70294,7 @@ function addMarkAtRange(transform, range, mark) {
 
     transform.addMarkByKey(key, index, length, mark, { normalize: normalize });
   });
-}
+};
 
 /**
  * Delete everything in a `range`.
@@ -69688,7 +70305,7 @@ function addMarkAtRange(transform, range, mark) {
  *   @property {Boolean} normalize
  */
 
-function deleteAtRange(transform, range) {
+Transforms.deleteAtRange = function (transform, range) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
   if (range.isCollapsed) return;
@@ -69715,8 +70332,8 @@ function deleteAtRange(transform, range) {
       document = _state.document;
 
   var ancestor = document.getCommonAncestor(startKey, endKey);
-  var startChild = ancestor.getHighestChild(startKey);
-  var endChild = ancestor.getHighestChild(endKey);
+  var startChild = ancestor.getFurthestAncestor(startKey);
+  var endChild = ancestor.getFurthestAncestor(endKey);
   var startOff = (startChild.kind == 'text' ? 0 : startChild.getOffset(startKey)) + startOffset;
   var endOff = (endChild.kind == 'text' ? 0 : endChild.getOffset(endKey)) + endOffset;
 
@@ -69727,8 +70344,8 @@ function deleteAtRange(transform, range) {
   state = transform.state;
   document = state.document;
   ancestor = document.getCommonAncestor(startKey, endKey);
-  startChild = ancestor.getHighestChild(startKey);
-  endChild = ancestor.getHighestChild(endKey);
+  startChild = ancestor.getFurthestAncestor(startKey);
+  endChild = ancestor.getFurthestAncestor(endKey);
   var startIndex = ancestor.nodes.indexOf(startChild);
   var endIndex = ancestor.nodes.indexOf(endChild);
   var middles = ancestor.nodes.slice(startIndex + 1, endIndex + 1);
@@ -69753,14 +70370,14 @@ function deleteAtRange(transform, range) {
     });
 
     // Remove parents of endBlock as long as they have a single child
-    var lonely = document.getHighestOnlyChildParent(endBlock.key) || endBlock;
+    var lonely = document.getFurthestOnlyChildAncestor(endBlock.key) || endBlock;
     transform.removeNodeByKey(lonely.key, OPTS);
   }
 
   if (normalize) {
     transform.normalizeNodeByKey(ancestor.key, _core2.default);
   }
-}
+};
 
 /**
  * Delete backward until the character boundary at a `range`.
@@ -69771,7 +70388,7 @@ function deleteAtRange(transform, range) {
  *   @property {Boolean} normalize
  */
 
-function deleteCharBackwardAtRange(transform, range, options) {
+Transforms.deleteCharBackwardAtRange = function (transform, range, options) {
   var state = transform.state;
   var document = state.document;
   var startKey = range.startKey,
@@ -69784,7 +70401,7 @@ function deleteCharBackwardAtRange(transform, range, options) {
 
   var n = _string2.default.getCharOffsetBackward(text, o);
   transform.deleteBackwardAtRange(range, n, options);
-}
+};
 
 /**
  * Delete backward until the line boundary at a `range`.
@@ -69795,7 +70412,7 @@ function deleteCharBackwardAtRange(transform, range, options) {
  *   @property {Boolean} normalize
  */
 
-function deleteLineBackwardAtRange(transform, range, options) {
+Transforms.deleteLineBackwardAtRange = function (transform, range, options) {
   var state = transform.state;
   var document = state.document;
   var startKey = range.startKey,
@@ -69805,7 +70422,7 @@ function deleteLineBackwardAtRange(transform, range, options) {
   var offset = startBlock.getOffset(startKey);
   var o = offset + startOffset;
   transform.deleteBackwardAtRange(range, o, options);
-}
+};
 
 /**
  * Delete backward until the word boundary at a `range`.
@@ -69816,7 +70433,7 @@ function deleteLineBackwardAtRange(transform, range, options) {
  *   @property {Boolean} normalize
  */
 
-function deleteWordBackwardAtRange(transform, range, options) {
+Transforms.deleteWordBackwardAtRange = function (transform, range, options) {
   var state = transform.state;
   var document = state.document;
   var startKey = range.startKey,
@@ -69829,7 +70446,7 @@ function deleteWordBackwardAtRange(transform, range, options) {
 
   var n = _string2.default.getWordOffsetBackward(text, o);
   transform.deleteBackwardAtRange(range, n, options);
-}
+};
 
 /**
  * Delete backward `n` characters at a `range`.
@@ -69841,7 +70458,7 @@ function deleteWordBackwardAtRange(transform, range, options) {
  *   @property {Boolean} normalize
  */
 
-function deleteBackwardAtRange(transform, range) {
+Transforms.deleteBackwardAtRange = function (transform, range) {
   var n = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize3 = options.normalize,
@@ -69866,7 +70483,7 @@ function deleteBackwardAtRange(transform, range) {
     return;
   }
   // If the closest is not void, but empty, remove it
-  if (block && !block.isVoid && block.isEmpty) {
+  if (block && !block.isVoid && block.isEmpty && document.nodes.size !== 1) {
     transform.removeNodeByKey(block.key, { normalize: normalize });
     return;
   }
@@ -69946,9 +70563,7 @@ function deleteBackwardAtRange(transform, range) {
 
   // If the focus node is inside a void, go up until right after it.
   if (document.hasVoidParent(node.key)) {
-    var parent = document.getClosest(node.key, function (p) {
-      return p.isVoid;
-    });
+    var parent = document.getClosestVoid(node.key);
     node = document.getNextText(parent.key);
     offset = 0;
   }
@@ -69960,7 +70575,7 @@ function deleteBackwardAtRange(transform, range) {
   });
 
   transform.deleteAtRange(range, { normalize: normalize });
-}
+};
 
 /**
  * Delete forward until the character boundary at a `range`.
@@ -69971,7 +70586,7 @@ function deleteBackwardAtRange(transform, range) {
  *   @property {Boolean} normalize
  */
 
-function deleteCharForwardAtRange(transform, range, options) {
+Transforms.deleteCharForwardAtRange = function (transform, range, options) {
   var state = transform.state;
   var document = state.document;
   var startKey = range.startKey,
@@ -69984,7 +70599,7 @@ function deleteCharForwardAtRange(transform, range, options) {
 
   var n = _string2.default.getCharOffsetForward(text, o);
   transform.deleteForwardAtRange(range, n, options);
-}
+};
 
 /**
  * Delete forward until the line boundary at a `range`.
@@ -69995,7 +70610,7 @@ function deleteCharForwardAtRange(transform, range, options) {
  *   @property {Boolean} normalize
  */
 
-function deleteLineForwardAtRange(transform, range, options) {
+Transforms.deleteLineForwardAtRange = function (transform, range, options) {
   var state = transform.state;
   var document = state.document;
   var startKey = range.startKey,
@@ -70005,7 +70620,7 @@ function deleteLineForwardAtRange(transform, range, options) {
   var offset = startBlock.getOffset(startKey);
   var o = offset + startOffset;
   transform.deleteForwardAtRange(range, o, options);
-}
+};
 
 /**
  * Delete forward until the word boundary at a `range`.
@@ -70016,7 +70631,7 @@ function deleteLineForwardAtRange(transform, range, options) {
  *   @property {Boolean} normalize
  */
 
-function deleteWordForwardAtRange(transform, range, options) {
+Transforms.deleteWordForwardAtRange = function (transform, range, options) {
   var state = transform.state;
   var document = state.document;
   var startKey = range.startKey,
@@ -70029,7 +70644,7 @@ function deleteWordForwardAtRange(transform, range, options) {
 
   var n = _string2.default.getWordOffsetForward(text, o);
   transform.deleteForwardAtRange(range, n, options);
-}
+};
 
 /**
  * Delete forward `n` characters at a `range`.
@@ -70041,7 +70656,7 @@ function deleteWordForwardAtRange(transform, range, options) {
  *   @property {Boolean} normalize
  */
 
-function deleteForwardAtRange(transform, range) {
+Transforms.deleteForwardAtRange = function (transform, range) {
   var n = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize4 = options.normalize,
@@ -70066,7 +70681,7 @@ function deleteForwardAtRange(transform, range) {
     return;
   }
   // If the closest is not void, but empty, remove it
-  if (block && !block.isVoid && block.isEmpty) {
+  if (block && !block.isVoid && block.isEmpty && document.nodes.size !== 1) {
     transform.removeNodeByKey(block.key, { normalize: normalize });
     return;
   }
@@ -70146,9 +70761,7 @@ function deleteForwardAtRange(transform, range) {
 
   // If the focus node is inside a void, go up until right before it.
   if (document.hasVoidParent(node.key)) {
-    var parent = document.getClosest(node.key, function (p) {
-      return p.isVoid;
-    });
+    var parent = document.getClosestVoid(node.key);
     node = document.getPreviousText(parent.key);
     offset = node.length;
   }
@@ -70159,7 +70772,7 @@ function deleteForwardAtRange(transform, range) {
   });
 
   transform.deleteAtRange(range, { normalize: normalize });
-}
+};
 
 /**
  * Insert a `block` node at `range`.
@@ -70171,7 +70784,7 @@ function deleteForwardAtRange(transform, range) {
  *   @property {Boolean} normalize
  */
 
-function insertBlockAtRange(transform, range, block) {
+Transforms.insertBlockAtRange = function (transform, range, block) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
   block = _normalize2.default.block(block);
@@ -70213,7 +70826,7 @@ function insertBlockAtRange(transform, range, block) {
   if (normalize) {
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Insert a `fragment` at a `range`.
@@ -70225,7 +70838,7 @@ function insertBlockAtRange(transform, range, block) {
  *   @property {Boolean} normalize
  */
 
-function insertFragmentAtRange(transform, range, fragment) {
+Transforms.insertFragmentAtRange = function (transform, range, fragment) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize6 = options.normalize,
       normalize = _options$normalize6 === undefined ? true : _options$normalize6;
@@ -70258,7 +70871,7 @@ function insertFragmentAtRange(transform, range, fragment) {
 
   var startText = document.getDescendant(startKey);
   var startBlock = document.getClosestBlock(startText.key);
-  var startChild = startBlock.getHighestChild(startText.key);
+  var startChild = startBlock.getFurthestAncestor(startText.key);
   var isAtStart = range.isAtStartOf(startBlock);
   var parent = document.getParent(startBlock.key);
   var index = parent.nodes.indexOf(startBlock);
@@ -70294,7 +70907,7 @@ function insertFragmentAtRange(transform, range, fragment) {
   document = state.document;
   startText = document.getDescendant(startKey);
   startBlock = document.getClosestBlock(startKey);
-  startChild = startBlock.getHighestChild(startText.key);
+  startChild = startBlock.getFurthestAncestor(startText.key);
 
   // If the first and last block aren't the same, we need to move any of the
   // starting block's children after the split into the last block of the
@@ -70322,7 +70935,7 @@ function insertFragmentAtRange(transform, range, fragment) {
   // Otherwise, we maintain the starting block, and insert all of the first
   // block's inline nodes into it at the split point.
   else {
-      var inlineChild = startBlock.getHighestChild(startText.key);
+      var inlineChild = startBlock.getFurthestAncestor(startText.key);
       var inlineIndex = startBlock.nodes.indexOf(inlineChild);
 
       firstBlock.nodes.forEach(function (inline, i) {
@@ -70336,7 +70949,7 @@ function insertFragmentAtRange(transform, range, fragment) {
   if (normalize) {
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Insert an `inline` node at `range`.
@@ -70348,7 +70961,7 @@ function insertFragmentAtRange(transform, range, fragment) {
  *   @property {Boolean} normalize
  */
 
-function insertInlineAtRange(transform, range, inline) {
+Transforms.insertInlineAtRange = function (transform, range, inline) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize7 = options.normalize,
       normalize = _options$normalize7 === undefined ? true : _options$normalize7;
@@ -70378,7 +70991,7 @@ function insertInlineAtRange(transform, range, inline) {
   if (normalize) {
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Insert `text` at a `range`, with optional `marks`.
@@ -70391,7 +71004,7 @@ function insertInlineAtRange(transform, range, inline) {
  *   @property {Boolean} normalize
  */
 
-function insertTextAtRange(transform, range, text, marks) {
+Transforms.insertTextAtRange = function (transform, range, text, marks) {
   var options = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
   var normalize = options.normalize;
   var state = transform.state;
@@ -70413,7 +71026,7 @@ function insertTextAtRange(transform, range, text, marks) {
   }
 
   transform.insertTextByKey(startKey, startOffset, text, marks, { normalize: normalize });
-}
+};
 
 /**
  * Remove an existing `mark` to the characters at `range`.
@@ -70425,7 +71038,7 @@ function insertTextAtRange(transform, range, text, marks) {
  *   @property {Boolean} normalize
  */
 
-function removeMarkAtRange(transform, range, mark) {
+Transforms.removeMarkAtRange = function (transform, range, mark) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
   if (range.isCollapsed) return;
@@ -70454,7 +71067,7 @@ function removeMarkAtRange(transform, range, mark) {
 
     transform.removeMarkByKey(key, index, length, mark, { normalize: normalize });
   });
-}
+};
 
 /**
  * Set the `properties` of block nodes in a `range`.
@@ -70466,7 +71079,7 @@ function removeMarkAtRange(transform, range, mark) {
  *   @property {Boolean} normalize
  */
 
-function setBlockAtRange(transform, range, properties) {
+Transforms.setBlockAtRange = function (transform, range, properties) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize9 = options.normalize,
       normalize = _options$normalize9 === undefined ? true : _options$normalize9;
@@ -70478,7 +71091,7 @@ function setBlockAtRange(transform, range, properties) {
   blocks.forEach(function (block) {
     transform.setNodeByKey(block.key, properties, { normalize: normalize });
   });
-}
+};
 
 /**
  * Set the `properties` of inline nodes in a `range`.
@@ -70490,7 +71103,7 @@ function setBlockAtRange(transform, range, properties) {
  *   @property {Boolean} normalize
  */
 
-function setInlineAtRange(transform, range, properties) {
+Transforms.setInlineAtRange = function (transform, range, properties) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize10 = options.normalize,
       normalize = _options$normalize10 === undefined ? true : _options$normalize10;
@@ -70502,7 +71115,7 @@ function setInlineAtRange(transform, range, properties) {
   inlines.forEach(function (inline) {
     transform.setNodeByKey(inline.key, properties, { normalize: normalize });
   });
-}
+};
 
 /**
  * Split the block nodes at a `range`, to optional `height`.
@@ -70514,7 +71127,7 @@ function setInlineAtRange(transform, range, properties) {
  *   @property {Boolean} normalize
  */
 
-function splitBlockAtRange(transform, range) {
+Transforms.splitBlockAtRange = function (transform, range) {
   var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize11 = options.normalize,
@@ -70545,7 +71158,7 @@ function splitBlockAtRange(transform, range) {
   }
 
   transform.splitNodeByKey(node.key, offset, { normalize: normalize });
-}
+};
 
 /**
  * Split the inline nodes at a `range`, to optional `height`.
@@ -70557,7 +71170,7 @@ function splitBlockAtRange(transform, range) {
  *   @property {Boolean} normalize
  */
 
-function splitInlineAtRange(transform, range) {
+Transforms.splitInlineAtRange = function (transform, range) {
   var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Infinity;
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize12 = options.normalize,
@@ -70588,7 +71201,7 @@ function splitInlineAtRange(transform, range) {
   }
 
   transform.splitNodeByKey(node.key, offset, { normalize: normalize });
-}
+};
 
 /**
  * Add or remove a `mark` from the characters at `range`, depending on whether
@@ -70601,7 +71214,7 @@ function splitInlineAtRange(transform, range) {
  *   @property {Boolean} normalize
  */
 
-function toggleMarkAtRange(transform, range, mark) {
+Transforms.toggleMarkAtRange = function (transform, range, mark) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
   if (range.isCollapsed) return;
@@ -70623,7 +71236,7 @@ function toggleMarkAtRange(transform, range, mark) {
   } else {
     transform.addMarkAtRange(range, mark, { normalize: normalize });
   }
-}
+};
 
 /**
  * Unwrap all of the block nodes in a `range` from a block with `properties`.
@@ -70635,7 +71248,7 @@ function toggleMarkAtRange(transform, range, mark) {
  *   @property {Boolean} normalize
  */
 
-function unwrapBlockAtRange(transform, range, properties) {
+Transforms.unwrapBlockAtRange = function (transform, range, properties) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
   properties = _normalize2.default.nodeProperties(properties);
@@ -70715,7 +71328,7 @@ function unwrapBlockAtRange(transform, range, properties) {
   if (normalize) {
     transform.normalizeDocument(_core2.default);
   }
-}
+};
 
 /**
  * Unwrap the inline nodes in a `range` from an inline with `properties`.
@@ -70727,7 +71340,7 @@ function unwrapBlockAtRange(transform, range, properties) {
  *   @property {Boolean} normalize
  */
 
-function unwrapInlineAtRange(transform, range, properties) {
+Transforms.unwrapInlineAtRange = function (transform, range, properties) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
   properties = _normalize2.default.nodeProperties(properties);
@@ -70751,7 +71364,7 @@ function unwrapInlineAtRange(transform, range, properties) {
   }).toOrderedSet().toList();
 
   inlines.forEach(function (inline) {
-    var parent = document.getParent(inline.key);
+    var parent = transform.state.document.getParent(inline.key);
     var index = parent.nodes.indexOf(inline);
 
     inline.nodes.forEach(function (child, i) {
@@ -70763,7 +71376,7 @@ function unwrapInlineAtRange(transform, range, properties) {
   if (normalize) {
     transform.normalizeDocument(_core2.default);
   }
-}
+};
 
 /**
  * Wrap all of the blocks in a `range` in a new `block`.
@@ -70775,7 +71388,7 @@ function unwrapInlineAtRange(transform, range, properties) {
  *   @property {Boolean} normalize
  */
 
-function wrapBlockAtRange(transform, range, block) {
+Transforms.wrapBlockAtRange = function (transform, range, block) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
   block = _normalize2.default.block(block);
@@ -70794,13 +71407,14 @@ function wrapBlockAtRange(transform, range, block) {
       siblings = void 0,
       index = void 0;
 
-  // if there is only one block in the selection then we know the parent and siblings
+  // If there is only one block in the selection then we know the parent and
+  // siblings.
   if (blocks.length === 1) {
     parent = document.getParent(firstblock.key);
     siblings = blocks;
   }
 
-  // determine closest shared parent to all blocks in selection
+  // Determine closest shared parent to all blocks in selection.
   else {
       parent = document.getClosest(firstblock.key, function (p1) {
         return !!document.getClosest(lastblock.key, function (p2) {
@@ -70809,10 +71423,11 @@ function wrapBlockAtRange(transform, range, block) {
       });
     }
 
-  // if no shared parent could be found then the parent is the document
+  // If no shared parent could be found then the parent is the document.
   if (parent == null) parent = document;
 
-  // create a list of direct children siblings of parent that fall in the selection
+  // Create a list of direct children siblings of parent that fall in the
+  // selection.
   if (siblings == null) {
     var indexes = parent.nodes.reduce(function (ind, node, i) {
       if (node == firstblock || node.hasDescendant(firstblock.key)) ind[0] = i;
@@ -70824,15 +71439,15 @@ function wrapBlockAtRange(transform, range, block) {
     siblings = parent.nodes.slice(indexes[0], indexes[1] + 1);
   }
 
-  // get the index to place the new wrapped node at
+  // Get the index to place the new wrapped node at.
   if (index == null) {
     index = parent.nodes.indexOf(siblings.first());
   }
 
-  // inject the new block node into the parent
+  // Inject the new block node into the parent.
   transform.insertNodeByKey(parent.key, index, block, OPTS);
 
-  // move the sibling nodes into the new block node
+  // Move the sibling nodes into the new block node.
   siblings.forEach(function (node, i) {
     transform.moveNodeByKey(node.key, block.key, i, OPTS);
   });
@@ -70840,7 +71455,7 @@ function wrapBlockAtRange(transform, range, block) {
   if (normalize) {
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Wrap the text and inlines in a `range` in a new `inline`.
@@ -70852,7 +71467,7 @@ function wrapBlockAtRange(transform, range, block) {
  *   @property {Boolean} normalize
  */
 
-function wrapInlineAtRange(transform, range, inline) {
+Transforms.wrapInlineAtRange = function (transform, range, inline) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var state = transform.state;
   var _state4 = state,
@@ -70881,8 +71496,8 @@ function wrapInlineAtRange(transform, range, inline) {
   var blocks = document.getBlocksAtRange(range);
   var startBlock = document.getClosestBlock(startKey);
   var endBlock = document.getClosestBlock(endKey);
-  var startChild = startBlock.getHighestChild(startKey);
-  var endChild = endBlock.getHighestChild(endKey);
+  var startChild = startBlock.getFurthestAncestor(startKey);
+  var endChild = endBlock.getFurthestAncestor(endKey);
   var startIndex = startBlock.nodes.indexOf(startChild);
   var endIndex = endBlock.nodes.indexOf(endChild);
 
@@ -70902,13 +71517,13 @@ function wrapInlineAtRange(transform, range, inline) {
     state = transform.state;
     document = state.document;
     startBlock = document.getClosestBlock(startKey);
-    startChild = startBlock.getHighestChild(startKey);
+    startChild = startBlock.getFurthestAncestor(startKey);
 
     var startInner = startOff == 0 ? startChild : document.getNextSibling(startChild.key);
 
     var startInnerIndex = startBlock.nodes.indexOf(startInner);
 
-    var endInner = startKey == endKey ? startInner : startBlock.getHighestChild(endKey);
+    var endInner = startKey == endKey ? startInner : startBlock.getFurthestAncestor(endKey);
     var inlines = startBlock.nodes.skipUntil(function (n) {
       return n == startInner;
     }).takeUntil(function (n) {
@@ -70968,7 +71583,7 @@ function wrapInlineAtRange(transform, range, inline) {
       }
     });
   }
-}
+};
 
 /**
  * Wrap the text in a `range` in a prefix/suffix.
@@ -70981,7 +71596,7 @@ function wrapInlineAtRange(transform, range, inline) {
  *   @property {Boolean} normalize
  */
 
-function wrapTextAtRange(transform, range, prefix) {
+Transforms.wrapTextAtRange = function (transform, range, prefix) {
   var suffix = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : prefix;
   var options = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
   var _options$normalize18 = options.normalize,
@@ -70993,34 +71608,26 @@ function wrapTextAtRange(transform, range, prefix) {
   var end = range.collapseToEnd();
 
   if (startKey == endKey) {
-    end = end.moveForward(prefix.length);
+    end = end.move(prefix.length);
   }
 
   transform.insertTextAtRange(start, prefix, [], { normalize: normalize });
   transform.insertTextAtRange(end, suffix, [], { normalize: normalize });
-}
-},{"../schemas/core":370,"../utils/normalize":393,"../utils/string":396,"immutable":162}],378:[function(require,module,exports){
+};
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = Transforms;
+},{"../schemas/core":373,"../utils/normalize":396,"../utils/string":399,"immutable":162}],381:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addMarkByKey = addMarkByKey;
-exports.insertNodeByKey = insertNodeByKey;
-exports.insertTextByKey = insertTextByKey;
-exports.joinNodeByKey = joinNodeByKey;
-exports.moveNodeByKey = moveNodeByKey;
-exports.removeMarkByKey = removeMarkByKey;
-exports.removeNodeByKey = removeNodeByKey;
-exports.removeTextByKey = removeTextByKey;
-exports.setMarkByKey = setMarkByKey;
-exports.setNodeByKey = setNodeByKey;
-exports.splitNodeByKey = splitNodeByKey;
-exports.unwrapInlineByKey = unwrapInlineByKey;
-exports.unwrapBlockByKey = unwrapBlockByKey;
-exports.unwrapNodeByKey = unwrapNodeByKey;
-exports.wrapInlineByKey = wrapInlineByKey;
-exports.wrapBlockByKey = wrapBlockByKey;
 
 var _normalize = require('../utils/normalize');
 
@@ -71031,6 +71638,14 @@ var _core = require('../schemas/core');
 var _core2 = _interopRequireDefault(_core);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Transforms.
+ *
+ * @type {Object}
+ */
+
+var Transforms = {};
 
 /**
  * Add mark to text at `offset` and `length` in node by `key`.
@@ -71044,7 +71659,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *   @property {Boolean} normalize
  */
 
-function addMarkByKey(transform, key, offset, length, mark) {
+Transforms.addMarkByKey = function (transform, key, offset, length, mark) {
   var options = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
 
   mark = _normalize2.default.mark(mark);
@@ -71061,7 +71676,7 @@ function addMarkByKey(transform, key, offset, length, mark) {
     var parent = document.getParent(key);
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Insert a `node` at `index` in a node by `key`.
@@ -71074,7 +71689,7 @@ function addMarkByKey(transform, key, offset, length, mark) {
  *   @property {Boolean} normalize
  */
 
-function insertNodeByKey(transform, key, index, node) {
+Transforms.insertNodeByKey = function (transform, key, index, node) {
   var options = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
   var _options$normalize2 = options.normalize,
       normalize = _options$normalize2 === undefined ? true : _options$normalize2;
@@ -71088,7 +71703,7 @@ function insertNodeByKey(transform, key, index, node) {
   if (normalize) {
     transform.normalizeNodeByKey(key, _core2.default);
   }
-}
+};
 
 /**
  * Insert `text` at `offset` in node by `key`.
@@ -71102,7 +71717,7 @@ function insertNodeByKey(transform, key, index, node) {
  *   @property {Boolean} normalize
  */
 
-function insertTextByKey(transform, key, offset, text, marks) {
+Transforms.insertTextByKey = function (transform, key, offset, text, marks) {
   var options = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
   var _options$normalize3 = options.normalize,
       normalize = _options$normalize3 === undefined ? true : _options$normalize3;
@@ -71117,7 +71732,7 @@ function insertTextByKey(transform, key, offset, text, marks) {
     var parent = document.getParent(key);
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Join a node by `key` with a node `withKey`.
@@ -71129,7 +71744,7 @@ function insertTextByKey(transform, key, offset, text, marks) {
  *   @property {Boolean} normalize
  */
 
-function joinNodeByKey(transform, key, withKey) {
+Transforms.joinNodeByKey = function (transform, key, withKey) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize4 = options.normalize,
       normalize = _options$normalize4 === undefined ? true : _options$normalize4;
@@ -71145,7 +71760,7 @@ function joinNodeByKey(transform, key, withKey) {
     var parent = document.getCommonAncestor(key, withKey);
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Move a node by `key` to a new parent by `newKey` and `index`.
@@ -71159,7 +71774,7 @@ function joinNodeByKey(transform, key, withKey) {
  *   @property {Boolean} normalize
  */
 
-function moveNodeByKey(transform, key, newKey, newIndex) {
+Transforms.moveNodeByKey = function (transform, key, newKey, newIndex) {
   var options = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
   var _options$normalize5 = options.normalize,
       normalize = _options$normalize5 === undefined ? true : _options$normalize5;
@@ -71175,7 +71790,7 @@ function moveNodeByKey(transform, key, newKey, newIndex) {
     var parent = document.getCommonAncestor(key, newKey);
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Remove mark from text at `offset` and `length` in node by `key`.
@@ -71189,7 +71804,7 @@ function moveNodeByKey(transform, key, newKey, newIndex) {
  *   @property {Boolean} normalize
  */
 
-function removeMarkByKey(transform, key, offset, length, mark) {
+Transforms.removeMarkByKey = function (transform, key, offset, length, mark) {
   var options = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
 
   mark = _normalize2.default.mark(mark);
@@ -71206,7 +71821,7 @@ function removeMarkByKey(transform, key, offset, length, mark) {
     var parent = document.getParent(key);
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Remove a node by `key`.
@@ -71217,7 +71832,7 @@ function removeMarkByKey(transform, key, offset, length, mark) {
  *   @property {Boolean} normalize
  */
 
-function removeNodeByKey(transform, key) {
+Transforms.removeNodeByKey = function (transform, key) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   var _options$normalize7 = options.normalize,
       normalize = _options$normalize7 === undefined ? true : _options$normalize7;
@@ -71232,7 +71847,7 @@ function removeNodeByKey(transform, key) {
     var parent = document.getParent(key);
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Remove text at `offset` and `length` in node by `key`.
@@ -71245,7 +71860,7 @@ function removeNodeByKey(transform, key) {
  *   @property {Boolean} normalize
  */
 
-function removeTextByKey(transform, key, offset, length) {
+Transforms.removeTextByKey = function (transform, key, offset, length) {
   var options = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
   var _options$normalize8 = options.normalize,
       normalize = _options$normalize8 === undefined ? true : _options$normalize8;
@@ -71260,7 +71875,7 @@ function removeTextByKey(transform, key, offset, length) {
     var block = document.getClosestBlock(key);
     transform.normalizeNodeByKey(block.key, _core2.default);
   }
-}
+};
 
 /**
  * Set `properties` on mark on text at `offset` and `length` in node by `key`.
@@ -71274,7 +71889,7 @@ function removeTextByKey(transform, key, offset, length) {
  *   @property {Boolean} normalize
  */
 
-function setMarkByKey(transform, key, offset, length, mark, properties) {
+Transforms.setMarkByKey = function (transform, key, offset, length, mark, properties) {
   var options = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : {};
 
   mark = _normalize2.default.mark(mark);
@@ -71294,7 +71909,7 @@ function setMarkByKey(transform, key, offset, length, mark, properties) {
     var parent = document.getParent(key);
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Set `properties` on a node by `key`.
@@ -71306,7 +71921,7 @@ function setMarkByKey(transform, key, offset, length, mark, properties) {
  *   @property {Boolean} normalize
  */
 
-function setNodeByKey(transform, key, properties) {
+Transforms.setNodeByKey = function (transform, key, properties) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
   properties = _normalize2.default.nodeProperties(properties);
@@ -71323,7 +71938,7 @@ function setNodeByKey(transform, key, properties) {
     var node = key === document.key ? document : document.getParent(key);
     transform.normalizeNodeByKey(node.key, _core2.default);
   }
-}
+};
 
 /**
  * Split a node by `key` at `offset`.
@@ -71335,7 +71950,7 @@ function setNodeByKey(transform, key, properties) {
  *   @property {Boolean} normalize
  */
 
-function splitNodeByKey(transform, key, offset) {
+Transforms.splitNodeByKey = function (transform, key, offset) {
   var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _options$normalize11 = options.normalize,
       normalize = _options$normalize11 === undefined ? true : _options$normalize11;
@@ -71350,7 +71965,7 @@ function splitNodeByKey(transform, key, offset) {
     var parent = document.getParent(key);
     transform.normalizeNodeByKey(parent.key, _core2.default);
   }
-}
+};
 
 /**
  * Unwrap content from an inline parent with `properties`.
@@ -71362,7 +71977,7 @@ function splitNodeByKey(transform, key, offset) {
  *   @property {Boolean} normalize
  */
 
-function unwrapInlineByKey(transform, key, properties, options) {
+Transforms.unwrapInlineByKey = function (transform, key, properties, options) {
   var state = transform.state;
   var document = state.document,
       selection = state.selection;
@@ -71372,7 +71987,7 @@ function unwrapInlineByKey(transform, key, properties, options) {
   var last = node.getLastText();
   var range = selection.moveToRangeOf(first, last);
   transform.unwrapInlineAtRange(range, properties, options);
-}
+};
 
 /**
  * Unwrap content from a block parent with `properties`.
@@ -71384,7 +71999,7 @@ function unwrapInlineByKey(transform, key, properties, options) {
  *   @property {Boolean} normalize
  */
 
-function unwrapBlockByKey(transform, key, properties, options) {
+Transforms.unwrapBlockByKey = function (transform, key, properties, options) {
   var state = transform.state;
   var document = state.document,
       selection = state.selection;
@@ -71394,7 +72009,7 @@ function unwrapBlockByKey(transform, key, properties, options) {
   var last = node.getLastText();
   var range = selection.moveToRangeOf(first, last);
   transform.unwrapBlockAtRange(range, properties, options);
-}
+};
 
 /**
  * Unwrap a single node from its parent.
@@ -71409,7 +72024,7 @@ function unwrapBlockByKey(transform, key, properties, options) {
  *   @property {Boolean} normalize
  */
 
-function unwrapNodeByKey(transform, key) {
+Transforms.unwrapNodeByKey = function (transform, key) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   var _options$normalize12 = options.normalize,
       normalize = _options$normalize12 === undefined ? true : _options$normalize12;
@@ -71427,28 +72042,27 @@ function unwrapNodeByKey(transform, key) {
   var parentIndex = parentParent.nodes.indexOf(parent);
 
   if (parent.nodes.size === 1) {
-    // Remove the parent
+    // Remove the parent and replace it by the node itself.
     transform.removeNodeByKey(parent.key, { normalize: false });
-    // and replace it by the node itself
     transform.insertNodeByKey(parentParent.key, parentIndex, node, options);
   } else if (isFirst) {
-    // Just move the node before its parent
+    // Just move the node before its parent.
     transform.moveNodeByKey(key, parentParent.key, parentIndex, options);
   } else if (isLast) {
-    // Just move the node after its parent
+    // Just move the node after its parent.
     transform.moveNodeByKey(key, parentParent.key, parentIndex + 1, options);
   } else {
     var parentPath = document.getPath(parent.key);
-    // Split the parent
+    // Split the parent.
     transform.splitNodeOperation(parentPath, index);
-    // Extract the node in between the splitted parent
+    // Extract the node in between the splitted parent.
     transform.moveNodeByKey(key, parentParent.key, parentIndex + 1, { normalize: false });
 
     if (normalize) {
       transform.normalizeNodeByKey(parentParent.key, _core2.default);
     }
   }
-}
+};
 
 /**
  * Wrap a node in an inline with `properties`.
@@ -71460,7 +72074,7 @@ function unwrapNodeByKey(transform, key) {
  *   @property {Boolean} normalize
  */
 
-function wrapInlineByKey(transform, key, inline, options) {
+Transforms.wrapInlineByKey = function (transform, key, inline, options) {
   inline = _normalize2.default.inline(inline);
   inline = inline.merge({ nodes: inline.nodes.clear() });
 
@@ -71472,7 +72086,7 @@ function wrapInlineByKey(transform, key, inline, options) {
 
   transform.insertNodeByKey(parent.key, index, inline, { normalize: false });
   transform.moveNodeByKey(node.key, inline.key, 0, options);
-}
+};
 
 /**
  * Wrap a node in a block with `properties`.
@@ -71484,7 +72098,7 @@ function wrapInlineByKey(transform, key, inline, options) {
  *   @property {Boolean} normalize
  */
 
-function wrapBlockByKey(transform, key, block, options) {
+Transforms.wrapBlockByKey = function (transform, key, block, options) {
   block = _normalize2.default.block(block);
   block = block.merge({ nodes: block.nodes.clear() });
 
@@ -71496,14 +72110,29 @@ function wrapBlockByKey(transform, key, block, options) {
 
   transform.insertNodeByKey(parent.key, index, block, { normalize: false });
   transform.moveNodeByKey(node.key, block.key, 0, options);
-}
-},{"../schemas/core":370,"../utils/normalize":393}],379:[function(require,module,exports){
+};
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = Transforms;
+},{"../schemas/core":373,"../utils/normalize":396}],382:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = call;
+
+/**
+ * Transforms.
+ *
+ * @type {Object}
+ */
+
+var Transforms = {};
 
 /**
  * Call a `fn` as if it was a core transform. This is a convenience method to
@@ -71514,40 +72143,66 @@ exports.default = call;
  * @param {Mixed} ...args
  */
 
-function call(transform, fn) {
+Transforms.call = function (transform, fn) {
   for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
     args[_key - 2] = arguments[_key];
   }
 
   fn.apply(undefined, [transform].concat(args));
   return;
-}
-},{}],380:[function(require,module,exports){
+};
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = Transforms;
+},{}],383:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _applyOperation = require('./apply-operation');
+
+var _applyOperation2 = _interopRequireDefault(_applyOperation);
+
+var _atCurrentRange = require('./at-current-range');
+
+var _atCurrentRange2 = _interopRequireDefault(_atCurrentRange);
+
+var _atRange = require('./at-range');
+
+var _atRange2 = _interopRequireDefault(_atRange);
+
+var _byKey = require('./by-key');
+
+var _byKey2 = _interopRequireDefault(_byKey);
 
 var _call = require('./call');
 
 var _call2 = _interopRequireDefault(_call);
 
-var _operations = require('./operations');
+var _normalize = require('./normalize');
 
-var _atRange = require('./at-range');
-
-var _atCurrentRange = require('./at-current-range');
-
-var _byKey = require('./by-key');
-
-var _onSelection = require('./on-selection');
+var _normalize2 = _interopRequireDefault(_normalize);
 
 var _onHistory = require('./on-history');
 
-var _normalize = require('./normalize');
+var _onHistory2 = _interopRequireDefault(_onHistory);
+
+var _onSelection = require('./on-selection');
+
+var _onSelection2 = _interopRequireDefault(_onSelection);
+
+var _operations = require('./operations');
+
+var _operations2 = _interopRequireDefault(_operations);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -71557,218 +72212,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @type {Object}
  */
 
-/**
- * On history.
- */
-
-/**
- * By key.
- */
-
-/**
- * At range.
- */
-
-/**
- * Call external transform.
- */
-
-exports.default = {
-
-  /**
-   * Apply operation.
-   */
-
-  applyOperation: _applyOperation.applyOperation,
-
-  /**
-   * Call external transform.
-   */
-
-  call: _call2.default,
-
-  /**
-   * Operations.
-   */
-
-  addMarkOperation: _operations.addMarkOperation,
-  insertNodeOperation: _operations.insertNodeOperation,
-  insertTextOperation: _operations.insertTextOperation,
-  joinNodeOperation: _operations.joinNodeOperation,
-  moveNodeOperation: _operations.moveNodeOperation,
-  removeMarkOperation: _operations.removeMarkOperation,
-  removeNodeOperation: _operations.removeNodeOperation,
-  removeTextOperation: _operations.removeTextOperation,
-  setMarkOperation: _operations.setMarkOperation,
-  setNodeOperation: _operations.setNodeOperation,
-  setSelectionOperation: _operations.setSelectionOperation,
-  splitNodeAtOffsetOperation: _operations.splitNodeAtOffsetOperation,
-  splitNodeOperation: _operations.splitNodeOperation,
-
-  /**
-   * At range.
-   */
-
-  deleteAtRange: _atRange.deleteAtRange,
-  deleteBackwardAtRange: _atRange.deleteBackwardAtRange,
-  deleteCharBackwardAtRange: _atRange.deleteCharBackwardAtRange,
-  deleteCharForwardAtRange: _atRange.deleteCharForwardAtRange,
-  deleteForwardAtRange: _atRange.deleteForwardAtRange,
-  deleteLineBackwardAtRange: _atRange.deleteLineBackwardAtRange,
-  deleteLineForwardAtRange: _atRange.deleteLineForwardAtRange,
-  deleteWordBackwardAtRange: _atRange.deleteWordBackwardAtRange,
-  deleteWordForwardAtRange: _atRange.deleteWordForwardAtRange,
-  insertBlockAtRange: _atRange.insertBlockAtRange,
-  insertFragmentAtRange: _atRange.insertFragmentAtRange,
-  insertInlineAtRange: _atRange.insertInlineAtRange,
-  insertTextAtRange: _atRange.insertTextAtRange,
-  addMarkAtRange: _atRange.addMarkAtRange,
-  setBlockAtRange: _atRange.setBlockAtRange,
-  setInlineAtRange: _atRange.setInlineAtRange,
-  splitBlockAtRange: _atRange.splitBlockAtRange,
-  splitInlineAtRange: _atRange.splitInlineAtRange,
-  removeMarkAtRange: _atRange.removeMarkAtRange,
-  toggleMarkAtRange: _atRange.toggleMarkAtRange,
-  unwrapBlockAtRange: _atRange.unwrapBlockAtRange,
-  unwrapInlineAtRange: _atRange.unwrapInlineAtRange,
-  wrapBlockAtRange: _atRange.wrapBlockAtRange,
-  wrapInlineAtRange: _atRange.wrapInlineAtRange,
-  wrapTextAtRange: _atRange.wrapTextAtRange,
-
-  /**
-   * At current range.
-   */
-
-  delete: _atCurrentRange._delete,
-  deleteBackward: _atCurrentRange.deleteBackward,
-  deleteCharBackward: _atCurrentRange.deleteCharBackward,
-  deleteCharForward: _atCurrentRange.deleteCharForward,
-  deleteForward: _atCurrentRange.deleteForward,
-  deleteLineBackward: _atCurrentRange.deleteLineBackward,
-  deleteLineForward: _atCurrentRange.deleteLineForward,
-  deleteWordBackward: _atCurrentRange.deleteWordBackward,
-  deleteWordForward: _atCurrentRange.deleteWordForward,
-  insertBlock: _atCurrentRange.insertBlock,
-  insertFragment: _atCurrentRange.insertFragment,
-  insertInline: _atCurrentRange.insertInline,
-  insertText: _atCurrentRange.insertText,
-  addMark: _atCurrentRange.addMark,
-  setBlock: _atCurrentRange.setBlock,
-  setInline: _atCurrentRange.setInline,
-  splitBlock: _atCurrentRange.splitBlock,
-  splitInline: _atCurrentRange.splitInline,
-  removeMark: _atCurrentRange.removeMark,
-  toggleMark: _atCurrentRange.toggleMark,
-  unwrapBlock: _atCurrentRange.unwrapBlock,
-  unwrapInline: _atCurrentRange.unwrapInline,
-  wrapBlock: _atCurrentRange.wrapBlock,
-  wrapInline: _atCurrentRange.wrapInline,
-  wrapText: _atCurrentRange.wrapText,
-
-  /**
-   * By key.
-   */
-
-  addMarkByKey: _byKey.addMarkByKey,
-  insertNodeByKey: _byKey.insertNodeByKey,
-  insertTextByKey: _byKey.insertTextByKey,
-  joinNodeByKey: _byKey.joinNodeByKey,
-  moveNodeByKey: _byKey.moveNodeByKey,
-  removeMarkByKey: _byKey.removeMarkByKey,
-  removeNodeByKey: _byKey.removeNodeByKey,
-  removeTextByKey: _byKey.removeTextByKey,
-  setMarkByKey: _byKey.setMarkByKey,
-  setNodeByKey: _byKey.setNodeByKey,
-  splitNodeByKey: _byKey.splitNodeByKey,
-  unwrapInlineByKey: _byKey.unwrapInlineByKey,
-  unwrapBlockByKey: _byKey.unwrapBlockByKey,
-  unwrapNodeByKey: _byKey.unwrapNodeByKey,
-  wrapBlockByKey: _byKey.wrapBlockByKey,
-  wrapInlineByKey: _byKey.wrapInlineByKey,
-
-  /**
-   * On selection.
-   */
-
-  blur: _onSelection.blur,
-  collapseToAnchor: _onSelection.collapseToAnchor,
-  collapseToEnd: _onSelection.collapseToEnd,
-  collapseToEndOf: _onSelection.collapseToEndOf,
-  collapseToEndOfNextBlock: _onSelection.collapseToEndOfNextBlock,
-  collapseToEndOfNextText: _onSelection.collapseToEndOfNextText,
-  collapseToEndOfPreviousBlock: _onSelection.collapseToEndOfPreviousBlock,
-  collapseToEndOfPreviousText: _onSelection.collapseToEndOfPreviousText,
-  collapseToFocus: _onSelection.collapseToFocus,
-  collapseToStart: _onSelection.collapseToStart,
-  collapseToStartOf: _onSelection.collapseToStartOf,
-  collapseToStartOfNextBlock: _onSelection.collapseToStartOfNextBlock,
-  collapseToStartOfNextText: _onSelection.collapseToStartOfNextText,
-  collapseToStartOfPreviousBlock: _onSelection.collapseToStartOfPreviousBlock,
-  collapseToStartOfPreviousText: _onSelection.collapseToStartOfPreviousText,
-  extendBackward: _onSelection.extendBackward,
-  extendForward: _onSelection.extendForward,
-  extendToEndOf: _onSelection.extendToEndOf,
-  extendToStartOf: _onSelection.extendToStartOf,
-  focus: _onSelection.focus,
-  flipSelection: _onSelection.flipSelection,
-  moveBackward: _onSelection.moveBackward,
-  moveForward: _onSelection.moveForward,
-  moveEndOffset: _onSelection.moveEndOffset,
-  moveStartOffset: _onSelection.moveStartOffset,
-  moveTo: _onSelection.moveTo,
-  moveToOffsets: _onSelection.moveToOffsets,
-  moveToRangeOf: _onSelection.moveToRangeOf,
-  unsetMarks: _onSelection.unsetMarks,
-  unsetSelection: _onSelection.unsetSelection,
-  snapshotSelection: _onSelection.snapshotSelection,
-
-  /**
-   * History.
-   */
-
-  redo: _onHistory.redo,
-  save: _onHistory.save,
-  undo: _onHistory.undo,
-
-  /**
-   * Normalize.
-   */
-
-  normalize: _normalize.normalize,
-  normalizeDocument: _normalize.normalizeDocument,
-  normalizeSelection: _normalize.normalizeSelection,
-  normalizeNodeByKey: _normalize.normalizeNodeByKey
-};
-
-/**
- * Normalize.
- */
-
-/**
- * On selection.
- */
-
-/**
- * At current range.
- */
-
-/**
- * Operations.
- */
-
-/**
- * Apply operation.
- */
-},{"./apply-operation":375,"./at-current-range":376,"./at-range":377,"./by-key":378,"./call":379,"./normalize":381,"./on-history":382,"./on-selection":383,"./operations":384}],381:[function(require,module,exports){
+exports.default = _extends({}, _applyOperation2.default, _atCurrentRange2.default, _atRange2.default, _byKey2.default, _call2.default, _normalize2.default, _onHistory2.default, _onSelection2.default, _operations2.default);
+},{"./apply-operation":378,"./at-current-range":379,"./at-range":380,"./by-key":381,"./call":382,"./normalize":384,"./on-history":385,"./on-selection":386,"./operations":387}],384:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.normalize = normalize;
-exports.normalizeDocument = normalizeDocument;
-exports.normalizeNodeByKey = normalizeNodeByKey;
-exports.normalizeSelection = normalizeSelection;
 
 var _normalize = require('../utils/normalize');
 
@@ -71787,16 +72237,24 @@ var _immutable = require('immutable');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
+ * Transforms.
+ *
+ * @type {Object}
+ */
+
+var Transforms = {};
+
+/**
  * Normalize the document and selection with a `schema`.
  *
  * @param {Transform} transform
  * @param {Schema} schema
  */
 
-function normalize(transform, schema) {
+Transforms.normalize = function (transform, schema) {
   transform.normalizeDocument(schema);
   transform.normalizeSelection(schema);
-}
+};
 
 /**
  * Normalize the document with a `schema`.
@@ -71805,12 +72263,12 @@ function normalize(transform, schema) {
  * @param {Schema} schema
  */
 
-function normalizeDocument(transform, schema) {
+Transforms.normalizeDocument = function (transform, schema) {
   var state = transform.state;
   var document = state.document;
 
   transform.normalizeNodeByKey(document.key, schema);
-}
+};
 
 /**
  * Normalize a `node` and its children with a `schema`.
@@ -71820,7 +72278,7 @@ function normalizeDocument(transform, schema) {
  * @param {Schema} schema
  */
 
-function normalizeNodeByKey(transform, key, schema) {
+Transforms.normalizeNodeByKey = function (transform, key, schema) {
   assertSchema(schema);
 
   // If the schema has no validation rules, there's nothing to normalize.
@@ -71833,7 +72291,7 @@ function normalizeNodeByKey(transform, key, schema) {
   var node = document.assertNode(key);
 
   normalizeNodeAndChildren(transform, node, schema);
-}
+};
 
 /**
  * Normalize the selection.
@@ -71841,18 +72299,26 @@ function normalizeNodeByKey(transform, key, schema) {
  * @param {Transform} transform
  */
 
-function normalizeSelection(transform) {
+Transforms.normalizeSelection = function (transform) {
   var state = transform.state;
   var _state = state,
       document = _state.document,
       selection = _state.selection;
 
+  // If document is empty, return
+
+  if (document.nodes.size === 0) {
+    return;
+  }
+
   selection = selection.normalize(document);
 
   // If the selection is unset, or the anchor or focus key in the selection are
-  // pointing to nodes that no longer exist, warn and reset the selection.
+  // pointing to nodes that no longer exist, warn (if not unset) and reset the selection.
   if (selection.isUnset || !document.hasDescendant(selection.anchorKey) || !document.hasDescendant(selection.focusKey)) {
-    (0, _warn2.default)('The selection was invalid and was reset to start of the document. The selection in question was:', selection);
+    if (!selection.isUnset) {
+      (0, _warn2.default)('The selection was invalid and was reset to start of the document. The selection in question was:', selection);
+    }
 
     var firstText = document.getFirstText();
     selection = selection.merge({
@@ -71866,7 +72332,7 @@ function normalizeSelection(transform) {
 
   state = state.merge({ selection: selection });
   transform.state = state;
-}
+};
 
 /**
  * Normalize a `node` and its children with a `schema`.
@@ -71997,15 +72463,28 @@ function assertSchema(schema) {
     throw new Error('You passed an invalid `schema` object: ' + schema + '.');
   }
 }
-},{"../models/schema":363,"../utils/normalize":393,"../utils/warn":397,"immutable":162}],382:[function(require,module,exports){
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = Transforms;
+},{"../models/schema":366,"../utils/normalize":396,"../utils/warn":400,"immutable":162}],385:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.redo = redo;
-exports.save = save;
-exports.undo = undo;
+
+/**
+ * Transforms.
+ *
+ * @type {Object}
+ */
+
+var Transforms = {};
 
 /**
  * Redo to the next state in the history.
@@ -72013,7 +72492,7 @@ exports.undo = undo;
  * @param {Transform} transform
  */
 
-function redo(transform) {
+Transforms.redo = function (transform) {
   var state = transform.state;
   var _state = state,
       history = _state.history;
@@ -72042,7 +72521,7 @@ function redo(transform) {
 
   // Update the transform.
   transform.state = state;
-}
+};
 
 /**
  * Save the operations into the history.
@@ -72051,7 +72530,7 @@ function redo(transform) {
  * @param {Object} options
  */
 
-function save(transform) {
+Transforms.save = function (transform) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var _options$merge = options.merge,
       merge = _options$merge === undefined ? false : _options$merge;
@@ -72087,7 +72566,7 @@ function save(transform) {
 
   // Update the transform.
   transform.state = state;
-}
+};
 
 /**
  * Undo the previous operations in the history.
@@ -72095,7 +72574,7 @@ function save(transform) {
  * @param {Transform} transform
  */
 
-function undo(transform) {
+Transforms.undo = function (transform) {
   var state = transform.state;
   var _state3 = state,
       history = _state3.history;
@@ -72126,231 +72605,64 @@ function undo(transform) {
 
   // Update the transform.
   transform.state = state;
-}
-},{}],383:[function(require,module,exports){
+};
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = Transforms;
+},{}],386:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.collapseToEndOfNextBlock = collapseToEndOfNextBlock;
-exports.collapseToEndOfNextText = collapseToEndOfNextText;
-exports.collapseToEndOfPreviousBlock = collapseToEndOfPreviousBlock;
-exports.collapseToEndOfPreviousText = collapseToEndOfPreviousText;
-exports.collapseToStartOfNextBlock = collapseToStartOfNextBlock;
-exports.collapseToStartOfNextText = collapseToStartOfNextText;
-exports.collapseToStartOfPreviousBlock = collapseToStartOfPreviousBlock;
-exports.collapseToStartOfPreviousText = collapseToStartOfPreviousText;
-exports.moveTo = moveTo;
-exports.unsetMarks = unsetMarks;
-exports.snapshotSelection = snapshotSelection;
-exports.unsetSelection = unsetSelection;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _warn = require('../utils/warn');
+
+var _warn2 = _interopRequireDefault(_warn);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Auto-generate many transforms based on the `Selection` methods.
- */
-
-var blur = exports.blur = generate('blur');
-var collapseToAnchor = exports.collapseToAnchor = generate('collapseToAnchor');
-var collapseToEnd = exports.collapseToEnd = generate('collapseToEnd');
-var collapseToFocus = exports.collapseToFocus = generate('collapseToFocus');
-var collapseToStart = exports.collapseToStart = generate('collapseToStart');
-var collapseToEndOf = exports.collapseToEndOf = generate('collapseToEndOf');
-var collapseToStartOf = exports.collapseToStartOf = generate('collapseToStartOf');
-var extendBackward = exports.extendBackward = generate('extendBackward');
-var extendForward = exports.extendForward = generate('extendForward');
-var extendToEndOf = exports.extendToEndOf = generate('extendToEndOf');
-var extendToStartOf = exports.extendToStartOf = generate('extendToStartOf');
-var focus = exports.focus = generate('focus');
-var moveBackward = exports.moveBackward = generate('moveBackward');
-var moveForward = exports.moveForward = generate('moveForward');
-var moveToOffsets = exports.moveToOffsets = generate('moveToOffsets');
-var moveToRangeOf = exports.moveToRangeOf = generate('moveToRangeOf');
-var moveStartOffset = exports.moveStartOffset = generate('moveStartOffset');
-var moveEndOffset = exports.moveEndOffset = generate('moveEndOffset');
-
-var flipSelection = exports.flipSelection = generate('flip');
-
-/**
- * Move the selection to the end of the next block.
+ * Transforms.
  *
- * @param {Transform} tansform
+ * @type {Object}
  */
 
-function collapseToEndOfNextBlock(transform) {
-  var state = transform.state;
-  var document = state.document,
-      selection = state.selection;
-
-  var blocks = document.getBlocksAtRange(selection);
-  var last = blocks.last();
-  var next = document.getNextBlock(last.key);
-  if (!next) return;
-
-  var sel = selection.collapseToEndOf(next);
-  transform.setSelectionOperation(sel);
-}
+var Transforms = {};
 
 /**
- * Move the selection to the end of the next text.
- *
- * @param {Transform} tansform
- */
-
-function collapseToEndOfNextText(transform) {
-  var state = transform.state;
-  var document = state.document,
-      selection = state.selection;
-
-  var texts = document.getTextsAtRange(selection);
-  var last = texts.last();
-  var next = document.getNextText(last.key);
-  if (!next) return;
-
-  var sel = selection.collapseToEndOf(next);
-  transform.setSelectionOperation(sel);
-}
-
-/**
- * Move the selection to the end of the previous block.
- *
- * @param {Transform} tansform
- */
-
-function collapseToEndOfPreviousBlock(transform) {
-  var state = transform.state;
-  var document = state.document,
-      selection = state.selection;
-
-  var blocks = document.getBlocksAtRange(selection);
-  var first = blocks.first();
-  var previous = document.getPreviousBlock(first.key);
-  if (!previous) return;
-
-  var sel = selection.collapseToEndOf(previous);
-  transform.setSelectionOperation(sel);
-}
-
-/**
- * Move the selection to the end of the previous text.
- *
- * @param {Transform} tansform
- */
-
-function collapseToEndOfPreviousText(transform) {
-  var state = transform.state;
-  var document = state.document,
-      selection = state.selection;
-
-  var texts = document.getTextsAtRange(selection);
-  var first = texts.first();
-  var previous = document.getPreviousText(first.key);
-  if (!previous) return;
-
-  var sel = selection.collapseToEndOf(previous);
-  transform.setSelectionOperation(sel);
-}
-
-/**
- * Move the selection to the start of the next block.
- *
- * @param {Transform} tansform
- */
-
-function collapseToStartOfNextBlock(transform) {
-  var state = transform.state;
-  var document = state.document,
-      selection = state.selection;
-
-  var blocks = document.getBlocksAtRange(selection);
-  var last = blocks.last();
-  var next = document.getNextBlock(last.key);
-  if (!next) return;
-
-  var sel = selection.collapseToStartOf(next);
-  transform.setSelectionOperation(sel);
-}
-
-/**
- * Move the selection to the start of the next text.
- *
- * @param {Transform} tansform
- */
-
-function collapseToStartOfNextText(transform) {
-  var state = transform.state;
-  var document = state.document,
-      selection = state.selection;
-
-  var texts = document.getTextsAtRange(selection);
-  var last = texts.last();
-  var next = document.getNextText(last.key);
-  if (!next) return;
-
-  var sel = selection.collapseToStartOf(next);
-  transform.setSelectionOperation(sel);
-}
-
-/**
- * Move the selection to the start of the previous block.
- *
- * @param {Transform} tansform
- */
-
-function collapseToStartOfPreviousBlock(transform) {
-  var state = transform.state;
-  var document = state.document,
-      selection = state.selection;
-
-  var blocks = document.getBlocksAtRange(selection);
-  var first = blocks.first();
-  var previous = document.getPreviousBlock(first.key);
-  if (!previous) return;
-
-  var sel = selection.collapseToStartOf(previous);
-  transform.setSelectionOperation(sel);
-}
-
-/**
- * Move the selection to the start of the previous text.
- *
- * @param {Transform} tansform
- */
-
-function collapseToStartOfPreviousText(transform) {
-  var state = transform.state;
-  var document = state.document,
-      selection = state.selection;
-
-  var texts = document.getTextsAtRange(selection);
-  var first = texts.first();
-  var previous = document.getPreviousText(first.key);
-  if (!previous) return;
-
-  var sel = selection.collapseToStartOf(previous);
-  transform.setSelectionOperation(sel);
-}
-
-/**
- * Move the selection to a specific anchor and focus point.
+ * Set `properties` on the selection.
  *
  * @param {Transform} transform
  * @param {Object} properties
  */
 
-function moveTo(transform, properties) {
+Transforms.select = function (transform, properties) {
   transform.setSelectionOperation(properties);
-}
+};
 
 /**
- * Unset the selection's marks.
+ * Selects the whole selection.
  *
  * @param {Transform} transform
+ * @param {Object} properties
  */
 
-function unsetMarks(transform) {
-  transform.setSelectionOperation({ marks: null });
-}
+Transforms.selectAll = function (transform) {
+  var state = transform.state;
+  var document = state.document,
+      selection = state.selection;
+
+  var next = selection.moveToRangeOf(document);
+  transform.setSelectionOperation(next);
+};
 
 /**
  * Snapshot the current selection.
@@ -72358,12 +72670,35 @@ function unsetMarks(transform) {
  * @param {Transform} transform
  */
 
-function snapshotSelection(transform) {
+Transforms.snapshotSelection = function (transform) {
   var state = transform.state;
   var selection = state.selection;
 
   transform.setSelectionOperation(selection, { snapshot: true });
-}
+};
+
+/**
+ * Set `properties` on the selection.
+ *
+ * @param {Mixed} ...args
+ * @param {Transform} transform
+ */
+
+Transforms.moveTo = function (transform, properties) {
+  (0, _warn2.default)('The `moveTo()` transform is deprecated, please use `select()` instead.');
+  transform.select(properties);
+};
+
+/**
+ * Unset the selection's marks.
+ *
+ * @param {Transform} transform
+ */
+
+Transforms.unsetMarks = function (transform) {
+  (0, _warn2.default)('The `unsetMarks()` transform is deprecated.');
+  transform.setSelectionOperation({ marks: null });
+};
 
 /**
  * Unset the selection, removing an association to a node.
@@ -72371,7 +72706,8 @@ function snapshotSelection(transform) {
  * @param {Transform} transform
  */
 
-function unsetSelection(transform) {
+Transforms.unsetSelection = function (transform) {
+  (0, _warn2.default)('The `unsetSelection()` transform is deprecated, please use `deselect()` instead.');
   transform.setSelectionOperation({
     anchorKey: null,
     anchorOffset: 0,
@@ -72380,54 +72716,130 @@ function unsetSelection(transform) {
     isFocused: false,
     isBackward: false
   });
-}
+};
 
 /**
- * Generate a selection transform for `method`.
- *
- * @param {String} method
- * @return {Function}
+ * Mix in selection transforms that are just a proxy for the selection method.
  */
 
-function generate(method) {
-  return function (transform) {
+var PROXY_TRANSFORMS = ['blur', 'collapseTo', 'collapseToAnchor', 'collapseToEnd', 'collapseToEndOf', 'collapseToFocus', 'collapseToStart', 'collapseToStartOf', 'extend', 'extendTo', 'extendToEndOf', 'extendToStartOf', 'flip', 'focus', 'move', 'moveAnchor', 'moveAnchorOffsetTo', 'moveAnchorTo', 'moveAnchorToEndOf', 'moveAnchorToStartOf', 'moveEnd', 'moveEndOffsetTo', 'moveEndTo', 'moveFocus', 'moveFocusOffsetTo', 'moveFocusTo', 'moveFocusToEndOf', 'moveFocusToStartOf', 'moveOffsetsTo', 'moveStart', 'moveStartOffsetTo', 'moveStartTo',
+// 'moveTo', Commented out for now, since it conflicts with a deprecated one.
+'moveToEnd', 'moveToEndOf', 'moveToRangeOf', 'moveToStart', 'moveToStartOf', 'deselect'];
+
+PROXY_TRANSFORMS.forEach(function (method) {
+  Transforms[method] = function (transform) {
     for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
     }
 
+    var normalize = method != 'deselect';
     var state = transform.state;
     var document = state.document,
         selection = state.selection;
 
-    var sel = selection[method].apply(selection, args).normalize(document);
+    var next = selection[method].apply(selection, args);
+    if (normalize) next = next.normalize(document);
+    transform.setSelectionOperation(next);
+  };
+});
+
+/**
+ * Mix in node-related transforms.
+ */
+
+var PREFIXES = ['moveTo', 'collapseTo', 'extendTo'];
+
+var DIRECTIONS = ['Next', 'Previous'];
+
+var KINDS = ['Block', 'Inline', 'Text'];
+
+PREFIXES.forEach(function (prefix) {
+  var edges = ['Start', 'End'];
+
+  if (prefix == 'moveTo') {
+    edges.push('Range');
+  }
+
+  edges.forEach(function (edge) {
+    DIRECTIONS.forEach(function (direction) {
+      KINDS.forEach(function (kind) {
+        var get = 'get' + direction + kind;
+        var getAtRange = 'get' + kind + 'sAtRange';
+        var index = direction == 'Next' ? 'last' : 'first';
+        var method = '' + prefix + edge + 'Of';
+        var name = '' + method + direction + kind;
+
+        Transforms[name] = function (transform) {
+          var state = transform.state;
+          var document = state.document,
+              selection = state.selection;
+
+          var nodes = document[getAtRange](selection);
+          var node = nodes[index]();
+          var target = document[get](node.key);
+          if (!target) return;
+          var next = selection[method](target);
+          transform.setSelectionOperation(next);
+        };
+      });
+    });
+  });
+});
+
+/**
+ * Mix in deprecated transforms with a warning.
+ */
+
+var DEPRECATED_TRANSFORMS = [['extendBackward', 'extend', 'The `extendBackward(n)` transform is deprecated, please use `extend(n)` instead with a negative offset.'], ['extendForward', 'extend', 'The `extendForward(n)` transform is deprecated, please use `extend(n)` instead.'], ['moveBackward', 'move', 'The `moveBackward(n)` transform is deprecated, please use `move(n)` instead with a negative offset.'], ['moveForward', 'move', 'The `moveForward(n)` transform is deprecated, please use `move(n)` instead.'], ['moveStartOffset', 'moveStart', 'The `moveStartOffset(n)` transform is deprecated, please use `moveStart(n)` instead.'], ['moveEndOffset', 'moveEnd', 'The `moveEndOffset(n)` transform is deprecated, please use `moveEnd()` instead.'], ['moveToOffsets', 'moveOffsetsTo', 'The `moveToOffsets()` transform is deprecated, please use `moveOffsetsTo()` instead.'], ['flipSelection', 'flip', 'The `flipSelection()` transform is deprecated, please use `flip()` instead.']];
+
+DEPRECATED_TRANSFORMS.forEach(function (_ref) {
+  var _ref2 = _slicedToArray(_ref, 3),
+      old = _ref2[0],
+      current = _ref2[1],
+      warning = _ref2[2];
+
+  Transforms[old] = function (transform) {
+    for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      args[_key2 - 1] = arguments[_key2];
+    }
+
+    (0, _warn2.default)(warning);
+    var state = transform.state;
+    var document = state.document,
+        selection = state.selection;
+
+    var sel = selection[current].apply(selection, args).normalize(document);
     transform.setSelectionOperation(sel);
   };
-}
-},{}],384:[function(require,module,exports){
+});
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = Transforms;
+},{"../utils/warn":400}],387:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addMarkOperation = addMarkOperation;
-exports.insertNodeOperation = insertNodeOperation;
-exports.insertTextOperation = insertTextOperation;
-exports.joinNodeOperation = joinNodeOperation;
-exports.moveNodeOperation = moveNodeOperation;
-exports.removeMarkOperation = removeMarkOperation;
-exports.removeNodeOperation = removeNodeOperation;
-exports.removeTextOperation = removeTextOperation;
-exports.setMarkOperation = setMarkOperation;
-exports.setNodeOperation = setNodeOperation;
-exports.setSelectionOperation = setSelectionOperation;
-exports.splitNodeAtOffsetOperation = splitNodeAtOffsetOperation;
-exports.splitNodeOperation = splitNodeOperation;
 
 var _normalize = require('../utils/normalize');
 
 var _normalize2 = _interopRequireDefault(_normalize);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Transforms.
+ *
+ * @type {Object}
+ */
+
+var Transforms = {};
 
 /**
  * Add mark to text at `offset` and `length` in node by `path`.
@@ -72439,7 +72851,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {Mixed} mark
  */
 
-function addMarkOperation(transform, path, offset, length, mark) {
+Transforms.addMarkOperation = function (transform, path, offset, length, mark) {
   var inverse = [{
     type: 'remove_mark',
     path: path,
@@ -72458,7 +72870,7 @@ function addMarkOperation(transform, path, offset, length, mark) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Insert a `node` at `index` in a node by `path`.
@@ -72469,7 +72881,7 @@ function addMarkOperation(transform, path, offset, length, mark) {
  * @param {Node} node
  */
 
-function insertNodeOperation(transform, path, index, node) {
+Transforms.insertNodeOperation = function (transform, path, index, node) {
   var inversePath = path.slice().concat([index]);
   var inverse = [{
     type: 'remove_node',
@@ -72485,7 +72897,7 @@ function insertNodeOperation(transform, path, index, node) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Insert `text` at `offset` in node by `path`.
@@ -72497,7 +72909,7 @@ function insertNodeOperation(transform, path, index, node) {
  * @param {Set<Mark>} marks (optional)
  */
 
-function insertTextOperation(transform, path, offset, text, marks) {
+Transforms.insertTextOperation = function (transform, path, offset, text, marks) {
   var inverseLength = text.length;
   var inverse = [{
     type: 'remove_text',
@@ -72516,7 +72928,7 @@ function insertTextOperation(transform, path, offset, text, marks) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Join a node by `path` with a node `withPath`.
@@ -72526,7 +72938,7 @@ function insertTextOperation(transform, path, offset, text, marks) {
  * @param {Array} withPath
  */
 
-function joinNodeOperation(transform, path, withPath) {
+Transforms.joinNodeOperation = function (transform, path, withPath) {
   var state = transform.state;
   var document = state.document;
 
@@ -72560,7 +72972,7 @@ function joinNodeOperation(transform, path, withPath) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Move a node by `path` to a `newPath` and `newIndex`.
@@ -72571,7 +72983,7 @@ function joinNodeOperation(transform, path, withPath) {
  * @param {Number} newIndex
  */
 
-function moveNodeOperation(transform, path, newPath, newIndex) {
+Transforms.moveNodeOperation = function (transform, path, newPath, newIndex) {
   var parentPath = path.slice(0, -1);
   var parentIndex = path[path.length - 1];
   var inversePath = newPath.slice().concat([newIndex]);
@@ -72592,7 +73004,7 @@ function moveNodeOperation(transform, path, newPath, newIndex) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Remove mark from text at `offset` and `length` in node by `path`.
@@ -72604,7 +73016,7 @@ function moveNodeOperation(transform, path, newPath, newIndex) {
  * @param {Mark} mark
  */
 
-function removeMarkOperation(transform, path, offset, length, mark) {
+Transforms.removeMarkOperation = function (transform, path, offset, length, mark) {
   var inverse = [{
     type: 'add_mark',
     path: path,
@@ -72623,7 +73035,7 @@ function removeMarkOperation(transform, path, offset, length, mark) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Remove a node by `path`.
@@ -72632,7 +73044,7 @@ function removeMarkOperation(transform, path, offset, length, mark) {
  * @param {Array} path
  */
 
-function removeNodeOperation(transform, path) {
+Transforms.removeNodeOperation = function (transform, path) {
   var state = transform.state;
   var document = state.document;
 
@@ -72654,7 +73066,7 @@ function removeNodeOperation(transform, path) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Remove text at `offset` and `length` in node by `path`.
@@ -72665,7 +73077,7 @@ function removeNodeOperation(transform, path) {
  * @param {Number} length
  */
 
-function removeTextOperation(transform, path, offset, length) {
+Transforms.removeTextOperation = function (transform, path, offset, length) {
   var state = transform.state;
   var document = state.document;
 
@@ -72708,7 +73120,7 @@ function removeTextOperation(transform, path, offset, length) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Set `properties` on mark on text at `offset` and `length` in node by `path`.
@@ -72721,7 +73133,7 @@ function removeTextOperation(transform, path, offset, length) {
  * @param {Mark} newMark
  */
 
-function setMarkOperation(transform, path, offset, length, mark, newMark) {
+Transforms.setMarkOperation = function (transform, path, offset, length, mark, newMark) {
   var inverse = [{
     type: 'set_mark',
     path: path,
@@ -72742,7 +73154,7 @@ function setMarkOperation(transform, path, offset, length, mark, newMark) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Set `properties` on a node by `path`.
@@ -72752,7 +73164,7 @@ function setMarkOperation(transform, path, offset, length, mark, newMark) {
  * @param {Object} properties
  */
 
-function setNodeOperation(transform, path, properties) {
+Transforms.setNodeOperation = function (transform, path, properties) {
   var state = transform.state;
   var document = state.document;
 
@@ -72777,7 +73189,7 @@ function setNodeOperation(transform, path, properties) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Set the selection to a new `selection`.
@@ -72786,7 +73198,7 @@ function setNodeOperation(transform, path, properties) {
  * @param {Mixed} selection
  */
 
-function setSelectionOperation(transform, properties) {
+Transforms.setSelectionOperation = function (transform, properties) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
   properties = _normalize2.default.selectionProperties(properties);
@@ -72853,7 +73265,7 @@ function setSelectionOperation(transform, properties) {
 
   // Apply the operation.
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Split a node by `path` at `offset`.
@@ -72863,7 +73275,7 @@ function setSelectionOperation(transform, properties) {
  * @param {Number} offset
  */
 
-function splitNodeAtOffsetOperation(transform, path, offset) {
+Transforms.splitNodeAtOffsetOperation = function (transform, path, offset) {
   var inversePath = path.slice();
   inversePath[path.length - 1] += 1;
 
@@ -72871,7 +73283,7 @@ function splitNodeAtOffsetOperation(transform, path, offset) {
     type: 'join_node',
     path: inversePath,
     withPath: path,
-    // we will split down to the text nodes, so we must join nodes recursively
+    // We will split down to the text nodes, so we must join nodes recursively.
     deep: true
   }];
 
@@ -72884,7 +73296,7 @@ function splitNodeAtOffsetOperation(transform, path, offset) {
   };
 
   transform.applyOperation(operation);
-}
+};
 
 /**
  * Split a node by `path` after its 'count' child.
@@ -72894,7 +73306,7 @@ function splitNodeAtOffsetOperation(transform, path, offset) {
  * @param {Number} count
  */
 
-function splitNodeOperation(transform, path, count) {
+Transforms.splitNodeOperation = function (transform, path, count) {
   var inversePath = path.slice();
   inversePath[path.length - 1] += 1;
 
@@ -72914,8 +73326,16 @@ function splitNodeOperation(transform, path, count) {
   };
 
   transform.applyOperation(operation);
-}
-},{"../utils/normalize":393}],385:[function(require,module,exports){
+};
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = Transforms;
+},{"../utils/normalize":396}],388:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -72946,7 +73366,7 @@ function findDOMNode(node) {
  */
 
 exports.default = findDOMNode;
-},{}],386:[function(require,module,exports){
+},{}],389:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73015,7 +73435,7 @@ resetKeyGenerator();
 exports.default = generateKey;
 exports.setKeyGenerator = setKeyGenerator;
 exports.resetKeyGenerator = resetKeyGenerator;
-},{}],387:[function(require,module,exports){
+},{}],390:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73126,7 +73546,7 @@ function getTransferType(data) {
  */
 
 exports.default = getTransferData;
-},{"../constants/types":353,"../serializers/base-64":371}],388:[function(require,module,exports){
+},{"../constants/types":356,"../serializers/base-64":374}],391:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73167,7 +73587,7 @@ function isInRange(index, text, range) {
  */
 
 exports.default = isInRange;
-},{}],389:[function(require,module,exports){
+},{}],392:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73192,7 +73612,7 @@ function isReactComponent(object) {
  */
 
 exports.default = isReactComponent;
-},{}],390:[function(require,module,exports){
+},{}],393:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73460,7 +73880,7 @@ function __enable(enabled) {
 exports.default = memoize;
 exports.__clear = __clear;
 exports.__enable = __enable;
-},{"../constants/is-dev":352,"es6-map":111}],391:[function(require,module,exports){
+},{"../constants/is-dev":355,"es6-map":111}],394:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73482,7 +73902,7 @@ function noop() {}
  */
 
 exports.default = noop;
-},{}],392:[function(require,module,exports){
+},{}],395:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73571,7 +73991,7 @@ function getNonComment(parent, index, direction) {
  */
 
 exports.default = normalizeNodeAndOffset;
-},{}],393:[function(require,module,exports){
+},{}],396:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73829,7 +74249,7 @@ exports.default = {
   selection: selection,
   selectionProperties: selectionProperties
 };
-},{"../models/block":355,"../models/data":357,"../models/document":358,"../models/inline":359,"../models/mark":360,"../models/selection":364,"../models/text":367,"./warn":397,"type-of":403}],394:[function(require,module,exports){
+},{"../models/block":358,"../models/data":360,"../models/document":361,"../models/inline":362,"../models/mark":363,"../models/selection":367,"../models/text":370,"./warn":400,"type-of":406}],397:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73914,7 +74334,6 @@ function findKey(rawNode, rawOffset) {
   // Find the closest parent with an offset key attribute.
 
   var closest = parentNode.closest(SELECTOR);
-  var offsetKey = void 0;
 
   // For void nodes, the element with the offset key will be a cousin, not an
   // ancestor, so find it by going down from the nearest void parent.
@@ -73926,7 +74345,7 @@ function findKey(rawNode, rawOffset) {
   }
 
   // Get the string value of the offset key attribute.
-  offsetKey = closest.getAttribute(ATTRIBUTE);
+  var offsetKey = closest.getAttribute(ATTRIBUTE);
 
   // If we still didn't find an offset key, abort.
   if (!offsetKey) return null;
@@ -74022,7 +74441,7 @@ exports.default = {
   parse: parse,
   stringify: stringify
 };
-},{"./normalize-node-and-offset":392}],395:[function(require,module,exports){
+},{"./normalize-node-and-offset":395}],398:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74033,72 +74452,46 @@ var _getWindow = require('get-window');
 
 var _getWindow2 = _interopRequireDefault(_getWindow);
 
+var _selectionIsBackward = require('selection-is-backward');
+
+var _selectionIsBackward2 = _interopRequireDefault(_selectionIsBackward);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function scrollWrapperElements(element, options) {
-  var window = (0, _getWindow2.default)(element);
-  var elementRect = element.getBoundingClientRect();
-  var wrapper = element.parentNode;
-
-  while (wrapper != window.document.body) {
-    var wrapperRect = wrapper.getBoundingClientRect();
-    var margin = options.margin;
-    var deltaX = 0;
-    var deltaY = 0;
-
-    if (elementRect.top < wrapperRect.top + margin) {
-      deltaY = elementRect.top - wrapperRect.top - margin;
-    } else if (elementRect.bottom > wrapperRect.bottom - margin) {
-      deltaY = elementRect.bottom - wrapperRect.bottom + margin;
-    }
-    if (elementRect.left < wrapperRect.left + margin) {
-      deltaX = elementRect.left - wrapperRect.left - margin;
-    } else if (elementRect.right > wrapperRect.right - margin) {
-      deltaX = elementRect.right - wrapperRect.right + margin;
-    }
-    wrapper.scrollTop += deltaY;
-    wrapper.scrollLeft += deltaX;
-    wrapper = wrapper.parentNode;
-  }
-
-  return elementRect;
-}
 /**
- * Copied from `element-scroll-to`, but edited to account for `window` being
- * inside of iframes.
+ * Scroll the current selection's focus point into view if needed.
  *
- * https://github.com/webmodules/element-scroll-to
+ * @param {Selection} selection
  */
 
-function scrollWindow(element, options, elementRect) {
-  var window = (0, _getWindow2.default)(element);
-  var margin = options.margin;
-  var deltaX = 0;
-  var deltaY = 0;
+function scrollToSelection(selection) {
+  var window = (0, _getWindow2.default)(selection.anchorNode);
+  var backward = (0, _selectionIsBackward2.default)(selection);
+  var range = selection.getRangeAt(0);
+  var rect = range.getBoundingClientRect();
+  var innerWidth = window.innerWidth,
+      innerHeight = window.innerHeight,
+      scrollY = window.scrollY,
+      scrollX = window.scrollX;
 
-  if (elementRect.top < 0 + margin) {
-    deltaY = elementRect.top - margin;
-  } else if (elementRect.bottom > window.innerHeight - margin) {
-    deltaY = elementRect.bottom - window.innerHeight + margin;
-  }
-  if (elementRect.left < 0 + margin) {
-    deltaX = elementRect.left - margin;
-  } else if (elementRect.right > window.innerWidth - margin) {
-    deltaX = elementRect.right - window.innerWidth + margin;
-  }
+  var top = (backward ? rect.top : rect.bottom) + scrollY;
+  var left = (backward ? rect.left : rect.right) + scrollX;
 
-  window.scrollBy(deltaX, deltaY);
+  var x = left < scrollX || innerWidth + scrollX < left ? left - innerWidth / 2 : scrollX;
+
+  var y = top < scrollY || innerHeight + scrollY < top ? top - innerHeight / 2 : scrollY;
+
+  window.scrollTo(x, y);
 }
 
-function scrollTo(element, options) {
-  options = options || {};
-  options.margin = options.margin || 0;
-  var rect = scrollWrapperElements(element, options);
-  scrollWindow(element, options, rect);
-}
+/**
+ * Export.
+ *
+ * @type {Function}
+ */
 
-exports.default = scrollTo;
-},{"get-window":151}],396:[function(require,module,exports){
+exports.default = scrollToSelection;
+},{"get-window":151,"selection-is-backward":347}],399:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74300,7 +74693,7 @@ exports.default = {
   getWordOffsetBackward: getWordOffsetBackward,
   getWordOffsetForward: getWordOffsetForward
 };
-},{"esrever":122}],397:[function(require,module,exports){
+},{"esrever":122}],400:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74352,7 +74745,7 @@ function warn(message) {
  */
 
 exports.default = warn;
-},{"../constants/is-dev":352}],398:[function(require,module,exports){
+},{"../constants/is-dev":355}],401:[function(require,module,exports){
 (function (process){
 
 /**
@@ -74533,7 +74926,7 @@ function localstorage(){
 }
 
 }).call(this,require('_process'))
-},{"./debug":399,"_process":185}],399:[function(require,module,exports){
+},{"./debug":402,"_process":186}],402:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -74735,7 +75128,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":400}],400:[function(require,module,exports){
+},{"ms":403}],403:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -74886,7 +75279,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's'
 }
 
-},{}],401:[function(require,module,exports){
+},{}],404:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75015,7 +75408,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":124,"inherits":163,"readable-stream/duplex.js":334,"readable-stream/passthrough.js":341,"readable-stream/readable.js":342,"readable-stream/transform.js":343,"readable-stream/writable.js":344}],402:[function(require,module,exports){
+},{"events":124,"inherits":163,"readable-stream/duplex.js":336,"readable-stream/passthrough.js":343,"readable-stream/readable.js":344,"readable-stream/transform.js":345,"readable-stream/writable.js":346}],405:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75238,7 +75631,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":27}],403:[function(require,module,exports){
+},{"buffer":27}],406:[function(require,module,exports){
 var toString = Object.prototype.toString
 
 module.exports = function(val){
@@ -75269,7 +75662,7 @@ module.exports = function(val){
   return typeof val
 }
 
-},{}],404:[function(require,module,exports){
+},{}],407:[function(require,module,exports){
 (function (global){
 
 /**
@@ -75340,7 +75733,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],405:[function(require,module,exports){
+},{}],408:[function(require,module,exports){
 (function() {
   var MarkedYAMLError, events, nodes, _ref,
     __hasProp = {}.hasOwnProperty,
@@ -75506,7 +75899,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":407,"./events":408,"./nodes":410}],406:[function(require,module,exports){
+},{"./errors":410,"./events":411,"./nodes":413}],409:[function(require,module,exports){
 (function (Buffer){
 (function() {
   var MarkedYAMLError, nodes, util, _ref, _ref1,
@@ -76122,7 +76515,7 @@ function config (name) {
 }).call(this);
 
 }).call(this,require("buffer").Buffer)
-},{"./errors":407,"./nodes":410,"./util":416,"buffer":27}],407:[function(require,module,exports){
+},{"./errors":410,"./nodes":413,"./util":419,"buffer":27}],410:[function(require,module,exports){
 (function() {
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __hasProp = {}.hasOwnProperty,
@@ -76241,7 +76634,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],408:[function(require,module,exports){
+},{}],411:[function(require,module,exports){
 (function() {
   var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6,
     __hasProp = {}.hasOwnProperty,
@@ -76431,7 +76824,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],409:[function(require,module,exports){
+},{}],412:[function(require,module,exports){
 (function() {
   var composer, constructor, parser, reader, resolver, scanner, util;
 
@@ -76504,7 +76897,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./composer":405,"./constructor":406,"./parser":411,"./reader":412,"./resolver":413,"./scanner":414,"./util":416}],410:[function(require,module,exports){
+},{"./composer":408,"./constructor":409,"./parser":414,"./reader":415,"./resolver":416,"./scanner":417,"./util":419}],413:[function(require,module,exports){
 (function() {
   var unique_id, _ref, _ref1,
     __hasProp = {}.hasOwnProperty,
@@ -76589,7 +76982,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],411:[function(require,module,exports){
+},{}],414:[function(require,module,exports){
 (function() {
   var MarkedYAMLError, events, tokens, _ref,
     __hasProp = {}.hasOwnProperty,
@@ -77223,7 +77616,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":407,"./events":408,"./tokens":415}],412:[function(require,module,exports){
+},{"./errors":410,"./events":411,"./tokens":418}],415:[function(require,module,exports){
 (function() {
   var Mark, YAMLError, _ref,
     __hasProp = {}.hasOwnProperty,
@@ -77328,7 +77721,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":407}],413:[function(require,module,exports){
+},{"./errors":410}],416:[function(require,module,exports){
 (function() {
   var YAMLError, nodes, util, _ref, _ref1,
     __hasProp = {}.hasOwnProperty,
@@ -77541,7 +77934,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":407,"./nodes":410,"./util":416}],414:[function(require,module,exports){
+},{"./errors":410,"./nodes":413,"./util":419}],417:[function(require,module,exports){
 (function() {
   var MarkedYAMLError, SimpleKey, tokens, util, _ref,
     __hasProp = {}.hasOwnProperty,
@@ -79056,7 +79449,7 @@ function config (name) {
 
 }).call(this);
 
-},{"./errors":407,"./tokens":415,"./util":416}],415:[function(require,module,exports){
+},{"./errors":410,"./tokens":418,"./util":419}],418:[function(require,module,exports){
 (function() {
   var _ref, _ref1, _ref10, _ref11, _ref12, _ref13, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9,
     __hasProp = {}.hasOwnProperty,
@@ -79363,7 +79756,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],416:[function(require,module,exports){
+},{}],419:[function(require,module,exports){
 (function() {
   var __slice = [].slice,
     __hasProp = {}.hasOwnProperty;
@@ -79397,7 +79790,7 @@ function config (name) {
 
 }).call(this);
 
-},{}],417:[function(require,module,exports){
+},{}],420:[function(require,module,exports){
 (function() {
   var fs;
 
@@ -79547,4 +79940,4 @@ function config (name) {
 
 }).call(this);
 
-},{"./composer":405,"./constructor":406,"./errors":407,"./events":408,"./loader":409,"./nodes":410,"./parser":411,"./reader":412,"./resolver":413,"./scanner":414,"./tokens":415,"fs":25}]},{},[1]);
+},{"./composer":408,"./constructor":409,"./errors":410,"./events":411,"./loader":412,"./nodes":413,"./parser":414,"./reader":415,"./resolver":416,"./scanner":417,"./tokens":418,"fs":25}]},{},[1]);
