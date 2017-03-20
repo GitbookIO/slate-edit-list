@@ -161,7 +161,7 @@ var Example = React.createClass({
 ReactDOM.render(React.createElement(Example, null), document.getElementById('example'));
 
 },{"../lib/":9,"./state.yaml":2,"react":333,"react-dom":186,"slate":354,"yaml-js":417}],2:[function(require,module,exports){
-module.exports = "nodes:\n- kind: block\n  type: heading\n  nodes:\n  - kind: text\n    ranges:\n    - text: 'Slate + List Edition'\n- kind: block\n  type: paragraph\n  nodes:\n  - kind: text\n    ranges:\n    - text: This page is a basic example of Slate + slate-edit-list plugin. Press Enter in a list to create a new list item. Press Enter again to exit and Shift+Enter to create a paragraph in a list. The items at range are detected and highlighted, for demonstration purpose.\n- kind: block\n  type: ul_list\n  nodes:\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'First item in the list'\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: heading\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'With blocks:'\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'List item can contain blocks'\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'Third item in the list, with a nested list'\n    - kind: block\n      type: ol_list\n      nodes:\n      - kind: block\n        type: list_item\n        nodes:\n        - kind: block\n          type: paragraph\n          nodes:\n          - kind: text\n            ranges:\n            - text: 'First item in the nested list'\n      - kind: block\n        type: list_item\n        nodes:\n        - kind: block\n          type: paragraph\n          nodes:\n          - kind: text\n            ranges:\n            - text: 'Second item in the nested list'\n- kind: block\n  type: paragraph\n  nodes:\n  - kind: text\n    ranges:\n    - text: 'End paragraph'\n";
+module.exports = "nodes:\n- kind: block\n  type: heading\n  nodes:\n  - kind: text\n    ranges:\n    - text: 'Slate + List Edition'\n- kind: block\n  type: paragraph\n  nodes:\n  - kind: text\n    ranges:\n    - text: This page is a basic example of Slate + slate-edit-list plugin. Press Enter in a list to create a new list item. Press Enter again to exit and Shift+Enter to create a paragraph in a list. The items at range are detected and highlighted, for demonstration purpose.\n- kind: block\n  type: ul_list\n  data:\n    style:\n      listStyleType: disc\n  nodes:\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'First item in the list'\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: heading\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'With blocks:'\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'List item can contain blocks'\n  - kind: block\n    type: list_item\n    nodes:\n    - kind: block\n      type: paragraph\n      nodes:\n      - kind: text\n        ranges:\n        - text: 'Third item in the list, with a nested list'\n    - kind: block\n      type: ol_list\n      data:\n          style:\n            listStyleType: decimal\n      nodes:\n      - kind: block\n        type: list_item\n        nodes:\n        - kind: block\n          type: paragraph\n          nodes:\n          - kind: text\n            ranges:\n            - text: 'First item in the nested list'\n      - kind: block\n        type: list_item\n        nodes:\n        - kind: block\n          type: paragraph\n          nodes:\n          - kind: text\n            ranges:\n            - text: 'Second item in the nested list'\n- kind: block\n  type: paragraph\n  nodes:\n  - kind: text\n    ranges:\n    - text: 'End paragraph'\n";
 
 },{}],3:[function(require,module,exports){
 "use strict";
@@ -860,7 +860,8 @@ function decreaseItemDepth(opts, transform, ordered) {
             // Add them as sublist of currentItem
             var sublist = Slate.Block.create({
                 kind: 'block',
-                type: currentList.type
+                type: currentList.type,
+                data: currentList.data
             });
             // Add the sublist
             transform = transform.insertNodeByKey(currentItem.key, currentItem.nodes.size, sublist, { normalize: false });
@@ -943,7 +944,8 @@ function moveAsSubItem(opts, transform, item, destKey) {
 
         var newSublist = Slate.Block.create({
             kind: 'block',
-            type: currentList.type
+            type: currentList.type,
+            data: currentList.data
         });
 
         transform = transform.insertNodeByKey(destKey, lastIndex, newSublist);
@@ -1029,6 +1031,8 @@ module.exports = unwrapList;
 },{"../getItemsAtRange":6}],21:[function(require,module,exports){
 'use strict';
 
+var Slate = require('slate');
+
 var _require = require('immutable'),
     List = _require.List;
 
@@ -1040,14 +1044,18 @@ var isList = require('../isList');
  *
  * @param  {PluginOptions} opts
  * @param  {Slate.Transform} transform
- * @param  {Boolean} ordered
+ * @param  {Boolean} [ordered=false]
+ * @param  {Object|Data} [data]
  * @return {Transform} transform
  */
-function wrapInList(opts, transform, ordered) {
+function wrapInList(opts, transform, ordered, data) {
     var selectedBlocks = getHighestSelectedBlocks(transform.state);
 
     // Wrap in container
-    transform.wrapBlock(ordered ? opts.typeOL : opts.typeUL);
+    transform.wrapBlock({
+        type: ordered ? opts.typeOL : opts.typeUL,
+        data: Slate.Data.create(data)
+    });
 
     // Wrap in list items
     selectedBlocks.forEach(function (node) {
@@ -1091,7 +1099,7 @@ function getHighestSelectedBlocks(state) {
 
 module.exports = wrapInList;
 
-},{"../isList":10,"immutable":162}],22:[function(require,module,exports){
+},{"../isList":10,"immutable":162,"slate":354}],22:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
