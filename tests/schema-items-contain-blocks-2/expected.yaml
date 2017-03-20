@@ -10,17 +10,14 @@ nodes:
             type: paragraph
             nodes:
               - kind: text
-                text: "1st"
+                text: ""
               - kind: inline
                 type: link
                 nodes:
                   - kind: text
-                    text: "2nd"
-              - kind: block
-                type: paragraph
-                nodes:
-                  - kind: text
-                    text: "item"
+                    text: "A link"
+              - kind: text
+                text: ""
       - kind: block
         type: list_item
         nodes:
