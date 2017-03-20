@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.6.3...HEAD
+[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.6.4...HEAD
 
-Nothing yet.
+## 0.6.4 - 2016-03-20
+
+- Now supports custom `data` for list containers. Added `data` parameter to `wrapInList`.
 
 ## 0.6.3 - 2016-03-20
 
