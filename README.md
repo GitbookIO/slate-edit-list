@@ -43,8 +43,7 @@ const plugins = [
 
 This plugin accepts options to redefine the following block types:
 
-- `<String> typeUL="ul_list"` — type for bulleted lists.
-- `<String> typeOL="ol_list"` — type for numbered lists.
+- `<String> types={["ol_list", "ul_list"]}` — an array of types that should be considered as lists
 - `<String> typeItem="list_item"` — type for list items.
 - `<String> typeDefault="paragraph"` — type for default block in list items.
 
