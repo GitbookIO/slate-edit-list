@@ -471,7 +471,7 @@ module.exports = EditList;
  * @return {Boolean} true if the node is a UL or OL
  */
 function isList(opts, node) {
-  return node.type === opts.typeUL || node.type === opts.typeOL;
+  return opts.types.includes(node.type);
 }
 
 module.exports = isList;
@@ -495,18 +495,13 @@ module.exports = isSelectionInList;
 },{"./getItemsAtRange":6}],12:[function(require,module,exports){
 'use strict';
 
-var Immutable = require('immutable');
-var Set = Immutable.Set;
+var isList = require('./isList');
 
 /**
  * Create a schema for lists
- * @param {String} opts.typeUL The type of unordered lists
- * @param {String} opts.typeOL The type of ordered lists
- * @param {String} opts.typeItem The type of list items
- * @param {String} opts.typeDefault The type of the default block in list items
+ * @param {PluginOptions} The plugin options
  * @return {Object} A schema definition with rules to normalize lists
  */
-
 function makeSchema(opts) {
     return {
         rules: [listsContainOnlyItems(opts), itemsDescendList(opts),
@@ -516,17 +511,15 @@ function makeSchema(opts) {
 }
 
 /**
- * @param {String} opts.typeUL The type of unordered lists
- * @param {String} opts.typeOL The type of ordered lists
- * @param {String} opts.typeItem The type of list items
+ * @param {PluginOptions} The plugin options
  * @return {Object} A rule that ensure lists only contain list
  * items, and at least one.
  */
 function listsContainOnlyItems(opts) {
-    var isList = matchTypes([opts.typeUL, opts.typeOL]);
-
     return {
-        match: isList,
+        match: function match(node) {
+            return isList(opts, node);
+        },
 
         validate: function validate(list) {
             var notItems = list.nodes.filter(function (n) {
@@ -558,18 +551,14 @@ function listsContainOnlyItems(opts) {
 }
 
 /**
- * @param {String} opts.typeUL The type of unordered lists
- * @param {String} opts.typeOL The type of ordered lists
- * @param {String} opts.typeItem The type of list items
+ * @param {PluginOptions} The plugin options
  * @return {Object} A rule that ensure list items are always children
  * of a list block.
  */
 function itemsDescendList(opts) {
-    var isList = matchTypes([opts.typeUL, opts.typeOL]);
-
     return {
         match: function match(node) {
-            return (node.kind === 'block' || node.kind === 'document') && !isList(node);
+            return (node.kind === 'block' || node.kind === 'document') && !isList(opts, node);
         },
         validate: function validate(block) {
             var listItems = block.nodes.filter(function (n) {
@@ -601,16 +590,15 @@ function itemsDescendList(opts) {
 }
 
 /**
- * @param {String} opts.typeItem The type of list items
- * @param {String} opts.typeDefault The type of the default block in list items
+ * @param {PluginOptions} The plugin options
  * @return {Object} A rule that ensure list items always contain
  * blocks.
  */
 function itemsContainBlocks(opts) {
-    var isItem = matchTypes([opts.typeItem]);
-
     return {
-        match: isItem,
+        match: function match(node) {
+            return node.type === opts.typeItem;
+        },
 
         validate: function validate(item) {
             var shouldWrap = item.nodes.some(function (node) {
@@ -639,24 +627,9 @@ function itemsContainBlocks(opts) {
     };
 }
 
-/**
- * @param {Array<String>} types
- * @return {Function} A function that returns true for nodes that
- * match one of the given types.
- */
-function matchTypes(types) {
-    types = new Set(types);
-
-    return function (node) {
-        return types.some(function (type) {
-            return type === node.type;
-        });
-    };
-}
-
 module.exports = makeSchema;
 
-},{"immutable":162}],13:[function(require,module,exports){
+},{"./isList":10}],13:[function(require,module,exports){
 'use strict';
 
 var unwrapList = require('./transforms/unwrapList');
@@ -785,10 +758,8 @@ var _require = require('immutable'),
     Record = _require.Record;
 
 var DEFAULTS = {
-    // The type of the lists
-    typeUL: 'ul_list',
-    // The type of ordered lists
-    typeOL: 'ol_list',
+    // The possibles types for list containers
+    types: ['ul_list', 'ol_list'],
     // The type of list items
     typeItem: 'list_item',
     // The type of default block in items
@@ -1044,16 +1015,17 @@ var isList = require('../isList');
  *
  * @param  {PluginOptions} opts
  * @param  {Slate.Transform} transform
- * @param  {Boolean} [ordered=false]
- * @param  {Object|Data} [data]
+ * @param  {String?} type
+ * @param  {Object|Data?} [data]
  * @return {Transform} transform
  */
 function wrapInList(opts, transform, ordered, data) {
     var selectedBlocks = getHighestSelectedBlocks(transform.state);
+    var type = ordered || opts.types[0];
 
     // Wrap in container
     transform.wrapBlock({
-        type: ordered ? opts.typeOL : opts.typeUL,
+        type: type,
         data: Slate.Data.create(data)
     });
 
