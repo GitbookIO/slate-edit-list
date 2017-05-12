@@ -43,8 +43,7 @@ const plugins = [
 
 This plugin accepts options to redefine the following block types:
 
-- `<String> typeUL="ul_list"` — type for bulleted lists.
-- `<String> typeOL="ol_list"` — type for numbered lists.
+- `<String> types={["ol_list", "ul_list"]}` — the array of possible types for list containers. First value will be used as default.
 - `<String> typeItem="list_item"` — type for list items.
 - `<String> typeDefault="paragraph"` — type for default block in list items.
 
@@ -163,9 +162,9 @@ Decrease the depth of the current item.
 
 #### `transforms.wrapInList`
 
-`plugin.transforms.wrapInList(transform: Transform, ordered: Boolean?, data: Object|Data?) => Transform`
+`plugin.transforms.wrapInList(transform: Transform, type: String?, data: Object|Data?) => Transform`
 
-Wrap the current blocks in list items. You can pass optional data for the created list container.
+Wrap the current blocks in list items of a list container of the given type. You can pass optional data for the created list container.
 
 #### `transforms.unwrapList`
 
