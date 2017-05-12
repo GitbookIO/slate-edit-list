@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.6.4...HEAD
+[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.7.0...HEAD
+
+## 0.7.0 - 2016-05-12
+
+- Add support for more than two list types through the option `types`
+  - **BREAKING** Removed old options for `typeUL` and `typeOL`.
+  - **BREAKING** `wrapInList` now takes a `type` param
 
 ## 0.6.4 - 2016-03-20
 
