@@ -43,7 +43,7 @@ const plugins = [
 
 This plugin accepts options to redefine the following block types:
 
-- `<String> types={["ol_list", "ul_list"]}` — the array of possible types for list containers. First value will be used as default.
+- `<String> types=["ol_list", "ul_list"]` — the array of possible types for list containers. First value will be used as default.
 - `<String> typeItem="list_item"` — type for list items.
 - `<String> typeDefault="paragraph"` — type for default block in list items.
 
