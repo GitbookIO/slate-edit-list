@@ -110,70 +110,48 @@ nodes:
 
 `slate-edit-list` exports utilities and transforms:
 
-#### `utils.isSelectionInList`
-
-`plugin.utils.isSelectionInList(state: State) => Boolean`
+#### `plugin.utils.isSelectionInList(state: State) => Boolean`
 
 Return true if selection is inside a list (and it can be unwrap).
 
-#### `utils.isList`
-
-`plugin.utils.isList(node: Node) => Boolean`
+#### `plugin.utils.isList(node: Node) => Boolean`
 
 Return true if the node is one of the list type.
 
-#### `utils.getItemDepth`
-
-`plugin.utils.getItemDepth(state: State, block: Block?) => Number`
+#### `plugin.utils.getItemDepth(state: State, block: Block?) => Number`
 
 Returns the depth of the current item (or the depth of the given block) in a list. 0 means not in a list.
 
-#### `utils.getCurrentItem`
-
-`plugin.utils.getCurrentItem(state: State, block: Block?) => Block || Void`
+#### `plugin.utils.getCurrentItem(state: State, block: Block?) => Block || Void`
 
 Returns the current item at selection (or at the given block).
 
-#### `utils.getCurrentList`
-
-`plugin.utils.getCurrentList(state: State, block: Block?) => Block || Void`
+#### `plugin.utils.getCurrentList(state: State, block: Block?) => Block || Void`
 
 Returns the current list at selection (or at the given block).
 
-#### `utils.getItemsAtRange`
-
-`plugin.utils.getItemsAtRange(state: State, range: Selection?) => List<Node>`
+#### `plugin.utils.getItemsAtRange(state: State, range: Selection?) => List<Node>`
 
 Return the list of items at the given range. The returned items are the highest list of of successive items that cover the given range.
 
 The returned list is empty if no such list can be found.
 
-#### `transforms.increaseItemDepth`
-
-`plugin.transforms.increaseItemDepth(transform: Transform) => Transform`
+#### `plugin.transforms.increaseItemDepth(transform: Transform) => Transform`
 
 Increase the depth of the current item.
 
-#### `transforms.decreaseItemDepth`
-
-`plugin.transforms.decreaseItemDepth(transform: Transform) => Transform`
+#### `plugin.transforms.decreaseItemDepth(transform: Transform) => Transform`
 
 Decrease the depth of the current item.
 
-#### `transforms.wrapInList`
-
-`plugin.transforms.wrapInList(transform: Transform, type: String?, data: Object|Data?) => Transform`
+#### `plugin.transforms.wrapInList(transform: Transform, type: String?, data: Object|Data?) => Transform`
 
 Wrap the current blocks in list items of a list container of the given type. You can pass optional data for the created list container.
 
-#### `transforms.unwrapList`
-
-`plugin.transforms.unwrapList(transform: Transform) => Transform`
+#### `plugin.transforms.unwrapList(transform: Transform) => Transform`
 
 Unwrap all items at range from their list.
 
-#### `transforms.splitListItem`
-
-`plugin.transforms.splitListItem(transform: Transform) => Transform`
+#### `plugin.transforms.splitListItem(transform: Transform) => Transform`
 
 Split current block into a new list item.
