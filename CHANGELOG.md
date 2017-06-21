@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.7.0...HEAD
+[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.7.1...HEAD
+
+## 0.7.1 - 2017-06-21
+
+- Add normalization rule to join adjacent lists of the same types.
 
 ## 0.7.0 - 2016-05-12
 
@@ -79,5 +83,3 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 0.4.0 - 2016-09-14
 
 - **BREAKING** Updated to `slate^0.14.x`
-
-
