@@ -24,14 +24,14 @@ describe('slate-edit-list', function() {
                 expected = readMetadata.sync(expectedPath);
             }
 
-            const runTransform = require(path.resolve(dir, 'transform.js'));
+            const runChange = require(path.resolve(dir, 'change.js'));
 
             const stateInput = Slate.Raw.deserialize(input, { terse: true });
 
-            const newState = runTransform(plugin, stateInput);
+            const newChange = runChange(plugin, stateInput.change());
 
             if (expected) {
-                const newDocJSon = Slate.Raw.serialize(newState, {
+                const newDocJSon = Slate.Raw.serialize(newChange.state, {
                     terse: true,
                     preserveSelection: Boolean(expected.selection)
                 });

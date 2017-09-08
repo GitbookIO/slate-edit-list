@@ -44,20 +44,20 @@ const Example = React.createClass({
         };
     },
 
-    onChange(state) {
+    onChange({ state, }) {
         this.setState({
             state
         });
     },
 
-    call(transform) {
+    call(change) {
         this.setState({
-            state: this.state.state.transform().call(transform).apply()
+            state: this.state.change().call(change).state
         });
     },
 
     renderToolbar() {
-        const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.transforms;
+        const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.changes;
         const inList = plugin.utils.isSelectionInList(this.state.state);
 
         return (
