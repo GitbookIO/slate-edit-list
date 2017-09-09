@@ -44,7 +44,7 @@ const Example = React.createClass({
         };
     },
 
-    onChange({ state, }) {
+    onChange({ state }) {
         this.setState({
             state
         });
@@ -52,7 +52,7 @@ const Example = React.createClass({
 
     call(change) {
         this.setState({
-            state: this.state.change().call(change).state
+            state: this.state.state.change().call(change).state
         });
     },
 

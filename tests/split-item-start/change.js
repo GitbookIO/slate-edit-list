@@ -4,5 +4,5 @@ module.exports = function(plugin, change) {
     const p = state.document.findDescendant(node => node.type == 'paragraph');
 
     change.collapseToStartOf(p);
-    return change.splitListItem(change);
+    return change.call(plugin.changes.splitListItem);
 };

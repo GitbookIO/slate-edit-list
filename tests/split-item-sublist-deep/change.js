@@ -7,7 +7,7 @@ module.exports = function(plugin, change) {
     change.collapseToStartOf(selectedBlock)
           .move(2); // It|em 1
 
-    plugin.changes.splitListItem(change)
+    plugin.changes.splitListItem(change);
 
     // check new selection
     const selectedNode = change.state.document.getTexts().get(2);
