@@ -4,7 +4,8 @@ document:
       type: paragraph
       nodes:
         - kind: text
-          text: 'Blah blah'
+          ranges:
+            - text: 'Blah blah'
 
     - kind: block
       type: ul_list

@@ -16,7 +16,8 @@ document:
       type: paragraph
       nodes:
         - kind: text
-          text: ""
+          ranges:
+            - text: ""
         - kind: inline
           type: link
           nodes:
