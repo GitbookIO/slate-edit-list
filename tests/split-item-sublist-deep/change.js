@@ -19,7 +19,8 @@ module.exports = function(plugin, change) {
         focusOffset: 0,
         isBackward: false,
         isFocused: false,
-        marks: null
+        marks: null,
+        kind: 'selection'
     });
 
     return change;

@@ -1,35 +1,38 @@
+document:
+  nodes:
+    # orphan item
+    - kind: block
+      type: list_item
+      nodes:
+        - kind: block
+          type: paragraph
+          nodes:
+            - kind: text
+              ranges:
+                - text: "Orphan"
 
-nodes:
-  # orphan item
-  - kind: block
-    type: list_item
-    nodes:
-      - kind: block
-        type: paragraph
-        nodes:
-          - kind: text
-            text: "Orphan"
-
-  - kind: block
-    type: ul_list
-    nodes:
-      - kind: block
-        type: list_item
-        nodes:
-          - kind: block
-            type: paragraph
-            nodes:
-              - kind: text
-                text: "Valid item"
-      # Item that contains another item
-      - kind: block
-        type: list_item
-        nodes:
-          - kind: block
-            type: list_item
-            nodes:
-              - kind: block
-                type: paragraph
-                nodes:
-                  - kind: text
-                    text: "Direct child of another item"
+    - kind: block
+      type: ul_list
+      nodes:
+        - kind: block
+          type: list_item
+          nodes:
+            - kind: block
+              type: paragraph
+              nodes:
+                - kind: text
+                  ranges:
+                    - text: "Valid item"
+        # Item that contains another item
+        - kind: block
+          type: list_item
+          nodes:
+            - kind: block
+              type: list_item
+              nodes:
+                - kind: block
+                  type: paragraph
+                  nodes:
+                    - kind: text
+                      ranges:
+                        - text: "Direct child of another item"

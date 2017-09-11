@@ -4,16 +4,18 @@ module.exports = function(plugin, change) {
     const { state } = change;
     const selectedBlock = state.document.getDescendant('_selection_key');
 
-    change.moveToRangeOf(selectedBlock);
-    const initialText = change.state.startBlock.text;
-    const initialSelection = change.state.selection;
+    const initial = change.state.change({ save: false }).moveToRangeOf(selectedBlock);
+    const initialText = initial.state.startBlock.text;
+    const initialSelection = initial.state.selection;
 
-    change.call(plugin.changes.increaseItemDepth)
+    const newChange = initial.state.change();
+
+    newChange.call(plugin.changes.increaseItemDepth)
           .undo();
 
     // Back to previous cursor position
-    expect(change.state.startBlock.text).toEqual(initialText);
-    expect(change.state.selection.toJS()).toEqual(initialSelection.toJS());
+    expect(newChange.state.startBlock.text).toEqual(initialText);
+    expect(newChange.state.selection.toJS()).toEqual(initialSelection.toJS());
 
-    return change;
+    return newChange;
 };

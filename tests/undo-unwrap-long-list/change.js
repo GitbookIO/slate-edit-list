@@ -3,15 +3,15 @@ const expect = require('expect');
 module.exports = function(plugin, change) {
     const { state } = change;
     const selectedBlock = state.document.getDescendant('_selection_key');
-    change.moveToRangeOf(selectedBlock);
-    const initialText = change.state.startBlock.text;
-    const initialSelection = change.state.selection;
-
-    change.call(plugin.changes.unwrapList).undo();
+    const initial = change.state.change({ save: false }).moveToRangeOf(selectedBlock).state;
+    const initialText = initial.startBlock.text;
+    const initialSelection = initial.selection;
+    const toTest = initial.change();
+    toTest.call(plugin.changes.unwrapList).undo();
 
     // Back to previous cursor position
-    expect(change.state.startBlock.text).toEqual(initialText);
-    expect(change.state.selection.toJS()).toEqual(initialSelection.toJS());
+    expect(toTest.state.startBlock.text).toEqual(initialText);
+    expect(toTest.state.selection.toJS()).toEqual(initialSelection.toJS());
 
-    return change;
+    return toTest;
 };
