@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.7.1...HEAD
 
+## 0.8.0 - 2017-09-20
+
+- Upgrade to be compatible with Slate after the `expose-transform` branch went in.
+- Change all instances of `transform` to `change`
+- Change the namespace of `plugin.transforms` to `plugin.changes`
+
 ## 0.7.1 - 2017-06-21
 
 - Add normalization rule to join adjacent lists of the same types.
