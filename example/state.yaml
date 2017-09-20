@@ -1,60 +1,22 @@
-nodes:
-- kind: block
-  type: heading
+document:
   nodes:
-  - kind: text
-    ranges:
-    - text: 'Slate + List Edition'
-- kind: block
-  type: paragraph
-  nodes:
-  - kind: text
-    ranges:
-    - text: This page is a basic example of Slate + slate-edit-list plugin. Press Enter in a list to create a new list item. Press Enter again to exit and Shift+Enter to create a paragraph in a list. The items at range are detected and highlighted, for demonstration purpose.
-- kind: block
-  type: ul_list
-  data:
-    style:
-      listStyleType: disc
-  nodes:
-  - kind: block
-    type: list_item
-    nodes:
-    - kind: block
-      type: paragraph
-      nodes:
-      - kind: text
-        ranges:
-        - text: 'First item in the list'
-  - kind: block
-    type: list_item
-    nodes:
     - kind: block
       type: heading
       nodes:
       - kind: text
         ranges:
-        - text: 'With blocks:'
+        - text: 'Slate + List Edition'
     - kind: block
       type: paragraph
       nodes:
       - kind: text
         ranges:
-        - text: 'List item can contain blocks'
-  - kind: block
-    type: list_item
-    nodes:
+        - text: This page is a basic example of Slate + slate-edit-list plugin. Press Enter in a list to create a new list item. Press Enter again to exit and Shift+Enter to create a paragraph in a list. The items at range are detected and highlighted, for demonstration purpose.
     - kind: block
-      type: paragraph
-      nodes:
-      - kind: text
-        ranges:
-        - text: 'Third item in the list, with a nested list'
-    - kind: block
-      type: ol_list
+      type: ul_list
       data:
-          style:
-            listStyleType: decimal
+        style:
+          listStyleType: disc
       nodes:
       - kind: block
         type: list_item
@@ -64,7 +26,22 @@ nodes:
           nodes:
           - kind: text
             ranges:
-            - text: 'First item in the nested list'
+            - text: 'First item in the list'
+      - kind: block
+        type: list_item
+        nodes:
+        - kind: block
+          type: heading
+          nodes:
+          - kind: text
+            ranges:
+            - text: 'With blocks:'
+        - kind: block
+          type: paragraph
+          nodes:
+          - kind: text
+            ranges:
+            - text: 'List item can contain blocks'
       - kind: block
         type: list_item
         nodes:
@@ -73,10 +50,34 @@ nodes:
           nodes:
           - kind: text
             ranges:
-            - text: 'Second item in the nested list'
-- kind: block
-  type: paragraph
-  nodes:
-  - kind: text
-    ranges:
-    - text: 'End paragraph'
+            - text: 'Third item in the list, with a nested list'
+        - kind: block
+          type: ol_list
+          data:
+              style:
+                listStyleType: decimal
+          nodes:
+          - kind: block
+            type: list_item
+            nodes:
+            - kind: block
+              type: paragraph
+              nodes:
+              - kind: text
+                ranges:
+                - text: 'First item in the nested list'
+          - kind: block
+            type: list_item
+            nodes:
+            - kind: block
+              type: paragraph
+              nodes:
+              - kind: text
+                ranges:
+                - text: 'Second item in the nested list'
+    - kind: block
+      type: paragraph
+      nodes:
+      - kind: text
+        ranges:
+        - text: 'End paragraph'

@@ -11,7 +11,8 @@ document:
         type: paragraph
         nodes:
         - kind: text
-          text: 'First item'
+          ranges:
+            - text: 'First item'
 
     - kind: block
       type: list_item
@@ -21,7 +22,8 @@ document:
         nodes:
         - kind: text
           key: 'start'
-          text: ''
+          ranges:
+            - text: ''
 
 selection:
   anchorKey: 'start'

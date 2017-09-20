@@ -11,7 +11,8 @@ document:
         type: paragraph
         nodes:
         - kind: text
-          text: 'First item'
+          ranges:
+            - text: 'First item'
 
     - kind: block
       type: list_item
@@ -20,7 +21,8 @@ document:
         type: paragraph
         nodes:
         - kind: text
-          text: 'Second item'
+          ranges:
+            - text: 'Second item'
       - kind: block
         type: ul_list
         nodes:
@@ -32,7 +34,8 @@ document:
             nodes:
             - kind: text
               key: 'start'
-              text: ''
+              ranges:
+                - text: ''
 
 selection:
   anchorKey: 'start'

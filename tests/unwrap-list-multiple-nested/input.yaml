@@ -1,7 +1,6 @@
 
 document:
   nodes:
-
   - kind: block
     type: ul_list
     nodes:
@@ -13,7 +12,8 @@ document:
         nodes:
         - kind: text
           key: 'start'
-          text: 'First item'
+          ranges:
+            - text: 'First item'
 
     - kind: block
       type: list_item
@@ -22,7 +22,8 @@ document:
         type: paragraph
         nodes:
         - kind: text
-          text: 'Second item, with nested list'
+          ranges:
+            - text: 'Second item, with nested list'
       - kind: block
         type: ol_list
         nodes:
@@ -34,7 +35,8 @@ document:
             nodes:
             - kind: text
               key: 'end'
-              text: 'First item in the nested list'
+              ranges:
+                - text: 'First item in the nested list'
         - kind: block
           type: list_item
           nodes:
@@ -42,7 +44,8 @@ document:
             type: paragraph
             nodes:
             - kind: text
-              text: 'Second item in the nested list'
+              ranges:
+                - text: 'Second item in the nested list'
 
 
     - kind: block
@@ -52,7 +55,8 @@ document:
         type: paragraph
         nodes:
         - kind: text
-          text: 'Third item'
+          ranges:
+            - text: 'Third item'
 
 selection:
   anchorKey: 'start'

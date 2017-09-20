@@ -136,22 +136,22 @@ Return the list of items at the given range. The returned items are the highest 
 
 The returned list is empty if no such list can be found.
 
-#### `plugin.transforms.increaseItemDepth(transform: Transform) => Transform`
+#### `plugin.changes.increaseItemDepth(transform: Transform) => Transform`
 
 Increase the depth of the current item.
 
-#### `plugin.transforms.decreaseItemDepth(transform: Transform) => Transform`
+#### `plugin.changes.decreaseItemDepth(transform: Transform) => Transform`
 
 Decrease the depth of the current item.
 
-#### `plugin.transforms.wrapInList(transform: Transform, type: String?, data: Object|Data?) => Transform`
+#### `plugin.changes.wrapInList(transform: Transform, type: String?, data: Object|Data?) => Transform`
 
 Wrap the current blocks in list items of a list container of the given type. You can pass optional data for the created list container.
 
-#### `plugin.transforms.unwrapList(transform: Transform) => Transform`
+#### `plugin.changes.unwrapList(transform: Transform) => Transform`
 
 Unwrap all items at range from their list.
 
-#### `plugin.transforms.splitListItem(transform: Transform) => Transform`
+#### `plugin.changes.splitListItem(transform: Transform) => Transform`
 
 Split current block into a new list item.

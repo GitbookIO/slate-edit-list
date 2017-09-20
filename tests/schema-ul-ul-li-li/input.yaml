@@ -17,7 +17,8 @@ document:
                       nodes:
                         - kind: text
                           key: 'start'
-                          text: '1st item'
+                          ranges:
+                            - text: '1st item'
 
 selection:
   anchorKey: 'start'
