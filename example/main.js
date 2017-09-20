@@ -1,6 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Slate = require('slate');
+const { Editor } = require('slate-react');
 const yaml = require('yaml-js');
 
 const PluginEditList = require('../lib/');
@@ -89,11 +90,11 @@ const Example = React.createClass({
         return (
             <div>
                 {this.renderToolbar()}
-                <Slate.Editor placeholder={'Enter some text...'}
-                              plugins={plugins}
-                              state={this.state.state}
-                              onChange={this.onChange}
-                              schema={SCHEMA} />
+                <Editor placeholder={'Enter some text...'}
+                        plugins={plugins}
+                        state={this.state.state}
+                        onChange={this.onChange}
+                        schema={SCHEMA} />
             </div>
         );
     }
