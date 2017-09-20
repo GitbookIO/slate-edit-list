@@ -40,24 +40,24 @@ const SCHEMA = {
 const Example = React.createClass({
     getInitialState() {
         return {
-            state: Slate.Raw.deserialize(stateJson, { terse: true })
+            state: Slate.State.fromJSON(stateJson)
         };
     },
 
-    onChange(state) {
+    onChange({ state }) {
         this.setState({
             state
         });
     },
 
-    call(transform) {
+    call(change) {
         this.setState({
-            state: this.state.state.transform().call(transform).apply()
+            state: this.state.state.change().call(change).state
         });
     },
 
     renderToolbar() {
-        const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.transforms;
+        const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.changes;
         const inList = plugin.utils.isSelectionInList(this.state.state);
 
         return (
