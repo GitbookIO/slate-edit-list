@@ -4,10 +4,12 @@ module.exports = function(plugin, change) {
     const ret = plugin.onKeyDown(
         {
             preventDefault: () => {},
-            stopPropagation: () => {}
+            stopPropagation: () => {},
+            key: 'Enter',
+            shiftKey: true
         },
-        { key: 'enter', isShift: true },
-        change
+        change,
+        {}
     );
 
     expect(ret === null).toBe(true);
