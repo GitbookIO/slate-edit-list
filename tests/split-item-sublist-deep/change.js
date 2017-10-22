@@ -20,7 +20,7 @@ module.exports = function(plugin, change) {
         isBackward: false,
         isFocused: false,
         marks: null,
-        kind: 'selection'
+        kind: 'range'
     });
 
     return change;

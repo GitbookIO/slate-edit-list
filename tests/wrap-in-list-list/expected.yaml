@@ -4,7 +4,7 @@ document:
       type: paragraph
       nodes:
         - kind: text
-          ranges:
+          leaves:
             - text: 'Blah blah'
 
     - kind: block
@@ -18,7 +18,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: 'First item'
             - kind: block
               type: ul_list
@@ -30,7 +30,7 @@ document:
                       type: paragraph
                       nodes:
                         - kind: text
-                          ranges:
+                          leaves:
                             - text: 'Subitem'
 
         - kind: block
@@ -40,7 +40,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: 'Second item'
 
         - kind: block
@@ -50,5 +50,5 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: 'Blah blah'

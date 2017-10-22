@@ -11,7 +11,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: "1.1"
         - kind: block
           type: list_item
@@ -20,7 +20,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: "1.2"
     - kind: block
       type: ul_list
@@ -32,7 +32,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: "2.1"
         - kind: block
           type: list_item
@@ -41,5 +41,5 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: "2.2"

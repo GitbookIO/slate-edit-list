@@ -10,7 +10,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: Item 1
             - kind: block
               type: ol_list
@@ -23,7 +23,7 @@ document:
                       key: '_selection_key'
                       nodes:
                         - kind: text
-                          ranges:
+                          leaves:
                             - text: Item 1.1 # split here "It|em 1.1"
                     - kind: block
                       type: ol_list
@@ -35,7 +35,7 @@ document:
                               type: paragraph
                               nodes:
                                 - kind: text
-                                  ranges:
+                                  leaves:
                                     - text: Item 1.1.1
                         - kind: block
                           type: list_item
@@ -44,5 +44,5 @@ document:
                               type: paragraph
                               nodes:
                                 - kind: text
-                                  ranges:
+                                  leaves:
                                     - text: Item 1.1.2

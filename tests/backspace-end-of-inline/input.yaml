@@ -10,7 +10,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: First item
 
         - kind: block
@@ -20,17 +20,17 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: ""
                 - kind: inline
                   type: link
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: "Second item"
                 - kind: text
                   key: '_selection_key'
-                  ranges:
+                  leaves:
                     - text: ""
         - kind: block
           type: list_item
@@ -39,14 +39,14 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: ""
                 - kind: inline
                   type: link
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: "Third item"
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: ""

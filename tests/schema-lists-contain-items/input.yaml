@@ -7,17 +7,17 @@ document:
           type: list_item
           nodes:
             - kind: text
-              ranges:
+              leaves:
                 - text: "1st item"
         - kind: block
           type: NOT_AN_ITEM
           nodes:
             - kind: text
-              ranges:
+              leaves:
                 - text: "2nd item"
         - kind: block
           type: list_item
           nodes:
             - kind: text
-              ranges:
+              leaves:
                 - text: "3rd item"

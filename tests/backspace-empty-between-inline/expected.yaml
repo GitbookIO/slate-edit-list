@@ -10,22 +10,22 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: ""
                 - kind: inline
                   type: link
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: "First item"
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: ""
     - kind: block
       type: paragraph
       nodes:
         - kind: text
-          ranges:
+          leaves:
             - text: ""
     - kind: block
       type: ul_list
@@ -37,14 +37,14 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: ""
                 - kind: inline
                   type: link
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: "Third item"
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: ""

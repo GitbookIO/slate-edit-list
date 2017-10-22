@@ -10,11 +10,11 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: First item
     - kind: block
       type: paragraph
       nodes:
         - kind: text
-          ranges:
+          leaves:
             - text: Second item

@@ -11,7 +11,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: First item
         - kind: block
           type: list_item
@@ -22,5 +22,5 @@ document:
               nodes:
                 - kind: text
                   key: 'cursor'
-                  ranges:
+                  leaves:
                   - text: Second item

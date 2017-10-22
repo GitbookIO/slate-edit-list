@@ -4,7 +4,7 @@ document:
       type: paragraph
       nodes:
         - kind: text
-          ranges:
+          leaves:
             - text: 'Blah blah'
 
     - kind: block
@@ -17,7 +17,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: 'First item'
         - kind: block
           type: list_item
@@ -26,12 +26,12 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: 'Second item'
 
     - kind: block
       type: paragraph
       nodes:
         - kind: text
-          ranges:
+          leaves:
             - text: 'Blah blah'

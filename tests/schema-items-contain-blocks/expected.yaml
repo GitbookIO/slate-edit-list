@@ -10,19 +10,19 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: "1st"
                 - kind: inline
                   type: link
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: "2nd"
                 - kind: block
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: "item"
         - kind: block
           type: list_item
@@ -31,5 +31,5 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: "2nd item"
