@@ -6,14 +6,14 @@ const yaml = require('yaml-js');
 
 const PluginEditList = require('../lib/');
 
-const stateJson = yaml.load(require('./state.yaml'));
+const valueJson = yaml.load(require('./state.yaml'));
 
 const plugin = PluginEditList();
 const plugins = [plugin];
 
 const highlightedItems = (props) => {
-    const { node, state } = props;
-    const isCurrentItem = plugin.utils.getItemsAtRange(state).contains(node);
+    const { node, value } = props;
+    const isCurrentItem = plugin.utils.getItemsAtRange(value).contains(node);
 
     return (
         <li className={isCurrentItem ? 'current-item' : ''}
@@ -41,25 +41,25 @@ const SCHEMA = {
 class Example extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { state: Slate.State.fromJSON(stateJson) };
+        this.state = { state: Slate.Value.fromJSON(valueJson) };
         this.onChange = this.onChange.bind(this);
     }
 
-    onChange({ state }) {
+    onChange({ value }) {
         this.setState({
-            state
+            value
         });
     }
 
     call(change) {
         this.setState({
-            state: this.state.state.change().call(change).state
+            value: this.state.value.change().call(change).value
         });
     }
 
     renderToolbar() {
         const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.changes;
-        const inList = plugin.utils.isSelectionInList(this.state.state);
+        const inList = plugin.utils.isSelectionInList(this.state.value);
 
         return (
             <div>
@@ -92,7 +92,7 @@ class Example extends React.Component {
                 {this.renderToolbar()}
                 <Editor placeholder={'Enter some text...'}
                         plugins={plugins}
-                        state={this.state.state}
+                        state={this.state.value}
                         onChange={this.onChange}
                         schema={SCHEMA} />
             </div>

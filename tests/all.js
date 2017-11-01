@@ -20,16 +20,16 @@ describe('slate-edit-list', function() {
             const expectedPath = path.resolve(dir, 'expected.yaml');
             let expected;
             if (fs.existsSync(expectedPath)) {
-                expected = Slate.State.fromJSON(readMetadata.sync(expectedPath)).toJSON();
+                expected = Slate.Value.fromJSON(readMetadata.sync(expectedPath)).toJSON();
             }
 
             const runChange = require(path.resolve(dir, 'change.js'));
-            const stateInput = Slate.State.fromJSON(input);
+            const valueInput = Slate.Value.fromJSON(input);
 
-            const newChange = runChange(plugin, stateInput.change());
+            const newChange = runChange(plugin, valueInput.change());
 
             if (expected) {
-                const newDocJSon = newChange.state.toJSON();
+                const newDocJSon = newChange.value.toJSON();
 
                 expect(newDocJSon).toEqual(expected);
             }

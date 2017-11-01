@@ -1,8 +1,8 @@
 const expect = require('expect');
 
 module.exports = function(plugin, change) {
-    const { state } = change;
-    const selectedBlock = state.document.getDescendant('_selection_key');
+    const { value } = change;
+    const selectedBlock = value.document.getDescendant('_selection_key');
     change.collapseToStartOf(selectedBlock);
 
     plugin.onKeyDown(
@@ -16,8 +16,8 @@ module.exports = function(plugin, change) {
     );
 
     // Selection check
-    expect(change.state.startBlock.text).toEqual('Second item');
-    expect(change.state.selection.anchorOffset).toEqual(0);
-    expect(change.state.selection.isCollapsed).toBe(true);
+    expect(change.value.startBlock.text).toEqual('Second item');
+    expect(change.value.selection.anchorOffset).toEqual(0);
+    expect(change.value.selection.isCollapsed).toBe(true);
     return change;
 };
