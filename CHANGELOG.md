@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.7.1...HEAD
+[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.9.0...HEAD
+
+## 0.9.0 - 2017-11-06
+
+- Upgrade to be compatible with Slate 0.27.x
 
 ## 0.8.0 - 2017-09-20
 
