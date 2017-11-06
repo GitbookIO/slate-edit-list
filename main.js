@@ -1,6 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Slate = require('slate');
+const { Editor } = require('slate-react');
 const yaml = require('yaml-js');
 
 const PluginEditList = require('../lib/');
@@ -37,24 +38,24 @@ const SCHEMA = {
     }
 };
 
-const Example = React.createClass({
-    getInitialState() {
-        return {
-            state: Slate.State.fromJSON(stateJson)
-        };
-    },
+class Example extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { state: Slate.State.fromJSON(stateJson) };
+        this.onChange = this.onChange.bind(this);
+    }
 
     onChange({ state }) {
         this.setState({
             state
         });
-    },
+    }
 
     call(change) {
         this.setState({
             state: this.state.state.change().call(change).state
         });
-    },
+    }
 
     renderToolbar() {
         const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.changes;
@@ -83,21 +84,21 @@ const Example = React.createClass({
                 <button onClick={() => this.call(unwrapList)}>Unwrap from list</button>
             </div>
         );
-    },
+    }
 
     render() {
         return (
             <div>
                 {this.renderToolbar()}
-                <Slate.Editor placeholder={'Enter some text...'}
-                              plugins={plugins}
-                              state={this.state.state}
-                              onChange={this.onChange}
-                              schema={SCHEMA} />
+                <Editor placeholder={'Enter some text...'}
+                        plugins={plugins}
+                        state={this.state.state}
+                        onChange={this.onChange}
+                        schema={SCHEMA} />
             </div>
         );
     }
-});
+}
 
 ReactDOM.render(
     <Example />,
