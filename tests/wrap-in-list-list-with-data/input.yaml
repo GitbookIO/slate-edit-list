@@ -6,7 +6,7 @@ document:
     type: paragraph
     nodes:
       - kind: text
-        ranges:
+        leaves:
           - text: 'Blah blah'
 
   - kind: block
@@ -23,7 +23,7 @@ document:
             nodes:
               - kind: text
                 key: 'start'
-                ranges:
+                leaves:
                   - text: 'First item'
           - kind: block
             type: ul_list
@@ -35,7 +35,7 @@ document:
                     type: paragraph
                     nodes:
                       - kind: text
-                        ranges:
+                        leaves:
                           - text: 'Subitem'
       - kind: block
         type: list_item
@@ -44,7 +44,7 @@ document:
             type: paragraph
             nodes:
               - kind: text
-                ranges:
+                leaves:
                   - text: 'Second item'
 
   - kind: block
@@ -52,7 +52,7 @@ document:
     nodes:
       - kind: text
         key: 'end'
-        ranges:
+        leaves:
           - text: 'Blah blah'
 
 selection:

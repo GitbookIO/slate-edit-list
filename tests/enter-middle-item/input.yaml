@@ -10,7 +10,7 @@ document:
         type: paragraph
         nodes:
         - kind: text
-          ranges:
+          leaves:
             - text: 'First item'
 
     - kind: block
@@ -21,7 +21,7 @@ document:
         nodes:
         - kind: text
           key: 'start'
-          ranges:
+          leaves:
             - text: 'Second item'
 
 selection:

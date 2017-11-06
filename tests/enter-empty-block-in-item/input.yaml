@@ -11,7 +11,7 @@ document:
         type: paragraph
         nodes:
         - kind: text
-          ranges:
+          leaves:
             - text: 'First item'
 
     - kind: block
@@ -21,14 +21,14 @@ document:
         type: paragraph
         nodes:
         - kind: text
-          ranges:
+          leaves:
             - text: 'A first paragraph'
       - kind: block
         type: paragraph
         nodes:
         - kind: text
           key: 'start'
-          ranges:
+          leaves:
             - text: ''
 
 selection:

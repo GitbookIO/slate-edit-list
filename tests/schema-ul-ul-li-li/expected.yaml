@@ -16,5 +16,5 @@ document:
                       type: paragraph
                       nodes:
                         - kind: text
-                          ranges:
+                          leaves:
                             - text: '1st item'

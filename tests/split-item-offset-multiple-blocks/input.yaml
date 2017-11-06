@@ -10,11 +10,11 @@ document:
                   type: heading
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: First block
                 - kind: block
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: SplitHere

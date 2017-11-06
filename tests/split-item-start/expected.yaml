@@ -10,7 +10,7 @@ document:
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: ""
             - kind: block
               type: list_item
@@ -19,5 +19,5 @@ document:
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: Hello World

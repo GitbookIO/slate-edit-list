@@ -17,12 +17,12 @@ document:
                       nodes:
                         - kind: text
                           key: 'start'
-                          ranges:
+                          leaves:
                             - text: '1st item'
 
 selection:
   anchorKey: 'start'
   anchorOffset: 2
-  focusKey: 'end'
+  focusKey: 'start'
   focusOffset: 4
   isFocused: true

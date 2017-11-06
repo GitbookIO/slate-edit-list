@@ -8,7 +8,7 @@ document:
           type: paragraph
           nodes:
             - kind: text
-              ranges:
+              leaves:
                 - text: "Orphan"
 
     - kind: block
@@ -21,7 +21,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: "Valid item"
         # Item that contains another item
         - kind: block
@@ -34,5 +34,5 @@ document:
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: "Direct child of another item"

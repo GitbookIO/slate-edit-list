@@ -10,13 +10,13 @@ document:
                   type: heading
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: First block
                 - kind: block
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: Split
             - kind: block
               type: list_item
@@ -25,5 +25,5 @@ document:
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: Here

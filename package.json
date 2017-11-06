@@ -6,7 +6,7 @@
   "repository": "git://github.com/GitbookIO/slate-edit-list.git",
   "main": "./dist/index.js",
   "peerDependencies": {
-    "slate": "^0.23.0"
+    "slate": "^0.27.4"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -20,12 +20,13 @@
     "expect": "^1.20.2",
     "gh-pages": "^0.11.0",
     "http-server": "^0.9.0",
+    "immutable": "^3.8.2",
     "mocha": "^3.0.1",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "read-metadata": "^1.0.0",
-    "slate": "^0.24.0",
-    "slate-react": "^0.1.5",
+    "slate": "^0.27.4",
+    "slate-react": "^0.7.2",
     "stringify": "^5.1.0"
   },
   "scripts": {

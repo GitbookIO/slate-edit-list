@@ -38,24 +38,24 @@ const SCHEMA = {
     }
 };
 
-const Example = React.createClass({
-    getInitialState() {
-        return {
-            state: Slate.State.fromJSON(stateJson)
-        };
-    },
+class Example extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { state: Slate.State.fromJSON(stateJson) };
+        this.onChange = this.onChange.bind(this);
+    }
 
     onChange({ state }) {
         this.setState({
             state
         });
-    },
+    }
 
     call(change) {
         this.setState({
             state: this.state.state.change().call(change).state
         });
-    },
+    }
 
     renderToolbar() {
         const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.changes;
@@ -84,7 +84,7 @@ const Example = React.createClass({
                 <button onClick={() => this.call(unwrapList)}>Unwrap from list</button>
             </div>
         );
-    },
+    }
 
     render() {
         return (
@@ -98,7 +98,7 @@ const Example = React.createClass({
             </div>
         );
     }
-});
+}
 
 ReactDOM.render(
     <Example />,

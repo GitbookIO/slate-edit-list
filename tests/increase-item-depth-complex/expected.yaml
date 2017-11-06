@@ -10,7 +10,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: First item
         - kind: block
           type: list_item
@@ -19,7 +19,7 @@ document:
               type: paragraph
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: Second item
             - kind: block
               type: ol_list
@@ -31,7 +31,7 @@ document:
                       type: paragraph
                       nodes:
                         - kind: text
-                          ranges:
+                          leaves:
                             - text: First item in the nested list
                     - kind: block
                       type: ol_list
@@ -43,5 +43,5 @@ document:
                               type: paragraph
                               nodes:
                                 - kind: text
-                                  ranges:
+                                  leaves:
                                     - text: Second item in the nested list

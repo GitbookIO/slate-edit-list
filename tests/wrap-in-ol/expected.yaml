@@ -10,5 +10,5 @@ document:
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: Hello World

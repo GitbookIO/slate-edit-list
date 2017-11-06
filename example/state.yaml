@@ -4,13 +4,13 @@ document:
       type: heading
       nodes:
       - kind: text
-        ranges:
+        leaves:
         - text: 'Slate + List Edition'
     - kind: block
       type: paragraph
       nodes:
       - kind: text
-        ranges:
+        leaves:
         - text: This page is a basic example of Slate + slate-edit-list plugin. Press Enter in a list to create a new list item. Press Enter again to exit and Shift+Enter to create a paragraph in a list. The items at range are detected and highlighted, for demonstration purpose.
     - kind: block
       type: ul_list
@@ -25,7 +25,7 @@ document:
           type: paragraph
           nodes:
           - kind: text
-            ranges:
+            leaves:
             - text: 'First item in the list'
       - kind: block
         type: list_item
@@ -34,13 +34,13 @@ document:
           type: heading
           nodes:
           - kind: text
-            ranges:
+            leaves:
             - text: 'With blocks:'
         - kind: block
           type: paragraph
           nodes:
           - kind: text
-            ranges:
+            leaves:
             - text: 'List item can contain blocks'
       - kind: block
         type: list_item
@@ -49,7 +49,7 @@ document:
           type: paragraph
           nodes:
           - kind: text
-            ranges:
+            leaves:
             - text: 'Third item in the list, with a nested list'
         - kind: block
           type: ol_list
@@ -64,7 +64,7 @@ document:
               type: paragraph
               nodes:
               - kind: text
-                ranges:
+                leaves:
                 - text: 'First item in the nested list'
           - kind: block
             type: list_item
@@ -73,11 +73,11 @@ document:
               type: paragraph
               nodes:
               - kind: text
-                ranges:
+                leaves:
                 - text: 'Second item in the nested list'
     - kind: block
       type: paragraph
       nodes:
       - kind: text
-        ranges:
+        leaves:
         - text: 'End paragraph'

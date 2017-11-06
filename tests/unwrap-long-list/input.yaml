@@ -10,7 +10,7 @@ document:
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: Item 1
             - kind: block
               type: list_item
@@ -20,7 +20,7 @@ document:
                   nodes:
                     - kind: text
                       key: '_selection_key'
-                      ranges:
+                      leaves:
                         - text: Item 2
             - kind: block
               type: list_item
@@ -29,5 +29,5 @@ document:
                   type: paragraph
                   nodes:
                     - kind: text
-                      ranges:
+                      leaves:
                         - text: Item 3

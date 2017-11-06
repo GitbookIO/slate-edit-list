@@ -7,20 +7,20 @@ document:
           type: list_item
           nodes:
             - kind: text
-              ranges:
+              leaves:
                 - text: ""
             - kind: inline
               type: link
               nodes:
                 - kind: text
-                  ranges:
+                  leaves:
                     - text: "A link"
             - kind: text
-              ranges:
+              leaves:
                 - text: ""
         - kind: block
           type: list_item
           nodes:
             - kind: text
-              ranges:
+              leaves:
                 - text: "2nd item"

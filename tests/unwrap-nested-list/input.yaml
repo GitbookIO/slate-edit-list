@@ -11,7 +11,7 @@ document:
               nodes:
                 - kind: text
                   key: '_selection_key'
-                  ranges:
+                  leaves:
                     - text: Item 1
             - kind: block
               type: ol_list
@@ -23,5 +23,5 @@ document:
                       type: paragraph
                       nodes:
                         - kind: text
-                          ranges:
+                          leaves:
                             - text: Subtitem 1
