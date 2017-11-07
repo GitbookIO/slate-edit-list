@@ -21,4 +21,4 @@ export default function(plugin, change) {
     expect(change.value.selection.isCollapsed).toBe(true);
 
     return change;
-};
+}

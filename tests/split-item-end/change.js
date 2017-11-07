@@ -4,4 +4,4 @@ export default function(plugin, change) {
 
     change.collapseToEndOf(p);
     return plugin.changes.splitListItem(change);
-};
+}

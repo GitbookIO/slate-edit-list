@@ -4,4 +4,4 @@ export default function(plugin, change) {
     change.collapseToStartOf(selectedBlock).move(2);
 
     return plugin.changes.decreaseItemDepth(change);
-};
+}

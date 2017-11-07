@@ -117,8 +117,7 @@ class Example extends React.Component<*, *> {
                     renderNode={renderNode}
                     shouldNodeComponentUpdate={props =>
                         // To update the highlighting of nodes inside the selection
-                        props.node.type === 'list_item'
-                    }
+                        props.node.type === 'list_item'}
                 />
             </div>
         );

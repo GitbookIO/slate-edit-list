@@ -12,4 +12,4 @@ export default function(plugin, change) {
         change,
         {}
     );
-};
+}

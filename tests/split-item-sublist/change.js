@@ -5,4 +5,4 @@ export default function(plugin, change) {
     change.collapseToStartOf(selectedBlock).move(2); // It|em 1
 
     return plugin.changes.splitListItem(change);
-};
+}

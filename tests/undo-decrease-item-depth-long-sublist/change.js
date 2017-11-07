@@ -14,4 +14,4 @@ export default function(plugin, change) {
     expect(toTest.value.startBlock.text).toEqual('Item 1.1');
 
     return toTest;
-};
+}

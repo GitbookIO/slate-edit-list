@@ -12,4 +12,4 @@ export default function(plugin, change) {
     expect(change.value.selection.toJS()).toEqual(initialSelection.toJS());
 
     return change;
-};
+}

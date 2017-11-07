@@ -22,4 +22,4 @@ export default function(plugin, change) {
     // expect(value.selection.toJS()).toEqual(initialSelection.toJS());
 
     return change;
-};
+}

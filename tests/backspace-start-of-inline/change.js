@@ -20,4 +20,4 @@ export default function(plugin, change) {
     expect(change.value.selection.anchorOffset).toEqual(0);
     expect(change.value.selection.isCollapsed).toBe(true);
     return change;
-};
+}

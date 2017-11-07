@@ -4,4 +4,4 @@ export default function(plugin, change) {
 
     change.collapseToStartOf(p).moveOffsetsTo(5, 5);
     return plugin.changes.splitListItem(change);
-};
+}

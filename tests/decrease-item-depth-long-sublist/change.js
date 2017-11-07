@@ -4,4 +4,4 @@ export default function(plugin, change) {
     change.moveToRangeOf(selectedBlock).move(2);
 
     return change.call(plugin.changes.decreaseItemDepth);
-};
+}

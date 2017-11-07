@@ -16,4 +16,4 @@ export default function(plugin, change) {
     expect(toTest.value.selection.toJS()).toEqual(initialSelection.toJS());
 
     return toTest;
-};
+}

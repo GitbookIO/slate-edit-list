@@ -13,4 +13,4 @@ export default function(plugin, change) {
     );
 
     expect(ret === null).toBe(true);
-};
+}

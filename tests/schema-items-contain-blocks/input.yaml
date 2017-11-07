@@ -18,12 +18,6 @@ document:
             - kind: text
               leaves:
                 - text: ""
-            - kind: block
-              type: paragraph
-              nodes:
-                - kind: text
-                  leaves:
-                    - text: "item"
         - kind: block
           type: list_item
           nodes:

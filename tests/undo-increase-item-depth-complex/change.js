@@ -19,4 +19,4 @@ export default function(plugin, change) {
     expect(newChange.value.selection.toJS()).toEqual(initialSelection.toJS());
 
     return newChange;
-};
+}
