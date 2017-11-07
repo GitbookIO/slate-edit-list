@@ -1,4 +1,3 @@
-
 module.exports = function(plugin, change) {
     return plugin.onKeyDown(
         {

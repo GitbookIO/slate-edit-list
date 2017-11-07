@@ -11,9 +11,10 @@ module.exports = function(plugin, change) {
         focusOffset: 2
     });
 
-    change.select(range)
-         .call(plugin.changes.splitListItem)
-         .undo();
+    change
+        .select(range)
+        .call(plugin.changes.splitListItem)
+        .undo();
 
     // TODO fix undo, and test selection
     // Back to previous cursor position

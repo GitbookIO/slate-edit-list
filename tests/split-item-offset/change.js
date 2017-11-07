@@ -1,4 +1,3 @@
-
 module.exports = function(plugin, change) {
     const { value } = change;
     const p = value.document.findDescendant(node => node.type == 'paragraph');

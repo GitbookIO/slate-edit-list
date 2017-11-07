@@ -10,14 +10,18 @@ const INITIAL_VALUE = require('./value');
 const plugin = PluginEditList();
 const plugins = [plugin];
 
-const highlightedItems = (props) => {
+const highlightedItems = props => {
     const { node, editor } = props;
-    const isCurrentItem = plugin.utils.getItemsAtRange(editor.value).contains(node);
+    const isCurrentItem = plugin.utils
+        .getItemsAtRange(editor.value)
+        .contains(node);
 
     return (
-        <li className={isCurrentItem ? 'current-item' : ''}
+        <li
+            className={isCurrentItem ? 'current-item' : ''}
             title={isCurrentItem ? 'Current Item' : ''}
-            {...props.attributes}>
+            {...props.attributes}
+        >
             {props.children}
         </li>
     );
@@ -29,18 +33,18 @@ function renderNode(props) {
     const { node, attributes, children } = props;
 
     switch (node.type) {
-    case 'ul_list':
-        return <ul {...attributes}>{children}</ul>;
-    case 'ol_list':
-        return <ol {...attributes}>{children}</ol>;
+        case 'ul_list':
+            return <ul {...attributes}>{children}</ul>;
+        case 'ol_list':
+            return <ol {...attributes}>{children}</ol>;
 
-    case 'list_item':
-        return highlightedItems(props);
+        case 'list_item':
+            return highlightedItems(props);
 
-    case 'paragraph':
-        return <p {...attributes}>{children}</p>;
-    case 'heading':
-        return <h1 {...attributes}>{children}</h1>;
+        case 'paragraph':
+            return <p {...attributes}>{children}</p>;
+        case 'heading':
+            return <h1 {...attributes}>{children}</h1>;
     }
 }
 
@@ -64,30 +68,45 @@ class Example extends React.Component {
     }
 
     renderToolbar() {
-        const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.changes;
+        const {
+            wrapInList,
+            unwrapList,
+            increaseItemDepth,
+            decreaseItemDepth
+        } = plugin.changes;
         const inList = plugin.utils.isSelectionInList(this.state.value);
 
         return (
             <div>
-                <button className={inList ? 'active' : ''}
-                        onClick={() => this.call(inList ? unwrapList : wrapInList)}>
-                    <i className="fa fa-list-ul fa-lg"></i>
+                <button
+                    className={inList ? 'active' : ''}
+                    onClick={() => this.call(inList ? unwrapList : wrapInList)}
+                >
+                    <i className="fa fa-list-ul fa-lg" />
                 </button>
 
-                <button className={inList ? '' : 'disabled'}
-                        onClick={() => this.call(decreaseItemDepth)}>
-                    <i className="fa fa-outdent fa-lg"></i>
+                <button
+                    className={inList ? '' : 'disabled'}
+                    onClick={() => this.call(decreaseItemDepth)}
+                >
+                    <i className="fa fa-outdent fa-lg" />
                 </button>
 
-                <button className={inList ? '' : 'disabled'}
-                        onClick={() => this.call(increaseItemDepth)}>
-                    <i className="fa fa-indent fa-lg"></i>
+                <button
+                    className={inList ? '' : 'disabled'}
+                    onClick={() => this.call(increaseItemDepth)}
+                >
+                    <i className="fa fa-indent fa-lg" />
                 </button>
 
                 <span className="sep">·</span>
 
-                <button onClick={() => this.call(wrapInList)}>Wrap in list</button>
-                <button onClick={() => this.call(unwrapList)}>Unwrap from list</button>
+                <button onClick={() => this.call(wrapInList)}>
+                    Wrap in list
+                </button>
+                <button onClick={() => this.call(unwrapList)}>
+                    Unwrap from list
+                </button>
             </div>
         );
     }
@@ -96,20 +115,19 @@ class Example extends React.Component {
         return (
             <div>
                 {this.renderToolbar()}
-                <Editor placeholder={'Enter some text...'}
-                        plugins={plugins}
-                        value={this.state.value}
-                        onChange={this.onChange}
-                        renderNode={renderNode}
-                        shouldNodeComponentUpdate={(props => {
-                            return props.node.type === 'list_item';
-                        })} />
+                <Editor
+                    placeholder={'Enter some text...'}
+                    plugins={plugins}
+                    value={this.state.value}
+                    onChange={this.onChange}
+                    renderNode={renderNode}
+                    shouldNodeComponentUpdate={props =>
+                        props.node.type === 'list_item'
+                    }
+                />
             </div>
         );
     }
 }
 
-ReactDOM.render(
-    <Example />,
-    document.getElementById('example')
-);
+ReactDOM.render(<Example />, document.getElementById('example'));
