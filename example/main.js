@@ -2,18 +2,17 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const Slate = require('slate');
 const { Editor } = require('slate-react');
-const yaml = require('yaml-js');
 
 const PluginEditList = require('../lib/');
 
-const valueJson = yaml.load(require('./state.yaml'));
+const INITIAL_VALUE = require('./value');
 
 const plugin = PluginEditList();
 const plugins = [plugin];
 
 const highlightedItems = (props) => {
-    const { node, value } = props;
-    const isCurrentItem = plugin.utils.getItemsAtRange(value).contains(node);
+    const { node, editor } = props;
+    const isCurrentItem = plugin.utils.getItemsAtRange(editor.value).contains(node);
 
     return (
         <li className={isCurrentItem ? 'current-item' : ''}
@@ -26,22 +25,29 @@ const highlightedItems = (props) => {
 // To update the highlighting of nodes inside the selection
 highlightedItems.suppressShouldComponentUpdate = true;
 
-const SCHEMA = {
-    nodes: {
-        ul_list:   props => <ul {...props.attributes}>{props.children}</ul>,
-        ol_list:   props => <ol {...props.attributes}>{props.children}</ol>,
+function renderNode(props) {
+    const { node, attributes, children } = props;
 
-        list_item: highlightedItems,
+    switch (node.type) {
+    case 'ul_list':
+        return <ul {...attributes}>{children}</ul>;
+    case 'ol_list':
+        return <ol {...attributes}>{children}</ol>;
 
-        paragraph: props => <p {...props.attributes}>{props.children}</p>,
-        heading:   props => <h1 {...props.attributes}>{props.children}</h1>
+    case 'list_item':
+        return highlightedItems(props);
+
+    case 'paragraph':
+        return <p {...attributes}>{children}</p>;
+    case 'heading':
+        return <h1 {...attributes}>{children}</h1>;
     }
-};
+}
 
 class Example extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { state: Slate.Value.fromJSON(valueJson) };
+        this.state = { value: INITIAL_VALUE };
         this.onChange = this.onChange.bind(this);
     }
 
@@ -92,9 +98,12 @@ class Example extends React.Component {
                 {this.renderToolbar()}
                 <Editor placeholder={'Enter some text...'}
                         plugins={plugins}
-                        state={this.state.value}
+                        value={this.state.value}
                         onChange={this.onChange}
-                        schema={SCHEMA} />
+                        renderNode={renderNode}
+                        shouldNodeComponentUpdate={(props => {
+                            return props.node.type === 'list_item';
+                        })} />
             </div>
         );
     }

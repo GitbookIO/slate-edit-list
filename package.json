@@ -26,6 +26,7 @@
     "react-dom": "^16.0.0",
     "read-metadata": "^1.0.0",
     "slate": "^0.30.0",
+    "slate-hyperscript": "^0.4.6",
     "slate-react": "^0.10.0",
     "stringify": "^5.1.0"
   },
