@@ -1,6 +1,6 @@
 /** @jsx h */
-// eslint-disable-next-line
-const { createHyperscript } = require('slate-hyperscript');
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createHyperscript } from 'slate-hyperscript';
 
 const h = createHyperscript({
     blocks: {
@@ -12,7 +12,7 @@ const h = createHyperscript({
     }
 });
 
-module.exports = (
+export default (
     <value>
         <document>
             <heading>Slate + List Edition</heading>
