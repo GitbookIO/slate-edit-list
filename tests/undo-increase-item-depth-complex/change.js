@@ -1,21 +1,21 @@
 const expect = require('expect');
 
 module.exports = function(plugin, change) {
-    const { state } = change;
-    const selectedBlock = state.document.getDescendant('_selection_key');
+    const { value } = change;
+    const selectedBlock = value.document.getDescendant('_selection_key');
 
-    const initial = change.state.change({ save: false }).moveToRangeOf(selectedBlock);
-    const initialText = initial.state.startBlock.text;
-    const initialSelection = initial.state.selection;
+    const initial = change.value.change({ save: false }).moveToRangeOf(selectedBlock);
+    const initialText = initial.value.startBlock.text;
+    const initialSelection = initial.value.selection;
 
-    const newChange = initial.state.change();
+    const newChange = initial.value.change();
 
     newChange.call(plugin.changes.increaseItemDepth)
           .undo();
 
     // Back to previous cursor position
-    expect(newChange.state.startBlock.text).toEqual(initialText);
-    expect(newChange.state.selection.toJS()).toEqual(initialSelection.toJS());
+    expect(newChange.value.startBlock.text).toEqual(initialText);
+    expect(newChange.value.selection.toJS()).toEqual(initialSelection.toJS());
 
     return newChange;
 };
