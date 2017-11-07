@@ -26,6 +26,7 @@ module.exports = (
         <list_item>
           <paragraph>List item can contain blocks</paragraph>
           <heading>Here is a heading</heading>
+          <paragraph>And another paragraph</paragraph>
         </list_item>
         <list_item>
           <paragraph>Third item in the list, with a nested list</paragraph>

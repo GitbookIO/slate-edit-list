@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.9.0...HEAD
+[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.10.0...HEAD
 
 ## 0.10.0 - 2017-11-07
 
