@@ -6,6 +6,7 @@
   "repository": "git://github.com/GitbookIO/slate-edit-list.git",
   "main": "./dist/index.js",
   "peerDependencies": {
+    "immutable": "^3.8.2",
     "slate": "^0.29.0"
   },
   "devDependencies": {
