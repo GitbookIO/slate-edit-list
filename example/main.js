@@ -1,36 +1,22 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Slate = require('slate');
-const { Editor } = require('slate-react');
+// @flow
+/* global document */
+/* eslint-disable import/no-extraneous-dependencies */
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Editor } from 'slate-react';
 
-const PluginEditList = require('../lib/');
+import PluginEditList from '../lib/';
 
-const INITIAL_VALUE = require('./value');
+import INITIAL_VALUE from './value';
 
 const plugin = PluginEditList();
 const plugins = [plugin];
 
-const highlightedItems = props => {
-    const { node, editor } = props;
+function renderNode(props: *) {
+    const { node, attributes, children, editor } = props;
     const isCurrentItem = plugin.utils
         .getItemsAtRange(editor.value)
         .contains(node);
-
-    return (
-        <li
-            className={isCurrentItem ? 'current-item' : ''}
-            title={isCurrentItem ? 'Current Item' : ''}
-            {...props.attributes}
-        >
-            {props.children}
-        </li>
-    );
-};
-// To update the highlighting of nodes inside the selection
-highlightedItems.suppressShouldComponentUpdate = true;
-
-function renderNode(props) {
-    const { node, attributes, children } = props;
 
     switch (node.type) {
         case 'ul_list':
@@ -39,33 +25,29 @@ function renderNode(props) {
             return <ol {...attributes}>{children}</ol>;
 
         case 'list_item':
-            return highlightedItems(props);
+            return (
+                <li
+                    className={isCurrentItem ? 'current-item' : ''}
+                    title={isCurrentItem ? 'Current Item' : ''}
+                    {...props.attributes}
+                >
+                    {props.children}
+                </li>
+            );
 
         case 'paragraph':
             return <p {...attributes}>{children}</p>;
         case 'heading':
             return <h1 {...attributes}>{children}</h1>;
+        default:
+            return <p {...attributes}>{children}</p>;
     }
 }
 
-class Example extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { value: INITIAL_VALUE };
-        this.onChange = this.onChange.bind(this);
-    }
-
-    onChange({ value }) {
-        this.setState({
-            value
-        });
-    }
-
-    call(change) {
-        this.setState({
-            value: this.state.value.change().call(change).value
-        });
-    }
+class Example extends React.Component<*, *> {
+    state = {
+        value: INITIAL_VALUE
+    };
 
     renderToolbar() {
         const {
@@ -111,6 +93,18 @@ class Example extends React.Component {
         );
     }
 
+    call(change) {
+        this.setState({
+            value: this.state.value.change().call(change).value
+        });
+    }
+
+    onChange = ({ value }) => {
+        this.setState({
+            value
+        });
+    };
+
     render() {
         return (
             <div>
@@ -122,6 +116,7 @@ class Example extends React.Component {
                     onChange={this.onChange}
                     renderNode={renderNode}
                     shouldNodeComponentUpdate={props =>
+                        // To update the highlighting of nodes inside the selection
                         props.node.type === 'list_item'
                     }
                 />
