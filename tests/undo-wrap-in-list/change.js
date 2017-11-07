@@ -1,6 +1,6 @@
 import expect from 'expect';
 
-module.exports = function(plugin, change) {
+export default function(plugin, change) {
     const { value } = change;
     const initialText = value.startBlock.text;
     const initialSelection = value.selection;
