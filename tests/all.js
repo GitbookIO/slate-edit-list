@@ -1,10 +1,10 @@
-const expect = require('expect');
-const fs = require('fs');
-const path = require('path');
-const Slate = require('slate');
-const readMetadata = require('read-metadata');
+import expect from 'expect';
+import fs from 'fs';
+import path from 'path';
+import Slate from 'slate';
+import readMetadata from 'read-metadata';
 
-const EditList = require('../lib');
+import EditList from '../lib';
 
 describe('slate-edit-list', () => {
     const tests = fs.readdirSync(__dirname);
