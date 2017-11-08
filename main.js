@@ -1,60 +1,96 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Slate = require('slate');
-const { Editor } = require('slate-react');
+// @flow
+/* global document */
+/* eslint-disable import/no-extraneous-dependencies */
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Editor } from 'slate-react';
 
-const PluginEditList = require('../lib/');
+import PluginEditList from '../lib/';
 
-const INITIAL_VALUE = require('./value');
+import INITIAL_VALUE from './value';
 
 const plugin = PluginEditList();
 const plugins = [plugin];
 
-const highlightedItems = (props) => {
-    const { node, editor } = props;
-    const isCurrentItem = plugin.utils.getItemsAtRange(editor.value).contains(node);
-
-    return (
-        <li className={isCurrentItem ? 'current-item' : ''}
-            title={isCurrentItem ? 'Current Item' : ''}
-            {...props.attributes}>
-            {props.children}
-        </li>
-    );
-};
-// To update the highlighting of nodes inside the selection
-highlightedItems.suppressShouldComponentUpdate = true;
-
-function renderNode(props) {
-    const { node, attributes, children } = props;
+function renderNode(props: *) {
+    const { node, attributes, children, editor } = props;
+    const isCurrentItem = plugin.utils
+        .getItemsAtRange(editor.value)
+        .contains(node);
 
     switch (node.type) {
-    case 'ul_list':
-        return <ul {...attributes}>{children}</ul>;
-    case 'ol_list':
-        return <ol {...attributes}>{children}</ol>;
+        case 'ul_list':
+            return <ul {...attributes}>{children}</ul>;
+        case 'ol_list':
+            return <ol {...attributes}>{children}</ol>;
 
-    case 'list_item':
-        return highlightedItems(props);
+        case 'list_item':
+            return (
+                <li
+                    className={isCurrentItem ? 'current-item' : ''}
+                    title={isCurrentItem ? 'Current Item' : ''}
+                    {...props.attributes}
+                >
+                    {props.children}
+                </li>
+            );
 
-    case 'paragraph':
-        return <p {...attributes}>{children}</p>;
-    case 'heading':
-        return <h1 {...attributes}>{children}</h1>;
+        case 'paragraph':
+            return <p {...attributes}>{children}</p>;
+        case 'heading':
+            return <h1 {...attributes}>{children}</h1>;
+        default:
+            return <p {...attributes}>{children}</p>;
     }
 }
 
-class Example extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { value: INITIAL_VALUE };
-        this.onChange = this.onChange.bind(this);
-    }
+class Example extends React.Component<*, *> {
+    state = {
+        value: INITIAL_VALUE
+    };
 
-    onChange({ value }) {
-        this.setState({
-            value
-        });
+    renderToolbar() {
+        const {
+            wrapInList,
+            unwrapList,
+            increaseItemDepth,
+            decreaseItemDepth
+        } = plugin.changes;
+        const inList = plugin.utils.isSelectionInList(this.state.value);
+
+        return (
+            <div>
+                <button
+                    className={inList ? 'active' : ''}
+                    onClick={() => this.call(inList ? unwrapList : wrapInList)}
+                >
+                    <i className="fa fa-list-ul fa-lg" />
+                </button>
+
+                <button
+                    className={inList ? '' : 'disabled'}
+                    onClick={() => this.call(decreaseItemDepth)}
+                >
+                    <i className="fa fa-outdent fa-lg" />
+                </button>
+
+                <button
+                    className={inList ? '' : 'disabled'}
+                    onClick={() => this.call(increaseItemDepth)}
+                >
+                    <i className="fa fa-indent fa-lg" />
+                </button>
+
+                <span className="sep">·</span>
+
+                <button onClick={() => this.call(wrapInList)}>
+                    Wrap in list
+                </button>
+                <button onClick={() => this.call(unwrapList)}>
+                    Unwrap from list
+                </button>
+            </div>
+        );
     }
 
     call(change) {
@@ -63,53 +99,31 @@ class Example extends React.Component {
         });
     }
 
-    renderToolbar() {
-        const { wrapInList, unwrapList, increaseItemDepth, decreaseItemDepth } = plugin.changes;
-        const inList = plugin.utils.isSelectionInList(this.state.value);
-
-        return (
-            <div>
-                <button className={inList ? 'active' : ''}
-                        onClick={() => this.call(inList ? unwrapList : wrapInList)}>
-                    <i className="fa fa-list-ul fa-lg"></i>
-                </button>
-
-                <button className={inList ? '' : 'disabled'}
-                        onClick={() => this.call(decreaseItemDepth)}>
-                    <i className="fa fa-outdent fa-lg"></i>
-                </button>
-
-                <button className={inList ? '' : 'disabled'}
-                        onClick={() => this.call(increaseItemDepth)}>
-                    <i className="fa fa-indent fa-lg"></i>
-                </button>
-
-                <span className="sep">·</span>
-
-                <button onClick={() => this.call(wrapInList)}>Wrap in list</button>
-                <button onClick={() => this.call(unwrapList)}>Unwrap from list</button>
-            </div>
-        );
-    }
+    onChange = ({ value }) => {
+        this.setState({
+            value
+        });
+    };
 
     render() {
         return (
             <div>
                 {this.renderToolbar()}
-                <Editor placeholder={'Enter some text...'}
-                        plugins={plugins}
-                        value={this.state.value}
-                        onChange={this.onChange}
-                        renderNode={renderNode}
-                        shouldNodeComponentUpdate={(props => {
-                            return props.node.type === 'list_item';
-                        })} />
+                <Editor
+                    placeholder={'Enter some text...'}
+                    plugins={plugins}
+                    value={this.state.value}
+                    onChange={this.onChange}
+                    renderNode={renderNode}
+                    shouldNodeComponentUpdate={props =>
+                        // To update the highlighting of nodes inside the selection
+                        props.node.type === 'list_item'
+                    }
+                />
             </div>
         );
     }
 }
 
-ReactDOM.render(
-    <Example />,
-    document.getElementById('example')
-);
+// $FlowFixMe
+ReactDOM.render(<Example />, document.getElementById('example'));
