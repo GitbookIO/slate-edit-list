@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.10.0...HEAD
 
+## 0.10.1 - 2017-11-08
+
 - Fix errors due to some unwanted normalizations in changes.
 
 ## 0.10.0 - 2017-11-07
