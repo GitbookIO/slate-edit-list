@@ -1,6 +1,6 @@
-const expect = require('expect');
+import expect from 'expect';
 
-module.exports = function(plugin, change) {
+export default function(plugin, change) {
     const ret = plugin.onKeyDown(
         {
             preventDefault: () => {},
@@ -12,5 +12,5 @@ module.exports = function(plugin, change) {
         {}
     );
 
-    expect(ret === null).toBe(true);
-};
+    expect(ret == null).toBe(true);
+}

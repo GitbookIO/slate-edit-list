@@ -1,6 +1,6 @@
 // const expect = require('expect');
 
-module.exports = function(plugin, change) {
+export default function(plugin, change) {
     const { value } = change;
     const { selection } = value;
 
@@ -11,9 +11,10 @@ module.exports = function(plugin, change) {
         focusOffset: 2
     });
 
-    change.select(range)
-         .call(plugin.changes.splitListItem)
-         .undo();
+    change
+        .select(range)
+        .call(plugin.changes.splitListItem)
+        .undo();
 
     // TODO fix undo, and test selection
     // Back to previous cursor position
@@ -21,4 +22,4 @@ module.exports = function(plugin, change) {
     // expect(value.selection.toJS()).toEqual(initialSelection.toJS());
 
     return change;
-};
+}

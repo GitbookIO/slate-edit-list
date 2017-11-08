@@ -1,6 +1,6 @@
-const expect = require('expect');
+import expect from 'expect';
 
-module.exports = function(plugin, change) {
+export default function(plugin, change) {
     const { value } = change;
     const selectedBlock = value.document.getDescendant('current_item');
 
@@ -8,4 +8,4 @@ module.exports = function(plugin, change) {
 
     const previousItem = plugin.utils.getPreviousItem(change.value);
     expect(previousItem.key).toBe('previous_item');
-};
+}

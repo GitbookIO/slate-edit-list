@@ -1,5 +1,4 @@
-
-module.exports = function(plugin, change) {
+export default function(plugin, change) {
     return plugin.onKeyDown(
         {
             preventDefault: () => {},
@@ -9,4 +8,4 @@ module.exports = function(plugin, change) {
         change,
         {}
     );
-};
+}

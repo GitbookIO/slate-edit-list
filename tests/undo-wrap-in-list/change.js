@@ -1,6 +1,6 @@
-const expect = require('expect');
+import expect from 'expect';
 
-module.exports = function(plugin, change) {
+export default function(plugin, change) {
     const { value } = change;
     const initialText = value.startBlock.text;
     const initialSelection = value.selection;
@@ -12,4 +12,4 @@ module.exports = function(plugin, change) {
     expect(change.value.selection.toJS()).toEqual(initialSelection.toJS());
 
     return change;
-};
+}

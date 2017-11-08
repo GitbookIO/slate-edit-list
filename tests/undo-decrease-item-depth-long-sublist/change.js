@@ -1,9 +1,11 @@
-const expect = require('expect');
+import expect from 'expect';
 
-module.exports = function(plugin, change) {
+export default function(plugin, change) {
     const { value } = change;
     const selectedBlock = value.document.getDescendant('_selection_key');
-    const initial = change.value.change({ save: false }).moveToRangeOf(selectedBlock).value;
+    const initial = change.value
+        .change({ save: false })
+        .moveToRangeOf(selectedBlock).value;
     const toTest = initial.change();
 
     toTest.call(plugin.changes.decreaseItemDepth).undo();
@@ -12,4 +14,4 @@ module.exports = function(plugin, change) {
     expect(toTest.value.startBlock.text).toEqual('Item 1.1');
 
     return toTest;
-};
+}
