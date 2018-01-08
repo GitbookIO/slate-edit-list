@@ -1,32 +1,32 @@
 document:
   nodes:
     # orphan item
-    - kind: block
+    - object: block
       type: paragraph
       nodes:
-        - kind: text
+        - object: text
           leaves:
             - text: "Orphan"
 
-    - kind: block
+    - object: block
       type: ul_list
       nodes:
-        - kind: block
+        - object: block
           type: list_item
           nodes:
-            - kind: block
+            - object: block
               type: paragraph
               nodes:
-                - kind: text
+                - object: text
                   leaves:
                     - text: "Valid item"
 
-        - kind: block
+        - object: block
           type: list_item
           nodes:
-            - kind: block
+            - object: block
               type: paragraph
               nodes:
-                - kind: text
+                - object: text
                   leaves:
                     - text: "Direct child of another item"

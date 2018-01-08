@@ -1,40 +1,40 @@
 document:
   nodes:
-    - kind: block
+    - object: block
       type: ul_list
       nodes:
-        - kind: block
+        - object: block
           type: list_item
           nodes:
-            - kind: block
+            - object: block
               type: paragraph
               nodes:
-                - kind: text
+                - object: text
                   leaves:
                     - text: Item 1
 
-            - kind: block
+            - object: block
               type: ul_list
               data:
                 style:
                   listStyleType: 'square'
               nodes:
-                - kind: block
+                - object: block
                   type: list_item
                   nodes:
-                    - kind: block
+                    - object: block
                       type: paragraph
                       key: '_selection_key'
                       nodes:
-                        - kind: text
+                        - object: text
                           leaves:
                             - text: Item 1.1
-                - kind: block
+                - object: block
                   type: list_item
                   nodes:
-                    - kind: block
+                    - object: block
                       type: paragraph
                       nodes:
-                        - kind: text
+                        - object: text
                           leaves:
                             - text: Item 1.2

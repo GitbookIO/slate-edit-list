@@ -19,7 +19,7 @@ export default function(plugin, change) {
         isBackward: false,
         isFocused: false,
         marks: null,
-        kind: 'range'
+        object: 'range'
     });
 
     return change;

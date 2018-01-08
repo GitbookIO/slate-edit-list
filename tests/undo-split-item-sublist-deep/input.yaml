@@ -1,49 +1,49 @@
 document:
   nodes:
-    - kind: block
+    - object: block
       type: ol_list
       nodes:
-        - kind: block
+        - object: block
           type: list_item
           nodes:
-            - kind: block
+            - object: block
               type: paragraph
               nodes:
-                - kind: text
+                - object: text
                   leaves:
                     - text: Item 1
-            - kind: block
+            - object: block
               type: ol_list
               nodes:
-                - kind: block
+                - object: block
                   type: list_item
                   nodes:
-                    - kind: block
+                    - object: block
                       type: paragraph
                       nodes:
-                        - kind: text
+                        - object: text
                           key: '_selection_key'
                           # split here "It|em 1.1"
                           leaves:
                             - text: Item 1.1
-                    - kind: block
+                    - object: block
                       type: ol_list
                       nodes:
-                        - kind: block
+                        - object: block
                           type: list_item
                           nodes:
-                            - kind: block
+                            - object: block
                               type: paragraph
                               nodes:
-                                - kind: text
+                                - object: text
                                   leaves:
                                     - text: Item 1.1.1
-                        - kind: block
+                        - object: block
                           type: list_item
                           nodes:
-                            - kind: block
+                            - object: block
                               type: paragraph
                               nodes:
-                                - kind: text
+                                - object: text
                                   leaves:
                                     - text: Item 1.1.2
