@@ -1,56 +1,56 @@
 document:
   nodes:
-    - kind: block
+    - object: block
       type: ol_list
       nodes:
-        - kind: block
+        - object: block
           type: list_item
           nodes:
-            - kind: block
+            - object: block
               type: paragraph
               nodes:
-                - kind: text
+                - object: text
                   leaves:
                     - text: Item 1
-            - kind: block
+            - object: block
               type: ol_list
               nodes:
-                - kind: block
+                - object: block
                   type: list_item
                   nodes:
-                    - kind: block
+                    - object: block
                       type: paragraph
                       nodes:
-                        - kind: text
+                        - object: text
                           leaves:
                             - text: It
-                - kind: block
+                - object: block
                   type: list_item
                   nodes:
-                    - kind: block
+                    - object: block
                       type: paragraph
                       nodes:
-                        - kind: text
+                        - object: text
                           leaves:
                             - text: em 1.1
-                    - kind: block
+                    - object: block
                       type: ol_list
                       nodes:
-                        - kind: block
+                        - object: block
                           type: list_item
                           nodes:
-                            - kind: block
+                            - object: block
                               type: paragraph
                               nodes:
-                                - kind: text
+                                - object: text
                                   leaves:
                                     - text: Item 1.1.1
-                        - kind: block
+                        - object: block
                           type: list_item
                           nodes:
-                            - kind: block
+                            - object: block
                               type: paragraph
                               nodes:
-                                - kind: text
+                                - object: text
                                   leaves:
                                     - text: Item 1.1.2

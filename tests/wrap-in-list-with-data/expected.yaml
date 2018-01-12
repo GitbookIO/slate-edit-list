@@ -1,17 +1,17 @@
 document:
   nodes:
-      - kind: block
+      - object: block
         type: ol_list
         data:
           style:
             listStyleType: decimal
         nodes:
-            - kind: block
+            - object: block
               type: list_item
               nodes:
-                - kind: block
+                - object: block
                   type: paragraph
                   nodes:
-                    - kind: text
+                    - object: text
                       leaves:
                         - text: Hello World

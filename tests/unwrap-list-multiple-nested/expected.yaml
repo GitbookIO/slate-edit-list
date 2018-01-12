@@ -1,49 +1,49 @@
 document:
   nodes:
-    - kind: block
+    - object: block
       type: paragraph
       nodes:
-      - kind: text
+      - object: text
         leaves:
           - text: 'First item'
 
-    - kind: block
+    - object: block
       type: paragraph
       nodes:
-      - kind: text
+      - object: text
         leaves:
           - text: 'Second item, with nested list'
-    - kind: block
+    - object: block
       type: ol_list
       nodes:
-      - kind: block
+      - object: block
         type: list_item
         nodes:
-        - kind: block
+        - object: block
           type: paragraph
           nodes:
-          - kind: text
+          - object: text
             leaves:
               - text: 'First item in the nested list'
-      - kind: block
+      - object: block
         type: list_item
         nodes:
-        - kind: block
+        - object: block
           type: paragraph
           nodes:
-          - kind: text
+          - object: text
             leaves:
               - text: 'Second item in the nested list'
 
-    - kind: block
+    - object: block
       type: ul_list
       nodes:
-      - kind: block
+      - object: block
         type: list_item
         nodes:
-        - kind: block
+        - object: block
           type: paragraph
           nodes:
-          - kind: text
+          - object: text
             leaves:
               - text: 'Third item'

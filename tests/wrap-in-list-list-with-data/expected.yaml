@@ -1,57 +1,57 @@
 document:
   nodes:
-    - kind: block
+    - object: block
       type: paragraph
       nodes:
-        - kind: text
+        - object: text
           leaves:
             - text: 'Blah blah'
 
-    - kind: block
+    - object: block
       type: ul_list
       data:
         style:
           listStyleType: 'disc'
       nodes:
 
-        - kind: block
+        - object: block
           type: list_item
           nodes:
-            - kind: block
+            - object: block
               type: paragraph
               nodes:
-                - kind: text
+                - object: text
                   leaves:
                     - text: 'First item'
-            - kind: block
+            - object: block
               type: ul_list
               nodes:
-                - kind: block
+                - object: block
                   type: list_item
                   nodes:
-                    - kind: block
+                    - object: block
                       type: paragraph
                       nodes:
-                        - kind: text
+                        - object: text
                           leaves:
                             - text: 'Subitem'
 
-        - kind: block
+        - object: block
           type: list_item
           nodes:
-            - kind: block
+            - object: block
               type: paragraph
               nodes:
-                - kind: text
+                - object: text
                   leaves:
                     - text: 'Second item'
 
-        - kind: block
+        - object: block
           type: list_item
           nodes:
-            - kind: block
+            - object: block
               type: paragraph
               nodes:
-                - kind: text
+                - object: text
                   leaves:
                     - text: 'Blah blah'
