@@ -221,7 +221,7 @@ var Example = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(Example, null), document.getElementById('example'));
 
-},{"../lib/":14,"./value":2,"react":226,"react-dom":212,"slate-react":245}],2:[function(require,module,exports){
+},{"../lib/":14,"./value":2,"react":250,"react-dom":236,"slate-react":269}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -327,7 +327,7 @@ exports.default = h(
     )
 );
 
-},{"slate-hyperscript":231}],3:[function(require,module,exports){
+},{"slate-hyperscript":255}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -402,7 +402,7 @@ function decreaseItemDepth(opts, change) {
 
 exports.default = decreaseItemDepth;
 
-},{"../utils":22,"slate":280}],4:[function(require,module,exports){
+},{"../utils":22,"slate":305}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -474,7 +474,7 @@ destKey) {
 
 exports.default = increaseItemDepth;
 
-},{"../utils":22,"slate":280}],5:[function(require,module,exports){
+},{"../utils":22,"slate":305}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -539,7 +539,7 @@ function splitListItem(opts, change) {
 
 exports.default = splitListItem;
 
-},{"../utils":22,"slate":280}],7:[function(require,module,exports){
+},{"../utils":22,"slate":305}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -593,7 +593,7 @@ function unwrapList(opts, change) {
 
 exports.default = unwrapList;
 
-},{"../utils":22,"slate":280}],8:[function(require,module,exports){
+},{"../utils":22,"slate":305}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -635,7 +635,7 @@ function wrapInList(opts, change, type, data) {
         }
     });
 
-    return change;
+    return change.normalize();
 }
 
 /**
@@ -662,7 +662,7 @@ function getHighestSelectedBlocks(value) {
 
 exports.default = wrapInList;
 
-},{"../utils":22,"immutable":51,"slate":280}],9:[function(require,module,exports){
+},{"../utils":22,"immutable":51,"slate":305}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -817,7 +817,7 @@ function onBackspace(event, change, editor, opts) {
 }
 exports.default = onBackspace;
 
-},{"../changes":5,"../utils":22,"slate":280}],12:[function(require,module,exports){
+},{"../changes":5,"../utils":22,"slate":305}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -854,6 +854,12 @@ function onEnter(event, change, editor, opts) {
     }
 
     event.preventDefault();
+
+    // If expanded, delete first.
+    if (value.isExpanded) {
+        change.delete();
+    }
+
     if (currentItem.isEmpty) {
         // Block is empty, we exit the list
         if ((0, _utils.getItemDepth)(opts, value) > 1) {
@@ -867,7 +873,7 @@ function onEnter(event, change, editor, opts) {
 }
 exports.default = onEnter;
 
-},{"../changes":5,"../utils":22,"slate":280}],13:[function(require,module,exports){
+},{"../changes":5,"../utils":22,"slate":305}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -908,7 +914,7 @@ function onTab(event, change, editor, opts) {
 }
 exports.default = onTab;
 
-},{"../changes":5,"../utils":22,"slate":280}],14:[function(require,module,exports){
+},{"../changes":5,"../utils":22,"slate":305}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1030,7 +1036,7 @@ function getCurrentItem(opts, value, block) {
 }
 exports.default = getCurrentItem;
 
-},{"slate":280}],17:[function(require,module,exports){
+},{"slate":305}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1063,7 +1069,7 @@ function getCurrentList(opts, value, block) {
 }
 exports.default = getCurrentList;
 
-},{"./getCurrentItem":16,"./getListForItem":20,"slate":280}],18:[function(require,module,exports){
+},{"./getCurrentItem":16,"./getListForItem":20,"slate":305}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1099,7 +1105,7 @@ function getItemDepth(opts, value, block) {
 
 exports.default = getItemDepth;
 
-},{"./getCurrentItem":16,"slate":280}],19:[function(require,module,exports){
+},{"./getCurrentItem":16,"slate":305}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1161,7 +1167,7 @@ function getItemsAtRange(opts, value, range) {
 
 exports.default = getItemsAtRange;
 
-},{"./getCurrentItem":16,"./isList":23,"immutable":51,"slate":280}],20:[function(require,module,exports){
+},{"./getCurrentItem":16,"./isList":23,"immutable":51,"slate":305}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1188,7 +1194,7 @@ function getListForItem(opts, value, item) {
 
 exports.default = getListForItem;
 
-},{"./isList":23,"slate":280}],21:[function(require,module,exports){
+},{"./isList":23,"slate":305}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1229,7 +1235,7 @@ function getPreviousItem(opts, value, block) {
 
 exports.default = getPreviousItem;
 
-},{"./getCurrentItem":16,"slate":280}],22:[function(require,module,exports){
+},{"./getCurrentItem":16,"slate":305}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1297,7 +1303,7 @@ function isList(opts, node) {
 }
 exports.default = isList;
 
-},{"slate":280}],24:[function(require,module,exports){
+},{"slate":305}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1321,7 +1327,7 @@ function isSelectionInList(opts, value) {
 
 exports.default = isSelectionInList;
 
-},{"./getItemsAtRange":19,"slate":280}],25:[function(require,module,exports){
+},{"./getItemsAtRange":19,"slate":305}],25:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1427,7 +1433,7 @@ function wrapChildrenInDefaultBlock(opts, change, node) {
 
 exports.default = schema;
 
-},{"slate":280}],27:[function(require,module,exports){
+},{"slate":305}],27:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1480,7 +1486,7 @@ function joinAdjacentLists(opts, node) {
 
             var updatedSecond = change.value.document.getDescendant(second.key);
             updatedSecond.nodes.forEach(function (secondNode, index) {
-                change.insertNodeByKey(first.key, first.nodes.size + index, secondNode, { normalize: false });
+                change.moveNodeByKey(secondNode.key, first.key, first.nodes.size + index, { normalize: false });
             });
 
             change.removeNodeByKey(second.key, { normalize: false });
@@ -1490,7 +1496,7 @@ function joinAdjacentLists(opts, node) {
 
 exports.default = validateNode;
 
-},{"../utils":22,"slate":280}],28:[function(require,module,exports){
+},{"../utils":22,"slate":305}],28:[function(require,module,exports){
 'use strict';
 
 var GROUP_LEFT_TO_RIGHT,
@@ -1716,7 +1722,7 @@ var EventListener = {
 
 module.exports = EventListener;
 }).call(this,require('_process'))
-},{"./emptyFunction":35,"_process":203}],31:[function(require,module,exports){
+},{"./emptyFunction":35,"_process":227}],31:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -1913,7 +1919,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":203}],37:[function(require,module,exports){
+},{"_process":227}],37:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2099,7 +2105,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":203}],42:[function(require,module,exports){
+},{"_process":227}],42:[function(require,module,exports){
 'use strict';
 
 /**
@@ -2329,7 +2335,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":35,"_process":203}],48:[function(require,module,exports){
+},{"./emptyFunction":35,"_process":227}],48:[function(require,module,exports){
 
 /**
  * Module exports.
@@ -7824,7 +7830,7 @@ var DataView = getNative(root, 'DataView');
 
 module.exports = DataView;
 
-},{"./_getNative":122,"./_root":161}],59:[function(require,module,exports){
+},{"./_getNative":140,"./_root":183}],59:[function(require,module,exports){
 var hashClear = require('./_hashClear'),
     hashDelete = require('./_hashDelete'),
     hashGet = require('./_hashGet'),
@@ -7858,7 +7864,7 @@ Hash.prototype.set = hashSet;
 
 module.exports = Hash;
 
-},{"./_hashClear":129,"./_hashDelete":130,"./_hashGet":131,"./_hashHas":132,"./_hashSet":133}],60:[function(require,module,exports){
+},{"./_hashClear":148,"./_hashDelete":149,"./_hashGet":150,"./_hashHas":151,"./_hashSet":152}],60:[function(require,module,exports){
 var listCacheClear = require('./_listCacheClear'),
     listCacheDelete = require('./_listCacheDelete'),
     listCacheGet = require('./_listCacheGet'),
@@ -7892,7 +7898,7 @@ ListCache.prototype.set = listCacheSet;
 
 module.exports = ListCache;
 
-},{"./_listCacheClear":142,"./_listCacheDelete":143,"./_listCacheGet":144,"./_listCacheHas":145,"./_listCacheSet":146}],61:[function(require,module,exports){
+},{"./_listCacheClear":163,"./_listCacheDelete":164,"./_listCacheGet":165,"./_listCacheHas":166,"./_listCacheSet":167}],61:[function(require,module,exports){
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -7901,7 +7907,7 @@ var Map = getNative(root, 'Map');
 
 module.exports = Map;
 
-},{"./_getNative":122,"./_root":161}],62:[function(require,module,exports){
+},{"./_getNative":140,"./_root":183}],62:[function(require,module,exports){
 var mapCacheClear = require('./_mapCacheClear'),
     mapCacheDelete = require('./_mapCacheDelete'),
     mapCacheGet = require('./_mapCacheGet'),
@@ -7935,7 +7941,7 @@ MapCache.prototype.set = mapCacheSet;
 
 module.exports = MapCache;
 
-},{"./_mapCacheClear":147,"./_mapCacheDelete":148,"./_mapCacheGet":149,"./_mapCacheHas":150,"./_mapCacheSet":151}],63:[function(require,module,exports){
+},{"./_mapCacheClear":168,"./_mapCacheDelete":169,"./_mapCacheGet":170,"./_mapCacheHas":171,"./_mapCacheSet":172}],63:[function(require,module,exports){
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -7944,7 +7950,7 @@ var Promise = getNative(root, 'Promise');
 
 module.exports = Promise;
 
-},{"./_getNative":122,"./_root":161}],64:[function(require,module,exports){
+},{"./_getNative":140,"./_root":183}],64:[function(require,module,exports){
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -7953,7 +7959,7 @@ var Set = getNative(root, 'Set');
 
 module.exports = Set;
 
-},{"./_getNative":122,"./_root":161}],65:[function(require,module,exports){
+},{"./_getNative":140,"./_root":183}],65:[function(require,module,exports){
 var MapCache = require('./_MapCache'),
     setCacheAdd = require('./_setCacheAdd'),
     setCacheHas = require('./_setCacheHas');
@@ -7982,7 +7988,7 @@ SetCache.prototype.has = setCacheHas;
 
 module.exports = SetCache;
 
-},{"./_MapCache":62,"./_setCacheAdd":162,"./_setCacheHas":163}],66:[function(require,module,exports){
+},{"./_MapCache":62,"./_setCacheAdd":184,"./_setCacheHas":185}],66:[function(require,module,exports){
 var ListCache = require('./_ListCache'),
     stackClear = require('./_stackClear'),
     stackDelete = require('./_stackDelete'),
@@ -8011,7 +8017,7 @@ Stack.prototype.set = stackSet;
 
 module.exports = Stack;
 
-},{"./_ListCache":60,"./_stackClear":167,"./_stackDelete":168,"./_stackGet":169,"./_stackHas":170,"./_stackSet":171}],67:[function(require,module,exports){
+},{"./_ListCache":60,"./_stackClear":189,"./_stackDelete":190,"./_stackGet":191,"./_stackHas":192,"./_stackSet":193}],67:[function(require,module,exports){
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -8019,7 +8025,7 @@ var Symbol = root.Symbol;
 
 module.exports = Symbol;
 
-},{"./_root":161}],68:[function(require,module,exports){
+},{"./_root":183}],68:[function(require,module,exports){
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -8027,7 +8033,7 @@ var Uint8Array = root.Uint8Array;
 
 module.exports = Uint8Array;
 
-},{"./_root":161}],69:[function(require,module,exports){
+},{"./_root":183}],69:[function(require,module,exports){
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -8036,7 +8042,41 @@ var WeakMap = getNative(root, 'WeakMap');
 
 module.exports = WeakMap;
 
-},{"./_getNative":122,"./_root":161}],70:[function(require,module,exports){
+},{"./_getNative":140,"./_root":183}],70:[function(require,module,exports){
+/**
+ * Adds the key-value `pair` to `map`.
+ *
+ * @private
+ * @param {Object} map The map to modify.
+ * @param {Array} pair The key-value pair to add.
+ * @returns {Object} Returns `map`.
+ */
+function addMapEntry(map, pair) {
+  // Don't return `map.set` because it's not chainable in IE 11.
+  map.set(pair[0], pair[1]);
+  return map;
+}
+
+module.exports = addMapEntry;
+
+},{}],71:[function(require,module,exports){
+/**
+ * Adds `value` to `set`.
+ *
+ * @private
+ * @param {Object} set The set to modify.
+ * @param {*} value The value to add.
+ * @returns {Object} Returns `set`.
+ */
+function addSetEntry(set, value) {
+  // Don't return `set.add` because it's not chainable in IE 11.
+  set.add(value);
+  return set;
+}
+
+module.exports = addSetEntry;
+
+},{}],72:[function(require,module,exports){
 /**
  * A faster alternative to `Function#apply`, this function invokes `func`
  * with the `this` binding of `thisArg` and the arguments of `args`.
@@ -8059,7 +8099,31 @@ function apply(func, thisArg, args) {
 
 module.exports = apply;
 
-},{}],71:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
+/**
+ * A specialized version of `_.forEach` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns `array`.
+ */
+function arrayEach(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
+      break;
+    }
+  }
+  return array;
+}
+
+module.exports = arrayEach;
+
+},{}],74:[function(require,module,exports){
 /**
  * A specialized version of `_.filter` for arrays without support for
  * iteratee shorthands.
@@ -8086,7 +8150,7 @@ function arrayFilter(array, predicate) {
 
 module.exports = arrayFilter;
 
-},{}],72:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 var baseTimes = require('./_baseTimes'),
     isArguments = require('./isArguments'),
     isArray = require('./isArray'),
@@ -8137,7 +8201,7 @@ function arrayLikeKeys(value, inherited) {
 
 module.exports = arrayLikeKeys;
 
-},{"./_baseTimes":101,"./_isIndex":136,"./isArguments":180,"./isArray":181,"./isBuffer":184,"./isTypedArray":192}],73:[function(require,module,exports){
+},{"./_baseTimes":109,"./_isIndex":157,"./isArguments":202,"./isArray":203,"./isBuffer":206,"./isTypedArray":214}],76:[function(require,module,exports){
 /**
  * A specialized version of `_.map` for arrays without support for iteratee
  * shorthands.
@@ -8160,7 +8224,7 @@ function arrayMap(array, iteratee) {
 
 module.exports = arrayMap;
 
-},{}],74:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 /**
  * Appends the elements of `values` to `array`.
  *
@@ -8182,7 +8246,35 @@ function arrayPush(array, values) {
 
 module.exports = arrayPush;
 
-},{}],75:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
+/**
+ * A specialized version of `_.reduce` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {*} [accumulator] The initial value.
+ * @param {boolean} [initAccum] Specify using the first element of `array` as
+ *  the initial value.
+ * @returns {*} Returns the accumulated value.
+ */
+function arrayReduce(array, iteratee, accumulator, initAccum) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  if (initAccum && length) {
+    accumulator = array[++index];
+  }
+  while (++index < length) {
+    accumulator = iteratee(accumulator, array[index], index, array);
+  }
+  return accumulator;
+}
+
+module.exports = arrayReduce;
+
+},{}],79:[function(require,module,exports){
 /**
  * A specialized version of `_.some` for arrays without support for iteratee
  * shorthands.
@@ -8207,7 +8299,7 @@ function arraySome(array, predicate) {
 
 module.exports = arraySome;
 
-},{}],76:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 var baseAssignValue = require('./_baseAssignValue'),
     eq = require('./eq');
 
@@ -8229,7 +8321,7 @@ function assignMergeValue(object, key, value) {
 
 module.exports = assignMergeValue;
 
-},{"./_baseAssignValue":79,"./eq":176}],77:[function(require,module,exports){
+},{"./_baseAssignValue":85,"./eq":198}],81:[function(require,module,exports){
 var baseAssignValue = require('./_baseAssignValue'),
     eq = require('./eq');
 
@@ -8259,7 +8351,7 @@ function assignValue(object, key, value) {
 
 module.exports = assignValue;
 
-},{"./_baseAssignValue":79,"./eq":176}],78:[function(require,module,exports){
+},{"./_baseAssignValue":85,"./eq":198}],82:[function(require,module,exports){
 var eq = require('./eq');
 
 /**
@@ -8282,7 +8374,45 @@ function assocIndexOf(array, key) {
 
 module.exports = assocIndexOf;
 
-},{"./eq":176}],79:[function(require,module,exports){
+},{"./eq":198}],83:[function(require,module,exports){
+var copyObject = require('./_copyObject'),
+    keys = require('./keys');
+
+/**
+ * The base implementation of `_.assign` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+function baseAssign(object, source) {
+  return object && copyObject(source, keys(source), object);
+}
+
+module.exports = baseAssign;
+
+},{"./_copyObject":124,"./keys":215}],84:[function(require,module,exports){
+var copyObject = require('./_copyObject'),
+    keysIn = require('./keysIn');
+
+/**
+ * The base implementation of `_.assignIn` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+function baseAssignIn(object, source) {
+  return object && copyObject(source, keysIn(source), object);
+}
+
+module.exports = baseAssignIn;
+
+},{"./_copyObject":124,"./keysIn":216}],85:[function(require,module,exports){
 var defineProperty = require('./_defineProperty');
 
 /**
@@ -8309,7 +8439,162 @@ function baseAssignValue(object, key, value) {
 
 module.exports = baseAssignValue;
 
-},{"./_defineProperty":114}],80:[function(require,module,exports){
+},{"./_defineProperty":131}],86:[function(require,module,exports){
+var Stack = require('./_Stack'),
+    arrayEach = require('./_arrayEach'),
+    assignValue = require('./_assignValue'),
+    baseAssign = require('./_baseAssign'),
+    baseAssignIn = require('./_baseAssignIn'),
+    cloneBuffer = require('./_cloneBuffer'),
+    copyArray = require('./_copyArray'),
+    copySymbols = require('./_copySymbols'),
+    copySymbolsIn = require('./_copySymbolsIn'),
+    getAllKeys = require('./_getAllKeys'),
+    getAllKeysIn = require('./_getAllKeysIn'),
+    getTag = require('./_getTag'),
+    initCloneArray = require('./_initCloneArray'),
+    initCloneByTag = require('./_initCloneByTag'),
+    initCloneObject = require('./_initCloneObject'),
+    isArray = require('./isArray'),
+    isBuffer = require('./isBuffer'),
+    isObject = require('./isObject'),
+    keys = require('./keys');
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_DEEP_FLAG = 1,
+    CLONE_FLAT_FLAG = 2,
+    CLONE_SYMBOLS_FLAG = 4;
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/** Used to identify `toStringTag` values supported by `_.clone`. */
+var cloneableTags = {};
+cloneableTags[argsTag] = cloneableTags[arrayTag] =
+cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
+cloneableTags[boolTag] = cloneableTags[dateTag] =
+cloneableTags[float32Tag] = cloneableTags[float64Tag] =
+cloneableTags[int8Tag] = cloneableTags[int16Tag] =
+cloneableTags[int32Tag] = cloneableTags[mapTag] =
+cloneableTags[numberTag] = cloneableTags[objectTag] =
+cloneableTags[regexpTag] = cloneableTags[setTag] =
+cloneableTags[stringTag] = cloneableTags[symbolTag] =
+cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
+cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+cloneableTags[errorTag] = cloneableTags[funcTag] =
+cloneableTags[weakMapTag] = false;
+
+/**
+ * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+ * traversed objects.
+ *
+ * @private
+ * @param {*} value The value to clone.
+ * @param {boolean} bitmask The bitmask flags.
+ *  1 - Deep clone
+ *  2 - Flatten inherited properties
+ *  4 - Clone symbols
+ * @param {Function} [customizer] The function to customize cloning.
+ * @param {string} [key] The key of `value`.
+ * @param {Object} [object] The parent object of `value`.
+ * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+ * @returns {*} Returns the cloned value.
+ */
+function baseClone(value, bitmask, customizer, key, object, stack) {
+  var result,
+      isDeep = bitmask & CLONE_DEEP_FLAG,
+      isFlat = bitmask & CLONE_FLAT_FLAG,
+      isFull = bitmask & CLONE_SYMBOLS_FLAG;
+
+  if (customizer) {
+    result = object ? customizer(value, key, object, stack) : customizer(value);
+  }
+  if (result !== undefined) {
+    return result;
+  }
+  if (!isObject(value)) {
+    return value;
+  }
+  var isArr = isArray(value);
+  if (isArr) {
+    result = initCloneArray(value);
+    if (!isDeep) {
+      return copyArray(value, result);
+    }
+  } else {
+    var tag = getTag(value),
+        isFunc = tag == funcTag || tag == genTag;
+
+    if (isBuffer(value)) {
+      return cloneBuffer(value, isDeep);
+    }
+    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
+      result = (isFlat || isFunc) ? {} : initCloneObject(value);
+      if (!isDeep) {
+        return isFlat
+          ? copySymbolsIn(value, baseAssignIn(result, value))
+          : copySymbols(value, baseAssign(result, value));
+      }
+    } else {
+      if (!cloneableTags[tag]) {
+        return object ? value : {};
+      }
+      result = initCloneByTag(value, tag, baseClone, isDeep);
+    }
+  }
+  // Check for circular references and return its corresponding clone.
+  stack || (stack = new Stack);
+  var stacked = stack.get(value);
+  if (stacked) {
+    return stacked;
+  }
+  stack.set(value, result);
+
+  var keysFunc = isFull
+    ? (isFlat ? getAllKeysIn : getAllKeys)
+    : (isFlat ? keysIn : keys);
+
+  var props = isArr ? undefined : keysFunc(value);
+  arrayEach(props || value, function(subValue, key) {
+    if (props) {
+      key = subValue;
+      subValue = value[key];
+    }
+    // Recursively populate clone (susceptible to call stack limits).
+    assignValue(result, key, baseClone(subValue, bitmask, customizer, key, value, stack));
+  });
+  return result;
+}
+
+module.exports = baseClone;
+
+},{"./_Stack":66,"./_arrayEach":73,"./_assignValue":81,"./_baseAssign":83,"./_baseAssignIn":84,"./_cloneBuffer":116,"./_copyArray":123,"./_copySymbols":125,"./_copySymbolsIn":126,"./_getAllKeys":137,"./_getAllKeysIn":138,"./_getTag":145,"./_initCloneArray":153,"./_initCloneByTag":154,"./_initCloneObject":155,"./isArray":203,"./isBuffer":206,"./isObject":210,"./keys":215}],87:[function(require,module,exports){
 var isObject = require('./isObject');
 
 /** Built-in value references. */
@@ -8341,7 +8626,7 @@ var baseCreate = (function() {
 
 module.exports = baseCreate;
 
-},{"./isObject":188}],81:[function(require,module,exports){
+},{"./isObject":210}],88:[function(require,module,exports){
 var arrayPush = require('./_arrayPush'),
     isFlattenable = require('./_isFlattenable');
 
@@ -8381,7 +8666,7 @@ function baseFlatten(array, depth, predicate, isStrict, result) {
 
 module.exports = baseFlatten;
 
-},{"./_arrayPush":74,"./_isFlattenable":135}],82:[function(require,module,exports){
+},{"./_arrayPush":77,"./_isFlattenable":156}],89:[function(require,module,exports){
 var createBaseFor = require('./_createBaseFor');
 
 /**
@@ -8399,7 +8684,7 @@ var baseFor = createBaseFor();
 
 module.exports = baseFor;
 
-},{"./_createBaseFor":113}],83:[function(require,module,exports){
+},{"./_createBaseFor":129}],90:[function(require,module,exports){
 var castPath = require('./_castPath'),
     toKey = require('./_toKey');
 
@@ -8425,7 +8710,7 @@ function baseGet(object, path) {
 
 module.exports = baseGet;
 
-},{"./_castPath":105,"./_toKey":173}],84:[function(require,module,exports){
+},{"./_castPath":114,"./_toKey":195}],91:[function(require,module,exports){
 var arrayPush = require('./_arrayPush'),
     isArray = require('./isArray');
 
@@ -8447,7 +8732,7 @@ function baseGetAllKeys(object, keysFunc, symbolsFunc) {
 
 module.exports = baseGetAllKeys;
 
-},{"./_arrayPush":74,"./isArray":181}],85:[function(require,module,exports){
+},{"./_arrayPush":77,"./isArray":203}],92:[function(require,module,exports){
 var Symbol = require('./_Symbol'),
     getRawTag = require('./_getRawTag'),
     objectToString = require('./_objectToString');
@@ -8477,7 +8762,7 @@ function baseGetTag(value) {
 
 module.exports = baseGetTag;
 
-},{"./_Symbol":67,"./_getRawTag":124,"./_objectToString":158}],86:[function(require,module,exports){
+},{"./_Symbol":67,"./_getRawTag":142,"./_objectToString":179}],93:[function(require,module,exports){
 /**
  * The base implementation of `_.hasIn` without support for deep paths.
  *
@@ -8492,7 +8777,7 @@ function baseHasIn(object, key) {
 
 module.exports = baseHasIn;
 
-},{}],87:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     isObjectLike = require('./isObjectLike');
 
@@ -8512,7 +8797,7 @@ function baseIsArguments(value) {
 
 module.exports = baseIsArguments;
 
-},{"./_baseGetTag":85,"./isObjectLike":189}],88:[function(require,module,exports){
+},{"./_baseGetTag":92,"./isObjectLike":211}],95:[function(require,module,exports){
 var baseIsEqualDeep = require('./_baseIsEqualDeep'),
     isObjectLike = require('./isObjectLike');
 
@@ -8542,7 +8827,7 @@ function baseIsEqual(value, other, bitmask, customizer, stack) {
 
 module.exports = baseIsEqual;
 
-},{"./_baseIsEqualDeep":89,"./isObjectLike":189}],89:[function(require,module,exports){
+},{"./_baseIsEqualDeep":96,"./isObjectLike":211}],96:[function(require,module,exports){
 var Stack = require('./_Stack'),
     equalArrays = require('./_equalArrays'),
     equalByTag = require('./_equalByTag'),
@@ -8627,7 +8912,7 @@ function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
 
 module.exports = baseIsEqualDeep;
 
-},{"./_Stack":66,"./_equalArrays":115,"./_equalByTag":116,"./_equalObjects":117,"./_getTag":126,"./isArray":181,"./isBuffer":184,"./isTypedArray":192}],90:[function(require,module,exports){
+},{"./_Stack":66,"./_equalArrays":132,"./_equalByTag":133,"./_equalObjects":134,"./_getTag":145,"./isArray":203,"./isBuffer":206,"./isTypedArray":214}],97:[function(require,module,exports){
 var isFunction = require('./isFunction'),
     isMasked = require('./_isMasked'),
     isObject = require('./isObject'),
@@ -8676,7 +8961,7 @@ function baseIsNative(value) {
 
 module.exports = baseIsNative;
 
-},{"./_isMasked":140,"./_toSource":174,"./isFunction":186,"./isObject":188}],91:[function(require,module,exports){
+},{"./_isMasked":161,"./_toSource":196,"./isFunction":208,"./isObject":210}],98:[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     isLength = require('./isLength'),
     isObjectLike = require('./isObjectLike');
@@ -8738,7 +9023,7 @@ function baseIsTypedArray(value) {
 
 module.exports = baseIsTypedArray;
 
-},{"./_baseGetTag":85,"./isLength":187,"./isObjectLike":189}],92:[function(require,module,exports){
+},{"./_baseGetTag":92,"./isLength":209,"./isObjectLike":211}],99:[function(require,module,exports){
 var isPrototype = require('./_isPrototype'),
     nativeKeys = require('./_nativeKeys');
 
@@ -8770,7 +9055,7 @@ function baseKeys(object) {
 
 module.exports = baseKeys;
 
-},{"./_isPrototype":141,"./_nativeKeys":155}],93:[function(require,module,exports){
+},{"./_isPrototype":162,"./_nativeKeys":176}],100:[function(require,module,exports){
 var isObject = require('./isObject'),
     isPrototype = require('./_isPrototype'),
     nativeKeysIn = require('./_nativeKeysIn');
@@ -8805,7 +9090,7 @@ function baseKeysIn(object) {
 
 module.exports = baseKeysIn;
 
-},{"./_isPrototype":141,"./_nativeKeysIn":156,"./isObject":188}],94:[function(require,module,exports){
+},{"./_isPrototype":162,"./_nativeKeysIn":177,"./isObject":210}],101:[function(require,module,exports){
 var Stack = require('./_Stack'),
     assignMergeValue = require('./_assignMergeValue'),
     baseFor = require('./_baseFor'),
@@ -8848,7 +9133,7 @@ function baseMerge(object, source, srcIndex, customizer, stack) {
 
 module.exports = baseMerge;
 
-},{"./_Stack":66,"./_assignMergeValue":76,"./_baseFor":82,"./_baseMergeDeep":95,"./isObject":188,"./keysIn":194}],95:[function(require,module,exports){
+},{"./_Stack":66,"./_assignMergeValue":80,"./_baseFor":89,"./_baseMergeDeep":102,"./isObject":210,"./keysIn":216}],102:[function(require,module,exports){
 var assignMergeValue = require('./_assignMergeValue'),
     cloneBuffer = require('./_cloneBuffer'),
     cloneTypedArray = require('./_cloneTypedArray'),
@@ -8943,7 +9228,7 @@ function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, sta
 
 module.exports = baseMergeDeep;
 
-},{"./_assignMergeValue":76,"./_cloneBuffer":107,"./_cloneTypedArray":108,"./_copyArray":109,"./_initCloneObject":134,"./isArguments":180,"./isArray":181,"./isArrayLikeObject":183,"./isBuffer":184,"./isFunction":186,"./isObject":188,"./isPlainObject":190,"./isTypedArray":192,"./toPlainObject":200}],96:[function(require,module,exports){
+},{"./_assignMergeValue":80,"./_cloneBuffer":116,"./_cloneTypedArray":122,"./_copyArray":123,"./_initCloneObject":155,"./isArguments":202,"./isArray":203,"./isArrayLikeObject":205,"./isBuffer":206,"./isFunction":208,"./isObject":210,"./isPlainObject":212,"./isTypedArray":214,"./toPlainObject":224}],103:[function(require,module,exports){
 var basePickBy = require('./_basePickBy'),
     hasIn = require('./hasIn');
 
@@ -8964,7 +9249,7 @@ function basePick(object, paths) {
 
 module.exports = basePick;
 
-},{"./_basePickBy":97,"./hasIn":178}],97:[function(require,module,exports){
+},{"./_basePickBy":104,"./hasIn":200}],104:[function(require,module,exports){
 var baseGet = require('./_baseGet'),
     baseSet = require('./_baseSet'),
     castPath = require('./_castPath');
@@ -8996,7 +9281,7 @@ function basePickBy(object, paths, predicate) {
 
 module.exports = basePickBy;
 
-},{"./_baseGet":83,"./_baseSet":99,"./_castPath":105}],98:[function(require,module,exports){
+},{"./_baseGet":90,"./_baseSet":106,"./_castPath":114}],105:[function(require,module,exports){
 var identity = require('./identity'),
     overRest = require('./_overRest'),
     setToString = require('./_setToString');
@@ -9015,7 +9300,7 @@ function baseRest(func, start) {
 
 module.exports = baseRest;
 
-},{"./_overRest":160,"./_setToString":165,"./identity":179}],99:[function(require,module,exports){
+},{"./_overRest":181,"./_setToString":187,"./identity":201}],106:[function(require,module,exports){
 var assignValue = require('./_assignValue'),
     castPath = require('./_castPath'),
     isIndex = require('./_isIndex'),
@@ -9064,7 +9349,7 @@ function baseSet(object, path, value, customizer) {
 
 module.exports = baseSet;
 
-},{"./_assignValue":77,"./_castPath":105,"./_isIndex":136,"./_toKey":173,"./isObject":188}],100:[function(require,module,exports){
+},{"./_assignValue":81,"./_castPath":114,"./_isIndex":157,"./_toKey":195,"./isObject":210}],107:[function(require,module,exports){
 var constant = require('./constant'),
     defineProperty = require('./_defineProperty'),
     identity = require('./identity');
@@ -9088,7 +9373,40 @@ var baseSetToString = !defineProperty ? identity : function(func, string) {
 
 module.exports = baseSetToString;
 
-},{"./_defineProperty":114,"./constant":175,"./identity":179}],101:[function(require,module,exports){
+},{"./_defineProperty":131,"./constant":197,"./identity":201}],108:[function(require,module,exports){
+/**
+ * The base implementation of `_.slice` without an iteratee call guard.
+ *
+ * @private
+ * @param {Array} array The array to slice.
+ * @param {number} [start=0] The start position.
+ * @param {number} [end=array.length] The end position.
+ * @returns {Array} Returns the slice of `array`.
+ */
+function baseSlice(array, start, end) {
+  var index = -1,
+      length = array.length;
+
+  if (start < 0) {
+    start = -start > length ? 0 : (length + start);
+  }
+  end = end > length ? length : end;
+  if (end < 0) {
+    end += length;
+  }
+  length = start > end ? 0 : ((end - start) >>> 0);
+  start >>>= 0;
+
+  var result = Array(length);
+  while (++index < length) {
+    result[index] = array[index + start];
+  }
+  return result;
+}
+
+module.exports = baseSlice;
+
+},{}],109:[function(require,module,exports){
 /**
  * The base implementation of `_.times` without support for iteratee shorthands
  * or max array length checks.
@@ -9110,7 +9428,7 @@ function baseTimes(n, iteratee) {
 
 module.exports = baseTimes;
 
-},{}],102:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 var Symbol = require('./_Symbol'),
     arrayMap = require('./_arrayMap'),
     isArray = require('./isArray'),
@@ -9149,7 +9467,7 @@ function baseToString(value) {
 
 module.exports = baseToString;
 
-},{"./_Symbol":67,"./_arrayMap":73,"./isArray":181,"./isSymbol":191}],103:[function(require,module,exports){
+},{"./_Symbol":67,"./_arrayMap":76,"./isArray":203,"./isSymbol":213}],111:[function(require,module,exports){
 /**
  * The base implementation of `_.unary` without support for storing metadata.
  *
@@ -9165,7 +9483,29 @@ function baseUnary(func) {
 
 module.exports = baseUnary;
 
-},{}],104:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
+var castPath = require('./_castPath'),
+    last = require('./last'),
+    parent = require('./_parent'),
+    toKey = require('./_toKey');
+
+/**
+ * The base implementation of `_.unset`.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {Array|string} path The property path to unset.
+ * @returns {boolean} Returns `true` if the property is deleted, else `false`.
+ */
+function baseUnset(object, path) {
+  path = castPath(path, object);
+  object = parent(object, path);
+  return object == null || delete object[toKey(last(path))];
+}
+
+module.exports = baseUnset;
+
+},{"./_castPath":114,"./_parent":182,"./_toKey":195,"./last":217}],113:[function(require,module,exports){
 /**
  * Checks if a `cache` value for `key` exists.
  *
@@ -9180,7 +9520,7 @@ function cacheHas(cache, key) {
 
 module.exports = cacheHas;
 
-},{}],105:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 var isArray = require('./isArray'),
     isKey = require('./_isKey'),
     stringToPath = require('./_stringToPath'),
@@ -9203,7 +9543,7 @@ function castPath(value, object) {
 
 module.exports = castPath;
 
-},{"./_isKey":138,"./_stringToPath":172,"./isArray":181,"./toString":201}],106:[function(require,module,exports){
+},{"./_isKey":159,"./_stringToPath":194,"./isArray":203,"./toString":225}],115:[function(require,module,exports){
 var Uint8Array = require('./_Uint8Array');
 
 /**
@@ -9221,7 +9561,7 @@ function cloneArrayBuffer(arrayBuffer) {
 
 module.exports = cloneArrayBuffer;
 
-},{"./_Uint8Array":68}],107:[function(require,module,exports){
+},{"./_Uint8Array":68}],116:[function(require,module,exports){
 var root = require('./_root');
 
 /** Detect free variable `exports`. */
@@ -9258,7 +9598,112 @@ function cloneBuffer(buffer, isDeep) {
 
 module.exports = cloneBuffer;
 
-},{"./_root":161}],108:[function(require,module,exports){
+},{"./_root":183}],117:[function(require,module,exports){
+var cloneArrayBuffer = require('./_cloneArrayBuffer');
+
+/**
+ * Creates a clone of `dataView`.
+ *
+ * @private
+ * @param {Object} dataView The data view to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned data view.
+ */
+function cloneDataView(dataView, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+}
+
+module.exports = cloneDataView;
+
+},{"./_cloneArrayBuffer":115}],118:[function(require,module,exports){
+var addMapEntry = require('./_addMapEntry'),
+    arrayReduce = require('./_arrayReduce'),
+    mapToArray = require('./_mapToArray');
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_DEEP_FLAG = 1;
+
+/**
+ * Creates a clone of `map`.
+ *
+ * @private
+ * @param {Object} map The map to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned map.
+ */
+function cloneMap(map, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(mapToArray(map), CLONE_DEEP_FLAG) : mapToArray(map);
+  return arrayReduce(array, addMapEntry, new map.constructor);
+}
+
+module.exports = cloneMap;
+
+},{"./_addMapEntry":70,"./_arrayReduce":78,"./_mapToArray":173}],119:[function(require,module,exports){
+/** Used to match `RegExp` flags from their coerced string values. */
+var reFlags = /\w*$/;
+
+/**
+ * Creates a clone of `regexp`.
+ *
+ * @private
+ * @param {Object} regexp The regexp to clone.
+ * @returns {Object} Returns the cloned regexp.
+ */
+function cloneRegExp(regexp) {
+  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+  result.lastIndex = regexp.lastIndex;
+  return result;
+}
+
+module.exports = cloneRegExp;
+
+},{}],120:[function(require,module,exports){
+var addSetEntry = require('./_addSetEntry'),
+    arrayReduce = require('./_arrayReduce'),
+    setToArray = require('./_setToArray');
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_DEEP_FLAG = 1;
+
+/**
+ * Creates a clone of `set`.
+ *
+ * @private
+ * @param {Object} set The set to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned set.
+ */
+function cloneSet(set, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(setToArray(set), CLONE_DEEP_FLAG) : setToArray(set);
+  return arrayReduce(array, addSetEntry, new set.constructor);
+}
+
+module.exports = cloneSet;
+
+},{"./_addSetEntry":71,"./_arrayReduce":78,"./_setToArray":186}],121:[function(require,module,exports){
+var Symbol = require('./_Symbol');
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+
+/**
+ * Creates a clone of the `symbol` object.
+ *
+ * @private
+ * @param {Object} symbol The symbol object to clone.
+ * @returns {Object} Returns the cloned symbol object.
+ */
+function cloneSymbol(symbol) {
+  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+}
+
+module.exports = cloneSymbol;
+
+},{"./_Symbol":67}],122:[function(require,module,exports){
 var cloneArrayBuffer = require('./_cloneArrayBuffer');
 
 /**
@@ -9276,7 +9721,7 @@ function cloneTypedArray(typedArray, isDeep) {
 
 module.exports = cloneTypedArray;
 
-},{"./_cloneArrayBuffer":106}],109:[function(require,module,exports){
+},{"./_cloneArrayBuffer":115}],123:[function(require,module,exports){
 /**
  * Copies the values of `source` to `array`.
  *
@@ -9298,7 +9743,7 @@ function copyArray(source, array) {
 
 module.exports = copyArray;
 
-},{}],110:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 var assignValue = require('./_assignValue'),
     baseAssignValue = require('./_baseAssignValue');
 
@@ -9340,7 +9785,43 @@ function copyObject(source, props, object, customizer) {
 
 module.exports = copyObject;
 
-},{"./_assignValue":77,"./_baseAssignValue":79}],111:[function(require,module,exports){
+},{"./_assignValue":81,"./_baseAssignValue":85}],125:[function(require,module,exports){
+var copyObject = require('./_copyObject'),
+    getSymbols = require('./_getSymbols');
+
+/**
+ * Copies own symbols of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+function copySymbols(source, object) {
+  return copyObject(source, getSymbols(source), object);
+}
+
+module.exports = copySymbols;
+
+},{"./_copyObject":124,"./_getSymbols":143}],126:[function(require,module,exports){
+var copyObject = require('./_copyObject'),
+    getSymbolsIn = require('./_getSymbolsIn');
+
+/**
+ * Copies own and inherited symbols of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+function copySymbolsIn(source, object) {
+  return copyObject(source, getSymbolsIn(source), object);
+}
+
+module.exports = copySymbolsIn;
+
+},{"./_copyObject":124,"./_getSymbolsIn":144}],127:[function(require,module,exports){
 var root = require('./_root');
 
 /** Used to detect overreaching core-js shims. */
@@ -9348,7 +9829,7 @@ var coreJsData = root['__core-js_shared__'];
 
 module.exports = coreJsData;
 
-},{"./_root":161}],112:[function(require,module,exports){
+},{"./_root":183}],128:[function(require,module,exports){
 var baseRest = require('./_baseRest'),
     isIterateeCall = require('./_isIterateeCall');
 
@@ -9387,7 +9868,7 @@ function createAssigner(assigner) {
 
 module.exports = createAssigner;
 
-},{"./_baseRest":98,"./_isIterateeCall":137}],113:[function(require,module,exports){
+},{"./_baseRest":105,"./_isIterateeCall":158}],129:[function(require,module,exports){
 /**
  * Creates a base function for methods like `_.forIn` and `_.forOwn`.
  *
@@ -9414,7 +9895,25 @@ function createBaseFor(fromRight) {
 
 module.exports = createBaseFor;
 
-},{}],114:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
+var isPlainObject = require('./isPlainObject');
+
+/**
+ * Used by `_.omit` to customize its `_.cloneDeep` use to only clone plain
+ * objects.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @param {string} key The key of the property to inspect.
+ * @returns {*} Returns the uncloned value or `undefined` to defer cloning to `_.cloneDeep`.
+ */
+function customOmitClone(value) {
+  return isPlainObject(value) ? undefined : value;
+}
+
+module.exports = customOmitClone;
+
+},{"./isPlainObject":212}],131:[function(require,module,exports){
 var getNative = require('./_getNative');
 
 var defineProperty = (function() {
@@ -9427,7 +9926,7 @@ var defineProperty = (function() {
 
 module.exports = defineProperty;
 
-},{"./_getNative":122}],115:[function(require,module,exports){
+},{"./_getNative":140}],132:[function(require,module,exports){
 var SetCache = require('./_SetCache'),
     arraySome = require('./_arraySome'),
     cacheHas = require('./_cacheHas');
@@ -9512,7 +10011,7 @@ function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
 
 module.exports = equalArrays;
 
-},{"./_SetCache":65,"./_arraySome":75,"./_cacheHas":104}],116:[function(require,module,exports){
+},{"./_SetCache":65,"./_arraySome":79,"./_cacheHas":113}],133:[function(require,module,exports){
 var Symbol = require('./_Symbol'),
     Uint8Array = require('./_Uint8Array'),
     eq = require('./eq'),
@@ -9626,7 +10125,7 @@ function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
 
 module.exports = equalByTag;
 
-},{"./_Symbol":67,"./_Uint8Array":68,"./_equalArrays":115,"./_mapToArray":152,"./_setToArray":164,"./eq":176}],117:[function(require,module,exports){
+},{"./_Symbol":67,"./_Uint8Array":68,"./_equalArrays":132,"./_mapToArray":173,"./_setToArray":186,"./eq":198}],134:[function(require,module,exports){
 var getAllKeys = require('./_getAllKeys');
 
 /** Used to compose bitmasks for value comparisons. */
@@ -9717,7 +10216,7 @@ function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
 
 module.exports = equalObjects;
 
-},{"./_getAllKeys":120}],118:[function(require,module,exports){
+},{"./_getAllKeys":137}],135:[function(require,module,exports){
 var flatten = require('./flatten'),
     overRest = require('./_overRest'),
     setToString = require('./_setToString');
@@ -9735,7 +10234,7 @@ function flatRest(func) {
 
 module.exports = flatRest;
 
-},{"./_overRest":160,"./_setToString":165,"./flatten":177}],119:[function(require,module,exports){
+},{"./_overRest":181,"./_setToString":187,"./flatten":199}],136:[function(require,module,exports){
 (function (global){
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
@@ -9743,7 +10242,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 module.exports = freeGlobal;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],120:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 var baseGetAllKeys = require('./_baseGetAllKeys'),
     getSymbols = require('./_getSymbols'),
     keys = require('./keys');
@@ -9761,7 +10260,26 @@ function getAllKeys(object) {
 
 module.exports = getAllKeys;
 
-},{"./_baseGetAllKeys":84,"./_getSymbols":125,"./keys":193}],121:[function(require,module,exports){
+},{"./_baseGetAllKeys":91,"./_getSymbols":143,"./keys":215}],138:[function(require,module,exports){
+var baseGetAllKeys = require('./_baseGetAllKeys'),
+    getSymbolsIn = require('./_getSymbolsIn'),
+    keysIn = require('./keysIn');
+
+/**
+ * Creates an array of own and inherited enumerable property names and
+ * symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function getAllKeysIn(object) {
+  return baseGetAllKeys(object, keysIn, getSymbolsIn);
+}
+
+module.exports = getAllKeysIn;
+
+},{"./_baseGetAllKeys":91,"./_getSymbolsIn":144,"./keysIn":216}],139:[function(require,module,exports){
 var isKeyable = require('./_isKeyable');
 
 /**
@@ -9781,7 +10299,7 @@ function getMapData(map, key) {
 
 module.exports = getMapData;
 
-},{"./_isKeyable":139}],122:[function(require,module,exports){
+},{"./_isKeyable":160}],140:[function(require,module,exports){
 var baseIsNative = require('./_baseIsNative'),
     getValue = require('./_getValue');
 
@@ -9800,7 +10318,7 @@ function getNative(object, key) {
 
 module.exports = getNative;
 
-},{"./_baseIsNative":90,"./_getValue":127}],123:[function(require,module,exports){
+},{"./_baseIsNative":97,"./_getValue":146}],141:[function(require,module,exports){
 var overArg = require('./_overArg');
 
 /** Built-in value references. */
@@ -9808,7 +10326,7 @@ var getPrototype = overArg(Object.getPrototypeOf, Object);
 
 module.exports = getPrototype;
 
-},{"./_overArg":159}],124:[function(require,module,exports){
+},{"./_overArg":180}],142:[function(require,module,exports){
 var Symbol = require('./_Symbol');
 
 /** Used for built-in method references. */
@@ -9856,7 +10374,7 @@ function getRawTag(value) {
 
 module.exports = getRawTag;
 
-},{"./_Symbol":67}],125:[function(require,module,exports){
+},{"./_Symbol":67}],143:[function(require,module,exports){
 var arrayFilter = require('./_arrayFilter'),
     stubArray = require('./stubArray');
 
@@ -9888,7 +10406,34 @@ var getSymbols = !nativeGetSymbols ? stubArray : function(object) {
 
 module.exports = getSymbols;
 
-},{"./_arrayFilter":71,"./stubArray":198}],126:[function(require,module,exports){
+},{"./_arrayFilter":74,"./stubArray":222}],144:[function(require,module,exports){
+var arrayPush = require('./_arrayPush'),
+    getPrototype = require('./_getPrototype'),
+    getSymbols = require('./_getSymbols'),
+    stubArray = require('./stubArray');
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeGetSymbols = Object.getOwnPropertySymbols;
+
+/**
+ * Creates an array of the own and inherited enumerable symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of symbols.
+ */
+var getSymbolsIn = !nativeGetSymbols ? stubArray : function(object) {
+  var result = [];
+  while (object) {
+    arrayPush(result, getSymbols(object));
+    object = getPrototype(object);
+  }
+  return result;
+};
+
+module.exports = getSymbolsIn;
+
+},{"./_arrayPush":77,"./_getPrototype":141,"./_getSymbols":143,"./stubArray":222}],145:[function(require,module,exports){
 var DataView = require('./_DataView'),
     Map = require('./_Map'),
     Promise = require('./_Promise'),
@@ -9948,7 +10493,7 @@ if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
 
 module.exports = getTag;
 
-},{"./_DataView":58,"./_Map":61,"./_Promise":63,"./_Set":64,"./_WeakMap":69,"./_baseGetTag":85,"./_toSource":174}],127:[function(require,module,exports){
+},{"./_DataView":58,"./_Map":61,"./_Promise":63,"./_Set":64,"./_WeakMap":69,"./_baseGetTag":92,"./_toSource":196}],146:[function(require,module,exports){
 /**
  * Gets the value at `key` of `object`.
  *
@@ -9963,7 +10508,7 @@ function getValue(object, key) {
 
 module.exports = getValue;
 
-},{}],128:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 var castPath = require('./_castPath'),
     isArguments = require('./isArguments'),
     isArray = require('./isArray'),
@@ -10004,7 +10549,7 @@ function hasPath(object, path, hasFunc) {
 
 module.exports = hasPath;
 
-},{"./_castPath":105,"./_isIndex":136,"./_toKey":173,"./isArguments":180,"./isArray":181,"./isLength":187}],129:[function(require,module,exports){
+},{"./_castPath":114,"./_isIndex":157,"./_toKey":195,"./isArguments":202,"./isArray":203,"./isLength":209}],148:[function(require,module,exports){
 var nativeCreate = require('./_nativeCreate');
 
 /**
@@ -10021,7 +10566,7 @@ function hashClear() {
 
 module.exports = hashClear;
 
-},{"./_nativeCreate":154}],130:[function(require,module,exports){
+},{"./_nativeCreate":175}],149:[function(require,module,exports){
 /**
  * Removes `key` and its value from the hash.
  *
@@ -10040,7 +10585,7 @@ function hashDelete(key) {
 
 module.exports = hashDelete;
 
-},{}],131:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 var nativeCreate = require('./_nativeCreate');
 
 /** Used to stand-in for `undefined` hash values. */
@@ -10072,7 +10617,7 @@ function hashGet(key) {
 
 module.exports = hashGet;
 
-},{"./_nativeCreate":154}],132:[function(require,module,exports){
+},{"./_nativeCreate":175}],151:[function(require,module,exports){
 var nativeCreate = require('./_nativeCreate');
 
 /** Used for built-in method references. */
@@ -10097,7 +10642,7 @@ function hashHas(key) {
 
 module.exports = hashHas;
 
-},{"./_nativeCreate":154}],133:[function(require,module,exports){
+},{"./_nativeCreate":175}],152:[function(require,module,exports){
 var nativeCreate = require('./_nativeCreate');
 
 /** Used to stand-in for `undefined` hash values. */
@@ -10122,7 +10667,117 @@ function hashSet(key, value) {
 
 module.exports = hashSet;
 
-},{"./_nativeCreate":154}],134:[function(require,module,exports){
+},{"./_nativeCreate":175}],153:[function(require,module,exports){
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Initializes an array clone.
+ *
+ * @private
+ * @param {Array} array The array to clone.
+ * @returns {Array} Returns the initialized clone.
+ */
+function initCloneArray(array) {
+  var length = array.length,
+      result = array.constructor(length);
+
+  // Add properties assigned by `RegExp#exec`.
+  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+    result.index = array.index;
+    result.input = array.input;
+  }
+  return result;
+}
+
+module.exports = initCloneArray;
+
+},{}],154:[function(require,module,exports){
+var cloneArrayBuffer = require('./_cloneArrayBuffer'),
+    cloneDataView = require('./_cloneDataView'),
+    cloneMap = require('./_cloneMap'),
+    cloneRegExp = require('./_cloneRegExp'),
+    cloneSet = require('./_cloneSet'),
+    cloneSymbol = require('./_cloneSymbol'),
+    cloneTypedArray = require('./_cloneTypedArray');
+
+/** `Object#toString` result references. */
+var boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/**
+ * Initializes an object clone based on its `toStringTag`.
+ *
+ * **Note:** This function only supports cloning values with tags of
+ * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @param {string} tag The `toStringTag` of the object to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneByTag(object, tag, cloneFunc, isDeep) {
+  var Ctor = object.constructor;
+  switch (tag) {
+    case arrayBufferTag:
+      return cloneArrayBuffer(object);
+
+    case boolTag:
+    case dateTag:
+      return new Ctor(+object);
+
+    case dataViewTag:
+      return cloneDataView(object, isDeep);
+
+    case float32Tag: case float64Tag:
+    case int8Tag: case int16Tag: case int32Tag:
+    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
+      return cloneTypedArray(object, isDeep);
+
+    case mapTag:
+      return cloneMap(object, isDeep, cloneFunc);
+
+    case numberTag:
+    case stringTag:
+      return new Ctor(object);
+
+    case regexpTag:
+      return cloneRegExp(object);
+
+    case setTag:
+      return cloneSet(object, isDeep, cloneFunc);
+
+    case symbolTag:
+      return cloneSymbol(object);
+  }
+}
+
+module.exports = initCloneByTag;
+
+},{"./_cloneArrayBuffer":115,"./_cloneDataView":117,"./_cloneMap":118,"./_cloneRegExp":119,"./_cloneSet":120,"./_cloneSymbol":121,"./_cloneTypedArray":122}],155:[function(require,module,exports){
 var baseCreate = require('./_baseCreate'),
     getPrototype = require('./_getPrototype'),
     isPrototype = require('./_isPrototype');
@@ -10142,7 +10797,7 @@ function initCloneObject(object) {
 
 module.exports = initCloneObject;
 
-},{"./_baseCreate":80,"./_getPrototype":123,"./_isPrototype":141}],135:[function(require,module,exports){
+},{"./_baseCreate":87,"./_getPrototype":141,"./_isPrototype":162}],156:[function(require,module,exports){
 var Symbol = require('./_Symbol'),
     isArguments = require('./isArguments'),
     isArray = require('./isArray');
@@ -10164,7 +10819,7 @@ function isFlattenable(value) {
 
 module.exports = isFlattenable;
 
-},{"./_Symbol":67,"./isArguments":180,"./isArray":181}],136:[function(require,module,exports){
+},{"./_Symbol":67,"./isArguments":202,"./isArray":203}],157:[function(require,module,exports){
 /** Used as references for various `Number` constants. */
 var MAX_SAFE_INTEGER = 9007199254740991;
 
@@ -10188,7 +10843,7 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-},{}],137:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 var eq = require('./eq'),
     isArrayLike = require('./isArrayLike'),
     isIndex = require('./_isIndex'),
@@ -10220,7 +10875,7 @@ function isIterateeCall(value, index, object) {
 
 module.exports = isIterateeCall;
 
-},{"./_isIndex":136,"./eq":176,"./isArrayLike":182,"./isObject":188}],138:[function(require,module,exports){
+},{"./_isIndex":157,"./eq":198,"./isArrayLike":204,"./isObject":210}],159:[function(require,module,exports){
 var isArray = require('./isArray'),
     isSymbol = require('./isSymbol');
 
@@ -10251,7 +10906,7 @@ function isKey(value, object) {
 
 module.exports = isKey;
 
-},{"./isArray":181,"./isSymbol":191}],139:[function(require,module,exports){
+},{"./isArray":203,"./isSymbol":213}],160:[function(require,module,exports){
 /**
  * Checks if `value` is suitable for use as unique object key.
  *
@@ -10268,7 +10923,7 @@ function isKeyable(value) {
 
 module.exports = isKeyable;
 
-},{}],140:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 var coreJsData = require('./_coreJsData');
 
 /** Used to detect methods masquerading as native. */
@@ -10290,7 +10945,7 @@ function isMasked(func) {
 
 module.exports = isMasked;
 
-},{"./_coreJsData":111}],141:[function(require,module,exports){
+},{"./_coreJsData":127}],162:[function(require,module,exports){
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -10310,7 +10965,7 @@ function isPrototype(value) {
 
 module.exports = isPrototype;
 
-},{}],142:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 /**
  * Removes all key-value entries from the list cache.
  *
@@ -10325,7 +10980,7 @@ function listCacheClear() {
 
 module.exports = listCacheClear;
 
-},{}],143:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 var assocIndexOf = require('./_assocIndexOf');
 
 /** Used for built-in method references. */
@@ -10362,7 +11017,7 @@ function listCacheDelete(key) {
 
 module.exports = listCacheDelete;
 
-},{"./_assocIndexOf":78}],144:[function(require,module,exports){
+},{"./_assocIndexOf":82}],165:[function(require,module,exports){
 var assocIndexOf = require('./_assocIndexOf');
 
 /**
@@ -10383,7 +11038,7 @@ function listCacheGet(key) {
 
 module.exports = listCacheGet;
 
-},{"./_assocIndexOf":78}],145:[function(require,module,exports){
+},{"./_assocIndexOf":82}],166:[function(require,module,exports){
 var assocIndexOf = require('./_assocIndexOf');
 
 /**
@@ -10401,7 +11056,7 @@ function listCacheHas(key) {
 
 module.exports = listCacheHas;
 
-},{"./_assocIndexOf":78}],146:[function(require,module,exports){
+},{"./_assocIndexOf":82}],167:[function(require,module,exports){
 var assocIndexOf = require('./_assocIndexOf');
 
 /**
@@ -10429,7 +11084,7 @@ function listCacheSet(key, value) {
 
 module.exports = listCacheSet;
 
-},{"./_assocIndexOf":78}],147:[function(require,module,exports){
+},{"./_assocIndexOf":82}],168:[function(require,module,exports){
 var Hash = require('./_Hash'),
     ListCache = require('./_ListCache'),
     Map = require('./_Map');
@@ -10452,7 +11107,7 @@ function mapCacheClear() {
 
 module.exports = mapCacheClear;
 
-},{"./_Hash":59,"./_ListCache":60,"./_Map":61}],148:[function(require,module,exports){
+},{"./_Hash":59,"./_ListCache":60,"./_Map":61}],169:[function(require,module,exports){
 var getMapData = require('./_getMapData');
 
 /**
@@ -10472,7 +11127,7 @@ function mapCacheDelete(key) {
 
 module.exports = mapCacheDelete;
 
-},{"./_getMapData":121}],149:[function(require,module,exports){
+},{"./_getMapData":139}],170:[function(require,module,exports){
 var getMapData = require('./_getMapData');
 
 /**
@@ -10490,7 +11145,7 @@ function mapCacheGet(key) {
 
 module.exports = mapCacheGet;
 
-},{"./_getMapData":121}],150:[function(require,module,exports){
+},{"./_getMapData":139}],171:[function(require,module,exports){
 var getMapData = require('./_getMapData');
 
 /**
@@ -10508,7 +11163,7 @@ function mapCacheHas(key) {
 
 module.exports = mapCacheHas;
 
-},{"./_getMapData":121}],151:[function(require,module,exports){
+},{"./_getMapData":139}],172:[function(require,module,exports){
 var getMapData = require('./_getMapData');
 
 /**
@@ -10532,7 +11187,7 @@ function mapCacheSet(key, value) {
 
 module.exports = mapCacheSet;
 
-},{"./_getMapData":121}],152:[function(require,module,exports){
+},{"./_getMapData":139}],173:[function(require,module,exports){
 /**
  * Converts `map` to its key-value pairs.
  *
@@ -10552,7 +11207,7 @@ function mapToArray(map) {
 
 module.exports = mapToArray;
 
-},{}],153:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 var memoize = require('./memoize');
 
 /** Used as the maximum memoize cache size. */
@@ -10580,7 +11235,7 @@ function memoizeCapped(func) {
 
 module.exports = memoizeCapped;
 
-},{"./memoize":195}],154:[function(require,module,exports){
+},{"./memoize":218}],175:[function(require,module,exports){
 var getNative = require('./_getNative');
 
 /* Built-in method references that are verified to be native. */
@@ -10588,7 +11243,7 @@ var nativeCreate = getNative(Object, 'create');
 
 module.exports = nativeCreate;
 
-},{"./_getNative":122}],155:[function(require,module,exports){
+},{"./_getNative":140}],176:[function(require,module,exports){
 var overArg = require('./_overArg');
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -10596,7 +11251,7 @@ var nativeKeys = overArg(Object.keys, Object);
 
 module.exports = nativeKeys;
 
-},{"./_overArg":159}],156:[function(require,module,exports){
+},{"./_overArg":180}],177:[function(require,module,exports){
 /**
  * This function is like
  * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
@@ -10618,7 +11273,7 @@ function nativeKeysIn(object) {
 
 module.exports = nativeKeysIn;
 
-},{}],157:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `exports`. */
@@ -10642,7 +11297,7 @@ var nodeUtil = (function() {
 
 module.exports = nodeUtil;
 
-},{"./_freeGlobal":119}],158:[function(require,module,exports){
+},{"./_freeGlobal":136}],179:[function(require,module,exports){
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -10666,7 +11321,7 @@ function objectToString(value) {
 
 module.exports = objectToString;
 
-},{}],159:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 /**
  * Creates a unary function that invokes `func` with its argument transformed.
  *
@@ -10683,7 +11338,7 @@ function overArg(func, transform) {
 
 module.exports = overArg;
 
-},{}],160:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 var apply = require('./_apply');
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
@@ -10721,7 +11376,25 @@ function overRest(func, start, transform) {
 
 module.exports = overRest;
 
-},{"./_apply":70}],161:[function(require,module,exports){
+},{"./_apply":72}],182:[function(require,module,exports){
+var baseGet = require('./_baseGet'),
+    baseSlice = require('./_baseSlice');
+
+/**
+ * Gets the parent value at `path` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array} path The path to get the parent value of.
+ * @returns {*} Returns the parent value.
+ */
+function parent(object, path) {
+  return path.length < 2 ? object : baseGet(object, baseSlice(path, 0, -1));
+}
+
+module.exports = parent;
+
+},{"./_baseGet":90,"./_baseSlice":108}],183:[function(require,module,exports){
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `self`. */
@@ -10732,7 +11405,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 module.exports = root;
 
-},{"./_freeGlobal":119}],162:[function(require,module,exports){
+},{"./_freeGlobal":136}],184:[function(require,module,exports){
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
 
@@ -10753,7 +11426,7 @@ function setCacheAdd(value) {
 
 module.exports = setCacheAdd;
 
-},{}],163:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 /**
  * Checks if `value` is in the array cache.
  *
@@ -10769,7 +11442,7 @@ function setCacheHas(value) {
 
 module.exports = setCacheHas;
 
-},{}],164:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 /**
  * Converts `set` to an array of its values.
  *
@@ -10789,7 +11462,7 @@ function setToArray(set) {
 
 module.exports = setToArray;
 
-},{}],165:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 var baseSetToString = require('./_baseSetToString'),
     shortOut = require('./_shortOut');
 
@@ -10805,7 +11478,7 @@ var setToString = shortOut(baseSetToString);
 
 module.exports = setToString;
 
-},{"./_baseSetToString":100,"./_shortOut":166}],166:[function(require,module,exports){
+},{"./_baseSetToString":107,"./_shortOut":188}],188:[function(require,module,exports){
 /** Used to detect hot functions by number of calls within a span of milliseconds. */
 var HOT_COUNT = 800,
     HOT_SPAN = 16;
@@ -10844,7 +11517,7 @@ function shortOut(func) {
 
 module.exports = shortOut;
 
-},{}],167:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 var ListCache = require('./_ListCache');
 
 /**
@@ -10861,7 +11534,7 @@ function stackClear() {
 
 module.exports = stackClear;
 
-},{"./_ListCache":60}],168:[function(require,module,exports){
+},{"./_ListCache":60}],190:[function(require,module,exports){
 /**
  * Removes `key` and its value from the stack.
  *
@@ -10881,7 +11554,7 @@ function stackDelete(key) {
 
 module.exports = stackDelete;
 
-},{}],169:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 /**
  * Gets the stack value for `key`.
  *
@@ -10897,7 +11570,7 @@ function stackGet(key) {
 
 module.exports = stackGet;
 
-},{}],170:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 /**
  * Checks if a stack value for `key` exists.
  *
@@ -10913,7 +11586,7 @@ function stackHas(key) {
 
 module.exports = stackHas;
 
-},{}],171:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 var ListCache = require('./_ListCache'),
     Map = require('./_Map'),
     MapCache = require('./_MapCache');
@@ -10949,7 +11622,7 @@ function stackSet(key, value) {
 
 module.exports = stackSet;
 
-},{"./_ListCache":60,"./_Map":61,"./_MapCache":62}],172:[function(require,module,exports){
+},{"./_ListCache":60,"./_Map":61,"./_MapCache":62}],194:[function(require,module,exports){
 var memoizeCapped = require('./_memoizeCapped');
 
 /** Used to match property names within property paths. */
@@ -10979,7 +11652,7 @@ var stringToPath = memoizeCapped(function(string) {
 
 module.exports = stringToPath;
 
-},{"./_memoizeCapped":153}],173:[function(require,module,exports){
+},{"./_memoizeCapped":174}],195:[function(require,module,exports){
 var isSymbol = require('./isSymbol');
 
 /** Used as references for various `Number` constants. */
@@ -11002,7 +11675,7 @@ function toKey(value) {
 
 module.exports = toKey;
 
-},{"./isSymbol":191}],174:[function(require,module,exports){
+},{"./isSymbol":213}],196:[function(require,module,exports){
 /** Used for built-in method references. */
 var funcProto = Function.prototype;
 
@@ -11030,7 +11703,7 @@ function toSource(func) {
 
 module.exports = toSource;
 
-},{}],175:[function(require,module,exports){
+},{}],197:[function(require,module,exports){
 /**
  * Creates a function that returns `value`.
  *
@@ -11058,7 +11731,7 @@ function constant(value) {
 
 module.exports = constant;
 
-},{}],176:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 /**
  * Performs a
  * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
@@ -11097,7 +11770,7 @@ function eq(value, other) {
 
 module.exports = eq;
 
-},{}],177:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 var baseFlatten = require('./_baseFlatten');
 
 /**
@@ -11121,7 +11794,7 @@ function flatten(array) {
 
 module.exports = flatten;
 
-},{"./_baseFlatten":81}],178:[function(require,module,exports){
+},{"./_baseFlatten":88}],200:[function(require,module,exports){
 var baseHasIn = require('./_baseHasIn'),
     hasPath = require('./_hasPath');
 
@@ -11157,7 +11830,7 @@ function hasIn(object, path) {
 
 module.exports = hasIn;
 
-},{"./_baseHasIn":86,"./_hasPath":128}],179:[function(require,module,exports){
+},{"./_baseHasIn":93,"./_hasPath":147}],201:[function(require,module,exports){
 /**
  * This method returns the first argument it receives.
  *
@@ -11180,7 +11853,7 @@ function identity(value) {
 
 module.exports = identity;
 
-},{}],180:[function(require,module,exports){
+},{}],202:[function(require,module,exports){
 var baseIsArguments = require('./_baseIsArguments'),
     isObjectLike = require('./isObjectLike');
 
@@ -11218,7 +11891,7 @@ var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsAr
 
 module.exports = isArguments;
 
-},{"./_baseIsArguments":87,"./isObjectLike":189}],181:[function(require,module,exports){
+},{"./_baseIsArguments":94,"./isObjectLike":211}],203:[function(require,module,exports){
 /**
  * Checks if `value` is classified as an `Array` object.
  *
@@ -11246,7 +11919,7 @@ var isArray = Array.isArray;
 
 module.exports = isArray;
 
-},{}],182:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 var isFunction = require('./isFunction'),
     isLength = require('./isLength');
 
@@ -11281,7 +11954,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-},{"./isFunction":186,"./isLength":187}],183:[function(require,module,exports){
+},{"./isFunction":208,"./isLength":209}],205:[function(require,module,exports){
 var isArrayLike = require('./isArrayLike'),
     isObjectLike = require('./isObjectLike');
 
@@ -11316,7 +11989,7 @@ function isArrayLikeObject(value) {
 
 module.exports = isArrayLikeObject;
 
-},{"./isArrayLike":182,"./isObjectLike":189}],184:[function(require,module,exports){
+},{"./isArrayLike":204,"./isObjectLike":211}],206:[function(require,module,exports){
 var root = require('./_root'),
     stubFalse = require('./stubFalse');
 
@@ -11356,7 +12029,7 @@ var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
 
-},{"./_root":161,"./stubFalse":199}],185:[function(require,module,exports){
+},{"./_root":183,"./stubFalse":223}],207:[function(require,module,exports){
 var baseIsEqual = require('./_baseIsEqual');
 
 /**
@@ -11393,7 +12066,7 @@ function isEqual(value, other) {
 
 module.exports = isEqual;
 
-},{"./_baseIsEqual":88}],186:[function(require,module,exports){
+},{"./_baseIsEqual":95}],208:[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     isObject = require('./isObject');
 
@@ -11432,7 +12105,7 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-},{"./_baseGetTag":85,"./isObject":188}],187:[function(require,module,exports){
+},{"./_baseGetTag":92,"./isObject":210}],209:[function(require,module,exports){
 /** Used as references for various `Number` constants. */
 var MAX_SAFE_INTEGER = 9007199254740991;
 
@@ -11469,7 +12142,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-},{}],188:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 /**
  * Checks if `value` is the
  * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
@@ -11502,7 +12175,7 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],189:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -11533,7 +12206,7 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],190:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     getPrototype = require('./_getPrototype'),
     isObjectLike = require('./isObjectLike');
@@ -11597,7 +12270,7 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_baseGetTag":85,"./_getPrototype":123,"./isObjectLike":189}],191:[function(require,module,exports){
+},{"./_baseGetTag":92,"./_getPrototype":141,"./isObjectLike":211}],213:[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     isObjectLike = require('./isObjectLike');
 
@@ -11628,7 +12301,7 @@ function isSymbol(value) {
 
 module.exports = isSymbol;
 
-},{"./_baseGetTag":85,"./isObjectLike":189}],192:[function(require,module,exports){
+},{"./_baseGetTag":92,"./isObjectLike":211}],214:[function(require,module,exports){
 var baseIsTypedArray = require('./_baseIsTypedArray'),
     baseUnary = require('./_baseUnary'),
     nodeUtil = require('./_nodeUtil');
@@ -11657,7 +12330,7 @@ var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedA
 
 module.exports = isTypedArray;
 
-},{"./_baseIsTypedArray":91,"./_baseUnary":103,"./_nodeUtil":157}],193:[function(require,module,exports){
+},{"./_baseIsTypedArray":98,"./_baseUnary":111,"./_nodeUtil":178}],215:[function(require,module,exports){
 var arrayLikeKeys = require('./_arrayLikeKeys'),
     baseKeys = require('./_baseKeys'),
     isArrayLike = require('./isArrayLike');
@@ -11696,7 +12369,7 @@ function keys(object) {
 
 module.exports = keys;
 
-},{"./_arrayLikeKeys":72,"./_baseKeys":92,"./isArrayLike":182}],194:[function(require,module,exports){
+},{"./_arrayLikeKeys":75,"./_baseKeys":99,"./isArrayLike":204}],216:[function(require,module,exports){
 var arrayLikeKeys = require('./_arrayLikeKeys'),
     baseKeysIn = require('./_baseKeysIn'),
     isArrayLike = require('./isArrayLike');
@@ -11730,7 +12403,29 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"./_arrayLikeKeys":72,"./_baseKeysIn":93,"./isArrayLike":182}],195:[function(require,module,exports){
+},{"./_arrayLikeKeys":75,"./_baseKeysIn":100,"./isArrayLike":204}],217:[function(require,module,exports){
+/**
+ * Gets the last element of `array`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Array
+ * @param {Array} array The array to query.
+ * @returns {*} Returns the last element of `array`.
+ * @example
+ *
+ * _.last([1, 2, 3]);
+ * // => 3
+ */
+function last(array) {
+  var length = array == null ? 0 : array.length;
+  return length ? array[length - 1] : undefined;
+}
+
+module.exports = last;
+
+},{}],218:[function(require,module,exports){
 var MapCache = require('./_MapCache');
 
 /** Error message constants. */
@@ -11805,7 +12500,7 @@ memoize.Cache = MapCache;
 
 module.exports = memoize;
 
-},{"./_MapCache":62}],196:[function(require,module,exports){
+},{"./_MapCache":62}],219:[function(require,module,exports){
 var baseMerge = require('./_baseMerge'),
     createAssigner = require('./_createAssigner');
 
@@ -11846,7 +12541,66 @@ var mergeWith = createAssigner(function(object, source, srcIndex, customizer) {
 
 module.exports = mergeWith;
 
-},{"./_baseMerge":94,"./_createAssigner":112}],197:[function(require,module,exports){
+},{"./_baseMerge":101,"./_createAssigner":128}],220:[function(require,module,exports){
+var arrayMap = require('./_arrayMap'),
+    baseClone = require('./_baseClone'),
+    baseUnset = require('./_baseUnset'),
+    castPath = require('./_castPath'),
+    copyObject = require('./_copyObject'),
+    customOmitClone = require('./_customOmitClone'),
+    flatRest = require('./_flatRest'),
+    getAllKeysIn = require('./_getAllKeysIn');
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_DEEP_FLAG = 1,
+    CLONE_FLAT_FLAG = 2,
+    CLONE_SYMBOLS_FLAG = 4;
+
+/**
+ * The opposite of `_.pick`; this method creates an object composed of the
+ * own and inherited enumerable property paths of `object` that are not omitted.
+ *
+ * **Note:** This method is considerably slower than `_.pick`.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The source object.
+ * @param {...(string|string[])} [paths] The property paths to omit.
+ * @returns {Object} Returns the new object.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': '2', 'c': 3 };
+ *
+ * _.omit(object, ['a', 'c']);
+ * // => { 'b': '2' }
+ */
+var omit = flatRest(function(object, paths) {
+  var result = {};
+  if (object == null) {
+    return result;
+  }
+  var isDeep = false;
+  paths = arrayMap(paths, function(path) {
+    path = castPath(path, object);
+    isDeep || (isDeep = path.length > 1);
+    return path;
+  });
+  copyObject(object, getAllKeysIn(object), result);
+  if (isDeep) {
+    result = baseClone(result, CLONE_DEEP_FLAG | CLONE_FLAT_FLAG | CLONE_SYMBOLS_FLAG, customOmitClone);
+  }
+  var length = paths.length;
+  while (length--) {
+    baseUnset(result, paths[length]);
+  }
+  return result;
+});
+
+module.exports = omit;
+
+},{"./_arrayMap":76,"./_baseClone":86,"./_baseUnset":112,"./_castPath":114,"./_copyObject":124,"./_customOmitClone":130,"./_flatRest":135,"./_getAllKeysIn":138}],221:[function(require,module,exports){
 var basePick = require('./_basePick'),
     flatRest = require('./_flatRest');
 
@@ -11873,7 +12627,7 @@ var pick = flatRest(function(object, paths) {
 
 module.exports = pick;
 
-},{"./_basePick":96,"./_flatRest":118}],198:[function(require,module,exports){
+},{"./_basePick":103,"./_flatRest":135}],222:[function(require,module,exports){
 /**
  * This method returns a new empty array.
  *
@@ -11898,7 +12652,7 @@ function stubArray() {
 
 module.exports = stubArray;
 
-},{}],199:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 /**
  * This method returns `false`.
  *
@@ -11918,7 +12672,7 @@ function stubFalse() {
 
 module.exports = stubFalse;
 
-},{}],200:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 var copyObject = require('./_copyObject'),
     keysIn = require('./keysIn');
 
@@ -11952,7 +12706,7 @@ function toPlainObject(value) {
 
 module.exports = toPlainObject;
 
-},{"./_copyObject":110,"./keysIn":194}],201:[function(require,module,exports){
+},{"./_copyObject":124,"./keysIn":216}],225:[function(require,module,exports){
 var baseToString = require('./_baseToString');
 
 /**
@@ -11982,7 +12736,7 @@ function toString(value) {
 
 module.exports = toString;
 
-},{"./_baseToString":102}],202:[function(require,module,exports){
+},{"./_baseToString":110}],226:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -12136,7 +12890,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],203:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -12318,7 +13072,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],204:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -12381,7 +13135,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":208,"_process":203,"fbjs/lib/invariant":41,"fbjs/lib/warning":47}],205:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":232,"_process":227,"fbjs/lib/invariant":41,"fbjs/lib/warning":47}],229:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -12441,7 +13195,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":208,"fbjs/lib/emptyFunction":35,"fbjs/lib/invariant":41}],206:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":232,"fbjs/lib/emptyFunction":35,"fbjs/lib/invariant":41}],230:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -12987,7 +13741,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":204,"./lib/ReactPropTypesSecret":208,"_process":203,"fbjs/lib/emptyFunction":35,"fbjs/lib/invariant":41,"fbjs/lib/warning":47,"object-assign":209}],207:[function(require,module,exports){
+},{"./checkPropTypes":228,"./lib/ReactPropTypesSecret":232,"_process":227,"fbjs/lib/emptyFunction":35,"fbjs/lib/invariant":41,"fbjs/lib/warning":47,"object-assign":233}],231:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -13019,7 +13773,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":205,"./factoryWithTypeCheckers":206,"_process":203}],208:[function(require,module,exports){
+},{"./factoryWithThrowingShims":229,"./factoryWithTypeCheckers":230,"_process":227}],232:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -13033,7 +13787,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],209:[function(require,module,exports){
+},{}],233:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -13125,7 +13879,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],210:[function(require,module,exports){
+},{}],234:[function(require,module,exports){
 (function (process){
 /** @license React v16.0.0
  * react-dom.development.js
@@ -30350,7 +31104,7 @@ module.exports = ReactDOMFiberEntry;
 }
 
 }).call(this,require('_process'))
-},{"_process":203,"fbjs/lib/EventListener":30,"fbjs/lib/ExecutionEnvironment":31,"fbjs/lib/camelizeStyleName":33,"fbjs/lib/containsNode":34,"fbjs/lib/emptyFunction":35,"fbjs/lib/emptyObject":36,"fbjs/lib/focusNode":37,"fbjs/lib/getActiveElement":38,"fbjs/lib/hyphenateStyleName":40,"fbjs/lib/invariant":41,"fbjs/lib/performanceNow":45,"fbjs/lib/shallowEqual":46,"fbjs/lib/warning":47,"object-assign":213,"prop-types":207,"prop-types/checkPropTypes":204,"react":226}],211:[function(require,module,exports){
+},{"_process":227,"fbjs/lib/EventListener":30,"fbjs/lib/ExecutionEnvironment":31,"fbjs/lib/camelizeStyleName":33,"fbjs/lib/containsNode":34,"fbjs/lib/emptyFunction":35,"fbjs/lib/emptyObject":36,"fbjs/lib/focusNode":37,"fbjs/lib/getActiveElement":38,"fbjs/lib/hyphenateStyleName":40,"fbjs/lib/invariant":41,"fbjs/lib/performanceNow":45,"fbjs/lib/shallowEqual":46,"fbjs/lib/warning":47,"object-assign":237,"prop-types":231,"prop-types/checkPropTypes":228,"react":250}],235:[function(require,module,exports){
 /*
  React v16.0.0
  react-dom.production.min.js
@@ -30608,7 +31362,7 @@ function ck(a,b,c,d,e){ak(c)?void 0:w("200");var f=c._reactRootContainer;if(f)Xj
 var ek={createPortal:dk,hydrate:function(a,b,c){return ck(null,a,b,!0,c)},render:function(a,b,c){return ck(null,a,b,!1,c)},unstable_renderSubtreeIntoContainer:function(a,b,c,d){null!=a&&Pa.has(a)?void 0:w("38");return ck(a,b,c,!1,d)},unmountComponentAtNode:function(a){ak(a)?void 0:w("40");return a._reactRootContainer?(Xj.unbatchedUpdates(function(){ck(null,null,a,!1,function(){a._reactRootContainer=null})}),!0):!1},findDOMNode:Dh,unstable_createPortal:dk,unstable_batchedUpdates:sb.batchedUpdates,
 unstable_deferredUpdates:Xj.deferredUpdates,flushSync:Xj.flushSync,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{EventPluginHub:Jb,EventPluginRegistry:sa,EventPropagators:Th,ReactControlledComponent:nb,ReactDOMComponentTree:G,ReactDOMEventListener:L}};Cj({findFiberByHostInstance:G.getClosestInstanceFromNode,findHostInstanceByFiber:Xj.findHostInstance,bundleType:0,version:"16.0.0",rendererPackageName:"react-dom"});module.exports=ek;
 
-},{"fbjs/lib/EventListener":30,"fbjs/lib/ExecutionEnvironment":31,"fbjs/lib/containsNode":34,"fbjs/lib/emptyFunction":35,"fbjs/lib/emptyObject":36,"fbjs/lib/focusNode":37,"fbjs/lib/getActiveElement":38,"fbjs/lib/invariant":41,"fbjs/lib/shallowEqual":46,"object-assign":213,"react":226}],212:[function(require,module,exports){
+},{"fbjs/lib/EventListener":30,"fbjs/lib/ExecutionEnvironment":31,"fbjs/lib/containsNode":34,"fbjs/lib/emptyFunction":35,"fbjs/lib/emptyObject":36,"fbjs/lib/focusNode":37,"fbjs/lib/getActiveElement":38,"fbjs/lib/invariant":41,"fbjs/lib/shallowEqual":46,"object-assign":237,"react":250}],236:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -30650,9 +31404,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":210,"./cjs/react-dom.production.min.js":211,"_process":203}],213:[function(require,module,exports){
-arguments[4][209][0].apply(exports,arguments)
-},{"dup":209}],214:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":234,"./cjs/react-dom.production.min.js":235,"_process":227}],237:[function(require,module,exports){
+arguments[4][233][0].apply(exports,arguments)
+},{"dup":233}],238:[function(require,module,exports){
 /**
  * This is a straight rip-off of the React.js ReactPropTypes.js proptype validators,
  * modified to make it possible to validate Immutable.js data.
@@ -30903,7 +31657,7 @@ function createMapContainsChecker(shapeTypes) {
 }
 
 module.exports = ImmutablePropTypes;
-},{"immutable":51}],215:[function(require,module,exports){
+},{"immutable":51}],239:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31127,7 +31881,7 @@ Portal.defaultProps = {
 };
 module.exports = exports['default'];
 
-},{"prop-types":222,"react":226,"react-dom":212}],216:[function(require,module,exports){
+},{"prop-types":246,"react":250,"react-dom":236}],240:[function(require,module,exports){
 "use strict";
 
 /**
@@ -31166,7 +31920,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],217:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -31224,7 +31978,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":203}],218:[function(require,module,exports){
+},{"_process":227}],242:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -31291,7 +32045,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":216,"_process":203}],219:[function(require,module,exports){
+},{"./emptyFunction":240,"_process":227}],243:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -31356,7 +32110,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":223,"_process":203,"fbjs/lib/invariant":217,"fbjs/lib/warning":218}],220:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":247,"_process":227,"fbjs/lib/invariant":241,"fbjs/lib/warning":242}],244:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -31417,7 +32171,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":223,"fbjs/lib/emptyFunction":216,"fbjs/lib/invariant":217}],221:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":247,"fbjs/lib/emptyFunction":240,"fbjs/lib/invariant":241}],245:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -31933,7 +32687,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":219,"./lib/ReactPropTypesSecret":223,"_process":203,"fbjs/lib/emptyFunction":216,"fbjs/lib/invariant":217,"fbjs/lib/warning":218}],222:[function(require,module,exports){
+},{"./checkPropTypes":243,"./lib/ReactPropTypesSecret":247,"_process":227,"fbjs/lib/emptyFunction":240,"fbjs/lib/invariant":241,"fbjs/lib/warning":242}],246:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -31967,7 +32721,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":220,"./factoryWithTypeCheckers":221,"_process":203}],223:[function(require,module,exports){
+},{"./factoryWithThrowingShims":244,"./factoryWithTypeCheckers":245,"_process":227}],247:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -31983,7 +32737,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],224:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 (function (process){
 /** @license React v16.0.0
  * react.development.js
@@ -33685,7 +34439,7 @@ module.exports = ReactEntry;
 }
 
 }).call(this,require('_process'))
-},{"_process":203,"fbjs/lib/emptyFunction":35,"fbjs/lib/emptyObject":36,"fbjs/lib/invariant":41,"fbjs/lib/warning":47,"object-assign":227,"prop-types/checkPropTypes":204}],225:[function(require,module,exports){
+},{"_process":227,"fbjs/lib/emptyFunction":35,"fbjs/lib/emptyObject":36,"fbjs/lib/invariant":41,"fbjs/lib/warning":47,"object-assign":251,"prop-types/checkPropTypes":228}],249:[function(require,module,exports){
 /*
  React v16.0.0
  react.production.min.js
@@ -33710,7 +34464,7 @@ Object.keys(a).join(", ")+"}":d,""));return g}function O(a,b){return"object"===t
 function R(a,b,d,e,c){var g="";null!=d&&(g=(""+d).replace(J,"$\x26/")+"/");b=L(b,g,e,c);null==a||N(a,"",Q,b);M(b)}var S={forEach:function(a,b,d){if(null==a)return a;b=L(null,null,b,d);null==a||N(a,"",P,b);M(b)},map:function(a,b,d){if(null==a)return a;var e=[];R(a,e,null,b,d);return e},count:function(a){return null==a?0:N(a,"",r.thatReturnsNull,null)},toArray:function(a){var b=[];R(a,b,null,r.thatReturnsArgument);return b}};
 module.exports={Children:{map:S.map,forEach:S.forEach,count:S.count,toArray:S.toArray,only:function(a){G.isValidElement(a)?void 0:t("143");return a}},Component:B.Component,PureComponent:B.PureComponent,unstable_AsyncComponent:B.AsyncComponent,createElement:G.createElement,cloneElement:G.cloneElement,isValidElement:G.isValidElement,createFactory:G.createFactory,version:"16.0.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:C,assign:f}};
 
-},{"fbjs/lib/emptyFunction":35,"fbjs/lib/emptyObject":36,"fbjs/lib/invariant":41,"object-assign":227}],226:[function(require,module,exports){
+},{"fbjs/lib/emptyFunction":35,"fbjs/lib/emptyObject":36,"fbjs/lib/invariant":41,"object-assign":251}],250:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -33721,9 +34475,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":224,"./cjs/react.production.min.js":225,"_process":203}],227:[function(require,module,exports){
-arguments[4][209][0].apply(exports,arguments)
-},{"dup":209}],228:[function(require,module,exports){
+},{"./cjs/react.development.js":248,"./cjs/react.production.min.js":249,"_process":227}],251:[function(require,module,exports){
+arguments[4][233][0].apply(exports,arguments)
+},{"dup":233}],252:[function(require,module,exports){
 function isBackward(selection) {
     var startNode = selection.anchorNode;
     var startOffset = selection.anchorOffset;
@@ -33737,7 +34491,7 @@ function isBackward(selection) {
 
 module.exports = isBackward;
 
-},{}],229:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33841,7 +34595,7 @@ exports.default = {
   serialize: serialize,
   serializeNode: serializeNode
 };
-},{"isomorphic-base64":57,"slate":280}],230:[function(require,module,exports){
+},{"isomorphic-base64":57,"slate":305}],254:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -33953,7 +34707,7 @@ exports.default = {
   warn: warn
 };
 }).call(this,require('_process'))
-},{"_process":203}],231:[function(require,module,exports){
+},{"_process":227}],255:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34311,7 +35065,7 @@ function normalizeMark(key, value) {
 
 exports.default = createHyperscript();
 exports.createHyperscript = createHyperscript;
-},{"is-empty":52,"is-plain-object":55,"slate":280}],232:[function(require,module,exports){
+},{"is-empty":52,"is-plain-object":55,"slate":305}],256:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34415,7 +35169,7 @@ exports.default = {
   deserialize: deserialize,
   serialize: serialize
 };
-},{"immutable":51,"slate":280}],233:[function(require,module,exports){
+},{"immutable":51,"slate":305}],257:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -34545,7 +35299,7 @@ var Types = {
  */
 
 exports.default = Types;
-},{"slate":280}],234:[function(require,module,exports){
+},{"slate":305}],258:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35086,7 +35840,7 @@ _eventHandlers2.default.forEach(function (handler) {
  */
 
 exports.default = Content;
-},{"../constants/environment":240,"../constants/event-handlers":241,"../utils/find-dom-range":250,"../utils/find-range":253,"../utils/scroll-to-selection":258,"./node":237,"debug":260,"get-window":49,"prop-types":268,"react":226,"slate-dev-logger":230}],235:[function(require,module,exports){
+},{"../constants/environment":264,"../constants/event-handlers":265,"../utils/find-dom-range":274,"../utils/find-range":277,"../utils/scroll-to-selection":282,"./node":261,"debug":284,"get-window":49,"prop-types":292,"react":250,"slate-dev-logger":254}],259:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35567,7 +36321,7 @@ try {
 }
 
 exports.default = Editor;
-},{"../constants/event-handlers":241,"../constants/plugin-props":243,"../plugins/after":246,"../plugins/before":247,"../utils/noop":256,"debug":260,"prop-types":268,"react":226,"react-portal":215,"slate":280,"slate-dev-logger":230,"slate-prop-types":233}],236:[function(require,module,exports){
+},{"../constants/event-handlers":265,"../constants/plugin-props":267,"../plugins/after":270,"../plugins/before":271,"../utils/noop":280,"debug":284,"prop-types":292,"react":250,"react-portal":239,"slate":305,"slate-dev-logger":254,"slate-prop-types":257}],260:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35795,7 +36549,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Leaf;
-},{"../utils/offset-key":257,"debug":260,"prop-types":268,"react":226,"slate-prop-types":233}],237:[function(require,module,exports){
+},{"../utils/offset-key":281,"debug":284,"prop-types":292,"react":250,"slate-prop-types":257}],261:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36081,7 +36835,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Node;
-},{"./text":238,"./void":239,"debug":260,"prop-types":268,"react":226,"react-immutable-proptypes":214,"slate-dev-logger":230,"slate-prop-types":233}],238:[function(require,module,exports){
+},{"./text":262,"./void":263,"debug":284,"prop-types":292,"react":250,"react-immutable-proptypes":238,"slate-dev-logger":254,"slate-prop-types":257}],262:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36331,7 +37085,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Text;
-},{"./leaf":236,"debug":260,"prop-types":268,"react":226,"react-immutable-proptypes":214,"slate-prop-types":233}],239:[function(require,module,exports){
+},{"./leaf":260,"debug":284,"prop-types":292,"react":250,"react-immutable-proptypes":238,"slate-prop-types":257}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36537,7 +37291,7 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Void;
-},{"./text":238,"debug":260,"prop-types":268,"react":226,"slate-prop-types":233}],240:[function(require,module,exports){
+},{"./text":262,"debug":284,"prop-types":292,"react":250,"slate-prop-types":257}],264:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36703,7 +37457,7 @@ var IS_MAC = exports.IS_MAC = OS === 'macos';
 var IS_WINDOWS = exports.IS_WINDOWS = OS === 'windows';
 
 var SUPPORTED_EVENTS = exports.SUPPORTED_EVENTS = EVENTS;
-},{"is-in-browser":54}],241:[function(require,module,exports){
+},{"is-in-browser":54}],265:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36725,7 +37479,7 @@ var EVENT_HANDLERS = ['onBeforeInput', 'onBlur', 'onClick', 'onCompositionEnd', 
  */
 
 exports.default = EVENT_HANDLERS;
-},{}],242:[function(require,module,exports){
+},{}],266:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36872,7 +37626,7 @@ exports.default = {
   SPLIT_BLOCK: SPLIT_BLOCK,
   UNDO: UNDO
 };
-},{"./environment":240,"is-hotkey":53}],243:[function(require,module,exports){
+},{"./environment":264,"is-hotkey":53}],267:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36902,7 +37656,7 @@ var PLUGIN_PROPS = [].concat(_toConsumableArray(_eventHandlers2.default), ['deco
  */
 
 exports.default = PLUGIN_PROPS;
-},{"./event-handlers":241}],244:[function(require,module,exports){
+},{"./event-handlers":265}],268:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36930,7 +37684,7 @@ var TRANSFER_TYPES = {
  */
 
 exports.default = TRANSFER_TYPES;
-},{}],245:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36996,7 +37750,7 @@ exports.default = {
   getEventTransfer: _getEventTransfer2.default,
   setEventTransfer: _setEventTransfer2.default
 };
-},{"./components/editor":235,"./utils/find-dom-node":248,"./utils/find-dom-range":250,"./utils/find-node":251,"./utils/find-range":253,"./utils/get-event-range":254,"./utils/get-event-transfer":255,"./utils/set-event-transfer":259}],246:[function(require,module,exports){
+},{"./components/editor":259,"./utils/find-dom-node":272,"./utils/find-dom-range":274,"./utils/find-node":275,"./utils/find-range":277,"./utils/get-event-range":278,"./utils/get-event-transfer":279,"./utils/set-event-transfer":283}],270:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -37901,7 +38655,7 @@ function AfterPlugin() {
  */
 
 exports.default = AfterPlugin;
-},{"../components/content":234,"../constants/environment":240,"../constants/event-handlers":241,"../constants/hotkeys":242,"../utils/find-dom-node":248,"../utils/find-node":251,"../utils/find-point":252,"../utils/find-range":253,"../utils/get-event-range":254,"../utils/get-event-transfer":255,"../utils/set-event-transfer":259,"debug":260,"get-window":49,"react":226,"slate":280,"slate-base64-serializer":229,"slate-plain-serializer":232}],247:[function(require,module,exports){
+},{"../components/content":258,"../constants/environment":264,"../constants/event-handlers":265,"../constants/hotkeys":266,"../utils/find-dom-node":272,"../utils/find-node":275,"../utils/find-point":276,"../utils/find-range":277,"../utils/get-event-range":278,"../utils/get-event-transfer":279,"../utils/set-event-transfer":283,"debug":284,"get-window":49,"react":250,"slate":305,"slate-base64-serializer":253,"slate-plain-serializer":256}],271:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38384,7 +39138,7 @@ function BeforePlugin() {
  */
 
 exports.default = BeforePlugin;
-},{"../constants/environment":240,"../constants/hotkeys":242,"../utils/find-node":251,"debug":260,"get-window":49,"react-dom":212}],248:[function(require,module,exports){
+},{"../constants/environment":264,"../constants/hotkeys":266,"../utils/find-node":275,"debug":284,"get-window":49,"react-dom":236}],272:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38421,7 +39175,7 @@ function findDOMNode(key) {
  */
 
 exports.default = findDOMNode;
-},{"slate":280}],249:[function(require,module,exports){
+},{"slate":305}],273:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38482,7 +39236,7 @@ function findDOMPoint(key, offset) {
  */
 
 exports.default = findDOMPoint;
-},{"./find-dom-node":248,"get-window":49}],250:[function(require,module,exports){
+},{"./find-dom-node":272,"get-window":49}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38534,7 +39288,7 @@ function findDOMRange(range) {
  */
 
 exports.default = findDOMRange;
-},{"./find-dom-point":249,"get-window":49}],251:[function(require,module,exports){
+},{"./find-dom-point":273,"get-window":49}],275:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38567,7 +39321,7 @@ function findNode(element, value) {
  */
 
 exports.default = findNode;
-},{}],252:[function(require,module,exports){
+},{}],276:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38750,7 +39504,7 @@ function getEditableChild(parent, index, direction) {
  */
 
 exports.default = findPoint;
-},{"./offset-key":257,"get-window":49}],253:[function(require,module,exports){
+},{"./offset-key":281,"get-window":49}],277:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38828,7 +39582,7 @@ function findRange(native, value) {
  */
 
 exports.default = findRange;
-},{"./find-point":252,"get-window":49,"selection-is-backward":228,"slate":280}],254:[function(require,module,exports){
+},{"./find-point":276,"get-window":49,"selection-is-backward":252,"slate":305}],278:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38916,7 +39670,7 @@ function getEventRange(event, value) {
  */
 
 exports.default = getEventRange;
-},{"./find-node":251,"./find-range":253,"get-window":49,"slate":280}],255:[function(require,module,exports){
+},{"./find-node":275,"./find-range":277,"get-window":49,"slate":305}],279:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -39104,7 +39858,7 @@ function getType(transfer, type) {
  */
 
 exports.default = getEventTransfer;
-},{"../constants/transfer-types":244,"slate-base64-serializer":229}],256:[function(require,module,exports){
+},{"../constants/transfer-types":268,"slate-base64-serializer":253}],280:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39126,7 +39880,7 @@ function noop() {}
  */
 
 exports.default = noop;
-},{}],257:[function(require,module,exports){
+},{}],281:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39192,7 +39946,7 @@ exports.default = {
   parse: parse,
   stringify: stringify
 };
-},{}],258:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -39311,7 +40065,7 @@ function scrollToSelection(selection) {
  */
 
 exports.default = scrollToSelection;
-},{"get-window":49,"selection-is-backward":228}],259:[function(require,module,exports){
+},{"get-window":49,"selection-is-backward":252}],283:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -39390,7 +40144,7 @@ function setEventTransfer(event, type, content) {
  */
 
 exports.default = setEventTransfer;
-},{"../constants/transfer-types":244}],260:[function(require,module,exports){
+},{"../constants/transfer-types":268}],284:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.
@@ -39579,7 +40333,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":261,"_process":203}],261:[function(require,module,exports){
+},{"./debug":285,"_process":227}],285:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -39783,23 +40537,23 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":202}],262:[function(require,module,exports){
-arguments[4][216][0].apply(exports,arguments)
-},{"dup":216}],263:[function(require,module,exports){
-arguments[4][217][0].apply(exports,arguments)
-},{"_process":203,"dup":217}],264:[function(require,module,exports){
-arguments[4][218][0].apply(exports,arguments)
-},{"./emptyFunction":262,"_process":203,"dup":218}],265:[function(require,module,exports){
-arguments[4][219][0].apply(exports,arguments)
-},{"./lib/ReactPropTypesSecret":269,"_process":203,"dup":219,"fbjs/lib/invariant":263,"fbjs/lib/warning":264}],266:[function(require,module,exports){
-arguments[4][220][0].apply(exports,arguments)
-},{"./lib/ReactPropTypesSecret":269,"dup":220,"fbjs/lib/emptyFunction":262,"fbjs/lib/invariant":263}],267:[function(require,module,exports){
-arguments[4][221][0].apply(exports,arguments)
-},{"./checkPropTypes":265,"./lib/ReactPropTypesSecret":269,"_process":203,"dup":221,"fbjs/lib/emptyFunction":262,"fbjs/lib/invariant":263,"fbjs/lib/warning":264}],268:[function(require,module,exports){
-arguments[4][222][0].apply(exports,arguments)
-},{"./factoryWithThrowingShims":266,"./factoryWithTypeCheckers":267,"_process":203,"dup":222}],269:[function(require,module,exports){
-arguments[4][223][0].apply(exports,arguments)
-},{"dup":223}],270:[function(require,module,exports){
+},{"ms":226}],286:[function(require,module,exports){
+arguments[4][240][0].apply(exports,arguments)
+},{"dup":240}],287:[function(require,module,exports){
+arguments[4][241][0].apply(exports,arguments)
+},{"_process":227,"dup":241}],288:[function(require,module,exports){
+arguments[4][242][0].apply(exports,arguments)
+},{"./emptyFunction":286,"_process":227,"dup":242}],289:[function(require,module,exports){
+arguments[4][243][0].apply(exports,arguments)
+},{"./lib/ReactPropTypesSecret":293,"_process":227,"dup":243,"fbjs/lib/invariant":287,"fbjs/lib/warning":288}],290:[function(require,module,exports){
+arguments[4][244][0].apply(exports,arguments)
+},{"./lib/ReactPropTypesSecret":293,"dup":244,"fbjs/lib/emptyFunction":286,"fbjs/lib/invariant":287}],291:[function(require,module,exports){
+arguments[4][245][0].apply(exports,arguments)
+},{"./checkPropTypes":289,"./lib/ReactPropTypesSecret":293,"_process":227,"dup":245,"fbjs/lib/emptyFunction":286,"fbjs/lib/invariant":287,"fbjs/lib/warning":288}],292:[function(require,module,exports){
+arguments[4][246][0].apply(exports,arguments)
+},{"./factoryWithThrowingShims":290,"./factoryWithTypeCheckers":291,"_process":227,"dup":246}],293:[function(require,module,exports){
+arguments[4][247][0].apply(exports,arguments)
+},{"dup":247}],294:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -39874,6 +40628,19 @@ Changes.addMark = function (change, mark) {
     var _sel = selection.set('marks', _marks);
     change.select(_sel);
   }
+};
+
+/**
+ * Add a list of `marks` to the characters in the current selection.
+ *
+ * @param {Change} change
+ * @param {Mark} mark
+ */
+
+Changes.addMarks = function (change, marks) {
+  marks.forEach(function (mark) {
+    return change.addMark(mark);
+  });
 };
 
 /**
@@ -39989,7 +40756,7 @@ Changes.insertText = function (change, text, marks) {
   var document = value.document,
       selection = value.selection;
 
-  marks = marks || selection.marks;
+  marks = marks || value.marks;
   change.insertTextAtRange(selection, text, marks);
 
   // If the text was successfully inserted, and the selection had marks on it,
@@ -40100,7 +40867,7 @@ Changes.wrapText = function (change, prefix) {
  */
 
 exports.default = Changes;
-},{"../models/block":281,"../models/inline":287,"../models/mark":289}],271:[function(require,module,exports){
+},{"../models/block":306,"../models/inline":312,"../models/mark":314}],295:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -40176,6 +40943,24 @@ Changes.addMarkAtRange = function (change, range, mark) {
     if (key == startKey && key == endKey) length = endOffset - startOffset;
 
     change.addMarkByKey(key, index, length, mark, { normalize: normalize });
+  });
+};
+
+/**
+ * Add a list of `marks` to the characters at `range`.
+ *
+ * @param {Change} change
+ * @param {Range} range
+ * @param {Array<Mixed>} mark
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+Changes.addMarksAtRange = function (change, range, marks) {
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+  marks.forEach(function (mark) {
+    return change.addMarkAtRange(range, mark, options);
   });
 };
 
@@ -40420,8 +41205,22 @@ Changes.deleteLineBackwardAtRange = function (change, range, options) {
 
   var startBlock = document.getClosestBlock(startKey);
   var offset = startBlock.getOffset(startKey);
+  var startWithVoidInline = startBlock.nodes.size > 1 && startBlock.nodes.get(0).text == '' && startBlock.nodes.get(1).kind == 'inline';
+
   var o = offset + startOffset;
+
+  // If line starts with an void inline node, the text node inside this inline
+  // node disturbs the offset. Ignore this inline node and delete it afterwards.
+  if (startWithVoidInline) {
+    o -= 1;
+  }
+
   change.deleteBackwardAtRange(range, o, options);
+
+  // Delete the remaining first inline node if needed.
+  if (startWithVoidInline) {
+    change.deleteBackward();
+  }
 };
 
 /**
@@ -40686,7 +41485,11 @@ Changes.deleteForwardAtRange = function (change, range) {
 
   // If the closest is not void, but empty, remove it
   if (block && !block.isVoid && block.isEmpty && document.nodes.size !== 1) {
+    var nextBlock = document.getNextBlock(block.key);
     change.removeNodeByKey(block.key, { normalize: normalize });
+    if (nextBlock && nextBlock.key) {
+      change.moveToStartOf(nextBlock);
+    }
     return;
   }
 
@@ -40707,12 +41510,12 @@ Changes.deleteForwardAtRange = function (change, range) {
   var text = document.getDescendant(startKey);
   if (range.isAtEndOf(text)) {
     var next = document.getNextText(text.key);
-    var nextBlock = document.getClosestBlock(next.key);
+    var _nextBlock = document.getClosestBlock(next.key);
     var nextInline = document.getClosestInline(next.key);
 
     // If the previous block is void, remove it.
-    if (nextBlock && nextBlock.isVoid) {
-      change.removeNodeByKey(nextBlock.key, { normalize: normalize });
+    if (_nextBlock && _nextBlock.isVoid) {
+      change.removeNodeByKey(_nextBlock.key, { normalize: normalize });
       return;
     }
 
@@ -40724,7 +41527,7 @@ Changes.deleteForwardAtRange = function (change, range) {
 
     // If we're deleting by one character and the previous text node is not
     // inside the current block, we need to merge the two blocks together.
-    if (n == 1 && nextBlock != block) {
+    if (n == 1 && _nextBlock != block) {
       range = range.merge({
         focusKey: next.key,
         focusOffset: 0
@@ -41016,12 +41819,18 @@ Changes.insertTextAtRange = function (change, range, text, marks) {
   var startKey = range.startKey,
       startOffset = range.startOffset;
 
+  var key = startKey;
+  var offset = startOffset;
   var parent = document.getParent(startKey);
 
   if (parent.isVoid) return;
 
   if (range.isExpanded) {
     change.deleteAtRange(range, { normalize: false });
+
+    // Update range start after delete
+    key = change.value.startKey;
+    offset = change.value.startOffset;
   }
 
   // PERF: Unless specified, don't normalize if only inserting text.
@@ -41029,7 +41838,7 @@ Changes.insertTextAtRange = function (change, range, text, marks) {
     normalize = range.isExpanded;
   }
 
-  change.insertTextByKey(startKey, startOffset, text, marks, { normalize: normalize });
+  change.insertTextByKey(key, offset, text, marks, { normalize: normalize });
 };
 
 /**
@@ -41537,7 +42346,7 @@ Changes.wrapInlineAtRange = function (change, range, inline) {
     var startNode = inline.regenerateKey();
     var endNode = inline.regenerateKey();
 
-    change.insertNodeByKey(startBlock.key, startIndex - 1, startNode, { normalize: false });
+    change.insertNodeByKey(startBlock.key, startIndex + 1, startNode, { normalize: false });
     change.insertNodeByKey(endBlock.key, endIndex, endNode, { normalize: false });
 
     startInlines.forEach(function (child, i) {
@@ -41604,7 +42413,7 @@ Changes.wrapTextAtRange = function (change, range, prefix) {
  */
 
 exports.default = Changes;
-},{"../models/block":281,"../models/inline":287,"../models/mark":289,"../models/node":290,"../utils/string":304,"immutable":51}],272:[function(require,module,exports){
+},{"../models/block":306,"../models/inline":312,"../models/mark":314,"../models/node":315,"../utils/string":328,"immutable":51}],296:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41687,6 +42496,7 @@ Changes.addMarkByKey = function (change, key, offset, length, mark) {
 
     operations.push({
       type: 'add_mark',
+      value: value,
       path: path,
       offset: start,
       length: end - start,
@@ -41750,6 +42560,7 @@ Changes.insertNodeByKey = function (change, key, index, node) {
 
   change.applyOperation({
     type: 'insert_node',
+    value: value,
     path: [].concat(_toConsumableArray(path), [index]),
     node: node
   });
@@ -41784,6 +42595,7 @@ Changes.insertTextByKey = function (change, key, offset, text, marks) {
 
   change.applyOperation({
     type: 'insert_text',
+    value: value,
     path: path,
     offset: offset,
     text: text,
@@ -41823,8 +42635,10 @@ Changes.mergeNodeByKey = function (change, key) {
 
   change.applyOperation({
     type: 'merge_node',
+    value: value,
     path: path,
-    position: position
+    position: position,
+    target: null
   });
 
   if (normalize) {
@@ -41857,6 +42671,7 @@ Changes.moveNodeByKey = function (change, key, newKey, newIndex) {
 
   change.applyOperation({
     type: 'move_node',
+    value: value,
     path: path,
     newPath: [].concat(_toConsumableArray(newPath), [newIndex])
   });
@@ -41915,6 +42730,7 @@ Changes.removeMarkByKey = function (change, key, offset, length, mark) {
 
     operations.push({
       type: 'remove_mark',
+      value: value,
       path: path,
       offset: start,
       length: end - start,
@@ -41928,6 +42744,30 @@ Changes.removeMarkByKey = function (change, key, offset, length, mark) {
     var parent = document.getParent(key);
     change.normalizeNodeByKey(parent.key);
   }
+};
+
+/**
+ * Remove all `marks` from node by `key`.
+ *
+ * @param {Change} change
+ * @param {String} key
+ * @param {Object} options
+ *   @property {Boolean} normalize
+ */
+
+Changes.removeAllMarksByKey = function (change, key) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var state = change.state;
+  var document = state.document;
+
+  var node = document.getNode(key);
+  var texts = node.kind === 'text' ? [node] : node.getTextsAsArray();
+
+  texts.forEach(function (text) {
+    text.getMarksAsArray().forEach(function (mark) {
+      change.removeMarkByKey(text.key, 0, text.text.length, mark, options);
+    });
+  });
 };
 
 /**
@@ -41951,6 +42791,7 @@ Changes.removeNodeByKey = function (change, key) {
 
   change.applyOperation({
     type: 'remove_node',
+    value: value,
     path: path,
     node: node
   });
@@ -42006,6 +42847,7 @@ Changes.removeTextByKey = function (change, key, offset, length) {
 
     removals.push({
       type: 'remove_text',
+      value: value,
       path: path,
       offset: start,
       text: string,
@@ -42077,6 +42919,7 @@ Changes.setMarkByKey = function (change, key, offset, length, mark, properties) 
 
   change.applyOperation({
     type: 'set_mark',
+    value: value,
     path: path,
     offset: offset,
     length: length,
@@ -42114,6 +42957,7 @@ Changes.setNodeByKey = function (change, key, properties) {
 
   change.applyOperation({
     type: 'set_node',
+    value: value,
     path: path,
     node: node,
     properties: properties
@@ -42147,6 +42991,7 @@ Changes.splitNodeByKey = function (change, key, position) {
 
   change.applyOperation({
     type: 'split_node',
+    value: value,
     path: path,
     position: position,
     target: target
@@ -42378,7 +43223,7 @@ Changes.wrapNodeByKey = function (change, key, parent) {
  */
 
 exports.default = Changes;
-},{"../models/block":281,"../models/inline":287,"../models/mark":289,"../models/node":290}],273:[function(require,module,exports){
+},{"../models/block":306,"../models/inline":312,"../models/mark":314,"../models/node":315}],297:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42424,7 +43269,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 exports.default = _extends({}, _atCurrentRange2.default, _atRange2.default, _byKey2.default, _onHistory2.default, _onSelection2.default, _onValue2.default, _withSchema2.default);
-},{"./at-current-range":270,"./at-range":271,"./by-key":272,"./on-history":274,"./on-selection":275,"./on-value":276,"./with-schema":277}],274:[function(require,module,exports){
+},{"./at-current-range":294,"./at-range":295,"./by-key":296,"./on-history":298,"./on-selection":299,"./on-value":300,"./with-schema":301}],298:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42434,6 +43279,10 @@ Object.defineProperty(exports, "__esModule", {
 var _invert = require('../operations/invert');
 
 var _invert2 = _interopRequireDefault(_invert);
+
+var _omit = require('lodash/omit');
+
+var _omit2 = _interopRequireDefault(_omit);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42471,6 +43320,17 @@ Changes.redo = function (change) {
 
   // Replay the next operations.
   next.forEach(function (op) {
+    var _op = op,
+        type = _op.type,
+        properties = _op.properties;
+
+    // When the operation mutates the selection, omit its `isFocused` value to
+    // prevent the editor focus from changing during redoing.
+
+    if (type == 'set_selection') {
+      op = op.set('properties', (0, _omit2.default)(properties, 'isFocused'));
+    }
+
     change.applyOperation(op, { save: false });
   });
 
@@ -42507,6 +43367,17 @@ Changes.undo = function (change) {
 
   // Replay the inverse of the previous operations.
   previous.slice().reverse().map(_invert2.default).forEach(function (inverse) {
+    var _inverse = inverse,
+        type = _inverse.type,
+        properties = _inverse.properties;
+
+    // When the operation mutates the selection, omit its `isFocused` value to
+    // prevent the editor focus from changing during undoing.
+
+    if (type == 'set_selection') {
+      inverse = inverse.set('properties', (0, _omit2.default)(properties, 'isFocused'));
+    }
+
     change.applyOperation(inverse, { save: false });
   });
 
@@ -42524,7 +43395,7 @@ Changes.undo = function (change) {
  */
 
 exports.default = Changes;
-},{"../operations/invert":300}],275:[function(require,module,exports){
+},{"../operations/invert":324,"lodash/omit":220}],299:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42536,10 +43407,6 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 var _isEmpty = require('is-empty');
 
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
-
-var _slateDevLogger = require('slate-dev-logger');
-
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
 
 var _pick = require('lodash/pick');
 
@@ -42590,26 +43457,9 @@ Changes.select = function (change, properties) {
     props[k] = properties[k];
   }
 
-  // Resolve the selection keys into paths.
-  sel.anchorPath = sel.anchorKey == null ? null : document.getPath(sel.anchorKey);
-  delete sel.anchorKey;
-
-  if (props.anchorKey) {
-    props.anchorPath = props.anchorKey == null ? null : document.getPath(props.anchorKey);
-    delete props.anchorKey;
-  }
-
-  sel.focusPath = sel.focusKey == null ? null : document.getPath(sel.focusKey);
-  delete sel.focusKey;
-
-  if (props.focusKey) {
-    props.focusPath = props.focusKey == null ? null : document.getPath(props.focusKey);
-    delete props.focusKey;
-  }
-
   // If the selection moves, clear any marks, unless the new selection
   // properties change the marks in some way.
-  var moved = ['anchorPath', 'anchorOffset', 'focusPath', 'focusOffset'].some(function (p) {
+  var moved = ['anchorKey', 'anchorOffset', 'focusKey', 'focusOffset'].some(function (p) {
     return props.hasOwnProperty(p);
   });
 
@@ -42625,6 +43475,7 @@ Changes.select = function (change, properties) {
   // Apply the operation.
   change.applyOperation({
     type: 'set_selection',
+    value: value,
     properties: props,
     selection: sel
   }, snapshot ? { skip: false, merge: false } : {});
@@ -42858,9 +43709,7 @@ ALIAS_METHODS.forEach(function (_ref) {
  * Mix in selection changes that are just a proxy for the selection method.
  */
 
-var PROXY_TRANSFORMS = ['blur', 'collapseTo', 'collapseToAnchor', 'collapseToEnd', 'collapseToEndOf', 'collapseToFocus', 'collapseToStart', 'collapseToStartOf', 'extend', 'extendTo', 'extendToEndOf', 'extendToStartOf', 'flip', 'focus', 'move', 'moveAnchor', 'moveAnchorOffsetTo', 'moveAnchorTo', 'moveAnchorToEndOf', 'moveAnchorToStartOf', 'moveEnd', 'moveEndOffsetTo', 'moveEndTo', 'moveFocus', 'moveFocusOffsetTo', 'moveFocusTo', 'moveFocusToEndOf', 'moveFocusToStartOf', 'moveOffsetsTo', 'moveStart', 'moveStartOffsetTo', 'moveStartTo',
-// 'moveTo', Commented out for now, since it conflicts with a deprecated one.
-'moveToEnd', 'moveToEndOf', 'moveToRangeOf', 'moveToStart', 'moveToStartOf', 'deselect'];
+var PROXY_TRANSFORMS = ['blur', 'collapseTo', 'collapseToAnchor', 'collapseToEnd', 'collapseToEndOf', 'collapseToFocus', 'collapseToStart', 'collapseToStartOf', 'extend', 'extendTo', 'extendToEndOf', 'extendToStartOf', 'flip', 'focus', 'move', 'moveAnchor', 'moveAnchorOffsetTo', 'moveAnchorTo', 'moveAnchorToEndOf', 'moveAnchorToStartOf', 'moveEnd', 'moveEndOffsetTo', 'moveEndTo', 'moveFocus', 'moveFocusOffsetTo', 'moveFocusTo', 'moveFocusToEndOf', 'moveFocusToStartOf', 'moveOffsetsTo', 'moveStart', 'moveStartOffsetTo', 'moveStartTo', 'moveTo', 'moveToEnd', 'moveToEndOf', 'moveToRangeOf', 'moveToStart', 'moveToStartOf', 'deselect'];
 
 PROXY_TRANSFORMS.forEach(function (method) {
   Changes[method] = function (change) {
@@ -42933,90 +43782,18 @@ PREFIXES.forEach(function (prefix) {
 });
 
 /**
- * Set `properties` on the selection.
- *
- * @param {Mixed} ...args
- * @param {Change} change
- */
-
-Changes.moveTo = function (change, properties) {
-  _slateDevLogger2.default.deprecate('0.17.0', 'The `moveTo()` change is deprecated, please use `select()` instead.');
-  change.select(properties);
-};
-
-/**
- * Unset the selection's marks.
- *
- * @param {Change} change
- */
-
-Changes.unsetMarks = function (change) {
-  _slateDevLogger2.default.deprecate('0.17.0', 'The `unsetMarks()` change is deprecated.');
-  change.select({ marks: null });
-};
-
-/**
- * Unset the selection, removing an association to a node.
- *
- * @param {Change} change
- */
-
-Changes.unsetSelection = function (change) {
-  _slateDevLogger2.default.deprecate('0.17.0', 'The `unsetSelection()` change is deprecated, please use `deselect()` instead.');
-  change.select({
-    anchorKey: null,
-    anchorOffset: 0,
-    focusKey: null,
-    focusOffset: 0,
-    isFocused: false,
-    isBackward: false
-  });
-};
-
-/**
- * Mix in deprecated changes with a warning.
- */
-
-var DEPRECATED_TRANSFORMS = [['extendBackward', 'extend', 'The `extendBackward(n)` change is deprecated, please use `extend(n)` instead with a negative offset.'], ['extendForward', 'extend', 'The `extendForward(n)` change is deprecated, please use `extend(n)` instead.'], ['moveBackward', 'move', 'The `moveBackward(n)` change is deprecated, please use `move(n)` instead with a negative offset.'], ['moveForward', 'move', 'The `moveForward(n)` change is deprecated, please use `move(n)` instead.'], ['moveStartOffset', 'moveStart', 'The `moveStartOffset(n)` change is deprecated, please use `moveStart(n)` instead.'], ['moveEndOffset', 'moveEnd', 'The `moveEndOffset(n)` change is deprecated, please use `moveEnd()` instead.'], ['moveToOffsets', 'moveOffsetsTo', 'The `moveToOffsets()` change is deprecated, please use `moveOffsetsTo()` instead.'], ['flipSelection', 'flip', 'The `flipSelection()` change is deprecated, please use `flip()` instead.']];
-
-DEPRECATED_TRANSFORMS.forEach(function (_ref3) {
-  var _ref4 = _slicedToArray(_ref3, 3),
-      old = _ref4[0],
-      current = _ref4[1],
-      warning = _ref4[2];
-
-  Changes[old] = function (change) {
-    for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-      args[_key3 - 1] = arguments[_key3];
-    }
-
-    _slateDevLogger2.default.deprecate('0.17.0', warning);
-    var value = change.value;
-    var document = value.document,
-        selection = value.selection;
-
-    var sel = selection[current].apply(selection, args).normalize(document);
-    change.select(sel);
-  };
-});
-
-/**
  * Export.
  *
  * @type {Object}
  */
 
 exports.default = Changes;
-},{"../models/range":291,"is-empty":52,"lodash/pick":197,"slate-dev-logger":230}],276:[function(require,module,exports){
+},{"../models/range":317,"is-empty":52,"lodash/pick":221}],300:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _slateDevLogger = require('slate-dev-logger');
-
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
 
 var _value = require('../models/value');
 
@@ -43037,9 +43814,12 @@ var Changes = {};
  *
  * @param {Change} change
  * @param {Object|Value} properties
+ * @param {Object} options
  */
 
 Changes.setValue = function (change, properties) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
   properties = _value2.default.createProperties(properties);
   var value = change.value;
 
@@ -43048,25 +43828,7 @@ Changes.setValue = function (change, properties) {
     type: 'set_value',
     properties: properties,
     value: value
-  });
-};
-
-/**
- * Deprecated.
- */
-
-Changes.setState = function (change) {
-  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
-  }
-
-  _slateDevLogger2.default.deprecate('0.29.0', 'The `change.setState` method has been renamed to `change.setValue`.');
-  change.setValue.apply(change, args);
-};
-
-Changes.setData = function (change, data) {
-  _slateDevLogger2.default.deprecate('0.26.0', 'The `change.setData` method is deprecated, use `change.setValue` instead.');
-  change.setValue({ data: data });
+  }, options);
 };
 
 /**
@@ -43076,7 +43838,7 @@ Changes.setData = function (change, data) {
  */
 
 exports.default = Changes;
-},{"../models/value":297,"slate-dev-logger":230}],277:[function(require,module,exports){
+},{"../models/value":321}],301:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43166,7 +43928,8 @@ function normalizeNodeAndChildren(change, node, schema) {
   // While there is still a child key that hasn't been normalized yet...
 
   var _loop = function _loop() {
-    var ops = change.operations.length;
+    var size = change.operations.size;
+
     var key = void 0;
 
     // PERF: use a mutable set here since we'll be add to it a lot.
@@ -43185,7 +43948,7 @@ function normalizeNodeAndChildren(change, node, schema) {
 
     // PERF: Only re-find the node and re-normalize any new children if
     // operations occured that might have changed it.
-    if (change.operations.length != ops) {
+    if (change.operations.size > size) {
       node = refindNode(change, node);
 
       // Add any new children back onto the stack.
@@ -43270,7 +44033,7 @@ function normalizeNode(change, node, schema) {
  */
 
 exports.default = Changes;
-},{"immutable":51}],278:[function(require,module,exports){
+},{"immutable":51}],302:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43570,7 +44333,7 @@ var CORE_SCHEMA_RULES = [
  */
 
 exports.default = CORE_SCHEMA_RULES;
-},{"../models/text":296,"immutable":51}],279:[function(require,module,exports){
+},{"../models/text":320,"immutable":51}],303:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43592,6 +44355,7 @@ var MODEL_TYPES = {
   INLINE: '@@__SLATE_INLINE__@@',
   LEAF: '@@__SLATE_LEAF__@@',
   MARK: '@@__SLATE_MARK__@@',
+  OPERATION: '@@__SLATE_OPERATION__@@',
   RANGE: '@@__SLATE_RANGE__@@',
   SCHEMA: '@@__SLATE_SCHEMA__@@',
   STACK: '@@__SLATE_STACK__@@',
@@ -43606,13 +44370,49 @@ var MODEL_TYPES = {
  */
 
 exports.default = MODEL_TYPES;
-},{}],280:[function(require,module,exports){
+},{}],304:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setKeyGenerator = exports.resetKeyGenerator = exports.Value = exports.Text = exports.State = exports.Stack = exports.Selection = exports.Schema = exports.Range = exports.Operations = exports.Node = exports.Mark = exports.Leaf = exports.Inline = exports.History = exports.Document = exports.Data = exports.Character = exports.Changes = exports.Block = undefined;
+
+/**
+ * Slate operation attributes.
+ *
+ * @type {Array}
+ */
+
+var OPERATION_ATTRIBUTES = {
+  add_mark: ['value', 'path', 'offset', 'length', 'mark'],
+  insert_node: ['value', 'path', 'node'],
+  insert_text: ['value', 'path', 'offset', 'text', 'marks'],
+  merge_node: ['value', 'path', 'position', 'target'],
+  move_node: ['value', 'path', 'newPath'],
+  remove_mark: ['value', 'path', 'offset', 'length', 'mark'],
+  remove_node: ['value', 'path', 'node'],
+  remove_text: ['value', 'path', 'offset', 'text', 'marks'],
+  set_mark: ['value', 'path', 'offset', 'length', 'mark', 'properties'],
+  set_node: ['value', 'path', 'node', 'properties'],
+  set_selection: ['value', 'selection', 'properties'],
+  set_value: ['value', 'properties'],
+  split_node: ['value', 'path', 'position', 'target']
+};
+
+/**
+ * Export.
+ *
+ * @type {Object}
+ */
+
+exports.default = OPERATION_ATTRIBUTES;
+},{}],305:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setKeyGenerator = exports.resetKeyGenerator = exports.Value = exports.Text = exports.Stack = exports.Schema = exports.Range = exports.Operations = exports.Operation = exports.Node = exports.Mark = exports.Leaf = exports.Inline = exports.History = exports.Document = exports.Data = exports.Character = exports.Changes = exports.Block = undefined;
 
 var _block = require('./models/block');
 
@@ -43654,6 +44454,10 @@ var _node = require('./models/node');
 
 var _node2 = _interopRequireDefault(_node);
 
+var _operation = require('./models/operation');
+
+var _operation2 = _interopRequireDefault(_operation);
+
 var _operations = require('./operations');
 
 var _operations2 = _interopRequireDefault(_operations);
@@ -43666,17 +44470,9 @@ var _schema = require('./models/schema');
 
 var _schema2 = _interopRequireDefault(_schema);
 
-var _selection = require('./models/selection');
-
-var _selection2 = _interopRequireDefault(_selection);
-
 var _stack = require('./models/stack');
 
 var _stack2 = _interopRequireDefault(_stack);
-
-var _state = require('./models/state');
-
-var _state2 = _interopRequireDefault(_state);
 
 var _text = require('./models/text');
 
@@ -43706,12 +44502,11 @@ exports.Inline = _inline2.default;
 exports.Leaf = _leaf2.default;
 exports.Mark = _mark2.default;
 exports.Node = _node2.default;
+exports.Operation = _operation2.default;
 exports.Operations = _operations2.default;
 exports.Range = _range2.default;
 exports.Schema = _schema2.default;
-exports.Selection = _selection2.default;
 exports.Stack = _stack2.default;
-exports.State = _state2.default;
 exports.Text = _text2.default;
 exports.Value = _value2.default;
 exports.resetKeyGenerator = _generateKey.resetKeyGenerator;
@@ -43727,18 +44522,17 @@ exports.default = {
   Leaf: _leaf2.default,
   Mark: _mark2.default,
   Node: _node2.default,
+  Operation: _operation2.default,
   Operations: _operations2.default,
   Range: _range2.default,
   Schema: _schema2.default,
-  Selection: _selection2.default,
   Stack: _stack2.default,
-  State: _state2.default,
   Text: _text2.default,
   Value: _value2.default,
   resetKeyGenerator: _generateKey.resetKeyGenerator,
   setKeyGenerator: _generateKey.setKeyGenerator
 };
-},{"./changes":273,"./models/block":281,"./models/character":283,"./models/data":284,"./models/document":285,"./models/history":286,"./models/inline":287,"./models/leaf":288,"./models/mark":289,"./models/node":290,"./models/range":291,"./models/schema":292,"./models/selection":293,"./models/stack":294,"./models/state":295,"./models/text":296,"./models/value":297,"./operations":299,"./utils/generate-key":301}],281:[function(require,module,exports){
+},{"./changes":297,"./models/block":306,"./models/character":308,"./models/data":309,"./models/document":310,"./models/history":311,"./models/inline":312,"./models/leaf":313,"./models/mark":314,"./models/node":315,"./models/operation":316,"./models/range":317,"./models/schema":318,"./models/stack":319,"./models/text":320,"./models/value":321,"./operations":323,"./utils/generate-key":325}],306:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44038,7 +44832,7 @@ Object.getOwnPropertyNames(_node2.default.prototype).forEach(function (method) {
  */
 
 exports.default = Block;
-},{"../constants/model-types":279,"../utils/generate-key":301,"./document":285,"./node":290,"immutable":51,"is-plain-object":55}],282:[function(require,module,exports){
+},{"../constants/model-types":303,"../utils/generate-key":325,"./document":310,"./node":315,"immutable":51,"is-plain-object":55}],307:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44053,13 +44847,15 @@ var _debug = require('debug');
 
 var _debug2 = _interopRequireDefault(_debug);
 
-var _slateDevLogger = require('slate-dev-logger');
+var _isPlainObject = require('is-plain-object');
 
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
+var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 
 var _pick = require('lodash/pick');
 
 var _pick2 = _interopRequireDefault(_pick);
+
+var _immutable = require('immutable');
 
 var _modelTypes = require('../constants/model-types');
 
@@ -44068,6 +44864,10 @@ var _modelTypes2 = _interopRequireDefault(_modelTypes);
 var _changes = require('../changes');
 
 var _changes2 = _interopRequireDefault(_changes);
+
+var _operation = require('./operation');
+
+var _operation2 = _interopRequireDefault(_operation);
 
 var _apply = require('../operations/apply');
 
@@ -44121,14 +44921,8 @@ var Change = function () {
 
     var value = attrs.value;
 
-
-    if (!value && attrs.state) {
-      _slateDevLogger2.default.deprecate('0.29.0', 'The `state` attribute to change objects has been renamed to `value`.');
-      value = attrs.state;
-    }
-
     this.value = value;
-    this.operations = [];
+    this.operations = new _immutable.List();
     this.flags = (0, _pick2.default)(attrs, ['merge', 'save']);
   }
 
@@ -44146,7 +44940,7 @@ var Change = function () {
      * Apply an `operation` to the current value, saving the operation to the
      * history if needed.
      *
-     * @param {Object} operation
+     * @param {Operation|Object} operation
      * @param {Object} options
      * @return {Change}
      */
@@ -44159,15 +44953,22 @@ var Change = function () {
       var _value = value,
           history = _value.history;
 
+      // Add in the current `value` in case the operation was serialized.
+
+      if ((0, _isPlainObject2.default)(operation)) {
+        operation = _extends({}, operation, { value: value });
+      }
+
+      operation = _operation2.default.create(operation);
+
       // Default options to the change-level flags, this allows for setting
       // specific options for all of the operations of a given change.
-
       options = _extends({}, flags, options);
 
       // Derive the default option values.
       var _options = options,
           _options$merge = _options.merge,
-          merge = _options$merge === undefined ? operations.length == 0 ? null : true : _options$merge,
+          merge = _options$merge === undefined ? operations.size == 0 ? null : true : _options$merge,
           _options$save = _options.save,
           save = _options$save === undefined ? true : _options$save,
           _options$skip = _options.skip,
@@ -44186,14 +44987,14 @@ var Change = function () {
 
       // Update the mutable change object.
       this.value = value;
-      this.operations.push(operation);
+      this.operations = operations.push(operation);
       return this;
     }
 
     /**
      * Apply a series of `operations` to the current value.
      *
-     * @param {Array} operations
+     * @param {Array|List} operations
      * @param {Object} options
      * @return {Change}
      */
@@ -44256,29 +45057,10 @@ var Change = function () {
       delete this.flags[key];
       return this;
     }
-
-    /**
-     * Deprecated.
-     */
-
-  }, {
-    key: 'apply',
-    value: function apply() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      _slateDevLogger2.default.deprecate('0.22.0', 'The `change.apply()` method is deprecrated and no longer necessary, as all operations are applied immediately when invoked. You can access the change\'s value, which is already pre-computed, directly via `change.value` instead.');
-      return this.value;
-    }
   }, {
     key: 'kind',
     get: function get() {
       return 'change';
-    }
-  }, {
-    key: 'state',
-    get: function get() {
-      _slateDevLogger2.default.deprecate('0.29.0', 'The `change.state` property has been renamed to `change.value`.');
-      return this.value;
     }
   }]);
 
@@ -44305,25 +45087,7 @@ Object.keys(_changes2.default).forEach(function (type) {
     this.call.apply(this, [_changes2.default[type]].concat(args));
     return this;
   };
-})
-
-/**
- * Add deprecation warnings in case people try to access a change as a value.
- */
-
-;['hasUndos', 'hasRedos', 'isBlurred', 'isFocused', 'isCollapsed', 'isExpanded', 'isBackward', 'isForward', 'startKey', 'endKey', 'startOffset', 'endOffset', 'anchorKey', 'focusKey', 'anchorOffset', 'focusOffset', 'startBlock', 'endBlock', 'anchorBlock', 'focusBlock', 'startInline', 'endInline', 'anchorInline', 'focusInline', 'startText', 'endText', 'anchorText', 'focusText', 'characters', 'marks', 'blocks', 'fragment', 'inlines', 'texts', 'isEmpty'].forEach(function (getter) {
-  Object.defineProperty(Change.prototype, getter, {
-    get: function get() {
-      _slateDevLogger2.default.deprecate('0.22.0', 'You attempted to access the `' + getter + '` property of what was previously a `value` object but is now a `change` object. This syntax has been deprecated as plugins are now passed `change` objects instead of `value` objects.');
-      return this.value[getter];
-    }
-  });
 });
-
-Change.prototype.transform = function () {
-  _slateDevLogger2.default.deprecate('0.22.0', 'You attempted to call `.transform()` on what was previously a `value` object but is now already a `change` object. This syntax has been deprecated as plugins are now passed `change` objects instead of `value` objects.');
-  return this;
-};
 
 /**
  * Export.
@@ -44332,7 +45096,7 @@ Change.prototype.transform = function () {
  */
 
 exports.default = Change;
-},{"../changes":273,"../constants/model-types":279,"../operations/apply":298,"debug":305,"lodash/pick":197,"slate-dev-logger":230}],283:[function(require,module,exports){
+},{"../changes":297,"../constants/model-types":303,"../operations/apply":322,"./operation":316,"debug":329,"immutable":51,"is-plain-object":55,"lodash/pick":221}],308:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44344,10 +45108,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _isPlainObject = require('is-plain-object');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _slateDevLogger = require('slate-dev-logger');
-
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
 
 var _immutable = require('immutable');
 
@@ -44546,17 +45306,6 @@ var Character = function (_Record) {
         return Character.isCharacter(item);
       });
     }
-
-    /**
-     * Deprecated.
-     */
-
-  }, {
-    key: 'createListFromText',
-    value: function createListFromText(string) {
-      _slateDevLogger2.default.deprecate('0.22.0', 'The `Character.createListFromText(string)` method is deprecated, use `Character.createList(string)` instead.');
-      return this.createList(string);
-    }
   }]);
 
   return Character;
@@ -44576,7 +45325,7 @@ Character.prototype[_modelTypes2.default.CHARACTER] = true;
  */
 
 exports.default = Character;
-},{"../constants/model-types":279,"immutable":51,"is-plain-object":55,"slate-dev-logger":230}],284:[function(require,module,exports){
+},{"../constants/model-types":303,"immutable":51,"is-plain-object":55}],309:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44664,7 +45413,7 @@ var Data = function () {
 
 Data.fromJS = Data.fromJSON;
 exports.default = Data;
-},{"immutable":51,"is-plain-object":55}],285:[function(require,module,exports){
+},{"immutable":51,"is-plain-object":55}],310:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44918,7 +45667,7 @@ Object.getOwnPropertyNames(_node2.default.prototype).forEach(function (method) {
  */
 
 exports.default = Document;
-},{"../constants/model-types":279,"../utils/generate-key":301,"./block":281,"./inline":287,"./node":290,"immutable":51,"is-plain-object":55}],286:[function(require,module,exports){
+},{"../constants/model-types":303,"../utils/generate-key":325,"./block":306,"./inline":312,"./node":315,"immutable":51,"is-plain-object":55}],311:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45010,7 +45759,7 @@ var History = function (_Record) {
           skip = options.skip;
 
       var prevBatch = undos.peek();
-      var prevOperation = prevBatch && prevBatch[prevBatch.length - 1];
+      var prevOperation = prevBatch && prevBatch.last();
 
       if (skip == null) {
         skip = shouldSkip(operation, prevOperation);
@@ -45027,21 +45776,20 @@ var History = function (_Record) {
       debug('save', { operation: operation, merge: merge });
 
       // If the `merge` flag is true, add the operation to the previous batch.
-      if (merge) {
-        var batch = prevBatch.slice();
-        batch.push(operation);
+      if (merge && prevBatch) {
+        var batch = prevBatch.push(operation);
         undos = undos.pop();
         undos = undos.push(batch);
       }
 
       // Otherwise, create a new batch with the operation.
       else {
-          var _batch = [operation];
+          var _batch = new _immutable.List([operation]);
           undos = undos.push(_batch);
         }
 
       // Constrain the history to 100 entries for memory's sake.
-      if (undos.length > 100) {
+      if (undos.size > 100) {
         undos = undos.take(100);
       }
 
@@ -45209,7 +45957,7 @@ function shouldSkip(o, p) {
  */
 
 exports.default = History;
-},{"../constants/model-types":279,"debug":305,"immutable":51,"is-plain-object":55,"lodash/isEqual":185}],287:[function(require,module,exports){
+},{"../constants/model-types":303,"debug":329,"immutable":51,"is-plain-object":55,"lodash/isEqual":207}],312:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45509,7 +46257,7 @@ Object.getOwnPropertyNames(_node2.default.prototype).forEach(function (method) {
  */
 
 exports.default = Inline;
-},{"../constants/model-types":279,"../utils/generate-key":301,"./document":285,"./node":290,"immutable":51,"is-plain-object":55}],288:[function(require,module,exports){
+},{"../constants/model-types":303,"../utils/generate-key":325,"./document":310,"./node":315,"immutable":51,"is-plain-object":55}],313:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45760,7 +46508,7 @@ Leaf.prototype[_modelTypes2.default.LEAF] = true;
  */
 
 exports.default = Leaf;
-},{"../constants/model-types":279,"./character":283,"./mark":289,"immutable":51,"is-plain-object":55}],289:[function(require,module,exports){
+},{"../constants/model-types":303,"./character":308,"./mark":314,"immutable":51,"is-plain-object":55}],314:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46045,7 +46793,7 @@ Mark.prototype[_modelTypes2.default.MARK] = true;
  */
 
 exports.default = Mark;
-},{"../constants/model-types":279,"../utils/memoize":303,"./data":284,"immutable":51,"is-plain-object":55}],290:[function(require,module,exports){
+},{"../constants/model-types":303,"../utils/memoize":327,"./data":309,"immutable":51,"is-plain-object":55}],315:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46061,10 +46809,6 @@ var _direction2 = _interopRequireDefault(_direction);
 var _isPlainObject = require('is-plain-object');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _slateDevLogger = require('slate-dev-logger');
-
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
 
 var _immutable = require('immutable');
 
@@ -46084,9 +46828,9 @@ var _inline = require('./inline');
 
 var _inline2 = _interopRequireDefault(_inline);
 
-var _range9 = require('./range');
+var _range8 = require('./range');
 
-var _range10 = _interopRequireDefault(_range9);
+var _range9 = _interopRequireDefault(_range8);
 
 var _text = require('./text');
 
@@ -46136,8 +46880,8 @@ var Node = function () {
      */
 
     value: function areDescendantsSorted(first, second) {
-      first = normalizeKey(first);
-      second = normalizeKey(second);
+      first = assertKey(first);
+      second = assertKey(second);
 
       var keys = this.getKeysAsArray();
       var firstIndex = keys.indexOf(first);
@@ -46160,7 +46904,7 @@ var Node = function () {
       var child = this.getChild(key);
 
       if (!child) {
-        key = normalizeKey(key);
+        key = assertKey(key);
         throw new Error('Could not find a child node with key "' + key + '".');
       }
 
@@ -46180,7 +46924,7 @@ var Node = function () {
       var descendant = this.getDescendant(key);
 
       if (!descendant) {
-        key = normalizeKey(key);
+        key = assertKey(key);
         throw new Error('Could not find a descendant node with key "' + key + '".');
       }
 
@@ -46200,7 +46944,7 @@ var Node = function () {
       var node = this.getNode(key);
 
       if (!node) {
-        key = normalizeKey(key);
+        key = assertKey(key);
         throw new Error('Could not find a node with key "' + key + '".');
       }
 
@@ -46304,7 +47048,7 @@ var Node = function () {
   }, {
     key: 'getAncestors',
     value: function getAncestors(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
 
       if (key == this.key) return (0, _immutable.List)();
       if (this.hasChild(key)) return (0, _immutable.List)([this]);
@@ -46507,7 +47251,7 @@ var Node = function () {
   }, {
     key: 'getChild',
     value: function getChild(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
       return this.nodes.find(function (node) {
         return node.key == key;
       });
@@ -46524,7 +47268,7 @@ var Node = function () {
   }, {
     key: 'getClosest',
     value: function getClosest(key, iterator) {
-      key = normalizeKey(key);
+      key = assertKey(key);
       var ancestors = this.getAncestors(key);
       if (!ancestors) {
         throw new Error('Could not find a descendant node with key "' + key + '".');
@@ -46590,8 +47334,8 @@ var Node = function () {
   }, {
     key: 'getCommonAncestor',
     value: function getCommonAncestor(one, two) {
-      one = normalizeKey(one);
-      two = normalizeKey(two);
+      one = assertKey(one);
+      two = assertKey(two);
 
       if (one == this.key) return this;
       if (two == this.key) return this;
@@ -46624,7 +47368,7 @@ var Node = function () {
     key: 'getDecorations',
     value: function getDecorations(stack) {
       var decorations = stack.find('decorateNode', this);
-      var list = _range10.default.createList(decorations || []);
+      var list = _range9.default.createList(decorations || []);
       return list;
     }
 
@@ -46656,7 +47400,7 @@ var Node = function () {
   }, {
     key: 'getDescendant',
     value: function getDescendant(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
       var descendantFound = null;
 
       var found = this.nodes.find(function (node) {
@@ -46813,7 +47557,7 @@ var Node = function () {
     value: function getFurthest(key, iterator) {
       var ancestors = this.getAncestors(key);
       if (!ancestors) {
-        key = normalizeKey(key);
+        key = assertKey(key);
         throw new Error('Could not find a descendant node with key "' + key + '".');
       }
 
@@ -46861,7 +47605,7 @@ var Node = function () {
   }, {
     key: 'getFurthestAncestor',
     value: function getFurthestAncestor(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
       return this.nodes.find(function (node) {
         if (node.key == key) return true;
         if (node.kind == 'text') return false;
@@ -46882,7 +47626,7 @@ var Node = function () {
       var ancestors = this.getAncestors(key);
 
       if (!ancestors) {
-        key = normalizeKey(key);
+        key = assertKey(key);
         throw new Error('Could not find a descendant node with key "' + key + '".');
       }
 
@@ -47202,8 +47946,8 @@ var Node = function () {
 
       if (range.isCollapsed && startOffset == 0) {
         var previous = this.getPreviousText(startKey);
-        if (!previous || !previous.length) return [];
-        var char = previous.characters.get(previous.length - 1);
+        if (!previous || previous.text.length == 0) return [];
+        var char = previous.characters.get(previous.text.length - 1);
         return char.marks.toArray();
       }
 
@@ -47310,7 +48054,7 @@ var Node = function () {
   }, {
     key: 'getNextSibling',
     value: function getNextSibling(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
 
       var parent = this.getParent(key);
       var after = parent.nodes.skipUntil(function (child) {
@@ -47333,7 +48077,7 @@ var Node = function () {
   }, {
     key: 'getNextText',
     value: function getNextText(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
       return this.getTexts().skipUntil(function (text) {
         return text.key == key;
       }).get(1);
@@ -47349,7 +48093,7 @@ var Node = function () {
   }, {
     key: 'getNode',
     value: function getNode(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
       return this.key == key ? this : this.getDescendant(key);
     }
 
@@ -47515,7 +48259,7 @@ var Node = function () {
   }, {
     key: 'getPreviousSibling',
     value: function getPreviousSibling(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
       var parent = this.getParent(key);
       var before = parent.nodes.takeUntil(function (child) {
         return child.key == key;
@@ -47538,7 +48282,7 @@ var Node = function () {
   }, {
     key: 'getPreviousText',
     value: function getPreviousText(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
       return this.getTexts().takeUntil(function (text) {
         return text.key == key;
       }).last();
@@ -47564,6 +48308,11 @@ var Node = function () {
       // PERF: if we're not selected, or the range is blurred, we can exit early.
 
       if (!isSelected || range.isBlurred) {
+        return null;
+      }
+
+      // if we've been given an invalid selection we can exit early.
+      if (range.isUnset) {
         return null;
       }
 
@@ -47994,7 +48743,7 @@ var Node = function () {
   }, {
     key: 'removeDescendant',
     value: function removeDescendant(key) {
-      key = normalizeKey(key);
+      key = assertKey(key);
 
       var node = this;
       var parent = node.getParent(key);
@@ -48107,182 +48856,6 @@ var Node = function () {
     key: 'validate',
     value: function validate(schema) {
       return schema.validateNode(this);
-    }
-
-    /**
-     * True if the node has both descendants in that order, false otherwise. The
-     * order is depth-first, post-order.
-     *
-     * @param {String} first
-     * @param {String} second
-     * @return {Boolean}
-     */
-
-  }, {
-    key: 'areDescendantSorted',
-    value: function areDescendantSorted(first, second) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The Node.areDescendantSorted(first, second) method is deprecated, please use `Node.areDescendantsSorted(first, second) instead.');
-      return this.areDescendantsSorted(first, second);
-    }
-
-    /**
-     * Concat children `nodes` on to the end of the node.
-     *
-     * @param {List<Node>} nodes
-     * @return {Node}
-     */
-
-  }, {
-    key: 'concatChildren',
-    value: function concatChildren(nodes) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The `Node.concatChildren(nodes)` method is deprecated.');
-      nodes = this.nodes.concat(nodes);
-      return this.set('nodes', nodes);
-    }
-
-    /**
-     * Decorate all of the text nodes with a `decorator` function.
-     *
-     * @param {Function} decorator
-     * @return {Node}
-     */
-
-  }, {
-    key: 'decorateTexts',
-    value: function decorateTexts(decorator) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The `Node.decorateTexts(decorator) method is deprecated.');
-      return this.mapDescendants(function (child) {
-        return child.kind == 'text' ? child.decorateCharacters(decorator) : child;
-      });
-    }
-
-    /**
-     * Recursively filter all descendant nodes with `iterator`, depth-first.
-     * It is different from `filterDescendants` in regard of the order of results.
-     *
-     * @param {Function} iterator
-     * @return {List<Node>}
-     */
-
-  }, {
-    key: 'filterDescendantsDeep',
-    value: function filterDescendantsDeep(iterator) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The Node.filterDescendantsDeep(iterator) method is deprecated.');
-      return this.nodes.reduce(function (matches, child, i, nodes) {
-        if (child.kind != 'text') matches = matches.concat(child.filterDescendantsDeep(iterator));
-        if (iterator(child, i, nodes)) matches = matches.push(child);
-        return matches;
-      }, new _immutable.List());
-    }
-
-    /**
-     * Recursively find all descendant nodes by `iterator`. Depth first.
-     *
-     * @param {Function} iterator
-     * @return {Node|Null}
-     */
-
-  }, {
-    key: 'findDescendantDeep',
-    value: function findDescendantDeep(iterator) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The Node.findDescendantDeep(iterator) method is deprecated.');
-      var found = void 0;
-
-      this.forEachDescendant(function (node) {
-        if (iterator(node)) {
-          found = node;
-          return false;
-        }
-      });
-
-      return found;
-    }
-
-    /**
-     * Get children between two child keys.
-     *
-     * @param {String} start
-     * @param {String} end
-     * @return {Node}
-     */
-
-  }, {
-    key: 'getChildrenBetween',
-    value: function getChildrenBetween(start, end) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The `Node.getChildrenBetween(start, end)` method is deprecated.');
-      start = this.assertChild(start);
-      start = this.nodes.indexOf(start);
-      end = this.assertChild(end);
-      end = this.nodes.indexOf(end);
-      return this.nodes.slice(start + 1, end);
-    }
-
-    /**
-     * Get children between two child keys, including the two children.
-     *
-     * @param {String} start
-     * @param {String} end
-     * @return {Node}
-     */
-
-  }, {
-    key: 'getChildrenBetweenIncluding',
-    value: function getChildrenBetweenIncluding(start, end) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The `Node.getChildrenBetweenIncluding(start, end)` method is deprecated.');
-      start = this.assertChild(start);
-      start = this.nodes.indexOf(start);
-      end = this.assertChild(end);
-      end = this.nodes.indexOf(end);
-      return this.nodes.slice(start, end + 1);
-    }
-
-    /**
-     * Get the highest child ancestor of a node by `key`.
-     *
-     * @param {String} key
-     * @return {Node|Null}
-     */
-
-  }, {
-    key: 'getHighestChild',
-    value: function getHighestChild(key) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The `Node.getHighestChild(key) method is deprecated, please use `Node.getFurthestAncestor(key) instead.');
-      return this.getFurthestAncestor(key);
-    }
-
-    /**
-     * Get the highest parent of a node by `key` which has an only child.
-     *
-     * @param {String} key
-     * @return {Node|Null}
-     */
-
-  }, {
-    key: 'getHighestOnlyChildParent',
-    value: function getHighestOnlyChildParent(key) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The `Node.getHighestOnlyChildParent(key)` method is deprecated, please use `Node.getFurthestOnlyChildAncestor` instead.');
-      return this.getFurthestOnlyChildAncestor(key);
-    }
-
-    /**
-     * Check if the inline nodes are split at a `range`.
-     *
-     * @param {Range} range
-     * @return {Boolean}
-     */
-
-  }, {
-    key: 'isInlineSplitAtRange',
-    value: function isInlineSplitAtRange(range) {
-      _slateDevLogger2.default.deprecate('0.19.0', 'The `Node.isInlineSplitAtRange(range)` method is deprecated.');
-      range = range.normalize(this);
-      if (range.isExpanded) throw new Error();
-
-      var _range8 = range,
-          startKey = _range8.startKey;
-
-      var start = this.getFurthestInline(startKey) || this.getDescendant(startKey);
-      return range.isAtStartOf(start) || range.isAtEndOf(start);
     }
   }], [{
     key: 'create',
@@ -48445,23 +49018,16 @@ var Node = function () {
 }();
 
 /**
- * Normalize a key `arg`.
+ * Assert a key `arg`.
  *
- * @param {String|Node} arg
+ * @param {String} arg
  * @return {String}
  */
 
 Node.fromJS = Node.fromJSON;
-function normalizeKey(arg) {
+function assertKey(arg) {
   if (typeof arg == 'string') return arg;
-
-  _slateDevLogger2.default.deprecate('0.14.0', 'An object was passed to a Node method instead of a `key` string. This was previously supported, but is being deprecated because it can have a negative impact on performance. The object in question was:', arg);
-
-  if (Node.isNode(arg)) {
-    return arg.key;
-  }
-
-  throw new Error('Invalid `key` argument! It must be either a block, an inline, a text, or a string. You passed: ' + arg);
+  throw new Error('Invalid `key` argument! It must be a key string, but you passed: ' + arg);
 }
 
 /**
@@ -48472,7 +49038,7 @@ function normalizeKey(arg) {
   takesArguments: false
 });
 
-(0, _memoize2.default)(Node.prototype, ['areDescendantsSorted', 'getActiveMarksAtRange', 'getActiveMarksAtRangeAsArray', 'getAncestors', 'getBlocksAtRange', 'getBlocksAtRangeAsArray', 'getBlocksByType', 'getBlocksByTypeAsArray', 'getCharactersAtRange', 'getCharactersAtRangeAsArray', 'getChild', 'getChildrenBetween', 'getChildrenBetweenIncluding', 'getClosestBlock', 'getClosestInline', 'getClosestVoid', 'getCommonAncestor', 'getDecorations', 'getDepth', 'getDescendant', 'getDescendantAtPath', 'getFragmentAtRange', 'getFurthestBlock', 'getFurthestInline', 'getFurthestAncestor', 'getFurthestOnlyChildAncestor', 'getInlinesAtRange', 'getInlinesAtRangeAsArray', 'getInlinesByType', 'getInlinesByTypeAsArray', 'getMarksAtRange', 'getOrderedMarksAtRange', 'getMarksAtRangeAsArray', 'getMarksByType', 'getOrderedMarksByType', 'getMarksByTypeAsArray', 'getNextBlock', 'getNextSibling', 'getNextText', 'getNode', 'getNodeAtPath', 'getOffset', 'getOffsetAtRange', 'getParent', 'getPath', 'getPlaceholder', 'getPreviousBlock', 'getPreviousSibling', 'getPreviousText', 'getTextAtOffset', 'getTextsAtRange', 'getTextsAtRangeAsArray', 'hasChild', 'hasDescendant', 'hasNode', 'hasVoidParent', 'isInlineSplitAtRange', 'validate'], {
+(0, _memoize2.default)(Node.prototype, ['areDescendantsSorted', 'getActiveMarksAtRange', 'getActiveMarksAtRangeAsArray', 'getAncestors', 'getBlocksAtRange', 'getBlocksAtRangeAsArray', 'getBlocksByType', 'getBlocksByTypeAsArray', 'getCharactersAtRange', 'getCharactersAtRangeAsArray', 'getChild', 'getClosestBlock', 'getClosestInline', 'getClosestVoid', 'getCommonAncestor', 'getDecorations', 'getDepth', 'getDescendant', 'getDescendantAtPath', 'getFragmentAtRange', 'getFurthestBlock', 'getFurthestInline', 'getFurthestAncestor', 'getFurthestOnlyChildAncestor', 'getInlinesAtRange', 'getInlinesAtRangeAsArray', 'getInlinesByType', 'getInlinesByTypeAsArray', 'getMarksAtRange', 'getOrderedMarksAtRange', 'getMarksAtRangeAsArray', 'getMarksByType', 'getOrderedMarksByType', 'getMarksByTypeAsArray', 'getNextBlock', 'getNextSibling', 'getNextText', 'getNode', 'getNodeAtPath', 'getOffset', 'getOffsetAtRange', 'getParent', 'getPath', 'getPlaceholder', 'getPreviousBlock', 'getPreviousSibling', 'getPreviousText', 'getTextAtOffset', 'getTextsAtRange', 'getTextsAtRangeAsArray', 'hasChild', 'hasDescendant', 'hasNode', 'hasVoidParent', 'validate'], {
   takesArguments: true
 });
 
@@ -48483,7 +49049,423 @@ function normalizeKey(arg) {
  */
 
 exports.default = Node;
-},{"../utils/generate-key":301,"../utils/is-index-in-range":302,"../utils/memoize":303,"./block":281,"./data":284,"./document":285,"./inline":287,"./range":291,"./text":296,"direction":28,"immutable":51,"is-plain-object":55,"slate-dev-logger":230}],291:[function(require,module,exports){
+},{"../utils/generate-key":325,"../utils/is-index-in-range":326,"../utils/memoize":327,"./block":306,"./data":309,"./document":310,"./inline":312,"./range":317,"./text":320,"direction":28,"immutable":51,"is-plain-object":55}],316:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _isPlainObject = require('is-plain-object');
+
+var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+
+var _immutable = require('immutable');
+
+var _modelTypes = require('../constants/model-types');
+
+var _modelTypes2 = _interopRequireDefault(_modelTypes);
+
+var _operationAttributes = require('../constants/operation-attributes');
+
+var _operationAttributes2 = _interopRequireDefault(_operationAttributes);
+
+var _mark = require('./mark');
+
+var _mark2 = _interopRequireDefault(_mark);
+
+var _node = require('./node');
+
+var _node2 = _interopRequireDefault(_node);
+
+var _range = require('./range');
+
+var _range2 = _interopRequireDefault(_range);
+
+var _value = require('./value');
+
+var _value2 = _interopRequireDefault(_value);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * Default properties.
+ *
+ * @type {Object}
+ */
+
+var DEFAULTS = {
+  length: undefined,
+  mark: undefined,
+  marks: undefined,
+  newPath: undefined,
+  node: undefined,
+  offset: undefined,
+  path: undefined,
+  position: undefined,
+  properties: undefined,
+  selection: undefined,
+  target: undefined,
+  text: undefined,
+  type: undefined,
+  value: undefined
+};
+
+/**
+ * Operation.
+ *
+ * @type {Operation}
+ */
+
+var Operation = function (_Record) {
+  _inherits(Operation, _Record);
+
+  function Operation() {
+    _classCallCheck(this, Operation);
+
+    return _possibleConstructorReturn(this, (Operation.__proto__ || Object.getPrototypeOf(Operation)).apply(this, arguments));
+  }
+
+  _createClass(Operation, [{
+    key: 'toJSON',
+
+
+    /**
+     * Return a JSON representation of the operation.
+     *
+     * @param {Object} options
+     * @return {Object}
+     */
+
+    value: function toJSON() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var kind = this.kind,
+          type = this.type;
+
+      var object = { kind: kind, type: type };
+      var ATTRIBUTES = _operationAttributes2.default[type];
+
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = ATTRIBUTES[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var key = _step.value;
+
+          var value = this[key];
+
+          // Skip keys for objects that should not be serialized, and are only used
+          // for providing the local-only invert behavior for the history stack.
+          if (key == 'document') continue;
+          if (key == 'selection') continue;
+          if (key == 'value') continue;
+          if (key == 'node' && type != 'insert_node') continue;
+
+          if (key == 'mark' || key == 'marks' || key == 'node') {
+            value = value.toJSON();
+          }
+
+          if (key == 'properties' && type == 'set_mark') {
+            var v = {};
+            if ('data' in value) v.data = value.data.toJS();
+            if ('type' in value) v.type = value.type;
+            value = v;
+          }
+
+          if (key == 'properties' && type == 'set_node') {
+            var _v = {};
+            if ('data' in value) _v.data = value.data.toJS();
+            if ('isVoid' in value) _v.isVoid = value.isVoid;
+            if ('type' in value) _v.type = value.type;
+            value = _v;
+          }
+
+          if (key == 'properties' && type == 'set_selection') {
+            var _v2 = {};
+            if ('anchorOffset' in value) _v2.anchorOffset = value.anchorOffset;
+            if ('anchorPath' in value) _v2.anchorPath = value.anchorPath;
+            if ('focusOffset' in value) _v2.focusOffset = value.focusOffset;
+            if ('focusPath' in value) _v2.focusPath = value.focusPath;
+            if ('isBackward' in value) _v2.isBackward = value.isBackward;
+            if ('isFocused' in value) _v2.isFocused = value.isFocused;
+            if ('marks' in value) _v2.marks = value.marks == null ? null : value.marks.toJSON();
+            value = _v2;
+          }
+
+          if (key == 'properties' && type == 'set_value') {
+            var _v3 = {};
+            if ('data' in value) _v3.data = value.data.toJS();
+            if ('decorations' in value) _v3.decorations = value.decorations.toJS();
+            if ('schema' in value) _v3.schema = value.schema.toJS();
+            value = _v3;
+          }
+
+          object[key] = value;
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return object;
+    }
+
+    /**
+     * Alias `toJS`.
+     */
+
+  }, {
+    key: 'toJS',
+    value: function toJS(options) {
+      return this.toJSON(options);
+    }
+  }, {
+    key: 'kind',
+
+
+    /**
+     * Get the node's kind.
+     *
+     * @return {String}
+     */
+
+    get: function get() {
+      return 'operation';
+    }
+  }], [{
+    key: 'create',
+
+
+    /**
+     * Create a new `Operation` with `attrs`.
+     *
+     * @param {Object|Array|List|String|Operation} attrs
+     * @return {Operation}
+     */
+
+    value: function create() {
+      var attrs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      if (Operation.isOperation(attrs)) {
+        return attrs;
+      }
+
+      if ((0, _isPlainObject2.default)(attrs)) {
+        return Operation.fromJSON(attrs);
+      }
+
+      throw new Error('`Operation.create` only accepts objects or operations, but you passed it: ' + attrs);
+    }
+
+    /**
+     * Create a list of `Operations` from `elements`.
+     *
+     * @param {Array<Operation|Object>|List<Operation|Object>} elements
+     * @return {List<Operation>}
+     */
+
+  }, {
+    key: 'createList',
+    value: function createList() {
+      var elements = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+      if (_immutable.List.isList(elements) || Array.isArray(elements)) {
+        var list = new _immutable.List(elements.map(Operation.create));
+        return list;
+      }
+
+      throw new Error('`Operation.createList` only accepts arrays or lists, but you passed it: ' + elements);
+    }
+
+    /**
+     * Create a `Operation` from a JSON `object`.
+     *
+     * @param {Object|Operation} object
+     * @return {Operation}
+     */
+
+  }, {
+    key: 'fromJSON',
+    value: function fromJSON(object) {
+      if (Operation.isOperation(object)) {
+        return object;
+      }
+
+      var type = object.type,
+          value = object.value;
+
+      var ATTRIBUTES = _operationAttributes2.default[type];
+      var attrs = { type: type };
+
+      if (!ATTRIBUTES) {
+        throw new Error('`Operation.fromJSON` was passed an unrecognized operation type: "' + type + '"');
+      }
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = ATTRIBUTES[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var key = _step2.value;
+
+          var v = object[key];
+
+          if (v === undefined) {
+            // Skip keys for objects that should not be serialized, and are only used
+            // for providing the local-only invert behavior for the history stack.
+            if (key == 'document') continue;
+            if (key == 'selection') continue;
+            if (key == 'value') continue;
+            if (key == 'node' && type != 'insert_node') continue;
+
+            throw new Error('`Operation.fromJSON` was passed a "' + type + '" operation without the required "' + key + '" attribute.');
+          }
+
+          if (key == 'mark') {
+            v = _mark2.default.create(v);
+          }
+
+          if (key == 'marks' && v != null) {
+            v = _mark2.default.createSet(v);
+          }
+
+          if (key == 'node') {
+            v = _node2.default.create(v);
+          }
+
+          if (key == 'selection') {
+            v = _range2.default.create(v);
+          }
+
+          if (key == 'value') {
+            v = _value2.default.create(v);
+          }
+
+          if (key == 'properties' && type == 'set_mark') {
+            v = _mark2.default.createProperties(v);
+          }
+
+          if (key == 'properties' && type == 'set_node') {
+            v = _node2.default.createProperties(v);
+          }
+
+          if (key == 'properties' && type == 'set_selection') {
+            var _v4 = v,
+                anchorKey = _v4.anchorKey,
+                focusKey = _v4.focusKey,
+                rest = _objectWithoutProperties(_v4, ['anchorKey', 'focusKey']);
+
+            v = _range2.default.createProperties(rest);
+
+            if (anchorKey !== undefined) {
+              v.anchorPath = anchorKey === null ? null : value.document.getPath(anchorKey);
+            }
+
+            if (focusKey !== undefined) {
+              v.focusPath = focusKey === null ? null : value.document.getPath(focusKey);
+            }
+          }
+
+          if (key == 'properties' && type == 'set_value') {
+            v = _value2.default.createProperties(v);
+          }
+
+          attrs[key] = v;
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      var node = new Operation(attrs);
+      return node;
+    }
+
+    /**
+     * Alias `fromJS`.
+     */
+
+  }, {
+    key: 'isOperation',
+
+
+    /**
+     * Check if `any` is a `Operation`.
+     *
+     * @param {Any} any
+     * @return {Boolean}
+     */
+
+    value: function isOperation(any) {
+      return !!(any && any[_modelTypes2.default.OPERATION]);
+    }
+
+    /**
+     * Check if `any` is a list of operations.
+     *
+     * @param {Any} any
+     * @return {Boolean}
+     */
+
+  }, {
+    key: 'isOperationList',
+    value: function isOperationList(any) {
+      return _immutable.List.isList(any) && any.every(function (item) {
+        return Operation.isOperation(item);
+      });
+    }
+  }]);
+
+  return Operation;
+}((0, _immutable.Record)(DEFAULTS));
+
+/**
+ * Attach a pseudo-symbol for type checking.
+ */
+
+Operation.fromJS = Operation.fromJSON;
+Operation.prototype[_modelTypes2.default.OPERATION] = true;
+
+/**
+ * Export.
+ *
+ * @type {Operation}
+ */
+
+exports.default = Operation;
+},{"../constants/model-types":303,"../constants/operation-attributes":304,"./mark":314,"./node":315,"./range":317,"./value":321,"immutable":51,"is-plain-object":55}],317:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -49115,164 +50097,6 @@ var Range = function (_Record) {
     value: function toJS() {
       return this.toJSON();
     }
-
-    /**
-     * Unset the range.
-     *
-     * @return {Range}
-     */
-
-  }, {
-    key: 'unset',
-    value: function unset() {
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.unset` method is deprecated, please switch to using `Range.deselect` instead.');
-      return this.deselect();
-    }
-
-    /**
-     * Move the range forward `n` characters.
-     *
-     * @param {Number} n (optional)
-     * @return {Range}
-     */
-
-  }, {
-    key: 'moveForward',
-    value: function moveForward() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.moveForward(n)` method is deprecated, please switch to using `Range.move(n)` instead.');
-      return this.move(n);
-    }
-
-    /**
-     * Move the range backward `n` characters.
-     *
-     * @param {Number} n (optional)
-     * @return {Range}
-     */
-
-  }, {
-    key: 'moveBackward',
-    value: function moveBackward() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.moveBackward(n)` method is deprecated, please switch to using `Range.move(-n)` (with a negative number) instead.');
-      return this.move(0 - n);
-    }
-
-    /**
-     * Move the anchor offset `n` characters.
-     *
-     * @param {Number} n (optional)
-     * @return {Range}
-     */
-
-  }, {
-    key: 'moveAnchorOffset',
-    value: function moveAnchorOffset() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.moveAnchorOffset(n)` method is deprecated, please switch to using `Range.moveAnchor(n)` instead.');
-      return this.moveAnchor(n);
-    }
-
-    /**
-     * Move the focus offset `n` characters.
-     *
-     * @param {Number} n (optional)
-     * @return {Range}
-     */
-
-  }, {
-    key: 'moveFocusOffset',
-    value: function moveFocusOffset() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.moveFocusOffset(n)` method is deprecated, please switch to using `Range.moveFocus(n)` instead.');
-      return this.moveFocus(n);
-    }
-
-    /**
-     * Move the start offset `n` characters.
-     *
-     * @param {Number} n (optional)
-     * @return {Range}
-     */
-
-  }, {
-    key: 'moveStartOffset',
-    value: function moveStartOffset() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.moveStartOffset(n)` method is deprecated, please switch to using `Range.moveStart(n)` instead.');
-      return this.moveStart(n);
-    }
-
-    /**
-     * Move the focus offset `n` characters.
-     *
-     * @param {Number} n (optional)
-     * @return {Range}
-     */
-
-  }, {
-    key: 'moveEndOffset',
-    value: function moveEndOffset() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.moveEndOffset(n)` method is deprecated, please switch to using `Range.moveEnd(n)` instead.');
-      return this.moveEnd(n);
-    }
-
-    /**
-     * Extend the focus point forward `n` characters.
-     *
-     * @param {Number} n (optional)
-     * @return {Range}
-     */
-
-  }, {
-    key: 'extendForward',
-    value: function extendForward() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.extendForward(n)` method is deprecated, please switch to using `Range.extend(n)` instead.');
-      return this.extend(n);
-    }
-
-    /**
-     * Extend the focus point backward `n` characters.
-     *
-     * @param {Number} n (optional)
-     * @return {Range}
-     */
-
-  }, {
-    key: 'extendBackward',
-    value: function extendBackward() {
-      var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.extendBackward(n)` method is deprecated, please switch to using `Range.extend(-n)` (with a negative number) instead.');
-      return this.extend(0 - n);
-    }
-
-    /**
-     * Move the range to `anchorOffset` and `focusOffset`.
-     *
-     * @param {Number} anchorOffset
-     * @param {Number} focusOffset (optional)
-     * @return {Range}
-     */
-
-  }, {
-    key: 'moveToOffsets',
-    value: function moveToOffsets(anchorOffset) {
-      var focusOffset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : anchorOffset;
-
-      _slateDevLogger2.default.deprecate('0.17.0', 'The `Range.moveToOffsets` method is deprecated, please switch to using `Range.moveOffsetsTo` instead.');
-      return this.moveOffsetsTo(anchorOffset, focusOffset);
-    }
   }, {
     key: 'kind',
 
@@ -49479,11 +50303,13 @@ var Range = function (_Record) {
         var props = {};
         if ('anchorKey' in attrs) props.anchorKey = attrs.anchorKey;
         if ('anchorOffset' in attrs) props.anchorOffset = attrs.anchorOffset;
+        if ('anchorPath' in attrs) props.anchorPath = attrs.anchorPath;
         if ('focusKey' in attrs) props.focusKey = attrs.focusKey;
         if ('focusOffset' in attrs) props.focusOffset = attrs.focusOffset;
+        if ('focusPath' in attrs) props.focusPath = attrs.focusPath;
         if ('isBackward' in attrs) props.isBackward = attrs.isBackward;
         if ('isFocused' in attrs) props.isFocused = attrs.isFocused;
-        if ('marks' in attrs) props.marks = attrs.marks;
+        if ('marks' in attrs) props.marks = attrs.marks == null ? null : _mark2.default.createSet(attrs.marks);
         return props;
       }
 
@@ -49652,12 +50478,14 @@ function getLast(node) {
  */
 
 exports.default = Range;
-},{"../constants/model-types":279,"./mark":289,"immutable":51,"is-plain-object":55,"slate-dev-logger":230}],292:[function(require,module,exports){
+},{"../constants/model-types":303,"./mark":314,"immutable":51,"is-plain-object":55,"slate-dev-logger":331}],318:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -49713,6 +50541,10 @@ var CHILD_KIND_INVALID = 'child_kind_invalid';
 var CHILD_REQUIRED = 'child_required';
 var CHILD_TYPE_INVALID = 'child_type_invalid';
 var CHILD_UNKNOWN = 'child_unknown';
+var FIRST_CHILD_KIND_INVALID = 'first_child_kind_invalid';
+var FIRST_CHILD_TYPE_INVALID = 'first_child_type_invalid';
+var LAST_CHILD_KIND_INVALID = 'last_child_kind_invalid';
+var LAST_CHILD_TYPE_INVALID = 'last_child_type_invalid';
 var NODE_DATA_INVALID = 'node_data_invalid';
 var NODE_IS_VOID_INVALID = 'node_is_void_invalid';
 var NODE_MARK_INVALID = 'node_mark_invalid';
@@ -49823,10 +50655,10 @@ var Schema = function (_Record) {
       return function (change) {
         debug('normalizing', { reason: reason, context: context });
         var rule = context.rule;
+        var size = change.operations.size;
 
-        var count = change.operations.length;
         if (rule.normalize) rule.normalize(change, reason, context);
-        if (change.operations.length > count) return;
+        if (change.operations.size > size) return;
         _this2.normalize(change, reason, context);
       };
     }
@@ -49846,6 +50678,10 @@ var Schema = function (_Record) {
         case CHILD_KIND_INVALID:
         case CHILD_TYPE_INVALID:
         case CHILD_UNKNOWN:
+        case FIRST_CHILD_KIND_INVALID:
+        case FIRST_CHILD_TYPE_INVALID:
+        case LAST_CHILD_KIND_INVALID:
+        case LAST_CHILD_TYPE_INVALID:
           {
             var child = context.child,
                 node = context.node;
@@ -49903,6 +50739,8 @@ var Schema = function (_Record) {
   }, {
     key: 'validateNode',
     value: function validateNode(node) {
+      var _this3 = this;
+
       var ret = this.stack.find('validateNode', node);
       if (ret) return ret;
 
@@ -49937,34 +50775,22 @@ var Schema = function (_Record) {
         var _iteratorError = undefined;
 
         try {
-          for (var _iterator = marks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var _loop = function _loop() {
             var mark = _step.value;
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
 
-            try {
-              for (var _iterator2 = rule.marks[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                var def = _step2.value;
-
-                if (def.type != mark.type) {
-                  return this.fail(NODE_MARK_INVALID, _extends({}, ctx, { mark: mark }));
-                }
-              }
-            } catch (err) {
-              _didIteratorError2 = true;
-              _iteratorError2 = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                  _iterator2.return();
-                }
-              } finally {
-                if (_didIteratorError2) {
-                  throw _iteratorError2;
-                }
-              }
+            if (!rule.marks.some(function (def) {
+              return def.type === mark.type;
+            })) {
+              return {
+                v: _this3.fail(NODE_MARK_INVALID, _extends({}, ctx, { mark: mark }))
+              };
             }
+          };
+
+          for (var _iterator = marks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _ret = _loop();
+
+            if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
           }
         } catch (err) {
           _didIteratorError = true;
@@ -49991,21 +50817,58 @@ var Schema = function (_Record) {
         }
       }
 
+      if (rule.first != null) {
+        var _rule$first = rule.first,
+            kinds = _rule$first.kinds,
+            types = _rule$first.types;
+
+        var child = node.nodes.first();
+
+        if (child && kinds && !kinds.includes(child.kind)) {
+          return this.fail(FIRST_CHILD_KIND_INVALID, _extends({}, ctx, { child: child }));
+        }
+
+        if (child && types && !types.includes(child.type)) {
+          return this.fail(FIRST_CHILD_TYPE_INVALID, _extends({}, ctx, { child: child }));
+        }
+      }
+
+      if (rule.last != null) {
+        var _rule$last = rule.last,
+            _kinds = _rule$last.kinds,
+            _types = _rule$last.types;
+
+        var _child = node.nodes.last();
+
+        if (_child && _kinds && !_kinds.includes(_child.kind)) {
+          return this.fail(LAST_CHILD_KIND_INVALID, _extends({}, ctx, { child: _child }));
+        }
+
+        if (_child && _types && !_types.includes(_child.type)) {
+          return this.fail(LAST_CHILD_TYPE_INVALID, _extends({}, ctx, { child: _child }));
+        }
+      }
+
       if (rule.nodes != null || parents != null) {
         var nextDef = function nextDef() {
           offset = offset == null ? null : 0;
-          _def = defs.shift();
-          min = _def && (_def.min == null ? 0 : _def.min);
-          max = _def && (_def.max == null ? Infinity : _def.max);
-          return !!_def;
+          def = defs.shift();
+          min = def && (def.min == null ? 0 : def.min);
+          max = def && (def.max == null ? Infinity : def.max);
+          return !!def;
         };
 
         var nextChild = function nextChild() {
           index = index == null ? 0 : index + 1;
           offset = offset == null ? 0 : offset + 1;
-          child = children[index];
+          _child2 = children[index];
           if (max != null && offset == max) nextDef();
-          return !!child;
+          return !!_child2;
+        };
+
+        var rewind = function rewind() {
+          offset -= 1;
+          index -= 1;
         };
 
         var children = node.nodes.toArray();
@@ -50014,40 +50877,46 @@ var Schema = function (_Record) {
         var offset = void 0;
         var min = void 0;
         var index = void 0;
-        var _def = void 0;
+        var def = void 0;
         var max = void 0;
-        var child = void 0;
+        var _child2 = void 0;
 
         if (rule.nodes != null) {
           nextDef();
         }
 
         while (nextChild()) {
-          if (parents != null && child.kind != 'text' && child.type in parents) {
-            var r = parents[child.type];
+          if (parents != null && _child2.kind != 'text' && _child2.type in parents) {
+            var r = parents[_child2.type];
 
             if (r.parent.kinds != null && !r.parent.kinds.includes(node.kind)) {
-              return this.fail(PARENT_KIND_INVALID, { node: child, parent: node, rule: r });
+              return this.fail(PARENT_KIND_INVALID, { node: _child2, parent: node, rule: r });
             }
 
             if (r.parent.types != null && !r.parent.types.includes(node.type)) {
-              return this.fail(PARENT_TYPE_INVALID, { node: child, parent: node, rule: r });
+              return this.fail(PARENT_TYPE_INVALID, { node: _child2, parent: node, rule: r });
             }
           }
 
           if (rule.nodes != null) {
-            if (!_def) {
-              return this.fail(CHILD_UNKNOWN, _extends({}, ctx, { child: child, index: index }));
+            if (!def) {
+              return this.fail(CHILD_UNKNOWN, _extends({}, ctx, { child: _child2, index: index }));
             }
 
-            if (_def.kinds != null && !_def.kinds.includes(child.kind)) {
-              if (offset >= min && nextDef()) continue;
-              return this.fail(CHILD_KIND_INVALID, _extends({}, ctx, { child: child, index: index }));
+            if (def.kinds != null && !def.kinds.includes(_child2.kind)) {
+              if (offset >= min && nextDef()) {
+                rewind();
+                continue;
+              }
+              return this.fail(CHILD_KIND_INVALID, _extends({}, ctx, { child: _child2, index: index }));
             }
 
-            if (_def.types != null && !_def.types.includes(child.type)) {
-              if (offset >= min && nextDef()) continue;
-              return this.fail(CHILD_TYPE_INVALID, _extends({}, ctx, { child: child, index: index }));
+            if (def.types != null && !def.types.includes(_child2.type)) {
+              if (offset >= min && nextDef()) {
+                rewind();
+                continue;
+              }
+              return this.fail(CHILD_TYPE_INVALID, _extends({}, ctx, { child: _child2, index: index }));
             }
           }
         }
@@ -50272,13 +51141,16 @@ function resolveNodeRule(kind, type, obj) {
     data: {},
     isVoid: null,
     nodes: null,
+    first: null,
+    last: null,
     parent: null,
     text: null
   }, obj);
 }
 
 /**
- * A Lodash customizer for merging `kinds` and `types` arrays.
+ * A Lodash customizer for merging schema definitions. Special cases `kinds`
+ * and `types` arrays to be unioned, and ignores new `null` values.
  *
  * @param {Mixed} target
  * @param {Mixed} source
@@ -50288,6 +51160,8 @@ function resolveNodeRule(kind, type, obj) {
 function customizer(target, source, key) {
   if (key == 'kinds' || key == 'types') {
     return target == null ? source : target.concat(source);
+  } else {
+    return source == null ? target : source;
   }
 }
 
@@ -50312,62 +51186,7 @@ Schema.prototype[_modelTypes2.default.SCHEMA] = true;
  */
 
 exports.default = Schema;
-},{"../constants/core-schema-rules":278,"../constants/model-types":279,"../utils/memoize":303,"./stack":294,"debug":305,"immutable":51,"is-plain-object":55,"lodash/mergeWith":196}],293:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _slateDevLogger = require('slate-dev-logger');
-
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
-
-var _range = require('./range');
-
-var _range2 = _interopRequireDefault(_range);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Deprecated.
- */
-
-var Selection = {
-  create: function create() {
-    _slateDevLogger2.default.deprecate('0.27.0', 'The `Selection` model has been renamed to `Range`.');
-    return _range2.default.create.apply(_range2.default, arguments);
-  },
-  createList: function createList() {
-    _slateDevLogger2.default.deprecate('0.27.0', 'The `Selection` model has been renamed to `Range`.');
-    return _range2.default.createList.apply(_range2.default, arguments);
-  },
-  createProperties: function createProperties() {
-    _slateDevLogger2.default.deprecate('0.27.0', 'The `Selection` model has been renamed to `Range`.');
-    return _range2.default.createProperties.apply(_range2.default, arguments);
-  },
-  fromJSON: function fromJSON() {
-    _slateDevLogger2.default.deprecate('0.27.0', 'The `Selection` model has been renamed to `Range`.');
-    return _range2.default.fromJSON.apply(_range2.default, arguments);
-  },
-  fromJS: function fromJS() {
-    _slateDevLogger2.default.deprecate('0.27.0', 'The `Selection` model has been renamed to `Range`.');
-    return _range2.default.fromJS.apply(_range2.default, arguments);
-  },
-  isSelection: function isSelection() {
-    _slateDevLogger2.default.deprecate('0.27.0', 'The `Selection` model has been renamed to `Range`.');
-    return _range2.default.isRange.apply(_range2.default, arguments);
-  }
-};
-
-/**
- * Export.
- *
- * @type {Object}
- */
-
-exports.default = Selection;
-},{"./range":291,"slate-dev-logger":230}],294:[function(require,module,exports){
+},{"../constants/core-schema-rules":302,"../constants/model-types":303,"../utils/memoize":327,"./stack":319,"debug":329,"immutable":51,"is-plain-object":55,"lodash/mergeWith":219}],319:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50580,7 +51399,7 @@ var Stack = function (_Record) {
   }, {
     key: 'render',
     value: function render(property, props) {
-      var plugins = this.getPluginsWith(property).reverse();
+      var plugins = this.getPluginsWith(property).slice().reverse();
       var _props$children = props.children,
           children = _props$children === undefined ? null : _props$children;
 
@@ -50688,62 +51507,7 @@ Stack.prototype[_modelTypes2.default.STACK] = true;
  */
 
 exports.default = Stack;
-},{"../constants/model-types":279,"../utils/memoize":303,"immutable":51}],295:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _slateDevLogger = require('slate-dev-logger');
-
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
-
-var _value = require('./value');
-
-var _value2 = _interopRequireDefault(_value);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Deprecated.
- */
-
-var State = {
-  create: function create() {
-    _slateDevLogger2.default.deprecate('0.29.0', 'The `State` model has been renamed to `Value`.');
-    return _value2.default.create.apply(_value2.default, arguments);
-  },
-  createList: function createList() {
-    _slateDevLogger2.default.deprecate('0.29.0', 'The `State` model has been renamed to `Value`.');
-    return _value2.default.createList.apply(_value2.default, arguments);
-  },
-  createProperties: function createProperties() {
-    _slateDevLogger2.default.deprecate('0.29.0', 'The `State` model has been renamed to `Value`.');
-    return _value2.default.createProperties.apply(_value2.default, arguments);
-  },
-  fromJSON: function fromJSON() {
-    _slateDevLogger2.default.deprecate('0.29.0', 'The `State` model has been renamed to `Value`.');
-    return _value2.default.fromJSON.apply(_value2.default, arguments);
-  },
-  fromJS: function fromJS() {
-    _slateDevLogger2.default.deprecate('0.29.0', 'The `State` model has been renamed to `Value`.');
-    return _value2.default.fromJS.apply(_value2.default, arguments);
-  },
-  isState: function isState() {
-    _slateDevLogger2.default.deprecate('0.29.0', 'The `State` model has been renamed to `Value`.');
-    return _value2.default.isValue.apply(_value2.default, arguments);
-  }
-};
-
-/**
- * Export.
- *
- * @type {Object}
- */
-
-exports.default = State;
-},{"./value":297,"slate-dev-logger":230}],296:[function(require,module,exports){
+},{"../constants/model-types":303,"../utils/memoize":327,"immutable":51}],320:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -50755,10 +51519,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _isPlainObject = require('is-plain-object');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _slateDevLogger = require('slate-dev-logger');
-
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
 
 var _immutable = require('immutable');
 
@@ -51212,17 +51972,6 @@ var Text = function (_Record) {
     value: function validate(schema) {
       return schema.validateNode(this);
     }
-
-    /**
-     * Deprecated.
-     */
-
-  }, {
-    key: 'getRanges',
-    value: function getRanges() {
-      _slateDevLogger2.default.deprecate('0.27.0', 'The `Text.getRanges()` method was renamed to `Text.getLeaves`.');
-      return this.getLeaves.apply(this, arguments);
-    }
   }, {
     key: 'kind',
 
@@ -51340,16 +52089,6 @@ var Text = function (_Record) {
           key = _object$key === undefined ? (0, _generateKey2.default)() : _object$key;
 
 
-      if (object.ranges) {
-        _slateDevLogger2.default.deprecate('0.27.0', 'Passing `object.ranges` to `Text.fromJSON` has been renamed to `object.leaves`.');
-        leaves = object.ranges;
-      }
-
-      if (object.text) {
-        _slateDevLogger2.default.deprecate('0.23.0', 'Passing `object.text` to `Text.fromJSON` has been deprecated, please use `object.leaves` instead.');
-        leaves = [{ text: object.text }];
-      }
-
       var characters = leaves.map(_leaf2.default.fromJSON).reduce(function (l, r) {
         return l.concat(r.getCharacters());
       }, new _immutable.List());
@@ -51395,28 +52134,6 @@ var Text = function (_Record) {
         return Text.isText(item);
       });
     }
-
-    /**
-     * Deprecated.
-     */
-
-  }, {
-    key: 'createFromString',
-    value: function createFromString(string) {
-      _slateDevLogger2.default.deprecate('0.22.0', 'The `Text.createFromString(string)` method is deprecated, use `Text.create(string)` instead.');
-      return Text.create(string);
-    }
-
-    /**
-     * Deprecated.
-     */
-
-  }, {
-    key: 'createFromRanges',
-    value: function createFromRanges(ranges) {
-      _slateDevLogger2.default.deprecate('0.22.0', 'The `Text.createFromRanges(ranges)` method is deprecated, use `Text.create(ranges)` instead.');
-      return Text.create(ranges);
-    }
   }]);
 
   return Text;
@@ -51448,7 +52165,7 @@ Text.prototype[_modelTypes2.default.TEXT] = true;
  */
 
 exports.default = Text;
-},{"../constants/model-types":279,"../utils/generate-key":301,"../utils/memoize":303,"./character":283,"./leaf":288,"./mark":289,"immutable":51,"is-plain-object":55,"slate-dev-logger":230}],297:[function(require,module,exports){
+},{"../constants/model-types":303,"../utils/generate-key":325,"../utils/memoize":327,"./character":308,"./leaf":313,"./mark":314,"immutable":51,"is-plain-object":55}],321:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -51462,10 +52179,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _isPlainObject = require('is-plain-object');
 
 var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-
-var _slateDevLogger = require('slate-dev-logger');
-
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
 
 var _immutable = require('immutable');
 
@@ -51550,19 +52263,6 @@ var Value = function (_Record) {
     }
 
     /**
-     * Deprecated.
-     *
-     * @return {Change}
-     */
-
-  }, {
-    key: 'transform',
-    value: function transform() {
-      _slateDevLogger2.default.deprecate('0.22.0', 'The `value.transform()` method has been deprecated in favor of `value.change()`.');
-      return this.change.apply(this, arguments);
-    }
-
-    /**
      * Return a JSON representation of the value.
      *
      * @param {Object} options
@@ -51578,11 +52278,6 @@ var Value = function (_Record) {
         kind: this.kind,
         document: this.document.toJSON(options)
       };
-
-      if ('preserveStateData' in options) {
-        _slateDevLogger2.default.deprecate('0.26.0', 'The `preserveStateData` option to `value.toJSON` has been deprecated in favor of `options.preserveData`.');
-        options.preserveData = options.preserveStateData;
-      }
 
       if (options.preserveData) {
         object.data = this.data.toJSON();
@@ -52333,32 +53028,24 @@ Value.prototype[_modelTypes2.default.VALUE] = true;
  */
 
 exports.default = Value;
-},{"../constants/model-types":279,"./change":282,"./data":284,"./document":285,"./history":286,"./range":291,"./schema":292,"immutable":51,"is-plain-object":55,"slate-dev-logger":230}],298:[function(require,module,exports){
+},{"../constants/model-types":303,"./change":307,"./data":309,"./document":310,"./history":311,"./range":317,"./schema":318,"immutable":51,"is-plain-object":55}],322:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _debug = require('debug');
 
 var _debug2 = _interopRequireDefault(_debug);
 
-var _slateDevLogger = require('slate-dev-logger');
+var _operation2 = require('../models/operation');
 
-var _slateDevLogger2 = _interopRequireDefault(_slateDevLogger);
-
-var _node = require('../models/node');
-
-var _node2 = _interopRequireDefault(_node);
-
-var _mark = require('../models/mark');
-
-var _mark2 = _interopRequireDefault(_mark);
+var _operation3 = _interopRequireDefault(_operation2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 /**
  * Debug.
@@ -52380,16 +53067,15 @@ var APPLIERS = {
    * Add mark to text at `offset` and `length` in node by `path`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
   add_mark: function add_mark(value, operation) {
     var path = operation.path,
         offset = operation.offset,
-        length = operation.length;
-
-    var mark = _mark2.default.create(operation.mark);
+        length = operation.length,
+        mark = operation.mark;
     var _value = value,
         document = _value.document;
 
@@ -52405,14 +53091,14 @@ var APPLIERS = {
    * Insert a `node` at `index` in a node by `path`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
   insert_node: function insert_node(value, operation) {
-    var path = operation.path;
+    var path = operation.path,
+        node = operation.node;
 
-    var node = _node2.default.create(operation.node);
     var index = path[path.length - 1];
     var rest = path.slice(0, -1);
     var _value2 = value,
@@ -52430,18 +53116,15 @@ var APPLIERS = {
    * Insert `text` at `offset` in node by `path`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
   insert_text: function insert_text(value, operation) {
     var path = operation.path,
         offset = operation.offset,
-        text = operation.text;
-    var marks = operation.marks;
-
-    if (Array.isArray(marks)) marks = _mark2.default.createSet(marks);
-
+        text = operation.text,
+        marks = operation.marks;
     var _value3 = value,
         document = _value3.document,
         selection = _value3.selection;
@@ -52474,7 +53157,7 @@ var APPLIERS = {
    * Merge a node at `path` with the previous node.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
@@ -52532,7 +53215,7 @@ var APPLIERS = {
    * Move a node by `path` to `newPath`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
@@ -52591,16 +53274,15 @@ var APPLIERS = {
    * Remove mark from text at `offset` and `length` in node by `path`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
   remove_mark: function remove_mark(value, operation) {
     var path = operation.path,
         offset = operation.offset,
-        length = operation.length;
-
-    var mark = _mark2.default.create(operation.mark);
+        length = operation.length,
+        mark = operation.mark;
     var _value6 = value,
         document = _value6.document;
 
@@ -52616,7 +53298,7 @@ var APPLIERS = {
    * Remove a node by `path`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
@@ -52630,6 +53312,7 @@ var APPLIERS = {
         endKey = _selection3.endKey;
 
     var node = document.assertPath(path);
+
     // If the selection is set, check to see if it needs to be updated.
     if (selection.isSet) {
       var hasStartNode = node.hasNode(startKey);
@@ -52683,7 +53366,7 @@ var APPLIERS = {
    * Remove `text` at `offset` in node by `path`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
@@ -52705,7 +53388,6 @@ var APPLIERS = {
 
     var node = document.assertPath(path);
 
-    // Update the selection.
     if (anchorKey == node.key && anchorOffset >= rangeOffset) {
       selection = selection.moveAnchor(-length);
     }
@@ -52725,7 +53407,7 @@ var APPLIERS = {
    * Set `properties` on mark on text at `offset` and `length` in node by `path`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
@@ -52733,9 +53415,8 @@ var APPLIERS = {
     var path = operation.path,
         offset = operation.offset,
         length = operation.length,
+        mark = operation.mark,
         properties = operation.properties;
-
-    var mark = _mark2.default.create(operation.mark);
     var _value9 = value,
         document = _value9.document;
 
@@ -52751,7 +53432,7 @@ var APPLIERS = {
    * Set `properties` on a node by `path`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
@@ -52762,17 +53443,6 @@ var APPLIERS = {
         document = _value10.document;
 
     var node = document.assertPath(path);
-
-    if ('nodes' in properties) {
-      _slateDevLogger2.default.warn('Updating a Node\'s `nodes` property via `setNode()` is not allowed. Use the appropriate insertion and removal methods instead. The operation in question was:', operation);
-      delete properties.nodes;
-    }
-
-    if ('key' in properties) {
-      _slateDevLogger2.default.warn('Updating a Node\'s `key` property via `setNode()` is not allowed. There should be no reason to do this. The operation in question was:', operation);
-      delete properties.key;
-    }
-
     node = node.merge(properties);
     document = document.updateNode(node);
     value = value.set('document', document);
@@ -52784,32 +53454,31 @@ var APPLIERS = {
    * Set `properties` on the selection.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
   set_selection: function set_selection(value, operation) {
-    var properties = _extends({}, operation.properties);
+    var properties = operation.properties;
+
+    var anchorPath = properties.anchorPath,
+        focusPath = properties.focusPath,
+        props = _objectWithoutProperties(properties, ['anchorPath', 'focusPath']);
+
     var _value11 = value,
         document = _value11.document,
         selection = _value11.selection;
 
 
-    if (properties.marks != null) {
-      properties.marks = _mark2.default.createSet(properties.marks);
+    if (anchorPath !== undefined) {
+      props.anchorKey = anchorPath === null ? null : document.assertPath(anchorPath).key;
     }
 
-    if (properties.anchorPath !== undefined) {
-      properties.anchorKey = properties.anchorPath === null ? null : document.assertPath(properties.anchorPath).key;
-      delete properties.anchorPath;
+    if (focusPath !== undefined) {
+      props.focusKey = focusPath === null ? null : document.assertPath(focusPath).key;
     }
 
-    if (properties.focusPath !== undefined) {
-      properties.focusKey = properties.focusPath === null ? null : document.assertPath(properties.focusPath).key;
-      delete properties.focusPath;
-    }
-
-    selection = selection.merge(properties);
+    selection = selection.merge(props);
     selection = selection.normalize(document);
     value = value.set('selection', selection);
     return value;
@@ -52820,28 +53489,12 @@ var APPLIERS = {
    * Set `properties` on `value`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
   set_value: function set_value(value, operation) {
     var properties = operation.properties;
-
-
-    if ('document' in properties) {
-      _slateDevLogger2.default.warn('Updating `value.document` property via `setValue()` is not allowed. Use the appropriate document updating methods instead. The operation in question was:', operation);
-      delete properties.document;
-    }
-
-    if ('selection' in properties) {
-      _slateDevLogger2.default.warn('Updating `value.selection` property via `setValue()` is not allowed. Use the appropriate selection updating methods instead. The operation in question was:', operation);
-      delete properties.selection;
-    }
-
-    if ('history' in properties) {
-      _slateDevLogger2.default.warn('Updating `value.history` property via `setValue()` is not allowed. Use the appropriate history updating methods instead. The operation in question was:', operation);
-      delete properties.history;
-    }
 
     value = value.merge(properties);
     return value;
@@ -52852,7 +53505,7 @@ var APPLIERS = {
    * Split a node by `path` at `offset`.
    *
    * @param {Value} value
-   * @param {Object} operation
+   * @param {Operation} operation
    * @return {Value}
    */
 
@@ -52911,12 +53564,14 @@ var APPLIERS = {
  * Apply an `operation` to a `value`.
  *
  * @param {Value} value
- * @param {Object} operation
+ * @param {Object|Operation} operation
  * @return {Value} value
  */
 
 function applyOperation(value, operation) {
-  var type = operation.type;
+  operation = _operation3.default.create(operation);
+  var _operation = operation,
+      type = _operation.type;
 
   var apply = APPLIERS[type];
 
@@ -52936,7 +53591,7 @@ function applyOperation(value, operation) {
  */
 
 exports.default = applyOperation;
-},{"../models/mark":289,"../models/node":290,"debug":305,"slate-dev-logger":230}],299:[function(require,module,exports){
+},{"../models/operation":316,"debug":329}],323:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -52963,14 +53618,12 @@ exports.default = {
   apply: _apply2.default,
   invert: _invert2.default
 };
-},{"./apply":298,"./invert":300}],300:[function(require,module,exports){
+},{"./apply":322,"./invert":324}],324:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _debug = require('debug');
 
@@ -52980,7 +53633,13 @@ var _pick = require('lodash/pick');
 
 var _pick2 = _interopRequireDefault(_pick);
 
+var _operation = require('../models/operation');
+
+var _operation2 = _interopRequireDefault(_operation);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 /**
  * Debug.
@@ -52998,7 +53657,9 @@ var debug = (0, _debug2.default)('slate:operation:invert');
  */
 
 function invertOperation(op) {
-  var type = op.type;
+  op = _operation2.default.create(op);
+  var _op = op,
+      type = _op.type;
 
   debug(type, op);
 
@@ -53007,9 +53668,8 @@ function invertOperation(op) {
    */
 
   if (type == 'insert_node') {
-    return _extends({}, op, {
-      type: 'remove_node'
-    });
+    var inverse = op.set('type', 'remove_node');
+    return inverse;
   }
 
   /**
@@ -53017,9 +53677,8 @@ function invertOperation(op) {
    */
 
   if (type == 'remove_node') {
-    return _extends({}, op, {
-      type: 'insert_node'
-    });
+    var _inverse = op.set('type', 'insert_node');
+    return _inverse;
   }
 
   /**
@@ -53027,10 +53686,35 @@ function invertOperation(op) {
    */
 
   if (type == 'move_node') {
-    return _extends({}, op, {
-      path: op.newPath,
-      newPath: op.path
-    });
+    var _op2 = op,
+        newPath = _op2.newPath,
+        path = _op2.path;
+
+    var inversePath = newPath;
+    var inverseNewPath = path;
+
+    var pathLast = path.length - 1;
+    var newPathLast = newPath.length - 1;
+
+    // If the node's old position was a left sibling of an ancestor of
+    // its new position, we need to adjust part of the path by -1.
+    if (path.length < inversePath.length && path.slice(0, pathLast).every(function (e, i) {
+      return e == inversePath[i];
+    }) && path[pathLast] < inversePath[pathLast]) {
+      inversePath = inversePath.slice(0, pathLast).concat([inversePath[pathLast] - 1]).concat(inversePath.slice(pathLast + 1, inversePath.length));
+    }
+
+    // If the node's new position is an ancestor of the old position,
+    // or a left sibling of an ancestor of its old position, we need
+    // to adjust part of the path by 1.
+    if (newPath.length < inverseNewPath.length && newPath.slice(0, newPathLast).every(function (e, i) {
+      return e == inverseNewPath[i];
+    }) && newPath[newPathLast] <= inverseNewPath[newPathLast]) {
+      inverseNewPath = inverseNewPath.slice(0, newPathLast).concat([inverseNewPath[newPathLast] + 1]).concat(inverseNewPath.slice(newPathLast + 1, inverseNewPath.length));
+    }
+
+    var _inverse2 = op.set('path', inversePath).set('newPath', inverseNewPath);
+    return _inverse2;
   }
 
   /**
@@ -53038,14 +53722,14 @@ function invertOperation(op) {
    */
 
   if (type == 'merge_node') {
-    var path = op.path;
-    var length = path.length;
+    var _op3 = op,
+        _path = _op3.path;
+    var length = _path.length;
 
     var last = length - 1;
-    return _extends({}, op, {
-      type: 'split_node',
-      path: path.slice(0, last).concat([path[last] - 1])
-    });
+    var _inversePath = _path.slice(0, last).concat([_path[last] - 1]);
+    var _inverse3 = op.set('type', 'split_node').set('path', _inversePath);
+    return _inverse3;
   }
 
   /**
@@ -53053,14 +53737,14 @@ function invertOperation(op) {
    */
 
   if (type == 'split_node') {
-    var _path = op.path;
-    var _length = _path.length;
+    var _op4 = op,
+        _path2 = _op4.path;
+    var _length = _path2.length;
 
     var _last = _length - 1;
-    return _extends({}, op, {
-      type: 'merge_node',
-      path: _path.slice(0, _last).concat([_path[_last] + 1])
-    });
+    var _inversePath2 = _path2.slice(0, _last).concat([_path2[_last] + 1]);
+    var _inverse4 = op.set('type', 'merge_node').set('path', _inversePath2);
+    return _inverse4;
   }
 
   /**
@@ -53068,13 +53752,14 @@ function invertOperation(op) {
    */
 
   if (type == 'set_node') {
-    var properties = op.properties,
-        node = op.node;
+    var _op5 = op,
+        properties = _op5.properties,
+        node = _op5.node;
 
-    return _extends({}, op, {
-      node: node.merge(properties),
-      properties: (0, _pick2.default)(node, Object.keys(properties))
-    });
+    var inverseNode = node.merge(properties);
+    var inverseProperties = (0, _pick2.default)(node, Object.keys(properties));
+    var _inverse5 = op.set('node', inverseNode).set('properties', inverseProperties);
+    return _inverse5;
   }
 
   /**
@@ -53082,9 +53767,8 @@ function invertOperation(op) {
    */
 
   if (type == 'insert_text') {
-    return _extends({}, op, {
-      type: 'remove_text'
-    });
+    var _inverse6 = op.set('type', 'remove_text');
+    return _inverse6;
   }
 
   /**
@@ -53092,9 +53776,8 @@ function invertOperation(op) {
    */
 
   if (type == 'remove_text') {
-    return _extends({}, op, {
-      type: 'insert_text'
-    });
+    var _inverse7 = op.set('type', 'insert_text');
+    return _inverse7;
   }
 
   /**
@@ -53102,9 +53785,8 @@ function invertOperation(op) {
    */
 
   if (type == 'add_mark') {
-    return _extends({}, op, {
-      type: 'remove_mark'
-    });
+    var _inverse8 = op.set('type', 'remove_mark');
+    return _inverse8;
   }
 
   /**
@@ -53112,9 +53794,8 @@ function invertOperation(op) {
    */
 
   if (type == 'remove_mark') {
-    return _extends({}, op, {
-      type: 'add_mark'
-    });
+    var _inverse9 = op.set('type', 'add_mark');
+    return _inverse9;
   }
 
   /**
@@ -53122,13 +53803,14 @@ function invertOperation(op) {
    */
 
   if (type == 'set_mark') {
-    var _properties = op.properties,
-        mark = op.mark;
+    var _op6 = op,
+        _properties = _op6.properties,
+        mark = _op6.mark;
 
-    return _extends({}, op, {
-      mark: mark.merge(_properties),
-      properties: (0, _pick2.default)(mark, Object.keys(_properties))
-    });
+    var inverseMark = mark.merge(_properties);
+    var _inverseProperties = (0, _pick2.default)(mark, Object.keys(_properties));
+    var _inverse10 = op.set('mark', inverseMark).set('properties', _inverseProperties);
+    return _inverse10;
   }
 
   /**
@@ -53136,15 +53818,41 @@ function invertOperation(op) {
    */
 
   if (type == 'set_selection') {
-    var _properties2 = op.properties,
-        selection = op.selection;
+    var _op7 = op,
+        _properties2 = _op7.properties,
+        selection = _op7.selection,
+        value = _op7.value;
 
-    var inverse = _extends({}, op, {
-      selection: _extends({}, selection, _properties2),
-      properties: (0, _pick2.default)(selection, Object.keys(_properties2))
-    });
+    var anchorPath = _properties2.anchorPath,
+        focusPath = _properties2.focusPath,
+        props = _objectWithoutProperties(_properties2, ['anchorPath', 'focusPath']);
 
-    return inverse;
+    var document = value.document;
+
+
+    if (anchorPath !== undefined) {
+      props.anchorKey = anchorPath === null ? null : document.assertPath(anchorPath).key;
+    }
+
+    if (focusPath !== undefined) {
+      props.focusKey = focusPath === null ? null : document.assertPath(focusPath).key;
+    }
+
+    var inverseSelection = selection.merge(props);
+    var inverseProps = (0, _pick2.default)(selection, Object.keys(props));
+
+    if (anchorPath !== undefined) {
+      inverseProps.anchorPath = inverseProps.anchorKey === null ? null : document.getPath(inverseProps.anchorKey);
+      delete inverseProps.anchorKey;
+    }
+
+    if (focusPath !== undefined) {
+      inverseProps.focusPath = inverseProps.focusKey === null ? null : document.getPath(inverseProps.focusKey);
+      delete inverseProps.focusKey;
+    }
+
+    var _inverse11 = op.set('selection', inverseSelection).set('properties', inverseProps);
+    return _inverse11;
   }
 
   /**
@@ -53152,20 +53860,15 @@ function invertOperation(op) {
    */
 
   if (type == 'set_value') {
-    var _properties3 = op.properties,
-        value = op.value;
+    var _op8 = op,
+        _properties3 = _op8.properties,
+        _value = _op8.value;
 
-    return _extends({}, op, {
-      value: value.merge(_properties3),
-      properties: (0, _pick2.default)(value, Object.keys(_properties3))
-    });
+    var inverseValue = _value.merge(_properties3);
+    var _inverseProperties2 = (0, _pick2.default)(_value, Object.keys(_properties3));
+    var _inverse12 = op.set('value', inverseValue).set('properties', _inverseProperties2);
+    return _inverse12;
   }
-
-  /**
-   * Unknown.
-   */
-
-  throw new Error('Unknown op type: "' + type + '".');
 }
 
 /**
@@ -53175,7 +53878,7 @@ function invertOperation(op) {
  */
 
 exports.default = invertOperation;
-},{"debug":305,"lodash/pick":197}],301:[function(require,module,exports){
+},{"../models/operation":316,"debug":329,"lodash/pick":221}],325:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53244,7 +53947,7 @@ resetKeyGenerator();
 exports.default = generateKey;
 exports.setKeyGenerator = setKeyGenerator;
 exports.resetKeyGenerator = resetKeyGenerator;
-},{}],302:[function(require,module,exports){
+},{}],326:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -53285,7 +53988,7 @@ function isIndexInRange(index, text, range) {
  */
 
 exports.default = isIndexInRange;
-},{}],303:[function(require,module,exports){
+},{}],327:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -53566,7 +54269,7 @@ exports.default = memoize;
 exports.__clear = __clear;
 exports.__enable = __enable;
 }).call(this,require('_process'))
-},{"_process":203}],304:[function(require,module,exports){
+},{"_process":227}],328:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -53768,8 +54471,10 @@ exports.default = {
   getWordOffsetBackward: getWordOffsetBackward,
   getWordOffsetForward: getWordOffsetForward
 };
-},{"esrever":29}],305:[function(require,module,exports){
-arguments[4][260][0].apply(exports,arguments)
-},{"./debug":306,"_process":203,"dup":260}],306:[function(require,module,exports){
-arguments[4][261][0].apply(exports,arguments)
-},{"dup":261,"ms":202}]},{},[1]);
+},{"esrever":29}],329:[function(require,module,exports){
+arguments[4][284][0].apply(exports,arguments)
+},{"./debug":330,"_process":227,"dup":284}],330:[function(require,module,exports){
+arguments[4][285][0].apply(exports,arguments)
+},{"dup":285,"ms":226}],331:[function(require,module,exports){
+arguments[4][254][0].apply(exports,arguments)
+},{"_process":227,"dup":254}]},{},[1]);
