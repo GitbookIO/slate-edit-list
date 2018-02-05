@@ -1,32 +1,32 @@
 
 document:
   nodes:
-  - kind: block
+  - object: block
     type: ul_list
     nodes:
-    - kind: block
+    - object: block
       type: list_item
       nodes:
-      - kind: block
+      - object: block
         type: paragraph
         nodes:
-        - kind: text
+        - object: text
           leaves:
             - text: 'First item'
 
-    - kind: block
+    - object: block
       type: list_item
       nodes:
-      - kind: block
+      - object: block
         type: paragraph
         nodes:
-        - kind: text
+        - object: text
           leaves:
             - text: 'A first paragraph'
-      - kind: block
+      - object: block
         type: paragraph
         nodes:
-        - kind: text
+        - object: text
           key: 'start'
           leaves:
             - text: ''
