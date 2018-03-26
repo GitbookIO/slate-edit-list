@@ -4,7 +4,7 @@ import path from 'path';
 import Slate from 'slate';
 import readMetadata from 'read-metadata';
 
-import EditList from '../lib';
+import EditList from '../src';
 
 const PLUGIN = EditList();
 const SCHEMA = Slate.Schema.create({
