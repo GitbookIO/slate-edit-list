@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.11.0...HEAD
 
+## 0.11.3 - 2018-04-19
+
+- Limit package size by publishing only the `dist` folder
+
 ## 0.11.2 - 2018-02-06
 ## 0.11.1 - 2018-02-06
 
