@@ -9,6 +9,10 @@
     "immutable": "^3.8.2",
     "slate": "^0.32.0"
   },
+  "files": [
+     "dist",
+     "*.md"
+  ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
