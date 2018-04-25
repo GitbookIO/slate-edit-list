@@ -1,13 +1,13 @@
 // @flow
-/* global document */
+/* global window */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Editor } from 'slate-react';
 
-import PluginEditList from '../lib/';
-
+import PluginEditList from '../src/';
 import INITIAL_VALUE from './value';
+import './main.css';
 
 const plugin = PluginEditList();
 const plugins = [plugin];
@@ -125,5 +125,16 @@ class Example extends React.Component<*, *> {
     }
 }
 
-// $FlowFixMe
-ReactDOM.render(<Example />, document.getElementById('example'));
+/**
+ * Mount the router.
+ */
+
+const root = window.document.createElement('div');
+root.id = 'example';
+window.document.body.appendChild(root);
+
+const render = () => {
+    ReactDOM.render(<Example />, root);
+};
+
+render();
