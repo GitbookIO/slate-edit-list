@@ -1,7 +1,7 @@
 {
   "name": "slate-edit-list",
   "description": "A Slate plugin to handle keyboard events in lists.",
-  "version": "0.11.3",
+  "version": "0.12.0",
   "license": "Apache-2.0",
   "repository": "git://github.com/GitbookIO/slate-edit-list.git",
   "main": "./dist/index.js",
@@ -10,8 +10,8 @@
     "slate": "^0.32.0"
   },
   "files": [
-     "dist",
-     "*.md"
+    "dist",
+    "*.md"
   ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
