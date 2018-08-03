@@ -114,7 +114,7 @@ nodes:
 
 `slate-edit-list` exports utilities and transforms:
 
-#### `plugin.utils.isSelectionInList(state: State) => Boolean`
+#### `plugin.utils.isSelectionInList(value: Value) => Boolean`
 
 Return true if selection is inside a list (and it can be unwrap).
 
@@ -122,40 +122,40 @@ Return true if selection is inside a list (and it can be unwrap).
 
 Return true if the node is one of the list type.
 
-#### `plugin.utils.getItemDepth(state: State, block: Block?) => Number`
+#### `plugin.utils.getItemDepth(value: Value, block: Block?) => Number`
 
 Returns the depth of the current item (or the depth of the given block) in a list. 0 means not in a list.
 
-#### `plugin.utils.getCurrentItem(state: State, block: Block?) => Block || Void`
+#### `plugin.utils.getCurrentItem(value: Value, block: Block?) => Block || Void`
 
 Returns the current item at selection (or at the given block).
 
-#### `plugin.utils.getCurrentList(state: State, block: Block?) => Block || Void`
+#### `plugin.utils.getCurrentList(value: Value, block: Block?) => Block || Void`
 
 Returns the current list at selection (or at the given block).
 
-#### `plugin.utils.getItemsAtRange(state: State, range: Selection?) => List<Node>`
+#### `plugin.utils.getItemsAtRange(value: Value, range: Selection?) => List<Node>`
 
 Return the list of items at the given range. The returned items are the highest list of of successive items that cover the given range.
 
 The returned list is empty if no such list can be found.
 
-#### `plugin.changes.increaseItemDepth(transform: Transform) => Transform`
+#### `plugin.changes.increaseItemDepth(change: Change) => Transform`
 
 Increase the depth of the current item.
 
-#### `plugin.changes.decreaseItemDepth(transform: Transform) => Transform`
+#### `plugin.changes.decreaseItemDepth(change: Change) => Transform`
 
 Decrease the depth of the current item.
 
-#### `plugin.changes.wrapInList(transform: Transform, type: String?, data: Object|Data?) => Transform`
+#### `plugin.changes.wrapInList(change: Change, type: String?, data: Object|Data?) => Transform`
 
 Wrap the current blocks in list items of a list container of the given type. You can pass optional data for the created list container.
 
-#### `plugin.changes.unwrapList(transform: Transform) => Transform`
+#### `plugin.changes.unwrapList(change: Change) => Transform`
 
 Unwrap all items at range from their list.
 
-#### `plugin.changes.splitListItem(transform: Transform) => Transform`
+#### `plugin.changes.splitListItem(change: Change) => Transform`
 
 Split current block into a new list item.
