@@ -45,9 +45,11 @@ const plugins = [
 
 This plugin accepts options to redefine the following block types:
 
-- `<String> types=["ol_list", "ul_list"]` — the array of possible types for list containers. First value will be used as default.
-- `<String> typeItem="list_item"` — type for list items.
-- `<String> typeDefault="paragraph"` — type for default block in list items.
+- `types: string = ["ol_list", "ul_list"]` — the array of possible types for list containers. First value will be used as default.
+- `typeItem: string = "list_item"` — type for list items.
+- `typeDefault: string = "paragraph"` — type for default block in list items.
+- `canMerge: (Node, Node) => boolean` — controls which list can be merged automatically (for example when they are adjacent). Defaults to merging list with identical types
+
 
 #### Assumption about the schema
 
