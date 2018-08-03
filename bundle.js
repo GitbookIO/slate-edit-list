@@ -1005,7 +1005,10 @@ var Options = function (_Record) {
 }((0, _immutable.Record)({
     types: ['ul_list', 'ol_list'],
     typeItem: 'list_item',
-    typeDefault: 'paragraph'
+    typeDefault: 'paragraph',
+    canMerge: function canMerge(a, b) {
+        return a.type === b.type;
+    }
 }));
 
 exports.default = Options;
@@ -1466,7 +1469,7 @@ function joinAdjacentLists(opts, node) {
     var invalids = node.nodes.map(function (child, i) {
         if (!(0, _utils.isList)(opts, child)) return null;
         var next = node.nodes.get(i + 1);
-        if (!next || next.type !== child.type) return null;
+        if (!next || !opts.canMerge(child, next)) return null;
         return [child, next];
     }).filter(Boolean);
 
