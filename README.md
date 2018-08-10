@@ -114,9 +114,9 @@ nodes:
 
 `slate-edit-list` exports utilities and transforms:
 
-#### `plugin.utils.isSelectionInList(value: Value) => Boolean`
+#### `plugin.utils.isSelectionInList(value: Value, type?: string) => Boolean`
 
-Return true if selection is inside a list (and it can be unwrap).
+Return true if selection is inside a list (and it can be unwrap). Optional param `type` can be supplied to deduce whether list is of specified type.
 
 #### `plugin.utils.isList(node: Node) => Boolean`
 
