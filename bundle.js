@@ -1469,7 +1469,10 @@ function joinAdjacentLists(opts, node) {
     var invalids = node.nodes.map(function (child, i) {
         if (!(0, _utils.isList)(opts, child)) return null;
         var next = node.nodes.get(i + 1);
-        if (!next || !opts.canMerge(child, next)) return null;
+        if (!next || !(0, _utils.isList)(opts, next) || !opts.canMerge(child, next)) {
+            return null;
+        }
+
         return [child, next];
     }).filter(Boolean);
 
