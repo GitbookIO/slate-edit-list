@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.12.0...HEAD
 
+## 0.12.1 - 2018-08-20
+
+- Avoid merging non-list blocks, even when using the `canMerge` option
+
 ## 0.12.0 - 2018-08-03
 
 - Add `canMerge` option to control which adjacent lists can

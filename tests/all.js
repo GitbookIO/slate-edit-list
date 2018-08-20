@@ -6,12 +6,11 @@ import readMetadata from 'read-metadata';
 
 import EditList from '../lib';
 
-const PLUGIN = EditList();
-const SCHEMA = Slate.Schema.create({
-    plugins: [PLUGIN]
-});
+function deserializeValue(plugin, json) {
+    const SCHEMA = Slate.Schema.create({
+        plugins: [plugin]
+    });
 
-function deserializeValue(json) {
     return Slate.Value.fromJSON(
         { ...json, schema: SCHEMA },
         { normalize: false }
@@ -24,6 +23,8 @@ describe('slate-edit-list', () => {
     tests.forEach((test, index) => {
         if (test[0] === '.' || path.extname(test).length > 0) return;
         it(test, () => {
+            const plugin = EditList();
+
             const dir = path.resolve(__dirname, test);
             const input = readMetadata.sync(path.resolve(dir, 'input.yaml'));
             const expectedPath = path.resolve(dir, 'expected.yaml');
@@ -33,13 +34,15 @@ describe('slate-edit-list', () => {
             // eslint-disable-next-line
             const runChange = require(path.resolve(dir, 'change.js')).default;
 
-            const valueInput = deserializeValue(input);
+            const valueInput = deserializeValue(plugin, input);
 
-            const newChange = runChange(PLUGIN, valueInput.change());
+            const newChange = runChange(plugin, valueInput.change());
 
             if (expected) {
                 const newDocJSon = newChange.value.toJSON();
-                expect(newDocJSon).toEqual(deserializeValue(expected).toJSON());
+                expect(newDocJSon).toEqual(
+                    deserializeValue(plugin, expected).toJSON()
+                );
             }
         });
     });
