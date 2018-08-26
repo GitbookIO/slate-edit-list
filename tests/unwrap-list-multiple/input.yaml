@@ -28,7 +28,7 @@ document:
             type: paragraph
             nodes:
               - object: text
-                key: 'end'
+                key: end
                 leaves:
                   - text: 'Second item'
 
