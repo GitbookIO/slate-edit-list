@@ -63,8 +63,10 @@ document:
             - text: "2"
 
 selection:
-  anchorKey: cursor
-  anchorOffset: 0
-  focusKey: cursor
-  focusOffset: 0
+  anchor:
+    key: cursor
+    offset: 0
+  focus:
+    key: cursor
+    offset: 0
   isFocused: true

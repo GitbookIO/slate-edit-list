@@ -12,10 +12,14 @@ export default function(plugin, change) {
     const selectedNode = change.value.document.getTexts().get(2);
 
     expect(change.value.selection.toJS()).toEqual({
-        anchorKey: selectedNode.key,
-        anchorOffset: 0,
-        focusKey: selectedNode.key,
-        focusOffset: 0,
+        anchor: {
+            key: selectedNode.key,
+            offset: 0
+        },
+        focus: {
+            key: selectedNode.key,
+            offset: 0
+        },
         isBackward: false,
         isFocused: false,
         marks: null,

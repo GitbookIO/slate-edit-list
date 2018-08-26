@@ -18,7 +18,7 @@ document:
             type: paragraph
             nodes:
               - object: text
-                key: 'start'
+                key: start
                 leaves:
                   - text: 'First item'
           - object: block
@@ -52,8 +52,10 @@ document:
           - text: 'Blah blah'
 
 selection:
-  anchorKey: 'start'
-  anchorOffset: 2
-  focusKey: 'end'
-  focusOffset: 4
+  anchor:
+    key: start
+    offset: 2
+  focus:
+    key: end
+    offset: 4
   isFocused: true

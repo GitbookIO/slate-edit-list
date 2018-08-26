@@ -16,13 +16,15 @@ document:
                       type: paragraph
                       nodes:
                         - object: text
-                          key: 'start'
+                          key: start
                           leaves:
                             - text: '1st item'
 
 selection:
-  anchorKey: 'start'
-  anchorOffset: 2
-  focusKey: 'start'
-  focusOffset: 4
+  anchor:
+    key: start
+    offset: 2
+  focus:
+    key: start
+    offset: 4
   isFocused: true
