@@ -3,7 +3,7 @@ import expect from 'expect';
 export default function(plugin, change) {
     const { value } = change;
     const selectedBlock = value.document.getDescendant('_selection_key');
-    change.collapseToStartOf(selectedBlock);
+    change.moveToStartOfNode(selectedBlock);
 
     plugin.onKeyDown(
         {
