@@ -7,7 +7,11 @@ export default (
             <ul_list>
                 <list_item>
                     <heading>First block</heading>
-                    <paragraph>SplitHere</paragraph>
+                    <paragraph>
+                        Split
+                        <cursor />
+                        Here
+                    </paragraph>
                 </list_item>
             </ul_list>
         </document>

@@ -7,7 +7,11 @@ export default (
             <paragraph>Blah blah</paragraph>
             <ul_list style={{ listStyleType: 'square' }}>
                 <list_item>
-                    <paragraph>First item</paragraph>
+                    <paragraph>
+                        Fi
+                        <anchor />
+                        rst item
+                    </paragraph>
                     <ul_list>
                         <list_item>
                             <paragraph>Subitem</paragraph>
@@ -18,7 +22,10 @@ export default (
                     <paragraph>Second item</paragraph>
                 </list_item>
             </ul_list>
-            <paragraph>Blah blah</paragraph>
+            <paragraph>
+                Blah
+                <focus /> blah
+            </paragraph>
         </document>
     </value>
 );

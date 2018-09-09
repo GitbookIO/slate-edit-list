@@ -9,7 +9,10 @@ export default (
                     <paragraph>Item 1</paragraph>
                 </list_item>
                 <list_item>
-                    <paragraph>Item 2</paragraph>
+                    <paragraph>
+                        <anchor />
+                        Item 2<focus />
+                    </paragraph>
                 </list_item>
                 <list_item>
                     <paragraph>Item 3</paragraph>

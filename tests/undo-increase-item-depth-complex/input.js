@@ -16,7 +16,9 @@ export default (
                         </list_item>
                         <list_item>
                             <paragraph>
+                                <anchor />
                                 Second item in the nested list
+                                <focus />
                             </paragraph>
                         </list_item>
                     </ol_list>

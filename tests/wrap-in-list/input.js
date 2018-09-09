@@ -4,7 +4,10 @@ import h from 'h';
 export default (
     <value>
         <document>
-            <paragraph>Hello World</paragraph>
+            <paragraph>
+                <cursor />
+                Hello World
+            </paragraph>
         </document>
     </value>
 );

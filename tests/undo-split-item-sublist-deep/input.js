@@ -9,7 +9,11 @@ export default (
                     <paragraph>Item 1</paragraph>
                     <ol_list>
                         <list_item>
-                            <paragraph>Item 1.1</paragraph>
+                            <paragraph>
+                                It
+                                <cursor />
+                                em 1.1
+                            </paragraph>
                             <ol_list>
                                 <list_item>
                                     <paragraph>Item 1.1.1</paragraph>

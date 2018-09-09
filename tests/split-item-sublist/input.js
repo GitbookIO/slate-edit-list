@@ -6,7 +6,11 @@ export default (
         <document>
             <ol_list>
                 <list_item>
-                    <paragraph>Item 1</paragraph>
+                    <paragraph>
+                        It
+                        <cursor />
+                        em 1
+                    </paragraph>
                     <ol_list>
                         <list_item>
                             <paragraph>Item 1.1</paragraph>

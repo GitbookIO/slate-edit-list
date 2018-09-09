@@ -6,7 +6,10 @@ export default (
         <document>
             <ul_list>
                 <list_item>
-                    <paragraph>Hello World</paragraph>
+                    <paragraph>
+                        Hello World
+                        <cursor />
+                    </paragraph>
                 </list_item>
             </ul_list>
         </document>

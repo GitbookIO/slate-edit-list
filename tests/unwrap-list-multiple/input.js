@@ -7,10 +7,18 @@ export default (
             <paragraph>Blah blah</paragraph>
             <ul_list>
                 <list_item>
-                    <paragraph>First item</paragraph>
+                    <paragraph>
+                        Fi
+                        <anchor />
+                        rst item
+                    </paragraph>
                 </list_item>
                 <list_item>
-                    <paragraph>Second item</paragraph>
+                    <paragraph>
+                        Seco
+                        <focus />
+                        nd item
+                    </paragraph>
                 </list_item>
             </ul_list>
             <paragraph>Blah blah</paragraph>

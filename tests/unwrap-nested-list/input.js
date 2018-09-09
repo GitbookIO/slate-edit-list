@@ -6,7 +6,10 @@ export default (
         <document>
             <ul_list>
                 <list_item>
-                    <paragraph>Item 1</paragraph>
+                    <paragraph>
+                        <anchor />
+                        Item 1<focus />
+                    </paragraph>
                     <ol_list>
                         <list_item>
                             <paragraph>Subtitem 1</paragraph>

@@ -9,7 +9,10 @@ export default (
                     <paragraph>First item</paragraph>
                 </list_item>
                 <list_item>
-                    <paragraph>Second item</paragraph>
+                    <paragraph>
+                        Second
+                        <cursor /> item
+                    </paragraph>
                 </list_item>
             </ul_list>
         </document>
