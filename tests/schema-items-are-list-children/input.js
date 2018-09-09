@@ -1,15 +1,20 @@
-<document>
-    <list_item>
-        <paragraph>Orphan</paragraph>
-    </list_item>
-    <ul_list>
+/** @jsx h */
+import h from 'h';
+
+export default (
+    <document>
         <list_item>
-            <paragraph>Valid item</paragraph>
+            <paragraph>Orphan</paragraph>
         </list_item>
-        <list_item>
+        <ul_list>
             <list_item>
-                <paragraph>Direct child of another item</paragraph>
+                <paragraph>Valid item</paragraph>
             </list_item>
-        </list_item>
-    </ul_list>
-</document>
+            <list_item>
+                <list_item>
+                    <paragraph>Direct child of another item</paragraph>
+                </list_item>
+            </list_item>
+        </ul_list>
+    </document>
+);

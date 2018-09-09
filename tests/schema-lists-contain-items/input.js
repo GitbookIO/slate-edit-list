@@ -1,7 +1,12 @@
-<document>
-    <ul_list>
-        <list_item>1st item</list_item>
-        <NOT_AN_ITEM>2nd item</NOT_AN_ITEM>
-        <list_item>3rd item</list_item>
-    </ul_list>
-</document>
+/** @jsx h */
+import h from 'h';
+
+export default (
+    <document>
+        <ul_list>
+            <list_item>1st item</list_item>
+            <NOT_AN_ITEM>2nd item</NOT_AN_ITEM>
+            <list_item>3rd item</list_item>
+        </ul_list>
+    </document>
+);
