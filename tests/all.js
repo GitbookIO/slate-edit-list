@@ -7,13 +7,18 @@ import Slate from 'slate';
 
 import EditList from '../lib';
 
-function deserializeValue(plugin, json) {
+// Provide the value with
+function deserializeValue(plugin, value) {
     const SCHEMA = Slate.Schema.create({
         plugins: [plugin]
     });
 
     return Slate.Value.fromJSON(
-        { ...json, schema: SCHEMA },
+        {
+            selection: value.selection,
+            document: value.document,
+            schema: SCHEMA
+        },
         { normalize: false }
     );
 }
