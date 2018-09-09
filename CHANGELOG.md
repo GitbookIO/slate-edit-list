@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.12.0...HEAD
+[Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.12.2...HEAD
+
+## 0.12.2 - 2018-08-20
+
+- Added optional argument `type` to `isSelectionInList`
 
 ## 0.12.1 - 2018-08-20
 
