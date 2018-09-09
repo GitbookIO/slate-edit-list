@@ -8,7 +8,7 @@ export default (
                 <paragraph>1st item</paragraph>
             </list_item>
             <list_item>
-                <NOT_AN_ITEM>2nd item</NOT_AN_ITEM>
+                <unknown>2nd item</unknown>
             </list_item>
             <list_item>
                 <paragraph>3rd item</paragraph>
