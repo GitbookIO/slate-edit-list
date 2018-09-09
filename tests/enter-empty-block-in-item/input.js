@@ -10,7 +10,9 @@ export default (
                 </list_item>
                 <list_item>
                     <paragraph>A first paragraph</paragraph>
-                    <paragraph />
+                    <paragraph>
+                        <cursor />
+                    </paragraph>
                 </list_item>
             </ul_list>
         </document>

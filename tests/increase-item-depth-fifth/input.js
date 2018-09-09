@@ -23,7 +23,9 @@ export default (
                     </ul_list>
                 </list_item>
                 <list_item>
-                    <paragraph>2</paragraph>
+                    <paragraph>
+                        <cursor />2
+                    </paragraph>
                 </list_item>
             </ul_list>
         </document>

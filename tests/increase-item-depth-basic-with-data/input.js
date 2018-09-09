@@ -9,7 +9,11 @@ export default (
                     <paragraph>First item</paragraph>
                 </list_item>
                 <list_item>
-                    <paragraph>Second item</paragraph>
+                    <paragraph>
+                        <anchor />
+                        Second item
+                        <focus />
+                    </paragraph>
                 </list_item>
             </ul_list>
         </document>

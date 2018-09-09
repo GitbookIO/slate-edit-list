@@ -8,8 +8,12 @@ export default (
                 <list_item>
                     <paragraph>First item</paragraph>
                 </list_item>
-                <list_item>
-                    <paragraph>Second item</paragraph>
+                <list_item key="current_item">
+                    <paragraph>
+                        <anchor />
+                        Second item
+                        <focus />
+                    </paragraph>
                 </list_item>
             </ul_list>
         </document>

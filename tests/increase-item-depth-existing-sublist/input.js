@@ -14,7 +14,10 @@ export default (
                     </ul_list>
                 </list_item>
                 <list_item>
-                    <paragraph>Item 2</paragraph>
+                    <paragraph>
+                        <anchor />
+                        Item 2<focus />
+                    </paragraph>
                 </list_item>
             </ul_list>
         </document>
