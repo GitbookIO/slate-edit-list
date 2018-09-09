@@ -110,7 +110,7 @@ class Example extends React.Component<*, *> {
             <div>
                 {this.renderToolbar()}
                 <Editor
-                    placeholder={'Enter some text...'}
+                    placeholder="Enter some text..."
                     plugins={plugins}
                     value={this.state.value}
                     onChange={this.onChange}
