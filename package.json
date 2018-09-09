@@ -42,8 +42,8 @@
     "prettier": "^1.13.3",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "read-metadata": "^1.0.0",
     "slate": "^0.34.4",
+    "slate-hyperprint": "^2.2.5",
     "slate-hyperscript": "^0.5.15",
     "slate-react": "^0.13.0",
     "stringify": "^5.1.0"
