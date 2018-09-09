@@ -11,7 +11,9 @@ export default (
                     </paragraph>
                 </list_item>
                 <list_item>
-                    <paragraph />
+                    <paragraph>
+                        <cursor />
+                    </paragraph>
                 </list_item>
                 <list_item>
                     <paragraph>

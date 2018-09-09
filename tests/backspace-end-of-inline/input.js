@@ -11,6 +11,7 @@ export default (
                 <list_item>
                     <paragraph>
                         <link>Second item</link>
+                        <cursor />
                     </paragraph>
                 </list_item>
                 <list_item>

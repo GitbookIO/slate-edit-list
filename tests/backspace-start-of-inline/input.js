@@ -10,6 +10,7 @@ export default (
                 </list_item>
                 <list_item>
                     <paragraph>
+                        <cursor />
                         <link>Second item</link>
                     </paragraph>
                 </list_item>
