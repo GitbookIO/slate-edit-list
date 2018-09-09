@@ -4,6 +4,7 @@ import expect from 'expect';
 import fs from 'fs';
 import path from 'path';
 import Slate from 'slate';
+import hyperprint from 'slate-hyperprint';
 
 import EditList from '../lib';
 
@@ -29,24 +30,28 @@ describe('slate-edit-list', () => {
     tests.forEach((test, index) => {
         if (test[0] === '.' || path.extname(test).length > 0) return;
         it(test, () => {
+            const dir = path.resolve(__dirname, test);
             const plugin = EditList();
 
-            const dir = path.resolve(__dirname, test);
-            const input = require(path.resolve(dir, 'input.js')).default;
+            const input = deserializeValue(
+                plugin,
+                require(path.resolve(dir, 'input.js')).default
+            );
+
             const expectedPath = path.resolve(dir, 'expected.js');
             const expected =
-                fs.existsSync(expectedPath) && require(expectedPath).default;
+                fs.existsSync(expectedPath) &&
+                deserializeValue(plugin, require(expectedPath).default);
 
             const runChange = require(path.resolve(dir, 'change.js')).default;
 
-            const valueInput = deserializeValue(plugin, input);
-
-            const newChange = runChange(plugin, valueInput.change());
+            const newChange = runChange(plugin, input.change());
 
             if (expected) {
-                const newDocJSon = newChange.value.toJSON();
-                expect(newDocJSon).toEqual(
-                    deserializeValue(plugin, expected).toJSON()
+                const actual = newChange.value;
+
+                expect(hyperprint(actual, { strict: true })).toEqual(
+                    hyperprint(expected, { strict: true })
                 );
             }
         });
