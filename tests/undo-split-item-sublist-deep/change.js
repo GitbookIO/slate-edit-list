@@ -5,10 +5,14 @@ export default function(plugin, change) {
     const { selection } = value;
 
     const range = selection.merge({
-        anchorKey: '_selection_key',
-        anchorOffset: 2,
-        focusKey: '_selection_key',
-        focusOffset: 2
+        anchor: {
+            key: '_selection_key',
+            offset: 2
+        },
+        focus: {
+            key: '_selection_key',
+            offset: 2
+        }
     });
 
     change

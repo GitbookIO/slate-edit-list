@@ -5,7 +5,7 @@ export default function(plugin, change) {
     const selectedBlock = value.document.getDescendant('_selection_key');
     const initial = change.value
         .change({ save: false })
-        .moveToRangeOf(selectedBlock).value;
+        .moveToRangeOfNode(selectedBlock).value;
     const toTest = initial.change();
 
     toTest.call(plugin.changes.decreaseItemDepth).undo();

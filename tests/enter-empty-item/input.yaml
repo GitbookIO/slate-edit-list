@@ -21,13 +21,15 @@ document:
         type: paragraph
         nodes:
         - object: text
-          key: 'start'
+          key: start
           leaves:
             - text: ''
 
 selection:
-  anchorKey: 'start'
-  anchorOffset: 0
-  focusKey: 'start'
-  focusOffset: 0
+  anchor:
+    key: start
+    offset: 0
+  focus:
+    key: start
+    offset: 0
   isFocused: true

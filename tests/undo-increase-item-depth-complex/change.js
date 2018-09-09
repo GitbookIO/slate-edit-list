@@ -6,7 +6,7 @@ export default function(plugin, change) {
 
     const initial = change.value
         .change({ save: false })
-        .moveToRangeOf(selectedBlock);
+        .moveToRangeOfNode(selectedBlock);
     const initialText = initial.value.startBlock.text;
     const initialSelection = initial.value.selection;
 
