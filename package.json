@@ -1,5 +1,5 @@
 {
-  "name": "slate-edit-list",
+  "name": "@gitbook/slate-edit-list",
   "description": "A Slate plugin to handle keyboard events in lists.",
   "version": "0.12.2",
   "license": "Apache-2.0",
