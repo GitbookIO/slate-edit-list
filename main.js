@@ -3,7 +3,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Editor } from 'slate-react';
+import { Editor } from '@gitbook/slate-react';
 
 import PluginEditList from '../lib/';
 
@@ -110,7 +110,7 @@ class Example extends React.Component<*, *> {
             <div>
                 {this.renderToolbar()}
                 <Editor
-                    placeholder={'Enter some text...'}
+                    placeholder="Enter some text..."
                     plugins={plugins}
                     value={this.state.value}
                     onChange={this.onChange}
