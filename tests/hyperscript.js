@@ -1,4 +1,4 @@
-import { createHyperscript } from 'slate-hyperscript';
+import { createHyperscript } from '@gitbook/slate-hyperscript';
 
 // Hyperscript function used to convert the JSX syntax
 // in tests to Slate models `create` calls.
