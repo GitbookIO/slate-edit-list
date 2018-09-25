@@ -5,12 +5,24 @@ export default function(plugin, change) {
 
     // check new selection
     const selectedNode = change.value.document.getTexts().get(2);
+    const selectedNodePath = change.value.document
+        .getPath(selectedNode.key)
+        .toJS();
 
     expect(change.value.selection.toJS()).toMatch({
-        anchorKey: selectedNode.key,
-        anchorOffset: 0,
-        focusKey: selectedNode.key,
-        focusOffset: 0
+        object: 'selection',
+        anchor: {
+            object: 'point',
+            offset: 0,
+            path: selectedNodePath
+        },
+        focus: {
+            object: 'point',
+            offset: 0,
+            path: selectedNodePath
+        },
+        isFocused: true,
+        marks: null
     });
 
     return change;
