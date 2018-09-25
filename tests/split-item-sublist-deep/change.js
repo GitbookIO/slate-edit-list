@@ -1,4 +1,4 @@
-// import expect from 'expect';
+import expect from 'expect';
 
 export default function(plugin, change) {
     plugin.changes.splitListItem(change);
