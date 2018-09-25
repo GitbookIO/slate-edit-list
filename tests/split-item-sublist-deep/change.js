@@ -9,7 +9,7 @@ export default function(plugin, change) {
         .getPath(selectedNode.key)
         .toJS();
 
-    expect(change.value.selection.toJS()).toMatch({
+    expect(change.value.selection.toJS()).toMatchObject({
         object: 'selection',
         anchor: {
             object: 'point',
