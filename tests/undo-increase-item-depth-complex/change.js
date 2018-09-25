@@ -1,22 +1,14 @@
 import expect from 'expect';
 
 export default function(plugin, change) {
-    const { value } = change;
-    const selectedBlock = value.document.getDescendant('_selection_key');
+    const initialText = change.value.startBlock.text;
+    const initialSelection = change.value.selection;
 
-    const initial = change.value
-        .change({ save: false })
-        .moveToRangeOfNode(selectedBlock);
-    const initialText = initial.value.startBlock.text;
-    const initialSelection = initial.value.selection;
-
-    const newChange = initial.value.change();
-
-    newChange.call(plugin.changes.increaseItemDepth).undo();
+    change.call(plugin.changes.increaseItemDepth).undo();
 
     // Back to previous cursor position
-    expect(newChange.value.startBlock.text).toEqual(initialText);
-    expect(newChange.value.selection.toJS()).toEqual(initialSelection.toJS());
+    expect(change.value.startBlock.text).toEqual(initialText);
+    expect(change.value.selection.toJS()).toEqual(initialSelection.toJS());
 
-    return newChange;
+    return change;
 }
