@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 [Unreleased]: https://github.com/GitbookIO/slate-edit-list/compare/0.12.2...HEAD
 
+## 0.12.3 - 2019-01-07
+
+- Accept `immutable@4`
+
 ## 0.12.2 - 2018-08-20
 
 - Added optional argument `type` to `isSelectionInList`
