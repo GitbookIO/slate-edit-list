@@ -130,59 +130,59 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@gitbook/slate-base64-serializer@^0.2.41":
-  version "0.2.41"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate-base64-serializer/-/slate-base64-serializer-0.2.41.tgz#a391b62c8d87083137e3cd667ac604829103942f"
+"@gitbook/slate-base64-serializer@^0.2.45":
+  version "0.2.45"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate-base64-serializer/-/slate-base64-serializer-0.2.45.tgz#62b8d8405128d6b62cefd35c203cfe458c8784d2"
   dependencies:
     isomorphic-base64 "^1.0.2"
 
-"@gitbook/slate-dev-environment@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate-dev-environment/-/slate-dev-environment-0.1.2.tgz#db3e0bc21a8c2e2833911ea6be010480d39feae4"
+"@gitbook/slate-dev-environment@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate-dev-environment/-/slate-dev-environment-0.1.3.tgz#eed305abd717d6386a7496287600ed705e304464"
   dependencies:
     is-in-browser "^1.1.3"
 
-"@gitbook/slate-dev-logger@^0.1.39":
-  version "0.1.39"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate-dev-logger/-/slate-dev-logger-0.1.39.tgz#86cb39b8c535a480d31ab3636007911b6f7a3742"
+"@gitbook/slate-dev-logger@^0.1.40":
+  version "0.1.40"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate-dev-logger/-/slate-dev-logger-0.1.40.tgz#960ede184272329eb977a11aa6a601621c8b7a6d"
 
-"@gitbook/slate-hotkeys@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate-hotkeys/-/slate-hotkeys-0.1.2.tgz#6ef554b925f84e72f99734196d42f7c6679c772b"
+"@gitbook/slate-hotkeys@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate-hotkeys/-/slate-hotkeys-0.1.3.tgz#fc28216ddad0d88e86bec42cdf78d20db741e0a8"
   dependencies:
-    "@gitbook/slate-dev-environment" "^0.1.2"
+    "@gitbook/slate-dev-environment" "^0.1.3"
     is-hotkey "^0.1.1"
 
-"@gitbook/slate-hyperscript@^0.5.22":
-  version "0.5.22"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate-hyperscript/-/slate-hyperscript-0.5.22.tgz#b7fb270296852d961408840dd605cc0cdd156e19"
+"@gitbook/slate-hyperscript@^0.5.26":
+  version "0.5.26"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate-hyperscript/-/slate-hyperscript-0.5.26.tgz#bff629c4130c477670bd6dcf840f65b299df3eea"
   dependencies:
-    "@gitbook/slate-dev-logger" "^0.1.39"
+    "@gitbook/slate-dev-logger" "^0.1.40"
     is-empty "^1.0.0"
     is-plain-object "^2.0.4"
 
-"@gitbook/slate-plain-serializer@^0.5.22":
-  version "0.5.22"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate-plain-serializer/-/slate-plain-serializer-0.5.22.tgz#68f2dc82443ae6b326d17d379d44cdfb418dcebc"
+"@gitbook/slate-plain-serializer@^0.5.26":
+  version "0.5.26"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate-plain-serializer/-/slate-plain-serializer-0.5.26.tgz#6f90ef7215b955894ea373e74e1262fbdf499fa5"
   dependencies:
-    "@gitbook/slate-dev-logger" "^0.1.39"
+    "@gitbook/slate-dev-logger" "^0.1.40"
 
-"@gitbook/slate-prop-types@^0.4.39":
-  version "0.4.39"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate-prop-types/-/slate-prop-types-0.4.39.tgz#267cfc25c860b8feb73af733c0d8a524a8801cea"
+"@gitbook/slate-prop-types@^0.4.43":
+  version "0.4.43"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate-prop-types/-/slate-prop-types-0.4.43.tgz#6f0b83d1d308709681559b0c437fd4356be473b5"
   dependencies:
-    "@gitbook/slate-dev-logger" "^0.1.39"
+    "@gitbook/slate-dev-logger" "^0.1.40"
 
-"@gitbook/slate-react@^0.13.4":
-  version "0.13.4"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate-react/-/slate-react-0.13.4.tgz#d07f4ecc384900d20284d19e27b8eb9e1982cdd8"
+"@gitbook/slate-react@^0.13.9":
+  version "0.13.9"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate-react/-/slate-react-0.13.9.tgz#fc1f94540331304769c3e81ba20c066a02165a21"
   dependencies:
-    "@gitbook/slate-base64-serializer" "^0.2.41"
-    "@gitbook/slate-dev-environment" "^0.1.2"
-    "@gitbook/slate-dev-logger" "^0.1.39"
-    "@gitbook/slate-hotkeys" "^0.1.2"
-    "@gitbook/slate-plain-serializer" "^0.5.22"
-    "@gitbook/slate-prop-types" "^0.4.39"
+    "@gitbook/slate-base64-serializer" "^0.2.45"
+    "@gitbook/slate-dev-environment" "^0.1.3"
+    "@gitbook/slate-dev-logger" "^0.1.40"
+    "@gitbook/slate-hotkeys" "^0.1.3"
+    "@gitbook/slate-plain-serializer" "^0.5.26"
+    "@gitbook/slate-prop-types" "^0.4.43"
     debug "^3.1.0"
     get-window "^1.1.1"
     is-window "^1.0.2"
@@ -193,19 +193,20 @@
     react-portal "^3.1.0"
     selection-is-backward "^1.0.0"
 
-"@gitbook/slate-schema-violations@^0.1.20":
-  version "0.1.20"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate-schema-violations/-/slate-schema-violations-0.1.20.tgz#1e799757b79472a15938f05cd90923ea6750388b"
+"@gitbook/slate-schema-violations@^0.1.24":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate-schema-violations/-/slate-schema-violations-0.1.24.tgz#ab7d9f793d2943102b8c8014b9e71ab826a47ba6"
 
-"@gitbook/slate@^0.34.7":
-  version "0.34.7"
-  resolved "https://registry.yarnpkg.com/@gitbook/slate/-/slate-0.34.7.tgz#ecc0ddeac9d5e8380fb4b93e1b47306d139504ba"
+"@gitbook/slate@^0.34.11":
+  version "0.34.11"
+  resolved "https://registry.yarnpkg.com/@gitbook/slate/-/slate-0.34.11.tgz#dd20daa77510c581e4b12928f48ff70beb25848b"
   dependencies:
-    "@gitbook/slate-dev-logger" "^0.1.39"
-    "@gitbook/slate-schema-violations" "^0.1.20"
+    "@gitbook/slate-dev-logger" "^0.1.40"
+    "@gitbook/slate-schema-violations" "^0.1.24"
     debug "^3.1.0"
     direction "^0.1.5"
     esrever "^0.2.0"
+    immutablejs-record-memoize "^1.0.1"
     is-empty "^1.0.0"
     is-plain-object "^2.0.4"
     lodash "^4.17.4"
@@ -2912,9 +2913,13 @@ ignore@^3.3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
-immutable@^3.8.2:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
+immutable@^4.0.0-rc.12:
+  version "4.0.0-rc.12"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.12.tgz#ca59a7e4c19ae8d9bf74a97bdf0f6e2f2a5d0217"
+
+immutablejs-record-memoize@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/immutablejs-record-memoize/-/immutablejs-record-memoize-1.0.1.tgz#668ebe616f2bd743ce890321fa451f0c791dadce"
 
 imurmurhash@^0.1.4:
   version "0.1.4"

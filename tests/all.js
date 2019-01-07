@@ -14,7 +14,7 @@ function deserializeValue(plugin, value) {
         plugins: [plugin]
     });
 
-    return Slate.Value.fromJSON(
+    return Slate.Value.fromJS(
         {
             selection: value.selection,
             document: value.document,
