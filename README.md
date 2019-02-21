@@ -1,3 +1,8 @@
+> ⚠️  This repository is archived and has moved to [GitBook's fork](https://github.com/GitbookIO/slate) of [ianstormtaylor/slate](https://github.com/ianstormtaylor/slate).
+> Previous versions are still [available on NPM](https://www.npmjs.com/package/slate-edit-table)
+> All the versions using GitBook's fork of slate are now published under the `@gitbook` NPM scope.
+> To learn more about why we forked Slate, read [our manifest](https://github.com/GitbookIO/slate/blob/master/Forked.md)
+
 # slate-edit-list
 
 [![NPM version](https://badge.fury.io/js/slate-edit-list.svg)](http://badge.fury.io/js/slate-edit-list)
@@ -6,11 +11,6 @@
 A Slate plugin to handle keyboard events in lists. List items can contain blocks.
 
 Demo: [gitbookio.github.io/slate-edit-list/](https://gitbookio.github.io/slate-edit-list/)
-
-> ⚠️  This repository is now using GitBook's fork of [ianstormtaylor/slate](https://github.com/ianstormtaylor/slate).
-> Previous versions are still [available on NPM](https://www.npmjs.com/package/slate-edit-list)
-> All the versions using GitBook's fork of slate are now published under the `@gitbook` NPM scope.
-> To learn more about why we forked Slate, read [our manifest](https://github.com/GitbookIO/slate/blob/master/Readme.md)
 
 ### Install
 
